@@ -23,14 +23,8 @@ public class _KenronMain : MonoBehaviour {
     public int m_DamageDealt;
     public float m_Speed;
     private float m_JumpForce;
-    //Ability Variables
 
-    //UI
-    public Text m_Abiliy1_CD;
-    //public Text m_Ult_CD;
-
-    public Text m_Ability1_Use;
-   //public Text m_Ult_Use;
+    bool isActive;
 
     // Use this for initialization
     void Awake () {
@@ -39,6 +33,7 @@ public class _KenronMain : MonoBehaviour {
         m_DamageDealt = 50;
         m_Speed = 30.0f;
         m_JumpForce = 0.0f;
+        isActive = false;
         m_Kenron = GameObject.FindGameObjectWithTag("Kenron");
         m_KenronSkeleton = GetComponent<Rigidbody>();
 	}
@@ -52,10 +47,21 @@ public class _KenronMain : MonoBehaviour {
 	}
 
     //Abilty 1: Flash Fire
-    void FlashFire() {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            //
+    public void FlashFire() {
+        isActive = true;
+        int m_CoolDown = 7;
+        if (isActive == true && m_CoolDown == 7) {
+            for (int i = 0; i < 7; i++)
+            {
+                m_Speed += 4.0f;
+                m_DamageDealt += 5;
+                m_CoolDown--;
+            }
+            isActive = false;
+        }
+        if (isActive == false && m_CoolDown <= 0) {
+            m_Speed = 30.0f;
+            m_DamageDealt = 50;
         }
     }
 
