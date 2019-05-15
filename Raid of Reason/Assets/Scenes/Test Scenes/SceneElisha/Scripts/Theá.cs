@@ -14,13 +14,15 @@ public class Theá : BaseCharacter
     public GameObject projectile;
     private Vector3 hitLocation;
     private LayerMask layerMask;
+    public ParticleSystem healEffect;
     private float delay;
     private float shotCounter;
     private float counter;
-    public BaseEnemy m_enemy;
     public Rigidbody m_rigid;
     public GameObject m_thea;
     bool isActive;
+
+    private int m_fullHealth = 100;
 
     public void Awake()
     {
@@ -54,23 +56,24 @@ public class Theá : BaseCharacter
                 counter = 0f;
             }
 
-            // Ray cast mechanic
-            RaycastHit hit;
-            Ray rayCast = new Ray(transform.position, transform.forward);
-            if (Physics.Raycast(rayCast, out hit, layerMask))
-            {
-                // enemy health damaged
-                m_enemy = hit.transform.GetComponent<BaseEnemy>();
-                if (m_enemy != null)
-                {
-                    m_enemy.TakeDamage(5);
+            //// Ray cast mechanic
+            //RaycastHit hit;
+            //Ray rayCast = new Ray(transform.position, transform.forward);
+            //if (Physics.Raycast(rayCast, out hit, layerMask))
+            //{
+            //    // enemy health damaged
+            //    m_enemy = hit.transform.GetComponent<BaseEnemy>();
+            //    if (m_enemy != null)
+            //    {
+            //        m_enemy.TakeDamage(5);
 
-                }
-                else if (XCI.GetButtonUp(XboxButton.X, controller))
-                {
-                    shotCounter = 0f;
-                }
-            }
+            //    }
+
+            //}
+        }
+        else if (XCI.GetButtonUp(XboxButton.X, controller))
+        {
+            shotCounter = 0f;
         }
     }
 
@@ -82,16 +85,18 @@ public class Theá : BaseCharacter
         {
             for(int i = 0; i < 20; i++)
             {
-                SetHealth(100);
+                SetHealth(m_fullHealth);
                 Debug.Log("Ult ability works");
+                healEffect.Play();
                 m_coolDown--;
             }
             isActive = false;
+            healEffect.Stop();
         }
 
         if(isActive == false && m_coolDown <= 0)
         {
-             GetHealth();
+            return;
         }
     }
 }

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using XboxCtrlrInput;
 
-public class BaseCharacter : MonoBehaviour {
+public abstract class BaseCharacter : MonoBehaviour {
 
     public enum PlayerState
     {
@@ -22,7 +22,7 @@ public class BaseCharacter : MonoBehaviour {
     private PlayerState playerState;
     [SerializeField]
     private int m_maxHealth;
-    private int m_health;
+    private int m_currentHealth;
     [SerializeField]
     private int m_damage;
     private float m_controlSpeed;
@@ -33,8 +33,7 @@ public class BaseCharacter : MonoBehaviour {
     private Vector3 prevRotDirection = Vector3.forward;
 
     void Start () {
-        m_maxHealth = 100;
-        m_health = m_maxHealth;
+        m_currentHealth = m_maxHealth;
         m_damage = 5;
         m_controlSpeed = 15f;
   	}
@@ -78,9 +77,9 @@ public class BaseCharacter : MonoBehaviour {
 
     public virtual void TakeDamage(int damage)
     {
-        m_health -= damage;
+        m_currentHealth -= damage;
 
-        if (m_health <= 0.0f)
+        if (m_currentHealth <= 0.0f)
         {
             playerState = PlayerState.REVIVE;
         }
@@ -91,9 +90,9 @@ public class BaseCharacter : MonoBehaviour {
         m_damage = damage;
     }
 
-    virtual public void SetHealth(int health)
+     public void SetHealth(int health)
     {
-        m_health = health;
+        health = m_currentHealth;
     }
 
     virtual public int GetDamage()
@@ -101,9 +100,9 @@ public class BaseCharacter : MonoBehaviour {
         return m_damage;
     }
 
-    virtual public int GetHealth()
+     public int GetHealth()
     {
-        return m_health;
+        return m_currentHealth;
     }
 
     virtual protected void Player()
