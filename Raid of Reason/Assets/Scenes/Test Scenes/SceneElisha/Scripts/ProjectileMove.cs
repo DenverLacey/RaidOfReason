@@ -31,4 +31,16 @@ public class ProjectileMove : MonoBehaviour {
             Debug.Log("no projectile speed");
         }
 	}
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Enemy")
+        {
+            Debug.Log("attack successful");
+        }
+        else
+        {
+            Debug.Log("attack unsuccessful");
+        }
+    }
 }

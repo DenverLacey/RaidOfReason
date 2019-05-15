@@ -22,29 +22,28 @@ public class BaseCharacter : MonoBehaviour {
     private PlayerState playerState;
     [SerializeField]
     private int m_maxHealth;
-    [SerializeField]
-    private float m_speed;
-    [SerializeField]
-    private float m_maxSpeed;
+    private int m_health;
     [SerializeField]
     private int m_damage;
-    [SerializeField]
-    private float m_controlSpeed = 10.0f;
-    [SerializeField]
+    private float m_controlSpeed;
 
-    public XboxController controller;
+    protected XboxController controller;
     private float m_rotationSpeed = 250.0f;
     private Vector3 direction;
     private Vector3 prevRotDirection = Vector3.forward;
-    private int m_health;
 
     void Start () {
-        m_maxHealth = m_health;
+        m_maxHealth = 100;
+        m_health = m_maxHealth;
+        m_damage = 5;
+        m_controlSpeed = 15f;
   	}
 
-    virtual public void FixedUpdate(){}
+    protected virtual void FixedUpdate()
+    {   
+    }
 
-    virtual public void CharacterMovement()
+    virtual protected void CharacterMovement()
     {
         /// <summary> 
         /// Handles the forward and backwards movement of the character via the xbox controller layout
@@ -77,6 +76,16 @@ public class BaseCharacter : MonoBehaviour {
         //*
     }
 
+    public virtual void TakeDamage(int damage)
+    {
+        m_health -= damage;
+
+        if (m_health <= 0.0f)
+        {
+            playerState = PlayerState.REVIVE;
+        }
+    }
+
     virtual public void SetDamage(int damage)
     {
         m_damage = damage;
@@ -85,16 +94,6 @@ public class BaseCharacter : MonoBehaviour {
     virtual public void SetHealth(int health)
     {
         m_health = health;
-    }
-
-    virtual public void SetSpeed(float speed)
-    {
-        m_speed = speed;
-    }
-
-    virtual public void SetMaxSpeed(float maxSpeed)
-    {
-        m_maxSpeed = maxSpeed;
     }
 
     virtual public int GetDamage()
@@ -107,26 +106,19 @@ public class BaseCharacter : MonoBehaviour {
         return m_health;
     }
 
-    virtual public float GetSpeed()
+    virtual protected void Player()
     {
-        return m_speed;
-    }
-
-    virtual public float GetMaxSpeed()
-    {
-        return m_maxSpeed;
-    }
-
-    public void Player()
-    {
-        switch(playerState)
+        switch (playerState)
         {
             case PlayerState.ALIVE:
+                //Debug.Log("alive state activated");
                 CharacterMovement();
                 break;
             case PlayerState.REVIVE:
+                Debug.Log("revive state activated");
                 break;
             case PlayerState.DEAD:
+                Debug.Log("dead state activated");
                 break;
 
             default:

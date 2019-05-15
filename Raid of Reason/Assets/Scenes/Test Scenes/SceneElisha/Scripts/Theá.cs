@@ -9,31 +9,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using XboxCtrlrInput;
 
-public class Theá : BaseCharacter {
-
-    [SerializeField]
-    GameObject projectile;
-    [SerializeField]
-    private float delay;
-    [SerializeField]
-    private float range;
-    private float shotCounter;
-    private float counter;
+public class Theá : BaseCharacter
+{
+    public GameObject projectile;
     private Vector3 hitLocation;
     private LayerMask layerMask;
+    private float delay;
+    private float shotCounter;
+    private float counter;
+    public BaseEnemy m_enemy;
+    public Rigidbody m_rigid;
+    public GameObject m_thea;
+    bool isActive;
+
+    public void Awake()
+    {
+        isActive = false;
+        m_rigid = GetComponent<Rigidbody>();
+        m_thea = GameObject.FindGameObjectWithTag("Thea");
+    }
 
     // Update is called once per frame
-    public override void FixedUpdate()
+    protected override void FixedUpdate()
     {
-        base.FixedUpdate();
-
-        Player();
-        Projectile();
+        if(m_thea != null)
+        {
+            Player();
+            Projectile();
+        } 
     }
 
     public void Projectile()
     {
-         counter += Time.deltaTime;
+        counter += Time.deltaTime;
 
         if (XCI.GetButtonDown(XboxButton.X, controller))
         {
@@ -45,11 +53,45 @@ public class Theá : BaseCharacter {
                 Debug.Log("instiantiated");
                 counter = 0f;
             }
-               
+
+            // Ray cast mechanic
+            RaycastHit hit;
+            Ray rayCast = new Ray(transform.position, transform.forward);
+            if (Physics.Raycast(rayCast, out hit, layerMask))
+            {
+                // enemy health damaged
+                m_enemy = hit.transform.GetComponent<BaseEnemy>();
+                if (m_enemy != null)
+                {
+                    m_enemy.TakeDamage(5);
+
+                }
+                else if (XCI.GetButtonUp(XboxButton.X, controller))
+                {
+                    shotCounter = 0f;
+                }
+            }
         }
-        else if(XCI.GetButtonUp(XboxButton.X, controller))
+    }
+
+    public void UltimateAbility()
+    {
+        isActive = true;
+        int m_coolDown = 20;
+        if(isActive == true && m_coolDown == 20)
         {
-            shotCounter = 0f;
+            for(int i = 0; i < 20; i++)
+            {
+                SetHealth(100);
+                Debug.Log("Ult ability works");
+                m_coolDown--;
+            }
+            isActive = false;
+        }
+
+        if(isActive == false && m_coolDown <= 0)
+        {
+             GetHealth();
         }
     }
 }
