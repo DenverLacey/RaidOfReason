@@ -21,8 +21,6 @@ public class MultiTargetCamera : MonoBehaviour
     void Start()
     {
         cam = GetComponent<Camera>();
-
-        targets.Add(GameObject.FindGameObjectWithTag("Kenron").transform);
     }
 
     void FixedUpdate()

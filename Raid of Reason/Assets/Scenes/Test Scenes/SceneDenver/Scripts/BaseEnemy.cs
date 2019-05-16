@@ -16,7 +16,7 @@ public abstract class BaseEnemy : MonoBehaviour
 	public int Health { get { return m_health; } }
 
     protected NavMeshAgent m_navMeshAgent;
-    protected GameObject[] m_players;
+    protected BaseCharacter[] m_players;
 	protected Vector3 m_target;
 
     protected enum AI_STATE {
@@ -31,7 +31,7 @@ public abstract class BaseEnemy : MonoBehaviour
 
     protected virtual void Start() {
         m_navMeshAgent = GetComponent<NavMeshAgent>();
-        m_players = GameObject.FindGameObjectsWithTag("Player");
+        m_players = GameObject.FindObjectsOfType<BaseCharacter>();
         m_currentState = AI_STATE.WANDER;
         m_oldState = m_currentState;
 		m_health = m_maxHealth;
@@ -63,12 +63,12 @@ public abstract class BaseEnemy : MonoBehaviour
 		Transform closest = null;
 		float D = m_viewRange;
 
-		foreach (GameObject p in m_players) {
+		foreach (var p in m_players) {
 			Ray ray = new Ray(transform.position, p.transform.position - transform.position);
 			RaycastHit hit;
 
 			if (Physics.Raycast(ray, out hit, D)) {
-				if (hit.collider.tag == "Player") {
+				if (hit.collider.tag == "Kenron" || hit.collider.tag == "Thea") {
 					closest = p.transform;
 					D = Vector3.Distance(transform.position, p.transform.position);
 					s = AI_STATE.ATTACK;
@@ -98,7 +98,7 @@ public abstract class BaseEnemy : MonoBehaviour
 
     protected virtual void Wander() {
 
-		if (Vector3.Distance(transform.position, m_target) > 1f) {
+		if (Vector3.Distance(transform.position, m_target) > 2f) {
 			return;
 		} 
 

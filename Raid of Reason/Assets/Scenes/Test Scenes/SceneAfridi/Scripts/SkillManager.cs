@@ -18,6 +18,7 @@ public class SkillManager : MonoBehaviour {
 
     public List<Skills> m_Skills;
     public _KenronMain m_Kenron;
+    public Theá m_theá;
     protected XboxController controller;
 
     void Start()
@@ -30,20 +31,30 @@ public class SkillManager : MonoBehaviour {
 
     public void FixedUpdate()
     {
-        if (XCI.GetButtonDown(XboxButton.B, controller)) { 
+        if (XCI.GetButtonDown(XboxButton.B, XboxController.Second)) { 
             if (m_Skills[0].m_currentCoolDown >= m_Skills[0].m_coolDown) {
                 m_Kenron.FlashFire();
                 m_Skills[0].m_currentCoolDown = 0;
                 m_Skills[0].active = true;
-            }         
+            }
+            
         }
-        if (XCI.GetButtonDown(XboxButton.Y, controller))
+        if (XCI.GetButtonDown(XboxButton.Y, XboxController.Second))
         {
             if (m_Skills[1].m_currentCoolDown >= m_Skills[1].m_coolDown)
             {
                 m_Kenron.ChaosFlame();
                 m_Skills[1].m_currentCoolDown = 0;
                 m_Skills[1].active = true;
+            }
+        }
+        if (XCI.GetButtonDown(XboxButton.Y, XboxController.First))
+        {
+            if (m_Skills[2].m_currentCoolDown >= m_Skills[2].m_coolDown)
+            {
+                m_theá.UltimateAbility();
+                m_Skills[2].m_currentCoolDown = 0;
+                m_Skills[2].active = true;
             }
         }
     }
@@ -62,9 +73,10 @@ public class SkillManager : MonoBehaviour {
                 if (skill.m_currentCoolDown >= skill.m_coolDown)
                 {
                     m_Kenron.ResetSkill();
+                    m_Kenron.ResetSwordSkill();
                     m_Skills[0].active = false;
                     m_Skills[1].active = false;
-                }
+                 }
             }
         }
     }

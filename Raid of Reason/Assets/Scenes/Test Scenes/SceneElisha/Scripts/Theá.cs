@@ -16,6 +16,7 @@ public class Theá : BaseCharacter
     private LayerMask layerMask;
     public ParticleSystem healEffect;
     public GameObject m_thea;
+    public _KenronMain m_kenron;
     private float delay;
     private float shotCounter;
     private float counter;
@@ -41,7 +42,7 @@ public class Theá : BaseCharacter
     {
         counter += Time.deltaTime;
 
-        if (XCI.GetButtonDown(XboxButton.X, controller))
+        if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.First) > 0.1)
         {
             shotCounter += Time.deltaTime;
 
@@ -52,7 +53,7 @@ public class Theá : BaseCharacter
                 counter = 0f;
             }
         }
-        else if (XCI.GetButtonUp(XboxButton.X, controller))
+        else if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.First) < 0.1)
         {
             shotCounter = 0f;
         }
@@ -68,7 +69,8 @@ public class Theá : BaseCharacter
             {
                 SetHealth(100);
                 GetHealth();
-                Debug.Log("Ult ability works");
+                m_kenron.SetHealth(100);
+                m_kenron.GetHealth();
                 healEffect.Play();
                 m_coolDown--;
             }

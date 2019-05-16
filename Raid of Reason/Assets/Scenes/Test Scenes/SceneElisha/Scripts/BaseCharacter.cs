@@ -22,14 +22,14 @@ public abstract class BaseCharacter : MonoBehaviour {
     private PlayerState playerState;
     [SerializeField]
     private int m_maxHealth;
-    private int m_currentHealth;
+    public int m_currentHealth;
     [SerializeField]
     private int m_damage;
     private int m_armor;
     [SerializeField]
     private float m_controlSpeed;
 
-    protected XboxController controller;
+    public XboxController controller;
     private float m_rotationSpeed = 250.0f;
     private Vector3 direction;
     private Vector3 prevRotDirection = Vector3.forward;
@@ -101,7 +101,7 @@ public abstract class BaseCharacter : MonoBehaviour {
 
      public void SetHealth(int health)
     {
-        health = m_maxHealth;
+        m_currentHealth = health;
     }
 
     virtual public float GetSpeed()
@@ -121,7 +121,7 @@ public abstract class BaseCharacter : MonoBehaviour {
 
      public int GetHealth()
     {
-        return m_maxHealth;
+        return m_currentHealth;
     }
 
     virtual protected void Player()

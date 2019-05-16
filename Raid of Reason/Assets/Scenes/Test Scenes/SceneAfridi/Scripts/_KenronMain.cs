@@ -26,6 +26,8 @@ public class _KenronMain : BaseCharacter {
     private Vector3 Draw;
     private Vector3 Sheath;
 
+    //public int m_damage;
+
     // Use this for initialization
     void Awake () {
         SetArmor(100);
@@ -75,11 +77,18 @@ public class _KenronMain : BaseCharacter {
     public void Slash() {
         if (m_Amaterasu != null)
         {
-            if (XCI.GetButtonDown(XboxButton.X, controller))
+            if (XCI.GetButtonDown(XboxButton.X, XboxController.Second))
             {
                 m_Amaterasu.transform.localPosition = new Vector3(-0.65f, 0.0f, 0.8f);
+                //BaseEnemy enemy = gameObject.GetComponent<BaseEnemy>();
+
+                //if (enemy)
+                //{
+                //    SetDamage(20);
+                //    enemy.TakeDamage(m_damage);
+                //}
             }
-            else if (XCI.GetButtonUp(XboxButton.X, controller))
+            else if (XCI.GetButtonUp(XboxButton.X, XboxController.Second))
             {
                 m_Amaterasu.transform.localPosition = new Vector3(-0.65f, 0.0f, 0);
             }
@@ -93,8 +102,16 @@ public class _KenronMain : BaseCharacter {
             SetDamage(50);
             SetSpeed(10.0f);
             m_Kenron.gameObject.GetComponent<Renderer>().material = Base;
-            m_Amaterasu.gameObject.GetComponent<Renderer>().material = Steel;
         }
     }
 
+    public void ResetSwordSkill()
+    {
+        if (m_Kenron != null)
+        {
+            SetDamage(50);
+            SetSpeed(10.0f);
+            m_Amaterasu.gameObject.GetComponent<Renderer>().material = Steel;
+        }
+    }
 }

@@ -48,7 +48,7 @@ public class ProjectileMove : MonoBehaviour {
 
             if (enemy)
             {
-                SetDamage(20);
+                SetDamage(2);
                 enemy.TakeDamage(m_damage);
             }
 
