@@ -20,11 +20,10 @@ public abstract class BaseCharacter : MonoBehaviour {
 
     [SerializeField]
     private PlayerState playerState;
+    public float m_maxHealth;
+    public float m_currentHealth;
     [SerializeField]
-    private int m_maxHealth;
-    public int m_currentHealth;
-    [SerializeField]
-    private int m_damage;
+    private float m_damage;
     private int m_armor;
     [SerializeField]
     private float m_controlSpeed;
@@ -34,11 +33,18 @@ public abstract class BaseCharacter : MonoBehaviour {
     private Vector3 direction;
     private Vector3 prevRotDirection = Vector3.forward;
 
+    protected bool m_bActive;
+    [Tooltip("Reference to the camera to realocate the cameras focus on the last player standing")]
+    public MultiTargetCamera m_mtcCamera;
+
     void Start () {
         m_currentHealth = m_maxHealth;
+        m_bActive = false;
   	}
 
-    protected virtual void FixedUpdate() {   }
+    protected virtual void FixedUpdate()
+    {
+    }
 
     protected virtual void Update() { }
 
@@ -75,17 +81,17 @@ public abstract class BaseCharacter : MonoBehaviour {
         //*
     }
 
-    public virtual void TakeDamage(int damage)
+    public virtual void TakeDamage(float damage)
     {
         m_currentHealth -= damage;
 
         if (m_currentHealth <= 0.0f)
         {
-            playerState = PlayerState.REVIVE;
+            Destroy(gameObject);
         }
     }
 
-    virtual public void SetDamage(int damage)
+    virtual public void SetDamage(float damage)
     {
         m_damage = damage;
     }
@@ -99,7 +105,7 @@ public abstract class BaseCharacter : MonoBehaviour {
         return m_armor;
     }
 
-     public void SetHealth(int health)
+     public void SetHealth(float health)
     {
         m_currentHealth = health;
     }
@@ -114,12 +120,12 @@ public abstract class BaseCharacter : MonoBehaviour {
         speed = m_controlSpeed;
     }
 
-    virtual public int GetDamage()
+    virtual public float GetDamage()
     {
         return m_damage;
     }
 
-     public int GetHealth()
+     public float GetHealth()
     {
         return m_currentHealth;
     }

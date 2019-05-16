@@ -80,13 +80,6 @@ public class _KenronMain : BaseCharacter {
             if (XCI.GetButtonDown(XboxButton.X, XboxController.Second))
             {
                 m_Amaterasu.transform.localPosition = new Vector3(-0.65f, 0.0f, 0.8f);
-                //BaseEnemy enemy = gameObject.GetComponent<BaseEnemy>();
-
-                //if (enemy)
-                //{
-                //    SetDamage(20);
-                //    enemy.TakeDamage(m_damage);
-                //}
             }
             else if (XCI.GetButtonUp(XboxButton.X, XboxController.Second))
             {

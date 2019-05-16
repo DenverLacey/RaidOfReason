@@ -14,7 +14,8 @@ public class Theá : BaseCharacter
     public GameObject projectile;
     private Vector3 hitLocation;
     private LayerMask layerMask;
-    public ParticleSystem healEffect;
+    [SerializeField] private GameObject waterPrefab;
+    private GameObject temp;
     public GameObject m_thea;
     public _KenronMain m_kenron;
     private float delay;
@@ -35,7 +36,7 @@ public class Theá : BaseCharacter
         {
             Player();
             Projectile();
-        } 
+        }
     }
 
     public void Projectile()
@@ -71,11 +72,11 @@ public class Theá : BaseCharacter
                 GetHealth();
                 m_kenron.SetHealth(100);
                 m_kenron.GetHealth();
-                healEffect.Play();
+                temp = Instantiate(waterPrefab, transform.position, Quaternion.identity);
                 m_coolDown--;
             }
             isActive = false;
-            healEffect.Stop();
+            Destroy(temp);
         }
 
         if(isActive == false && m_coolDown <= 0)

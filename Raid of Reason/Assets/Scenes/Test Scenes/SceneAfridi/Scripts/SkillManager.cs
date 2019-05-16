@@ -12,6 +12,7 @@ public class Skills
     public float m_currentCoolDown;
     public Image m_skillIcon;
     internal bool active = false;
+  
 }
 
 public class SkillManager : MonoBehaviour {
