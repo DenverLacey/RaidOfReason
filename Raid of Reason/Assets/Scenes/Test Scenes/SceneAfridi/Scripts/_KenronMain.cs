@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using XboxCtrlrInput;
 
 /*
  * Author: Afridi Rahim
@@ -11,68 +12,89 @@ using UnityEngine.UI;
   - How he interacts with others     
 */
 
-public class _KenronMain : MonoBehaviour {
+public class _KenronMain : BaseCharacter {
 
     //Kenron himself
     public GameObject m_Kenron;
+    public GameObject m_Amaterasu;
     public Rigidbody m_KenronSkeleton;
 
-    //Variables will be in its own abstract class
-    private int m_Health;
-    private int m_Armor;
-    public int m_DamageDealt;
-    public float m_Speed;
-    private float m_JumpForce;
-
-    bool isActive;
+    //DEMO STUFF
+    public Material FFire;
+    public Material Base;
+    public Material Steel;
+    private Vector3 Draw;
+    private Vector3 Sheath;
 
     // Use this for initialization
     void Awake () {
-        m_Health = 100;
-        m_Armor = 100;
-        m_DamageDealt = 50;
-        m_Speed = 30.0f;
-        m_JumpForce = 0.0f;
-        isActive = false;
+        SetArmor(100);
+        SetDamage(50);
+        SetSpeed(10.0f);
+        Draw = new Vector3(0.0f, 0.0f, 0.8f);
+        Sheath = new Vector3(0.0f, 0.0f, 0.0f);
         m_Kenron = GameObject.FindGameObjectWithTag("Kenron");
+        m_Amaterasu = GameObject.FindGameObjectWithTag("Amaterasu");
         m_KenronSkeleton = GetComponent<Rigidbody>();
 	}
-	
-	// Update is called once per frame
-	void FixedUpdate () {
+
+    // Update is called once per frame
+    protected override void FixedUpdate() {
         if (m_Kenron != null)
         {
-            KenronMove();
+            Player();
+            Slash();
         }
 	}
+
+    protected override void Update()
+    {
+        if (m_Kenron != null && m_Amaterasu != null) {
+        }
+    }
 
     //Abilty 1: Flash Fire
     public void FlashFire() {
-        isActive = true;
-        int m_CoolDown = 7;
-        if (isActive == true && m_CoolDown == 7) {
-            for (int i = 0; i < 7; i++)
-            {
-                m_Speed += 4.0f;
-                m_DamageDealt += 5;
-                m_CoolDown--;
-            }
-            isActive = false;
-        }
-        if (isActive == false && m_CoolDown <= 0) {
-            m_Speed = 30.0f;
-            m_DamageDealt = 50;
+        if (m_Kenron != null)
+        {
+            SetDamage(60);
+            SetSpeed(15.0f);
+            m_Kenron.gameObject.GetComponent<Renderer>().material = FFire;
         }
     }
 
-    //This must be converted to Xbox controller
-    void KenronMove() {
-        if (m_Kenron != null)
+    public void ChaosFlame() {
+        if (m_Kenron != null && m_Amaterasu != null)
         {
-            float mH = Input.GetAxis("Horizontal");
-            float mV = Input.GetAxis("Vertical");
-            m_KenronSkeleton.velocity = new Vector3(mH * m_Speed, m_KenronSkeleton.velocity.y, mV * m_Speed);
+            SetDamage(90);
+            SetHealth(40);         
+            m_Amaterasu.gameObject.GetComponent<Renderer>().material = FFire;
         }
     }
-    
+
+    public void Slash() {
+        if (m_Amaterasu != null)
+        {
+            if (XCI.GetButtonDown(XboxButton.X, controller))
+            {
+                m_Amaterasu.transform.localPosition = new Vector3(-0.65f, 0.0f, 0.8f);
+            }
+            else if (XCI.GetButtonUp(XboxButton.X, controller))
+            {
+                m_Amaterasu.transform.localPosition = new Vector3(-0.65f, 0.0f, 0);
+            }
+        }
+    }
+
+    public void ResetSkill()
+    {
+        if (m_Kenron != null)
+        {
+            SetDamage(50);
+            SetSpeed(10.0f);
+            m_Kenron.gameObject.GetComponent<Renderer>().material = Base;
+            m_Amaterasu.gameObject.GetComponent<Renderer>().material = Steel;
+        }
+    }
+
 }

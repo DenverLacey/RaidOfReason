@@ -25,6 +25,8 @@ public abstract class BaseCharacter : MonoBehaviour {
     private int m_currentHealth;
     [SerializeField]
     private int m_damage;
+    private int m_armor;
+    [SerializeField]
     private float m_controlSpeed;
 
     protected XboxController controller;
@@ -34,13 +36,11 @@ public abstract class BaseCharacter : MonoBehaviour {
 
     void Start () {
         m_currentHealth = m_maxHealth;
-        m_damage = 5;
-        m_controlSpeed = 15f;
   	}
 
-    protected virtual void FixedUpdate()
-    {   
-    }
+    protected virtual void FixedUpdate() {   }
+
+    protected virtual void Update() { }
 
     virtual protected void CharacterMovement()
     {
@@ -90,9 +90,28 @@ public abstract class BaseCharacter : MonoBehaviour {
         m_damage = damage;
     }
 
+    virtual public void SetArmor(int armor) {
+        m_armor = armor;
+    }
+
+    virtual public int GetArmor()
+    {
+        return m_armor;
+    }
+
      public void SetHealth(int health)
     {
-        health = m_currentHealth;
+        health = m_maxHealth;
+    }
+
+    virtual public float GetSpeed()
+    {
+        return m_controlSpeed;
+    }
+
+    public void SetSpeed(float speed)
+    {
+        speed = m_controlSpeed;
     }
 
     virtual public int GetDamage()
@@ -102,7 +121,7 @@ public abstract class BaseCharacter : MonoBehaviour {
 
      public int GetHealth()
     {
-        return m_currentHealth;
+        return m_maxHealth;
     }
 
     virtual protected void Player()
