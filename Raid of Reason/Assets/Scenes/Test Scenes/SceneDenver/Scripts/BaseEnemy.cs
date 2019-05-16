@@ -10,10 +10,10 @@ public abstract class BaseEnemy : MonoBehaviour
     [SerializeField] protected float m_viewRange;
 
 	[Tooltip("Enemy's maximum amount of health.")]
-	[SerializeField] protected float m_maxHealth;
+	[SerializeField] protected int m_maxHealth;
 
-	protected float m_health;
-	public float Health { get { return m_health; } }
+	protected int m_health;
+	public int Health { get { return m_health; } }
 
     protected NavMeshAgent m_navMeshAgent;
     protected GameObject[] m_players;

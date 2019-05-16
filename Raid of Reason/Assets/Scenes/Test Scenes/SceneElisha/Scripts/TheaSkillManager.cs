@@ -29,7 +29,7 @@ public class TheaSkillManager : MonoBehaviour
 
     public void FixedUpdate()
     {
-        if (XCI.GetButtonDown(XboxButton.Y))
+        if (Input.GetKeyDown(KeyCode.K))
         {
             if (m_Skills[0].m_currentCoolDown >= m_Skills[0].m_coolDown)
             {

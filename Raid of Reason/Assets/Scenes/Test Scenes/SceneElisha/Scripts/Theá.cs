@@ -15,19 +15,15 @@ public class Theá : BaseCharacter
     private Vector3 hitLocation;
     private LayerMask layerMask;
     public ParticleSystem healEffect;
+    public GameObject m_thea;
     private float delay;
     private float shotCounter;
     private float counter;
-    public Rigidbody m_rigid;
-    public GameObject m_thea;
     bool isActive;
-
-    private int m_fullHealth = 100;
 
     public void Awake()
     {
         isActive = false;
-        m_rigid = GetComponent<Rigidbody>();
         m_thea = GameObject.FindGameObjectWithTag("Thea");
     }
 
@@ -51,25 +47,10 @@ public class Theá : BaseCharacter
 
             if (counter > delay)
             {
-                GameObject temp = Instantiate(projectile, transform.position, transform.rotation);
+                GameObject temp = Instantiate(projectile, transform.position + projectile.transform.position, transform.rotation);
                 Debug.Log("instiantiated");
                 counter = 0f;
             }
-
-            //// Ray cast mechanic
-            //RaycastHit hit;
-            //Ray rayCast = new Ray(transform.position, transform.forward);
-            //if (Physics.Raycast(rayCast, out hit, layerMask))
-            //{
-            //    // enemy health damaged
-            //    m_enemy = hit.transform.GetComponent<BaseEnemy>();
-            //    if (m_enemy != null)
-            //    {
-            //        m_enemy.TakeDamage(5);
-
-            //    }
-
-            //}
         }
         else if (XCI.GetButtonUp(XboxButton.X, controller))
         {
@@ -85,7 +66,8 @@ public class Theá : BaseCharacter
         {
             for(int i = 0; i < 20; i++)
             {
-                SetHealth(m_fullHealth);
+                SetHealth(100);
+                GetHealth();
                 Debug.Log("Ult ability works");
                 healEffect.Play();
                 m_coolDown--;
