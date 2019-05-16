@@ -12,6 +12,9 @@ public abstract class BaseEnemy : MonoBehaviour
 	[Tooltip("Enemy's maximum amount of health.")]
 	[SerializeField] protected int m_maxHealth;
 
+	[Tooltip("How much damage the enemy will deal.")]
+	[SerializeField] protected int m_damage;
+
 	protected int m_health;
 	public int Health { get { return m_health; } }
 
@@ -117,8 +120,8 @@ public abstract class BaseEnemy : MonoBehaviour
 		m_oldState = AI_STATE.WANDER;
 	}
 
-	public virtual void TakeDamage(int damamge) {
-		m_health -= damamge;
+	public virtual void TakeDamage(int damage) {
+		m_health -= damage;
 
 		if (m_health <= 0.0f) {
 			Destroy(gameObject);

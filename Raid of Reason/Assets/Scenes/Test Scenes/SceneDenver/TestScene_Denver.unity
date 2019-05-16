@@ -221,6 +221,8 @@ GameObject:
   - component: {fileID: 408426307}
   - component: {fileID: 408426306}
   - component: {fileID: 408426305}
+  - component: {fileID: 408426311}
+  - component: {fileID: 408426312}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -235,15 +237,19 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 408426304}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2778e890dc27188418ec50a03272741a, type: 3}
+  m_Script: {fileID: 11500000, guid: 59fd3c899c6634742ad56f352d90e32d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_viewRange: 15
-  m_maxHealth: 12
-  maxStandingRange: 7
-  minStandingDistance: 5
+  m_viewRange: 10
+  m_maxHealth: 10
+  m_damage: 50
+  m_attackRange: 3
+  m_damageRange: 5
+  m_explosionCountdown: 1
+  m_explosionPrefab: {fileID: 1261680495732904, guid: d59ccb2bf48b28f4e9827ea3b9c66f7a,
+    type: 3}
 --- !u!195 &408426306
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -274,7 +280,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 408426304}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -338,6 +344,43 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &408426311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 408426304}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd2113f6737648041bb6ca8048961abd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_viewRange: 10
+  m_maxHealth: 10
+  m_damage: 10
+  m_attackRange: 2
+  m_meleeCooldown: 1
+--- !u!114 &408426312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 408426304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2778e890dc27188418ec50a03272741a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_viewRange: 10
+  m_maxHealth: 10
+  m_damage: 20
+  m_maxStandingRange: 9
+  m_minStandingDistance: 7
+  m_projectilePrefab: {fileID: 8483169830998266081, guid: caa8eaf46261ada4ab6a395f956d02f2,
+    type: 3}
+  m_shootCooldown: 0.5
 --- !u!1 &511360045
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,7 +573,7 @@ GameObject:
   - component: {fileID: 756962985}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Player
+  m_TagString: Thea
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -602,7 +645,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 756962980}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6, y: 1.0383251, z: 10.43}
+  m_LocalPosition: {x: 0.86, y: 1.0383251, z: 2.69}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -617,9 +660,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 756962980}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fd99b81a7fa6cb4399e33ce43858997, type: 3}
+  m_Script: {fileID: 11500000, guid: 8baf95e4419db134b9f59982c3b5e069, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerState: 0
+  m_maxHealth: 50
+  m_currentHealth: 50
+  m_damage: 1
+  m_controlSpeed: 1
+  controller: 0
+  projectile: {fileID: 1119944734783606, guid: 4dab86d7c4169194e9d7640ac578ff72, type: 3}
+  healEffect: {fileID: 0}
+  m_thea: {fileID: 756962980}
+  m_kenron: {fileID: 0}
 --- !u!1 &1211197686
 GameObject:
   m_ObjectHideFlags: 0

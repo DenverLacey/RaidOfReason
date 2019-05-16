@@ -4,27 +4,39 @@ using UnityEngine;
 
 public class RangedEnemy : BaseEnemy {
 
-	public float maxStandingRange;
-	public float minStandingDistance;
+	[Tooltip("Maximum distance at which the enemy will stand and shoot.")]
+	[SerializeField] private float m_maxStandingRange;
+
+	[Tooltip("Minimum distance at which the enemy will stand and shoot.")]
+	[SerializeField] private float m_minStandingDistance;
+
+	[Tooltip("Projectile Prefab.")]
+	[SerializeField] GameObject m_projectilePrefab;
+
+	[Tooltip("How long in between shots.")]
+	[SerializeField] private float m_shootCooldown;
+
+	private float m_timer;
+
+	protected override void Start() {
+		base.Start();
+		m_timer = m_shootCooldown;
+	}
 
 	protected override void Attack() {
-		if (m_oldState == AI_STATE.ATTACK && m_navMeshAgent.remainingDistance < .25f) {
-			return;
-		}
-
 		float dist = Vector3.Distance(m_target, transform.position);
 
-		if (dist > maxStandingRange) {
+		if (dist > m_maxStandingRange) {
 			Vector3 direction = (transform.position - m_target).normalized;
-			Vector3 destination = m_target + direction * maxStandingRange;
+			Vector3 destination = m_target + direction * m_maxStandingRange;
 			destination.y = transform.position.y;
 
 			Vector3 closest = FindClosestPoint(destination);
 			m_target = closest;
 		}
-		else if (dist < minStandingDistance) {
+		else if (dist < m_minStandingDistance) {
 			Vector3 direction = (transform.position - m_target).normalized;
-			Vector3 destination = m_target + direction * minStandingDistance;
+			Vector3 destination = m_target + direction * m_minStandingDistance;
 			destination.y = transform.position.y;
 
 			Vector3 closest = FindClosestPoint(destination);
@@ -33,6 +45,14 @@ public class RangedEnemy : BaseEnemy {
 		else {
 			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(m_target - transform.position, Vector3.up), 0.1f);
 			m_target = transform.position;
+
+			m_timer -= Time.deltaTime;
+
+			if (m_timer <= 0.0f) {
+				EnemyProjectile ep = Instantiate(m_projectilePrefab, transform.position + transform.forward, transform.rotation).GetComponent<EnemyProjectile>();
+				ep.SetDamage(m_damage);
+				m_timer = m_shootCooldown;
+			}
 		}
 
 		m_oldState = AI_STATE.ATTACK;
