@@ -98,7 +98,7 @@ public abstract class BaseEnemy : MonoBehaviour
 
     protected virtual void Wander() {
 
-		if (Vector3.Distance(transform.position, m_target) > .5f) {
+		if (Vector3.Distance(transform.position, m_target) > 1f) {
 			return;
 		} 
 
