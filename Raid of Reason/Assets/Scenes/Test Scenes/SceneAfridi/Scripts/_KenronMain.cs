@@ -26,6 +26,8 @@ public class _KenronMain : BaseCharacter {
     private Vector3 Draw;
     private Vector3 Sheath;
 
+    [SerializeField]
+    private GameObject particle;
     //public int m_damage;
 
     // Use this for initialization
@@ -59,6 +61,8 @@ public class _KenronMain : BaseCharacter {
     public void FlashFire() {
         if (m_Kenron != null)
         {
+            GameObject temp = Instantiate(particle, transform.position + Vector3.down * 0.5f, Quaternion.Euler(270, 0, 0), transform);
+            Destroy(temp, 7);
             SetDamage(60);
             SetSpeed(15.0f);
             m_Kenron.gameObject.GetComponent<Renderer>().material = FFire;

@@ -32,7 +32,7 @@ public class SkillManager : MonoBehaviour {
 
     public void FixedUpdate()
     {
-        if (XCI.GetButtonDown(XboxButton.B, XboxController.Second)) { 
+        if (Input.GetKeyDown(KeyCode.K)) { 
             if (m_Skills[0].m_currentCoolDown >= m_Skills[0].m_coolDown) {
                 m_Kenron.FlashFire();
                 m_Skills[0].m_currentCoolDown = 0;

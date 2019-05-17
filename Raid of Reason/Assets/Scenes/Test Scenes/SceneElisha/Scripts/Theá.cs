@@ -73,7 +73,7 @@ public class Theá : BaseCharacter
                 GetHealth();
                 m_kenron.SetHealth(100);
                 m_kenron.GetHealth();
-                temp = Instantiate(waterPrefab, transform.position, Quaternion.identity);
+                temp = Instantiate(waterPrefab, transform.position + Vector3.down * 0.5f, Quaternion.Euler(90, 0, 0));
                 m_coolDown--;
             }
             isActive = false;

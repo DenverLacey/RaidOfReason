@@ -133,7 +133,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &38002298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,6 +159,8 @@ MonoBehaviour:
   FFire: {fileID: 2100000, guid: 5d41526994f156a46bfcaaaf52c55684, type: 2}
   Base: {fileID: 2100000, guid: 26b411d8f47449f49812f3cfb8e20733, type: 2}
   Steel: {fileID: 2100000, guid: 620e3744b67887c43a040757e55c8396, type: 2}
+  particle: {fileID: 1186225012428732162, guid: 14477d58dd7a8ea4faec6e74cea8b4f1,
+    type: 3}
 --- !u!114 &38002299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -657,7 +659,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_viewRange: 50
   m_maxHealth: 100
-  m_damage: 4
+  m_damage: 20
   m_attackRange: 2
   m_meleeCooldown: 1
 --- !u!54 &304378216
@@ -1330,8 +1332,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_viewRange: 50
   m_maxHealth: 100
-  m_damage: 2
-  m_maxStandingRange: 50
+  m_damage: 10
+  m_maxStandingRange: 40
   m_minStandingDistance: 10
   m_projectilePrefab: {fileID: 8483169830998266081, guid: caa8eaf46261ada4ab6a395f956d02f2,
     type: 3}
@@ -1590,10 +1592,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_viewRange: 50
   m_maxHealth: 100
-  m_damage: 10
-  m_attackRange: 2
-  m_damageRange: 3
-  m_explosionCountdown: 2
+  m_damage: 50
+  m_attackRange: 3
+  m_damageRange: 20
+  m_explosionCountdown: 1
   m_explosionPrefab: {fileID: 1134129239631916, guid: 7e48ba6b1b968764490bbc70b66e3fe1,
     type: 3}
 --- !u!195 &767457331
@@ -2190,7 +2192,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1775.4, y: -1251.9}
+  m_AnchoredPosition: {x: 1775.4, y: -882}
   m_SizeDelta: {x: 318.8, y: 65.3}
   m_Pivot: {x: 0.54641426, y: 0.57956725}
 --- !u!114 &1212579220
@@ -2400,7 +2402,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 162.78998, y: -1260.8}
+  m_AnchoredPosition: {x: 162.78998, y: -891.6}
   m_SizeDelta: {x: 297.92, y: 53}
   m_Pivot: {x: 0.54641426, y: 0.57956725}
 --- !u!114 &1304971013
