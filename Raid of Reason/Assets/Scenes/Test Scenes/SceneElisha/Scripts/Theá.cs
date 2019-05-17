@@ -11,10 +11,10 @@ using XboxCtrlrInput;
 
 public class Theá : BaseCharacter
 {
+    [SerializeField] private GameObject waterPrefab;
     public GameObject projectile;
     private Vector3 hitLocation;
     private LayerMask layerMask;
-    [SerializeField] private GameObject waterPrefab;
     private GameObject temp;
     public GameObject m_thea;
     public _KenronMain m_kenron;
@@ -27,6 +27,7 @@ public class Theá : BaseCharacter
     {
         isActive = false;
         m_thea = GameObject.FindGameObjectWithTag("Thea");
+        m_thea = GameObject.FindGameObjectWithTag("Kenron");
     }
 
     // Update is called once per frame
