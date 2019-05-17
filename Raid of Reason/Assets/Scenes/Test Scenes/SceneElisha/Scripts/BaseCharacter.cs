@@ -20,7 +20,7 @@ public abstract class BaseCharacter : MonoBehaviour {
 
     public XboxController controller;
     [SerializeField] private PlayerState playerState;
-    [SerializeField] private float m_damage;
+    [SerializeField] protected float m_damage;
     [SerializeField] private float m_controlSpeed;
     public float m_maxHealth;
     public float m_currentHealth;

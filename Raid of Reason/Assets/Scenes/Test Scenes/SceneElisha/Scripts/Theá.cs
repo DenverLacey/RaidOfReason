@@ -50,7 +50,8 @@ public class Theá : BaseCharacter
 
             if (counter > delay)
             {
-                GameObject temp = Instantiate(projectile, transform.position + projectile.transform.position, transform.rotation);
+                GameObject temp = Instantiate(projectile, transform.position + transform.forward * 2, transform.rotation);
+				temp.GetComponent<ProjectileMove>().SetDamage(m_damage);
                 Debug.Log("instiantiated");
                 counter = 0f;
             }
@@ -74,7 +75,10 @@ public class Theá : BaseCharacter
 				m_kenron.SetHealth(100);
 				m_kenron.GetHealth();
 				temp = Instantiate(waterPrefab, transform.position + Vector3.down * (transform.localScale.y / 2), Quaternion.Euler(90, 0, 0));
-				temp = Instantiate(waterPrefab, m_kenron.transform.position + Vector3.down * (m_kenron.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), m_kenron.transform);
+				if (m_kenron != null)
+				{
+					temp = Instantiate(waterPrefab, m_kenron.transform.position + Vector3.down * (m_kenron.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), m_kenron.transform);
+				}
 				m_coolDown--;
             }
             isActive = false;

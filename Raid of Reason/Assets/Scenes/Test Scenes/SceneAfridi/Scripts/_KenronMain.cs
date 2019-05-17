@@ -46,6 +46,7 @@ public class _KenronMain : BaseCharacter {
     protected override void FixedUpdate() {
         if (m_Kenron != null)
         {
+			base.FixedUpdate();
             Slash();
         }
 	}
@@ -80,11 +81,11 @@ public class _KenronMain : BaseCharacter {
     public void Slash() {
         if (m_Amaterasu != null)
         {
-            if (XCI.GetButtonDown(XboxButton.X, XboxController.Second))
+            if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.Second) > 0.1)
             {
                 m_Amaterasu.transform.localPosition = new Vector3(-0.65f, 0.0f, 0.8f);
             }
-            else if (XCI.GetButtonUp(XboxButton.X, XboxController.Second))
+            else if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.Second) < 0.1)
             {
                 m_Amaterasu.transform.localPosition = new Vector3(-0.65f, 0.0f, 0);
             }

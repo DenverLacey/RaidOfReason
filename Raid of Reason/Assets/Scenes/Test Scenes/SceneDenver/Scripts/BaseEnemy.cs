@@ -15,8 +15,8 @@ public abstract class BaseEnemy : MonoBehaviour
 	[Tooltip("How much damage the enemy will deal.")]
 	[SerializeField] protected int m_damage;
 
-	protected int m_health;
-	public int Health { get { return m_health; } }
+	protected float m_health;
+	public float Health { get { return m_health; } }
 
     protected NavMeshAgent m_navMeshAgent;
     protected BaseCharacter[] m_players;
@@ -122,7 +122,7 @@ public abstract class BaseEnemy : MonoBehaviour
 		m_oldState = AI_STATE.WANDER;
 	}
 
-	public virtual void TakeDamage(int damage) {
+	public virtual void TakeDamage(float damage) {
 		m_health -= damage;
 
 		if (m_health <= 0.0f) {

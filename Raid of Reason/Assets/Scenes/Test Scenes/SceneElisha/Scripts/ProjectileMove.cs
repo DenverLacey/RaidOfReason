@@ -15,9 +15,9 @@ public class ProjectileMove : MonoBehaviour {
     [SerializeField]
     private float projectileSpeed;
 
-    private int m_damage;
+    private float m_damage;
 
-    public void SetDamage(int damage)
+    public void SetDamage(float damage)
     {
         this.m_damage = damage;
     }
@@ -39,7 +39,7 @@ public class ProjectileMove : MonoBehaviour {
         }
 	}
 
-    public void OnTriggerEnter(Collider other)
+    public void OnCollisionEnter(Collision other)
     {
         string tag = other.gameObject.tag;
         if (tag == "Enemy")
@@ -48,7 +48,6 @@ public class ProjectileMove : MonoBehaviour {
 
             if (enemy)
             {
-                SetDamage(2);
                 enemy.TakeDamage(m_damage);
             }
 
@@ -58,5 +57,6 @@ public class ProjectileMove : MonoBehaviour {
         {
             Debug.Log("attack unsuccessful " + tag);
         }
+		Destroy(gameObject);
     }
 }

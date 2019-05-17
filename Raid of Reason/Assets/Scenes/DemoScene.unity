@@ -125,7 +125,6 @@ GameObject:
   - component: {fileID: 38002302}
   - component: {fileID: 38002301}
   - component: {fileID: 38002300}
-  - component: {fileID: 38002299}
   - component: {fileID: 38002298}
   m_Layer: 0
   m_Name: Kenron
@@ -160,18 +159,6 @@ MonoBehaviour:
   Steel: {fileID: 2100000, guid: 620e3744b67887c43a040757e55c8396, type: 2}
   particle: {fileID: 1186225012428732162, guid: 14477d58dd7a8ea4faec6e74cea8b4f1,
     type: 3}
---- !u!114 &38002299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 38002297}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c5108addb89215448ca5336e4dcbee7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &38002300
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -488,11 +475,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   smoothTime: 0.3
-  minFOV: 30
+  minFOV: 40
   maxFOV: 60
-  sizeNormaliser: 0
+  sizeNormaliser: 40
   offset: {x: -12, y: 14, z: -14}
   targets:
+  - {fileID: 38002304}
   - {fileID: 655161517}
 --- !u!81 &215099358
 AudioListener:
@@ -1392,7 +1380,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: 1
   playerState: 0
-  m_damage: 1
+  m_damage: 2
   m_controlSpeed: 10
   m_maxHealth: 100
   m_currentHealth: 0
@@ -1401,7 +1389,7 @@ MonoBehaviour:
   projectile: {fileID: 1119944734783606, guid: 4dab86d7c4169194e9d7640ac578ff72, type: 3}
   m_thea: {fileID: 655161516}
   m_kenron: {fileID: 38002298}
-  delay: 0.75
+  delay: 0.2
 --- !u!4 &655161517
 Transform:
   m_ObjectHideFlags: 0
@@ -1549,7 +1537,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: d697da8849d4c194096d3b2cf0d85446, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1878,7 +1866,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 6
+  m_Speed: 10
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -2095,7 +2083,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: d697da8849d4c194096d3b2cf0d85446, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2326,7 +2314,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1028221585
 Transform:
   m_ObjectHideFlags: 0
@@ -3477,9 +3465,17 @@ MonoBehaviour:
         m_Calls: []
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-    m_coolDown: 20
+    m_coolDown: 25
     m_currentCoolDown: 0
     m_skillIcon: {fileID: 857945459}
+  - m_reset:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    m_coolDown: 20
+    m_currentCoolDown: 0
+    m_skillIcon: {fileID: 720420063}
   m_Kenron: {fileID: 38002298}
   "m_the\xE1": {fileID: 655161516}
 --- !u!114 &1753630159
@@ -4179,6 +4175,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2128484016}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a406558314fab3545b815823423174c7, type: 3}
+  m_Script: {fileID: 11500000, guid: 35ce05d2e64cd76439eb4369617bece8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_damage: 10

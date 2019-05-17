@@ -47,38 +47,26 @@ public class SkillManager : MonoBehaviour {
 
     public void FixedUpdate()
     {
-		//if (XCI.GetButtonDown(XboxButton.X, XboxController.Second))
-		//{ 
-		//          if (m_Skills[0].m_currentCoolDown >= m_Skills[0].m_coolDown) {
-		//              m_Kenron.FlashFire();
-		//              m_Skills[0].m_currentCoolDown = 0;
-		//              m_Skills[0].active = true;
-		//          }
-
-		//      }
-		if (Input.GetKeyDown(KeyCode.K))
+		if (XCI.GetButtonDown(XboxButton.LeftBumper, XboxController.Second))
 		{
 			if (m_Skills[0].m_currentCoolDown >= m_Skills[0].m_coolDown)
 			{
 				m_Kenron.FlashFire();
 				m_Skills[0].m_currentCoolDown = 0;
 				m_Skills[0].active = true;
-
 			}
+
 		}
-		//if (XCI.GetButtonDown(XboxButton.Y, XboxController.Second))
-  //      {
-			if (Input.GetKeyDown(KeyCode.Y))
-			{
+		if (XCI.GetButtonDown(XboxButton.RightBumper, XboxController.Second))
+		      {
 				if (m_Skills[1].m_currentCoolDown >= m_Skills[1].m_coolDown)
 				{
 					m_Kenron.ChaosFlame();
 					m_Skills[1].m_currentCoolDown = 0;
 					m_Skills[1].active = true;
 				}
-			}
-        //}
-        if (XCI.GetButtonDown(XboxButton.Y, XboxController.First))
+        }
+        if (XCI.GetButtonDown(XboxButton.RightBumper, XboxController.First))
         {
             if (m_Skills[2].m_currentCoolDown >= m_Skills[2].m_coolDown)
             {
@@ -95,17 +83,7 @@ public class SkillManager : MonoBehaviour {
         {
             if (skill.active)
             {
-				skill.RunTimer();
-
-    //            if (skill.m_currentCoolDown < skill.m_coolDown)
-    //            {
-    //                skill.m_currentCoolDown += Time.deltaTime;
-    //                skill.m_skillIcon.fillAmount = skill.m_currentCoolDown / skill.m_coolDown;
-    //            }
-				//if (skill.m_currentCoolDown >= skill.m_coolDown)
-				//{
-					
-				//}              
+				skill.RunTimer();          
             }
         }
     }
