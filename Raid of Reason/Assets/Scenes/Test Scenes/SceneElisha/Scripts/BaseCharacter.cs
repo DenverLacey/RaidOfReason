@@ -18,35 +18,50 @@ public abstract class BaseCharacter : MonoBehaviour {
         DEAD
     }
 
-    [SerializeField]
-    private PlayerState playerState;
+    public XboxController controller;
+    [SerializeField] private PlayerState playerState;
+    [SerializeField] private float m_damage;
+    [SerializeField] private float m_controlSpeed;
     public float m_maxHealth;
     public float m_currentHealth;
-    [SerializeField]
-    private float m_damage;
     private int m_armor;
-    [SerializeField]
-    private float m_controlSpeed;
 
-    public XboxController controller;
     private float m_rotationSpeed = 250.0f;
     private Vector3 direction;
     private Vector3 prevRotDirection = Vector3.forward;
 
     protected bool m_bActive;
-    [Tooltip("Reference to the camera to realocate the cameras focus on the last player standing")]
-    public MultiTargetCamera m_mtcCamera;
+
+    MultiTargetCamera m_camera;
 
     void Start () {
         m_currentHealth = m_maxHealth;
         m_bActive = false;
+        m_camera = FindObjectOfType<MultiTargetCamera>();
   	}
 
     protected virtual void FixedUpdate()
     {
-    }
+		switch (playerState)
+		{
+			case PlayerState.ALIVE:
+				//Debug.Log("alive state activated");
+				CharacterMovement();
+				break;
+			case PlayerState.REVIVE:
+				Debug.Log("revive state activated");
+				break;
+			case PlayerState.DEAD:
+				Debug.Log("dead state activated");
+				break;
 
-    protected virtual void Update() { }
+			default:
+				break;
+		}
+	}
+
+    protected virtual void Update() {
+	}
 
     virtual protected void CharacterMovement()
     {
@@ -55,16 +70,18 @@ public abstract class BaseCharacter : MonoBehaviour {
         /// </summary>
         float axisX = XCI.GetAxisRaw(XboxAxis.LeftStickX, controller) * m_controlSpeed;
         float axisZ = XCI.GetAxisRaw(XboxAxis.LeftStickY, controller) * m_controlSpeed;
-        axisX *= Time.deltaTime;
-        axisZ *= Time.deltaTime;
-        transform.Translate(axisX, 0, axisZ);
+
+        Vector3 movement = m_camera.transform.TransformDirection(axisX, 0, axisZ);
+        transform.position += new Vector3(movement.x, 0, movement.z) * Time.deltaTime;
 
         /// <summary>
         /// Handles the rotation of the character via the xbox controller layout
         /// </summary>
         float rotAxisX = XCI.GetAxisRaw(XboxAxis.RightStickX, controller) * m_rotationSpeed;
         float rotAxisZ = XCI.GetAxisRaw(XboxAxis.RightStickY, controller) * m_rotationSpeed;
-        direction = new Vector3(rotAxisX, 0, rotAxisZ);
+
+		Vector3 rawDir = m_camera.transform.TransformDirection(rotAxisX, 0, rotAxisZ);
+		Vector3 direction = new Vector3(rawDir.x, 0, rawDir.z);
 
         if (direction.magnitude < 0.1f)
         {
@@ -128,25 +145,5 @@ public abstract class BaseCharacter : MonoBehaviour {
      public float GetHealth()
     {
         return m_currentHealth;
-    }
-
-    virtual protected void Player()
-    {
-        switch (playerState)
-        {
-            case PlayerState.ALIVE:
-                //Debug.Log("alive state activated");
-                CharacterMovement();
-                break;
-            case PlayerState.REVIVE:
-                Debug.Log("revive state activated");
-                break;
-            case PlayerState.DEAD:
-                Debug.Log("dead state activated");
-                break;
-
-            default:
-                break;
-        }
     }
 }

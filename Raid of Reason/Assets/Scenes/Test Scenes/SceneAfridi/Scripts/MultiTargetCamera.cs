@@ -17,14 +17,16 @@ public class MultiTargetCamera : MonoBehaviour
     private Vector3 movVelocity;
     private float zoomVelocity;
     private float fovScalar = 1f;
-    
+
     void Start()
     {
         cam = GetComponent<Camera>();
     }
 
     void FixedUpdate()
-    { 
+    {
+        targets.RemoveAll(target => !target);
+
         if (targets.Count == 0) { return; }
 
         var bounds = new Bounds(targets[0].position, Vector3.zero);

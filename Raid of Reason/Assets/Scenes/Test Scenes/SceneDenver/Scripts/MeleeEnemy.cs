@@ -25,6 +25,8 @@ public class MeleeEnemy : BaseEnemy
 		float D = m_viewRange;
 
 		foreach (var p in m_players) {
+            if (!p) continue;
+
 			Ray ray = new Ray(transform.position, p.transform.position - transform.position);
 			RaycastHit hit;
 

@@ -16,9 +16,9 @@ public class Theá : BaseCharacter
     private Vector3 hitLocation;
     private LayerMask layerMask;
     private GameObject temp;
-    public GameObject m_thea;
+    public Theá m_thea;
     public _KenronMain m_kenron;
-    private float delay;
+    [SerializeField]private float delay;
     private float shotCounter;
     private float counter;
     bool isActive;
@@ -26,8 +26,8 @@ public class Theá : BaseCharacter
     public void Awake()
     {
         isActive = false;
-        m_thea = GameObject.FindGameObjectWithTag("Thea");
-        m_thea = GameObject.FindGameObjectWithTag("Kenron");
+		m_thea = FindObjectOfType<Theá>();
+		m_kenron = FindObjectOfType<_KenronMain>();
     }
 
     // Update is called once per frame
@@ -35,8 +35,8 @@ public class Theá : BaseCharacter
     {
         if(m_thea != null)
         {
-            Player();
-            Projectile();
+			base.FixedUpdate();
+			Projectile();
         }
     }
 
@@ -71,10 +71,11 @@ public class Theá : BaseCharacter
             {
                 SetHealth(100);
                 GetHealth();
-                m_kenron.SetHealth(100);
-                m_kenron.GetHealth();
-                temp = Instantiate(waterPrefab, transform.position + Vector3.down * 0.5f, Quaternion.Euler(90, 0, 0));
-                m_coolDown--;
+				m_kenron.SetHealth(100);
+				m_kenron.GetHealth();
+				temp = Instantiate(waterPrefab, transform.position + Vector3.down * (transform.localScale.y / 2), Quaternion.Euler(90, 0, 0));
+				temp = Instantiate(waterPrefab, m_kenron.transform.position + Vector3.down * (m_kenron.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), m_kenron.transform);
+				m_coolDown--;
             }
             isActive = false;
             Destroy(temp);

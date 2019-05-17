@@ -2,17 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.Events;
 using XboxCtrlrInput;
 
 [System.Serializable]
 public class Skills
 {
-    public float m_coolDown;
-    //[HideInInspector]
+	public UnityEvent m_reset;
+
+	public float m_coolDown;
     public float m_currentCoolDown;
     public Image m_skillIcon;
     internal bool active = false;
-  
+
+	public void RunTimer()
+	{
+		m_currentCoolDown += Time.deltaTime;
+		m_skillIcon.fillAmount = m_currentCoolDown / m_coolDown;
+
+		if (m_currentCoolDown >= m_coolDown)
+		{
+			if (m_reset != null) m_reset.Invoke();
+			active = false;
+		}
+	}
 }
 
 public class SkillManager : MonoBehaviour {
@@ -28,27 +41,43 @@ public class SkillManager : MonoBehaviour {
         {
             skill.m_currentCoolDown = skill.m_coolDown;
         }
+		m_theá = FindObjectOfType<Theá>();
+		m_Kenron = FindObjectOfType<_KenronMain>();
     }
 
     public void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.K)) { 
-            if (m_Skills[0].m_currentCoolDown >= m_Skills[0].m_coolDown) {
-                m_Kenron.FlashFire();
-                m_Skills[0].m_currentCoolDown = 0;
-                m_Skills[0].active = true;
-            }
-            
-        }
-        if (XCI.GetButtonDown(XboxButton.Y, XboxController.Second))
-        {
-            if (m_Skills[1].m_currentCoolDown >= m_Skills[1].m_coolDown)
-            {
-                m_Kenron.ChaosFlame();
-                m_Skills[1].m_currentCoolDown = 0;
-                m_Skills[1].active = true;
-            }
-        }
+		//if (XCI.GetButtonDown(XboxButton.X, XboxController.Second))
+		//{ 
+		//          if (m_Skills[0].m_currentCoolDown >= m_Skills[0].m_coolDown) {
+		//              m_Kenron.FlashFire();
+		//              m_Skills[0].m_currentCoolDown = 0;
+		//              m_Skills[0].active = true;
+		//          }
+
+		//      }
+		if (Input.GetKeyDown(KeyCode.K))
+		{
+			if (m_Skills[0].m_currentCoolDown >= m_Skills[0].m_coolDown)
+			{
+				m_Kenron.FlashFire();
+				m_Skills[0].m_currentCoolDown = 0;
+				m_Skills[0].active = true;
+
+			}
+		}
+		//if (XCI.GetButtonDown(XboxButton.Y, XboxController.Second))
+  //      {
+			if (Input.GetKeyDown(KeyCode.Y))
+			{
+				if (m_Skills[1].m_currentCoolDown >= m_Skills[1].m_coolDown)
+				{
+					m_Kenron.ChaosFlame();
+					m_Skills[1].m_currentCoolDown = 0;
+					m_Skills[1].active = true;
+				}
+			}
+        //}
         if (XCI.GetButtonDown(XboxButton.Y, XboxController.First))
         {
             if (m_Skills[2].m_currentCoolDown >= m_Skills[2].m_coolDown)
@@ -66,18 +95,17 @@ public class SkillManager : MonoBehaviour {
         {
             if (skill.active)
             {
-                if (skill.m_currentCoolDown < skill.m_coolDown)
-                {
-                    skill.m_currentCoolDown += Time.deltaTime;
-                    skill.m_skillIcon.fillAmount = skill.m_currentCoolDown / skill.m_coolDown;
-                }
-                if (skill.m_currentCoolDown >= skill.m_coolDown)
-                {
-                    m_Kenron.ResetSkill();
-                    m_Kenron.ResetSwordSkill();
-                    m_Skills[0].active = false;
-                    m_Skills[1].active = false;
-                 }
+				skill.RunTimer();
+
+    //            if (skill.m_currentCoolDown < skill.m_coolDown)
+    //            {
+    //                skill.m_currentCoolDown += Time.deltaTime;
+    //                skill.m_skillIcon.fillAmount = skill.m_currentCoolDown / skill.m_coolDown;
+    //            }
+				//if (skill.m_currentCoolDown >= skill.m_coolDown)
+				//{
+					
+				//}              
             }
         }
     }

@@ -17,6 +17,7 @@ public class HealthBarUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        healthBar.fillAmount = character.GetComponent<BaseCharacter>().m_currentHealth / character.GetComponent<BaseCharacter>().m_maxHealth;
+        if (character)
+            healthBar.fillAmount = character.GetComponent<BaseCharacter>().m_currentHealth / character.GetComponent<BaseCharacter>().m_maxHealth;
     }
 }

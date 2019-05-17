@@ -46,7 +46,6 @@ public class _KenronMain : BaseCharacter {
     protected override void FixedUpdate() {
         if (m_Kenron != null)
         {
-            Player();
             Slash();
         }
 	}

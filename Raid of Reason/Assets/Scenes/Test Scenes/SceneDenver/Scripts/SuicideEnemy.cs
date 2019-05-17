@@ -55,6 +55,8 @@ public class SuicideEnemy : BaseEnemy
         float D = m_viewRange;
 
         foreach (var p in m_players) {
+            if (!p) continue;
+
             float d = 0;
             if ((d = Vector3.Distance(transform.position, p.transform.position)) < D) {
                 m_target = p.transform.position;
