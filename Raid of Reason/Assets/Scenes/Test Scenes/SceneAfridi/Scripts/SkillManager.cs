@@ -9,7 +9,6 @@ using XboxCtrlrInput;
 public class Skills
 {
 	public UnityEvent m_reset;
-
 	public float m_coolDown;
     public float m_currentCoolDown;
     public Image m_skillIcon;
@@ -33,6 +32,7 @@ public class SkillManager : MonoBehaviour {
     public List<Skills> m_Skills;
     public _KenronMain m_Kenron;
     public Theá m_theá;
+    public Nashorn m_Nashorn;
     protected XboxController controller;
 
     void Start()
@@ -43,6 +43,7 @@ public class SkillManager : MonoBehaviour {
         }
 		m_theá = FindObjectOfType<Theá>();
 		m_Kenron = FindObjectOfType<_KenronMain>();
+        m_Nashorn = FindObjectOfType<Nashorn>();
     }
 
     public void FixedUpdate()
@@ -70,7 +71,7 @@ public class SkillManager : MonoBehaviour {
         {
             if (m_Skills[2].m_currentCoolDown >= m_Skills[2].m_coolDown)
             {
-                m_theá.UltimateAbility();
+                m_theá.GiftOfPoseidon();
                 m_Skills[2].m_currentCoolDown = 0;
                 m_Skills[2].active = true;
             }

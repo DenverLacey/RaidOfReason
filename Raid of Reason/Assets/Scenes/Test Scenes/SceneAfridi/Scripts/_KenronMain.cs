@@ -28,12 +28,12 @@ public class _KenronMain : BaseCharacter {
 
     [SerializeField]
     private GameObject particle;
-    //public int m_damage;
 
     // Use this for initialization
     void Awake () {
-        SetArmor(100);
         SetDamage(50);
+        SetHealth(60);
+        SetMaxHealth(60);
         SetSpeed(10.0f);
         Draw = new Vector3(0.0f, 0.0f, 0.8f);
         Sheath = new Vector3(0.0f, 0.0f, 0.0f);
@@ -50,12 +50,6 @@ public class _KenronMain : BaseCharacter {
             Slash();
         }
 	}
-
-    protected override void Update()
-    {
-        if (m_Kenron != null && m_Amaterasu != null) {
-        }
-    }
 
     //Abilty 1: Flash Fire
     public void FlashFire() {

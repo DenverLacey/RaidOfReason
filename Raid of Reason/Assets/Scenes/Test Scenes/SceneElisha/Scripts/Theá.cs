@@ -18,6 +18,7 @@ public class Theá : BaseCharacter
     private GameObject temp;
     public Theá m_thea;
     public _KenronMain m_kenron;
+    public Nashorn m_Nashorn;
     [SerializeField]private float delay;
     private float shotCounter;
     private float counter;
@@ -26,6 +27,10 @@ public class Theá : BaseCharacter
     public void Awake()
     {
         isActive = false;
+        SetDamage(2);
+        SetHealth(100);
+        SetSpeed(15.0f);
+        m_Nashorn = FindObjectOfType<Nashorn>();
 		m_thea = FindObjectOfType<Theá>();
 		m_kenron = FindObjectOfType<_KenronMain>();
     }
@@ -52,7 +57,6 @@ public class Theá : BaseCharacter
             {
                 GameObject temp = Instantiate(projectile, transform.position + transform.forward * 2, transform.rotation);
 				temp.GetComponent<ProjectileMove>().SetDamage(m_damage);
-                Debug.Log("instiantiated");
                 counter = 0f;
             }
         }
@@ -62,7 +66,11 @@ public class Theá : BaseCharacter
         }
     }
 
-    public void UltimateAbility()
+    public void RipTide() {
+
+    }
+
+    public void GiftOfPoseidon()
     {
         isActive = true;
         int m_coolDown = 20;
@@ -74,12 +82,18 @@ public class Theá : BaseCharacter
                 GetHealth();
 				m_kenron.SetHealth(100);
 				m_kenron.GetHealth();
+                m_Nashorn.SetHealth(150);
+                m_Nashorn.GetHealth();
 				temp = Instantiate(waterPrefab, transform.position + Vector3.down * (transform.localScale.y / 2), Quaternion.Euler(90, 0, 0));
 				if (m_kenron != null)
 				{
 					temp = Instantiate(waterPrefab, m_kenron.transform.position + Vector3.down * (m_kenron.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), m_kenron.transform);
 				}
-				m_coolDown--;
+                if (m_Nashorn != null)
+                {
+                    temp = Instantiate(waterPrefab, m_Nashorn.transform.position + Vector3.down * (m_Nashorn.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), m_Nashorn.transform);
+                }
+                m_coolDown--;
             }
             isActive = false;
             Destroy(temp);

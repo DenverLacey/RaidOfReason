@@ -33,7 +33,7 @@ public class EnemyProjectile : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider other) {
-        if (other.tag == "Kenron" || other.tag == "Thea") {
+        if (other.tag == "Kenron" || other.tag == "Thea" || other.tag == "Nashorn") {
             BaseCharacter player = other.GetComponent<BaseCharacter>();
             player.TakeDamage(m_damage);
             Destroy(gameObject);

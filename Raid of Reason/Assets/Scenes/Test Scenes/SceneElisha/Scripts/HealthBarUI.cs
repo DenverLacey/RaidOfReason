@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class HealthBarUI : MonoBehaviour
 {
     Image healthBar;
-    [SerializeField]private BaseCharacter character;
+    [SerializeField]
+    private BaseCharacter character;
 
     // Start is called before the first frame update
     void Start()

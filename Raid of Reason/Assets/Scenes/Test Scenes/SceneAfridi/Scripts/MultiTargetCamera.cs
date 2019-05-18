@@ -12,13 +12,13 @@ public class MultiTargetCamera : MonoBehaviour
     public Vector3 offset;
     public List<Transform> targets;
 
-    private Camera cam;
+    public Camera cam;
 
     private Vector3 movVelocity;
     private float zoomVelocity;
     private float fovScalar = 1f;
 
-    void Start()
+    void Awake()
     {
         cam = GetComponent<Camera>();
     }

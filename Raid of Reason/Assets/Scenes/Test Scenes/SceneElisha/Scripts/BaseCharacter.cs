@@ -24,7 +24,6 @@ public abstract class BaseCharacter : MonoBehaviour {
     [SerializeField] private float m_controlSpeed;
     public float m_maxHealth;
     public float m_currentHealth;
-    private int m_armor;
 
     private float m_rotationSpeed = 250.0f;
     private Vector3 direction;
@@ -32,9 +31,10 @@ public abstract class BaseCharacter : MonoBehaviour {
 
     protected bool m_bActive;
 
-    MultiTargetCamera m_camera;
+    [HideInInspector]
+    public MultiTargetCamera m_camera;
 
-    void Start () {
+    void Awake () {
         m_currentHealth = m_maxHealth;
         m_bActive = false;
         m_camera = FindObjectOfType<MultiTargetCamera>();
@@ -65,6 +65,7 @@ public abstract class BaseCharacter : MonoBehaviour {
 
     virtual protected void CharacterMovement()
     {
+
         /// <summary> 
         /// Handles the forward and backwards movement of the character via the xbox controller layout
         /// </summary>
@@ -113,20 +114,11 @@ public abstract class BaseCharacter : MonoBehaviour {
         m_damage = damage;
     }
 
-    virtual public void SetArmor(int armor) {
-        m_armor = armor;
-    }
-
-    virtual public int GetArmor()
-    {
-        return m_armor;
-    }
-
-     public void SetHealth(float health)
+    public void SetHealth(float health)
     {
         m_currentHealth = health;
     }
-
+     
     virtual public float GetSpeed()
     {
         return m_controlSpeed;
@@ -142,8 +134,17 @@ public abstract class BaseCharacter : MonoBehaviour {
         return m_damage;
     }
 
-     public float GetHealth()
+    public float GetHealth()
     {
         return m_currentHealth;
+    }
+
+    public void SetMaxHealth(float maxhealth) {
+        maxhealth = m_maxHealth;
+    }
+
+    public float GetMaxHealth()
+    {
+        return m_maxHealth;
     }
 }

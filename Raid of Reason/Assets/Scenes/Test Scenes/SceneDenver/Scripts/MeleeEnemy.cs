@@ -31,7 +31,7 @@ public class MeleeEnemy : BaseEnemy
 			RaycastHit hit;
 
 			if (Physics.Raycast(ray, out hit, D)) {
-				if (hit.collider.tag == "Kenron" || hit.collider.tag == "Thea") {
+				if (hit.collider.tag == "Kenron" || hit.collider.tag == "Thea" || hit.collider.tag == "Nashorn") {
 					closest = p.transform;
                     m_targetPlayer = p;
 					D = Vector3.Distance(transform.position, p.transform.position);
