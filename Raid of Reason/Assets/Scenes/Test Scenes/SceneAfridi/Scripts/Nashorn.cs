@@ -9,6 +9,8 @@ public class Nashorn : BaseCharacter
     public GameObject m_Nashorn;
     public Rigidbody m_NashornSkeleton;
     public List<GameObject> m_gauntlets;
+    public GameObject m_Particle;
+    private GameObject m_Instaniate;
 
     // 1 = Left Fist / 0 = Right Fist
     private uint m_gauntletIndex;
@@ -51,20 +53,24 @@ public class Nashorn : BaseCharacter
             if (m_gauntletIndex == 0)
             {
                 m_gauntlets[0].gameObject.transform.localPosition = new Vector3(-0.75f, 0, 0.8f);
+                m_Instaniate = Instantiate(m_Particle, m_gauntlets[0].transform.position + Vector3.forward * (m_gauntlets[0].transform.localScale.y / 2), Quaternion.Euler(-180, 0, 0), m_gauntlets[0].transform);
             }
             else if (m_gauntletIndex == 1)
             {
                 m_gauntlets[1].gameObject.transform.localPosition = new Vector3(0.75f, 0, 0.8f);
+                m_Instaniate = Instantiate(m_Particle, m_gauntlets[1].transform.position + Vector3.forward * (m_gauntlets[1].transform.localScale.y / 2), Quaternion.Euler(-180, 0, 0), m_gauntlets[1].transform);
             }
         }
         else if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.Third) < 0.1) {
             if (m_gauntletIndex == 0)
             {
                 m_gauntlets[0].gameObject.transform.localPosition = new Vector3(-0.75f, 0, 0.0f);
+                Destroy(m_Instaniate);
                 m_gauntletIndex++;
             }
             else if (m_gauntletIndex == 1) {
                 m_gauntlets[1].gameObject.transform.localPosition = new Vector3(0.75f, 0, 0.0f);
+                Destroy(m_Instaniate);
                 m_gauntletIndex--;
             }
         }

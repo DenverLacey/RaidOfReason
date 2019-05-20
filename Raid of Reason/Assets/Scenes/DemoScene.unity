@@ -156,18 +156,17 @@ MonoBehaviour:
   controller: 2
   playerState: 0
   m_damage: 0
-  m_controlSpeed: 10
-  m_maxHealth: 60
+  m_controlSpeed: 0
+  m_maxHealth: 0
   m_currentHealth: 0
   m_camera: {fileID: 215099357}
-  m_Kenron: {fileID: 38002297}
-  m_Amaterasu: {fileID: 2128484016}
-  m_KenronSkeleton: {fileID: 38002300}
-  FFire: {fileID: 2100000, guid: 5d41526994f156a46bfcaaaf52c55684, type: 2}
-  Base: {fileID: 2100000, guid: 26b411d8f47449f49812f3cfb8e20733, type: 2}
-  Steel: {fileID: 2100000, guid: 620e3744b67887c43a040757e55c8396, type: 2}
+  m_Kenron: {fileID: 0}
+  m_Amaterasu: {fileID: 0}
+  m_KenronSkeleton: {fileID: 0}
+  m_JumpSpeed: 0
   particle: {fileID: 1186225012428732162, guid: 14477d58dd7a8ea4faec6e74cea8b4f1,
     type: 3}
+  swordParticle: {fileID: 100004, guid: 1c20c7996d683754db1f0f62a361952c, type: 3}
 --- !u!54 &38002300
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -179,10 +178,10 @@ Rigidbody:
   m_Mass: 0.5
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 116
+  m_Constraints: 112
   m_CollisionDetection: 3
 --- !u!136 &38002301
 CapsuleCollider:
@@ -1806,7 +1805,7 @@ MonoBehaviour:
   projectile: {fileID: 1119944734783606, guid: 4dab86d7c4169194e9d7640ac578ff72, type: 3}
   m_thea: {fileID: 655161516}
   m_kenron: {fileID: 38002298}
-  m_Nashorn: {fileID: 0}
+  m_Nashorn: {fileID: 1586976150}
   delay: 0.2
 --- !u!4 &655161517
 Transform:
@@ -2640,10 +2639,10 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 525, y: 768}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -3780,7 +3779,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d72675b89b94f14584ea295939b4dd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: 1
+  controller: 3
   playerState: 0
   m_damage: 5
   m_controlSpeed: 10
@@ -3792,6 +3791,7 @@ MonoBehaviour:
   m_gauntlets:
   - {fileID: 309024318}
   - {fileID: 1687842922}
+  m_Particle: {fileID: 100008, guid: 1ca16f2a31fb6a548ad8954bed1d321f, type: 3}
 --- !u!54 &1586976151
 Rigidbody:
   m_ObjectHideFlags: 0

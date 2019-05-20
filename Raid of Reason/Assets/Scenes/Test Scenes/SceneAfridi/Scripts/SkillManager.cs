@@ -30,7 +30,7 @@ public class Skills
 public class SkillManager : MonoBehaviour {
 
     public List<Skills> m_Skills;
-    public _KenronMain m_Kenron;
+    public Kenron m_Kenron;
     public Theá m_theá;
     public Nashorn m_Nashorn;
     protected XboxController controller;
@@ -42,7 +42,7 @@ public class SkillManager : MonoBehaviour {
             skill.m_currentCoolDown = skill.m_coolDown;
         }
 		m_theá = FindObjectOfType<Theá>();
-		m_Kenron = FindObjectOfType<_KenronMain>();
+		m_Kenron = FindObjectOfType<Kenron>();
         m_Nashorn = FindObjectOfType<Nashorn>();
     }
 

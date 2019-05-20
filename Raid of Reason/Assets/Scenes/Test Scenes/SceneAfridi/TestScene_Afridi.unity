@@ -678,8 +678,9 @@ MonoBehaviour:
     m_coolDown: 20
     m_currentCoolDown: 0
     m_skillIcon: {fileID: 662934752}
-  m_Kenron: {fileID: 1959340180}
+  m_Kenron: {fileID: 0}
   "m_the\xE1": {fileID: 0}
+  m_Nashorn: {fileID: 0}
 --- !u!114 &750438937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1308,12 +1309,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d72675b89b94f14584ea295939b4dd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: 1
+  controller: 3
   playerState: 0
   m_damage: 0
   m_controlSpeed: 0
   m_maxHealth: 0
   m_currentHealth: 0
+  m_camera: {fileID: 0}
   m_Nashorn: {fileID: 1766133849}
   m_NashornSkeleton: {fileID: 1766133851}
   m_gauntlets:
@@ -1550,14 +1552,13 @@ GameObject:
   - component: {fileID: 1959340174}
   - component: {fileID: 1959340178}
   - component: {fileID: 1959340179}
-  - component: {fileID: 1959340180}
   m_Layer: 0
   m_Name: Kenron
   m_TagString: Kenron
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!136 &1959340174
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1625,7 +1626,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1959340173}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: -2.28, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1173316483}
@@ -1647,20 +1648,8 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 80
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!114 &1959340179
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1959340173}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c5108addb89215448ca5336e4dcbee7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1959340180
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1676,11 +1665,13 @@ MonoBehaviour:
   playerState: 0
   m_damage: 0
   m_controlSpeed: 0
-  m_maxHealth: 100
+  m_maxHealth: 0
   m_currentHealth: 0
+  m_camera: {fileID: 0}
   m_Kenron: {fileID: 0}
   m_Amaterasu: {fileID: 0}
   m_KenronSkeleton: {fileID: 0}
+  m_JumpSpeed: 200
   FFire: {fileID: 2100000, guid: 5d41526994f156a46bfcaaaf52c55684, type: 2}
   Base: {fileID: 2100000, guid: 26b411d8f47449f49812f3cfb8e20733, type: 2}
   Steel: {fileID: 2100000, guid: 620e3744b67887c43a040757e55c8396, type: 2}
@@ -1791,7 +1782,7 @@ GameObject:
   - component: {fileID: 2062481849}
   m_Layer: 0
   m_Name: Plane
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

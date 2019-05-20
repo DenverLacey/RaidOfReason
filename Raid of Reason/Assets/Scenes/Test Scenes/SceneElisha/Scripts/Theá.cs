@@ -17,7 +17,7 @@ public class Theá : BaseCharacter
     private LayerMask layerMask;
     private GameObject temp;
     public Theá m_thea;
-    public _KenronMain m_kenron;
+    public Kenron m_kenron;
     public Nashorn m_Nashorn;
     [SerializeField]private float delay;
     private float shotCounter;
@@ -32,7 +32,7 @@ public class Theá : BaseCharacter
         SetSpeed(15.0f);
         m_Nashorn = FindObjectOfType<Nashorn>();
 		m_thea = FindObjectOfType<Theá>();
-		m_kenron = FindObjectOfType<_KenronMain>();
+		m_kenron = FindObjectOfType<Kenron>();
     }
 
     // Update is called once per frame
