@@ -10,7 +10,10 @@ public class Nashorn : BaseCharacter
     public Rigidbody m_NashornSkeleton;
     public List<GameObject> m_gauntlets;
     public GameObject m_Particle;
+    private GameObject m_Particle_2;
     private GameObject m_Instaniate;
+    public GameObject m_Collider;
+    
 
     // 1 = Left Fist / 0 = Right Fist
     private uint m_gauntletIndex;
@@ -44,6 +47,7 @@ public class Nashorn : BaseCharacter
     protected override void Update() {
         if (m_Nashorn != null) {
             Punch();
+            MachtDesSturms();
         }
     }
 
@@ -84,6 +88,28 @@ public class Nashorn : BaseCharacter
     //Ultimate
     public void MachtDesSturms() {
         //Power of the Storm
+        if (m_Nashorn != null)
+        {
+            if (Input.GetKeyDown(KeyCode.U))
+            {
+                //GameObject temp = Instantiate(m_Particle_2, m_Nashorn.transform.localPosition, m_Nashorn.transform.rotation);
+                m_Collider.SetActive(true);
+                Collider[] colliders = Physics.OverlapSphere(m_Collider.transform.position, 40.0f);
+
+                foreach (Collider nearbyEnemy in colliders)
+                {
+                    Rigidbody rb = nearbyEnemy.GetComponent<Rigidbody>();
+                    if (nearbyEnemy.tag == "Enemy")
+                    {
+                        rb.isKinematic = false;
+                        rb.AddExplosionForce(50.0f, m_Collider.transform.position, 40.0f);
+                    }
+                }
+                
+                //Destroy(temp);
+            }
+            
+        }
     }
 
     public void ResetSkill()
