@@ -9,10 +9,14 @@ public class Nashorn : BaseCharacter
     public GameObject m_Nashorn;
     public Rigidbody m_NashornSkeleton;
     public List<GameObject> m_gauntlets;
+
     public GameObject m_Particle;
-    private GameObject m_Particle_2;
+    public GameObject m_Particle_2;
     private GameObject m_Instaniate;
     public GameObject m_Collider;
+
+    public float m_explosiveForce;
+    public float m_explosiveRadius;
     
 
     // 1 = Left Fist / 0 = Right Fist
@@ -24,6 +28,7 @@ public class Nashorn : BaseCharacter
         SetSpeed(20.0f);
         SetDamage(5);
         m_gauntletIndex = 0;
+        m_Collider.SetActive(false);
         m_Nashorn = GameObject.FindGameObjectWithTag("Nashorn");
     }
 
@@ -47,7 +52,6 @@ public class Nashorn : BaseCharacter
     protected override void Update() {
         if (m_Nashorn != null) {
             Punch();
-            MachtDesSturms();
         }
     }
 
@@ -86,36 +90,27 @@ public class Nashorn : BaseCharacter
     }
 
     //Ultimate
-    public void MachtDesSturms() {
+    public void MachtDesSturms()
+    {
         //Power of the Storm
         if (m_Nashorn != null)
         {
-            if (Input.GetKeyDown(KeyCode.U))
+            GameObject temp = Instantiate(m_Particle_2, transform.position + Vector3.down * 0.5f, Quaternion.Euler(270, 0, 0), transform);
+            m_Collider.SetActive(true);
+            Collider[] colliders = Physics.OverlapSphere(m_Collider.transform.position, m_explosiveRadius);
+
+            foreach (Collider nearbyEnemy in colliders)
             {
-                //GameObject temp = Instantiate(m_Particle_2, m_Nashorn.transform.localPosition, m_Nashorn.transform.rotation);
-                m_Collider.SetActive(true);
-                Collider[] colliders = Physics.OverlapSphere(m_Collider.transform.position, 40.0f);
-
-                foreach (Collider nearbyEnemy in colliders)
+                Rigidbody rb = nearbyEnemy.GetComponent<Rigidbody>();
+                if (nearbyEnemy.tag == "Enemy")
                 {
-                    Rigidbody rb = nearbyEnemy.GetComponent<Rigidbody>();
-                    if (nearbyEnemy.tag == "Enemy")
-                    {
-                        rb.isKinematic = false;
-                        rb.AddExplosionForce(50.0f, m_Collider.transform.position, 40.0f);
-                    }
+                    rb.AddExplosionForce(m_explosiveForce, m_Collider.transform.position, m_explosiveRadius);
                 }
-                
-                //Destroy(temp);
             }
-            
-        }
-    }
 
-    public void ResetSkill()
-    {
-        
-    }
+            Destroy(temp, 12);
+        }
+    }   
 
     public void ResetGauntlet() {
 

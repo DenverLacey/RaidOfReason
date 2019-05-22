@@ -59,13 +59,13 @@ public class SkillManager : MonoBehaviour {
 
 		}
 		if (XCI.GetButtonDown(XboxButton.RightBumper, XboxController.Second))
-		      {
-				if (m_Skills[1].m_currentCoolDown >= m_Skills[1].m_coolDown)
-				{
-					m_Kenron.ChaosFlame();
-					m_Skills[1].m_currentCoolDown = 0;
-					m_Skills[1].active = true;
-				}
+        {
+			if (m_Skills[1].m_currentCoolDown >= m_Skills[1].m_coolDown)
+			{
+				m_Kenron.ChaosFlame();
+				m_Skills[1].m_currentCoolDown = 0;
+				m_Skills[1].active = true;
+			}
         }
         if (XCI.GetButtonDown(XboxButton.RightBumper, XboxController.First))
         {
@@ -75,6 +75,19 @@ public class SkillManager : MonoBehaviour {
                 m_Skills[2].m_currentCoolDown = 0;
                 m_Skills[2].active = true;
             }
+        }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            if (m_Skills[3].m_currentCoolDown >= m_Skills[3].m_coolDown)
+            {
+                m_Nashorn.MachtDesSturms();
+                m_Skills[3].m_currentCoolDown = 0;
+                m_Skills[3].active = true;
+            }
+        }
+        else if (Input.GetKeyUp(KeyCode.U))
+        {
+            m_Nashorn.m_Collider.SetActive(false);
         }
     }
 
