@@ -98,7 +98,9 @@ public abstract class BaseEnemy : MonoBehaviour
 		}
 
 		if (NavMesh.FindClosestEdge(source, out hit, NavMesh.GetAreaFromName("walkable"))) {
-			return hit.position;
+			if (hit.hit) {
+				return hit.position;
+			}
 		}
 		return Vector3.positiveInfinity;
 	}
