@@ -91,30 +91,35 @@ public abstract class BaseEnemy : MonoBehaviour
     protected Vector3 FindClosestPoint(Vector3 source) {
 
 		NavMeshHit hit;
-		if (NavMesh.SamplePosition(source, out hit, transform.localScale.y, 0)) {
-			return source;
+		if (NavMesh.SamplePosition(source, out hit, transform.localScale.y, NavMesh.GetAreaFromName("walkable"))) {
+			if (hit.hit) {
+				return source;
+			}
 		}
 
-		if (NavMesh.FindClosestEdge(source, out hit, 0)) {
+		if (NavMesh.FindClosestEdge(source, out hit, NavMesh.GetAreaFromName("walkable"))) {
 			return hit.position;
 		}
-		return source;
+		return Vector3.positiveInfinity;
 	}
 
     protected virtual void Wander() {
-
-		if (Vector3.Distance(transform.position, m_target) > 2f) {
+		if (Vector3.Distance(transform.position, m_target) > 2f && m_oldState == AI_STATE.WANDER) {
 			return;
-		} 
+		}
 
 		// get nav mesh triangulation
 		NavMeshTriangulation data = NavMesh.CalculateTriangulation();
 
-		// pick random number (t)
-		int t = Random.Range(0, data.vertices.Length);
+		// pick random triangle (t)
+		int t = 3 * Random.Range(0, data.vertices.Length / 3);
 
 		// get vertex at t
 		Vector3 point = data.vertices[t];
+
+		// lerp point so point can be anywhere within a tri
+		point = Vector3.Lerp(point, data.vertices[t + 1], Random.Range(0f, 1f));
+		point = Vector3.Lerp(point, data.vertices[t + 2], Random.Range(0f, 1f));
 
 		// set target destination
 		m_target = point;
