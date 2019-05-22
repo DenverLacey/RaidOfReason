@@ -68,7 +68,11 @@ public class SuicideEnemy : BaseEnemy
         return s;
     }
 
-    protected override void Attack() { 
+    protected override void Attack() {
+    	if (Vector3.Distance(transform.position, m_target) > 2f && m_oldState == AI_STATE.ATTACK) {
+		return;
+	}
+	
         if (Vector3.Distance(transform.position, m_target) <= m_attackRange || m_readyToExplode) {
             m_readyToExplode = true;
 
