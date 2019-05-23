@@ -28,6 +28,8 @@ public class SuicideEnemy : BaseEnemy
     }
 
     protected override void Update() {
+    	if (m_stunned) return;
+    
         // determine state
 		m_currentState = DetermineState();
 
