@@ -143,11 +143,12 @@ public abstract class BaseEnemy : MonoBehaviour
 
 	public virtual void Stun(float duration) {
 		m_stunned = true;
-		
-		while (duration > 0f) {
-			duration -= Time.deltaTime;
-		}
-		
-		m_stunned = false;
+        StartCoroutine(StunReset(duration));
 	}
+
+    IEnumerator StunReset(float duration) {
+        duration -= Time.deltaTime;
+        if (duration > 0f) yield return new WaitForEndOfFrame();
+        m_stunned = false;
+    }
 }

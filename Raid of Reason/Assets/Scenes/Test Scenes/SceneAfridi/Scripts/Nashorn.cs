@@ -20,16 +20,16 @@ public class Nashorn : BaseCharacter
     
 
     // 1 = Left Fist / 0 = Right Fist
-    private uint m_gauntletIndex;
+    private uint m_gauntletIndex = 0;
 
     private void Awake()
     {
         SetHealth(150);
         SetSpeed(20.0f);
         SetDamage(5);
-        m_gauntletIndex = 0;
         m_Collider.SetActive(false);
         m_Nashorn = GameObject.FindGameObjectWithTag("Nashorn");
+        m_NashornSkeleton = GetComponent<Rigidbody>();
     }
 
     private void Start()
@@ -43,10 +43,7 @@ public class Nashorn : BaseCharacter
 
     protected override void FixedUpdate()
     {
-        if (m_Nashorn != null)
-        {
-            base.FixedUpdate();
-        }
+        base.FixedUpdate();
     }
 
     protected override void Update() {
@@ -61,11 +58,13 @@ public class Nashorn : BaseCharacter
             if (m_gauntletIndex == 0)
             {
                 m_gauntlets[0].gameObject.transform.localPosition = new Vector3(-0.75f, 0, 0.8f);
+                SetDamage(10);
                 m_Instaniate = Instantiate(m_Particle, m_gauntlets[0].transform.position + Vector3.forward * (m_gauntlets[0].transform.localScale.y / 2), Quaternion.Euler(-180, 0, 0), m_gauntlets[0].transform);
             }
             else if (m_gauntletIndex == 1)
             {
                 m_gauntlets[1].gameObject.transform.localPosition = new Vector3(0.75f, 0, 0.8f);
+                SetDamage(10);
                 m_Instaniate = Instantiate(m_Particle, m_gauntlets[1].transform.position + Vector3.forward * (m_gauntlets[1].transform.localScale.y / 2), Quaternion.Euler(-180, 0, 0), m_gauntlets[1].transform);
             }
         }
@@ -73,13 +72,13 @@ public class Nashorn : BaseCharacter
             if (m_gauntletIndex == 0)
             {
                 m_gauntlets[0].gameObject.transform.localPosition = new Vector3(-0.75f, 0, 0.0f);
+                m_gauntletIndex = 1;
                 Destroy(m_Instaniate);
-                m_gauntletIndex++;
             }
             else if (m_gauntletIndex == 1) {
                 m_gauntlets[1].gameObject.transform.localPosition = new Vector3(0.75f, 0, 0.0f);
+                m_gauntletIndex = 0;
                 Destroy(m_Instaniate);
-                m_gauntletIndex--;
             }
         }
     }
@@ -105,8 +104,11 @@ public class Nashorn : BaseCharacter
                 if (nearbyEnemy.tag == "Enemy")
                 {
                     rb.AddExplosionForce(m_explosiveForce, m_Collider.transform.position, m_explosiveRadius);
+                    rb.GetComponent<BaseEnemy>().Stun(3f);
                 }
             }
+
+            m_Collider.SetActive(false);
 
             Destroy(temp, 12);
         }

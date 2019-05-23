@@ -76,7 +76,7 @@ public class SkillManager : MonoBehaviour {
                 m_Skills[2].active = true;
             }
         }
-        if (Input.GetKeyDown(KeyCode.U))
+        if (XCI.GetButtonDown(XboxButton.RightBumper, XboxController.Third))
         {
             if (m_Skills[3].m_currentCoolDown >= m_Skills[3].m_coolDown)
             {
@@ -85,7 +85,7 @@ public class SkillManager : MonoBehaviour {
                 m_Skills[3].active = true;
             }
         }
-        else if (Input.GetKeyUp(KeyCode.U))
+        else if (XCI.GetButtonUp(XboxButton.RightBumper, XboxController.Third))
         {
             m_Nashorn.m_Collider.SetActive(false);
         }
