@@ -17,6 +17,8 @@ public abstract class BaseEnemy : MonoBehaviour
 
 	protected float m_health;
 	public float Health { get { return m_health; } }
+	
+	protected bool m_stunned;
 
     protected NavMeshAgent m_navMeshAgent;
     protected BaseCharacter[] m_players;
@@ -41,6 +43,8 @@ public abstract class BaseEnemy : MonoBehaviour
     }
 
     protected virtual void Update() {
+    		if (m_stunned) return;
+		
 		// determine state
 		m_currentState = DetermineState();
 
@@ -137,4 +141,13 @@ public abstract class BaseEnemy : MonoBehaviour
 		}
 	}
 
+	public virtual void Stun(float duration) {
+		m_stunned = true;
+		
+		while (duration > 0f) {
+			duration -= Time.deltaTime;
+		}
+		
+		m_stunned = false;
+	}
 }
