@@ -24,12 +24,10 @@ public class Theá : BaseCharacter
     private float counter;
     bool isActive;
 
-    public void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         isActive = false;
-        SetDamage(2);
-        SetHealth(100);
-        SetSpeed(15.0f);
         m_Nashorn = FindObjectOfType<Nashorn>();
 		m_thea = FindObjectOfType<Theá>();
 		m_kenron = FindObjectOfType<Kenron>();
@@ -78,12 +76,9 @@ public class Theá : BaseCharacter
         {
             for(int i = 0; i < 20; i++)
             {
-                SetHealth(100);
-                GetHealth();
-				m_kenron.SetHealth(100);
-				m_kenron.GetHealth();
-                m_Nashorn.SetHealth(150);
-                m_Nashorn.GetHealth();
+                SetHealth(50);
+				m_kenron.SetHealth(50);
+                m_Nashorn.SetHealth(50);
 				temp = Instantiate(waterPrefab, transform.position + Vector3.down * (transform.localScale.y / 2), Quaternion.Euler(90, 0, 0));
 				if (m_kenron != null)
 				{

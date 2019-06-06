@@ -15,14 +15,9 @@ using XboxCtrlrInput;
 public class Kenron : BaseCharacter {
 
     //Kenron himself
-    public GameObject m_Kenron;
+    public Kenron m_Kenron;
     public GameObject m_Amaterasu;
     public Rigidbody m_KenronSkeleton;
-
-    //Jump Multiplier
-    [SerializeField]
-    private float m_JumpSpeed;
-    private bool isJumping;
 
     [SerializeField]
     private GameObject particle;
@@ -30,14 +25,9 @@ public class Kenron : BaseCharacter {
     private GameObject swordParticle;
 
     // Use this for initialization
-    void Awake () {
-        SetDamage(8);
-        SetHealth(60);
-        SetMaxHealth(60);
-        SetSpeed(10.0f);
-        m_JumpSpeed = 8f;
-        isJumping = false;
-        m_Kenron = GameObject.FindGameObjectWithTag("Kenron");
+    protected override void Awake () {
+        base.Awake();
+        m_Kenron = FindObjectOfType<Kenron>();
         m_Amaterasu = GameObject.FindGameObjectWithTag("Amaterasu");
         m_KenronSkeleton = GetComponent<Rigidbody>();
 	}
@@ -47,7 +37,6 @@ public class Kenron : BaseCharacter {
         if (m_Kenron != null)
         {
             Slash();
-            JumpForce();
 			base.FixedUpdate();
         }
 	}
@@ -70,24 +59,6 @@ public class Kenron : BaseCharacter {
             Destroy(temp, 30);
             SetDamage(90);
             SetHealth(40);         
-        }
-    }
-
-    //Merely checks if the player is colliding with floor
-    void OnCollisionStay(Collision collision)
-    {
-        //This prevents wall jumping - Better was is using Layer MASKS
-        if (collision.gameObject.tag == "Floor" || collision.gameObject.tag == "Platform")
-        {
-            isJumping = true;
-        }
-    }
-
-    void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.tag == "Floor" || collision.gameObject.tag == "Platform")
-        {
-            isJumping = false;
         }
     }
 
@@ -120,16 +91,6 @@ public class Kenron : BaseCharacter {
         {
             SetDamage(50);
             SetSpeed(10.0f);
-        }
-    }
-
-    public void JumpForce() {
-        if (m_Kenron != null)
-        {
-            if (XCI.GetButtonDown(XboxButton.A, XboxController.Second) && isJumping) {
-                m_KenronSkeleton.AddForce(Vector3.up * m_JumpSpeed);
-                isJumping = false;
-            }
         }
     }
 }

@@ -93,6 +93,11 @@ public class SkillManager : MonoBehaviour {
 
     public void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
         foreach (var skill in m_Skills)
         {
             if (skill.active)

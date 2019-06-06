@@ -23,6 +23,8 @@ public abstract class BaseCharacter : MonoBehaviour {
     [SerializeField] protected float m_damage;
     [SerializeField] private float m_controlSpeed;
     public float m_maxHealth;
+
+    [HideInInspector]
     public float m_currentHealth;
 
     private float m_rotationSpeed = 250.0f;
@@ -33,10 +35,10 @@ public abstract class BaseCharacter : MonoBehaviour {
 
     public MultiTargetCamera m_camera;
 
-    void Awake () {
+    protected virtual void Awake () {
         m_currentHealth = m_maxHealth;
         m_bActive = false;
-        m_camera = GetComponent<MultiTargetCamera>();
+        m_camera = FindObjectOfType<MultiTargetCamera>();
   	}
 
     protected virtual void FixedUpdate()

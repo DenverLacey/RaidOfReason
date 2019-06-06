@@ -6,7 +6,7 @@ using XboxCtrlrInput;
 
 public class Nashorn : BaseCharacter
 {
-    public GameObject m_Nashorn;
+    public Nashorn m_Nashorn;
     public Rigidbody m_NashornSkeleton;
     public List<GameObject> m_gauntlets;
 
@@ -22,13 +22,11 @@ public class Nashorn : BaseCharacter
     // 1 = Left Fist / 0 = Right Fist
     private uint m_gauntletIndex = 0;
 
-    private void Awake()
+    protected override void Awake()
     {
-        SetHealth(150);
-        SetSpeed(20.0f);
-        SetDamage(5);
+        base.Awake();
         m_Collider.SetActive(false);
-        m_Nashorn = GameObject.FindGameObjectWithTag("Nashorn");
+        m_Nashorn = FindObjectOfType<Nashorn>();
         m_NashornSkeleton = GetComponent<Rigidbody>();
     }
 

@@ -30,8 +30,8 @@ public class SpawnManager : MonoBehaviour
     void SpawnSuicide()
     {
         int spawnPointIndex = Random.Range(0, m_spawnPoints.Length);
-        m_Suicide.SetActive(true);
-        Instantiate(m_Suicide, m_spawnPoints[spawnPointIndex].position, m_spawnPoints[spawnPointIndex].rotation);
+        GameObject s = Instantiate(m_Suicide, m_spawnPoints[spawnPointIndex].position, m_spawnPoints[spawnPointIndex].rotation);
+        s.SetActive(true);
     }
 
     void SpawnRanged()
