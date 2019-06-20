@@ -141,4 +141,6 @@ public abstract class BaseCharacter : MonoBehaviour {
     {
         return m_maxHealth;
     }
+
+  
 }
