@@ -26,6 +26,7 @@ public abstract class BaseCharacter : MonoBehaviour {
 
     [HideInInspector]
     public float m_currentHealth;
+    public int m_playerSkillPoints;
 
     private float m_rotationSpeed = 250.0f;
     private Vector3 direction;
@@ -39,7 +40,8 @@ public abstract class BaseCharacter : MonoBehaviour {
         m_currentHealth = m_maxHealth;
         m_bActive = false;
         m_camera = FindObjectOfType<MultiTargetCamera>();
-  	}
+        m_playerSkillPoints = 0;
+}
 
     protected virtual void FixedUpdate()
     {

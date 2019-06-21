@@ -5,39 +5,26 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     private BaseCharacter m_baseCharacter;
-    public Transform[] m_spawnPoints;
+    public Transform m_spawnPoints;
 
     public GameObject m_Suicide;
     public GameObject m_Melee;
     public GameObject m_Ranged;
-    public float m_suicideSpawnTime;
-    public float m_meleeSpawnTime;
-    public float m_rangedSpawnTime;
 
-    void Start()
-    {
-        InvokeRepeating("SpawnMelee", m_meleeSpawnTime, m_meleeSpawnTime);
-        InvokeRepeating("SpawnSuicide", m_suicideSpawnTime, m_suicideSpawnTime);
-        InvokeRepeating("SpawnRanged", m_rangedSpawnTime, m_rangedSpawnTime);
-    }
-
-    void SpawnMelee() {
-        int spawnPointIndex = Random.Range(0, m_spawnPoints.Length);
+    public void SpawnMelee() {
         m_Melee.SetActive(true);
-        Instantiate(m_Melee, m_spawnPoints[spawnPointIndex].position, m_spawnPoints[spawnPointIndex].rotation);
+        Instantiate(m_Melee, m_spawnPoints.position, m_spawnPoints.rotation);
     }
 
-    void SpawnSuicide()
+    public void SpawnSuicide()
     {
-        int spawnPointIndex = Random.Range(0, m_spawnPoints.Length);
-        GameObject s = Instantiate(m_Suicide, m_spawnPoints[spawnPointIndex].position, m_spawnPoints[spawnPointIndex].rotation);
-        s.SetActive(true);
+        m_Suicide.SetActive(true);
+        Instantiate(m_Suicide, m_spawnPoints.position, m_spawnPoints.rotation);
     }
 
-    void SpawnRanged()
+    public void SpawnRanged()
     {
-        int spawnPointIndex = Random.Range(0, m_spawnPoints.Length);
         m_Ranged.SetActive(true);
-        Instantiate(m_Ranged, m_spawnPoints[spawnPointIndex].position, m_spawnPoints[spawnPointIndex].rotation);
+        Instantiate(m_Ranged, m_spawnPoints.position, m_spawnPoints.rotation);
     }
 }
