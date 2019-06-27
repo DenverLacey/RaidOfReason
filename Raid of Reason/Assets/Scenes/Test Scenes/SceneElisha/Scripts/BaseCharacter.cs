@@ -26,7 +26,11 @@ public abstract class BaseCharacter : MonoBehaviour {
 
     [HideInInspector]
     public float m_currentHealth;
+    [SerializeField]
     public int m_playerSkillPoints;
+
+    public List<PlayerAttributes> attributes = new List<PlayerAttributes>();
+    public List<SkillsAbilities> playerSkills = new List<SkillsAbilities>();
 
     private float m_rotationSpeed = 250.0f;
     private Vector3 direction;
@@ -36,12 +40,20 @@ public abstract class BaseCharacter : MonoBehaviour {
 
     public MultiTargetCamera m_camera;
 
+    public int SkillPoints {
+        get { return m_playerSkillPoints;  }
+        set {
+            m_playerSkillPoints = value;
+        }
+    }
+
+
     protected virtual void Awake () {
         m_currentHealth = m_maxHealth;
         m_bActive = false;
         m_camera = FindObjectOfType<MultiTargetCamera>();
         m_playerSkillPoints = 0;
-}
+    }
 
     protected virtual void FixedUpdate()
     {
@@ -144,5 +156,11 @@ public abstract class BaseCharacter : MonoBehaviour {
         return m_maxHealth;
     }
 
+    public delegate void OnPointChange();
+    public event OnPointChange onPointChange;
+
+    public void UpdateSkillPont(int amount) {
+        m_playerSkillPoints += amount;
+    }
   
 }

@@ -23,9 +23,7 @@ public class Kenron : BaseCharacter {
     private GameObject particle;
     [SerializeField]
     private GameObject swordParticle;
-
-    public GameObject m_SkillTree;
-
+    
     // Use this for initialization
     protected override void Awake () {
         base.Awake();
@@ -39,7 +37,6 @@ public class Kenron : BaseCharacter {
         if (m_Kenron != null)
         {
             Slash();
-            SkillMenu();
 			base.FixedUpdate();
         }
 	}
@@ -97,14 +94,5 @@ public class Kenron : BaseCharacter {
         }
     }
 
-    public void SkillMenu()
-    {
-        if (Input.GetKey(KeyCode.O)) {
-            m_SkillTree.SetActive(true);
-        }
-        else
-        {
-            m_SkillTree.SetActive(false);
-        }
-    }
+
 }
