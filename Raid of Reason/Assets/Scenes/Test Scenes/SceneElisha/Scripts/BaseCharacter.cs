@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using XboxCtrlrInput;
+using TMPro;
 
 public abstract class BaseCharacter : MonoBehaviour {
 
@@ -18,11 +19,15 @@ public abstract class BaseCharacter : MonoBehaviour {
         DEAD
     }
 
-    public XboxController controller;
-    [SerializeField] private PlayerState playerState;
-    [SerializeField] protected float m_damage;
-    [SerializeField] private float m_controlSpeed;
+    [SerializeField]
+    private PlayerState playerState;
+    [SerializeField]
+    protected float m_damage;
+    [SerializeField]
+    private float m_controlSpeed;
+
     public float m_maxHealth;
+    public XboxController controller;
 
     [HideInInspector]
     public float m_currentHealth;
@@ -35,10 +40,12 @@ public abstract class BaseCharacter : MonoBehaviour {
     private float m_rotationSpeed = 250.0f;
     private Vector3 direction;
     private Vector3 prevRotDirection = Vector3.forward;
-
+   
     protected bool m_bActive;
 
     public MultiTargetCamera m_camera;
+    public TextMeshProUGUI m_SkillDisplay;
+    public TextMeshProUGUI m_SkillMaxed;
 
     public int SkillPoints {
         get { return m_playerSkillPoints;  }
@@ -52,7 +59,7 @@ public abstract class BaseCharacter : MonoBehaviour {
         m_currentHealth = m_maxHealth;
         m_bActive = false;
         m_camera = FindObjectOfType<MultiTargetCamera>();
-        m_playerSkillPoints = 0;
+        m_SkillMaxed.gameObject.SetActive(false);
     }
 
     protected virtual void FixedUpdate()
@@ -73,10 +80,16 @@ public abstract class BaseCharacter : MonoBehaviour {
 			default:
 				break;
 		}
+        m_SkillDisplay.text = m_playerSkillPoints.ToString();
 	}
 
     protected virtual void Update() {
-	}
+        if (playerSkills.Count == 4)
+        {
+            m_SkillDisplay.gameObject.SetActive(false);
+            m_SkillMaxed.gameObject.SetActive(true);
+        }
+    }
 
     virtual protected void CharacterMovement() {
 
