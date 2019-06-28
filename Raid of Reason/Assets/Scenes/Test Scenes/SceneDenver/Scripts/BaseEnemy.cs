@@ -10,7 +10,7 @@ public abstract class BaseEnemy : MonoBehaviour
     [SerializeField] protected float m_viewRange;
 
 	[Tooltip("Enemy's maximum amount of health.")]
-	[SerializeField] protected int m_maxHealth;
+	[SerializeField] public int m_maxHealth;
 
 	[Tooltip("How much damage the enemy will deal.")]
 	[SerializeField] protected int m_damage;
@@ -23,6 +23,9 @@ public abstract class BaseEnemy : MonoBehaviour
     protected NavMeshAgent m_navMeshAgent;
     protected BaseCharacter[] m_players;
 	protected Vector3 m_target;
+
+    //Afridi: I added this for my skill tree
+    public bool isDeadbByKenron = false;
 
     protected enum AI_STATE {
 	    WANDER,
@@ -150,5 +153,20 @@ public abstract class BaseEnemy : MonoBehaviour
         duration -= Time.deltaTime;
         if (duration > 0f) yield return new WaitForEndOfFrame();
         m_stunned = false;
+    }
+
+    //Afridi : Added this for skill tree
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Amaterasu")
+        {
+            if (m_health <= 0.0f)
+            {
+                Kenron kenron = other.GetComponentInParent<Kenron>();
+                isDeadbByKenron = true;
+                kenron.SkillChecker();
+                isDeadbByKenron = false;
+            }
+        }
     }
 }

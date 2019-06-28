@@ -151,7 +151,7 @@ MonoBehaviour:
   m_maxHealth: 100
   controller: 2
   m_currentHealth: 0
-  m_playerSkillPoints: 1
+  m_playerSkillPoints: 5
   attributes:
   - attribute: {fileID: 11400000, guid: b2495a075f992234b88a59782976b17a, type: 2}
     amount: 100
@@ -171,6 +171,8 @@ MonoBehaviour:
   particle: {fileID: 1186225012428732162, guid: 14477d58dd7a8ea4faec6e74cea8b4f1,
     type: 3}
   swordParticle: {fileID: 100004, guid: 1c20c7996d683754db1f0f62a361952c, type: 3}
+  manager: {fileID: 1578306635}
+  isActive: 0
 --- !u!54 &38002300
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -261,6 +263,85 @@ Transform:
   m_Father: {fileID: 562301331}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &105965357
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6805561947401799007, guid: 0e52fe15bfadef549977d5c3613d565b,
+        type: 3}
+      propertyPath: m_Name
+      value: melee (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6805561947401799007, guid: 0e52fe15bfadef549977d5c3613d565b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6805561947401798996, guid: 0e52fe15bfadef549977d5c3613d565b,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6805561947401798996, guid: 0e52fe15bfadef549977d5c3613d565b,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 6805561947401798996, guid: 0e52fe15bfadef549977d5c3613d565b,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -9.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 6805561947401798996, guid: 0e52fe15bfadef549977d5c3613d565b,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6805561947401798996, guid: 0e52fe15bfadef549977d5c3613d565b,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6805561947401798996, guid: 0e52fe15bfadef549977d5c3613d565b,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6805561947401798996, guid: 0e52fe15bfadef549977d5c3613d565b,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6805561947401798996, guid: 0e52fe15bfadef549977d5c3613d565b,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6805561947401798996, guid: 0e52fe15bfadef549977d5c3613d565b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6805561947401798996, guid: 0e52fe15bfadef549977d5c3613d565b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6805561947401798996, guid: 0e52fe15bfadef549977d5c3613d565b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6805561947401798992, guid: 0e52fe15bfadef549977d5c3613d565b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0e52fe15bfadef549977d5c3613d565b, type: 3}
 --- !u!1 &136932003
 GameObject:
   m_ObjectHideFlags: 0
@@ -684,7 +765,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &224490490
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1101,7 +1182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1d8495152555a448347d7c1e081e83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skill: {fileID: 11400000, guid: 9effe3fb807c251428de26849650e568, type: 2}
+  skill: {fileID: 11400000, guid: a950858c0b81cf34e93af668a7bc3b67, type: 2}
   skillName: {fileID: 1238482872}
   skillDescription: {fileID: 1057742144}
   skillIcon: {fileID: 1044188155}
@@ -1625,7 +1706,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &398007904
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2016,7 +2097,7 @@ Transform:
   - {fileID: 38002304}
   - {fileID: 1529462483}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &562301332
 MonoBehaviour:
@@ -2269,7 +2350,7 @@ Transform:
   m_Children:
   - {fileID: 1534712044}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &578222974
 GameObject:
@@ -2363,7 +2444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1d8495152555a448347d7c1e081e83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skill: {fileID: 11400000, guid: d46fd7ec258bfd049b933218bf1d2b8f, type: 2}
+  skill: {fileID: 11400000, guid: fa301f8e6fbd2af42a68c33bf12f4e45, type: 2}
   skillName: {fileID: 357553062}
   skillDescription: {fileID: 775367545}
   skillIcon: {fileID: 958412788}
@@ -2892,7 +2973,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &725563825
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3854,7 +3935,7 @@ RectTransform:
   - {fileID: 725563825}
   - {fileID: 145923473}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4605,7 +4686,7 @@ Transform:
   - {fileID: 304378221}
   - {fileID: 746460668}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1044188153
 GameObject:
@@ -5361,7 +5442,7 @@ Transform:
   m_Children:
   - {fileID: 655161517}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1304971011
 GameObject:
@@ -5765,7 +5846,7 @@ Transform:
   m_LocalScale: {x: 1, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1372590015
 MonoBehaviour:
@@ -6315,7 +6396,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1529462480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6731,36 +6812,23 @@ MonoBehaviour:
   m_Skills:
   - m_reset:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 38002298}
+          m_MethodName: ResetSwordSkill
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-    m_coolDown: 0
+    m_coolDown: 10
     m_currentCoolDown: 0
-    m_skillIcon: {fileID: 0}
-  - m_reset:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-    m_coolDown: 0
-    m_currentCoolDown: 0
-    m_skillIcon: {fileID: 0}
-  - m_reset:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-    m_coolDown: 0
-    m_currentCoolDown: 0
-    m_skillIcon: {fileID: 0}
-  - m_reset:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-    m_coolDown: 0
-    m_currentCoolDown: 0
-    m_skillIcon: {fileID: 0}
+    m_skillIcon: {fileID: 939701316}
   m_Kenron: {fileID: 38002298}
   "m_the\xE1": {fileID: 655161516}
   m_Nashorn: {fileID: 1534712045}
@@ -7681,7 +7749,7 @@ Transform:
   - {fileID: 1694825428}
   - {fileID: 831252075}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1846276821
 GameObject:
@@ -8278,7 +8346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1d8495152555a448347d7c1e081e83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skill: {fileID: 11400000, guid: c8dc87d67b317324abc460b5a0abfabf, type: 2}
+  skill: {fileID: 11400000, guid: c8b7e4b239fc27541b9be50dd5fb1ce8, type: 2}
   skillName: {fileID: 590637670}
   skillDescription: {fileID: 1443829346}
   skillIcon: {fileID: 1555662870}
@@ -8552,7 +8620,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2128484016
 GameObject:
@@ -8599,8 +8667,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1, z: 1.1781235}
+  m_Center: {x: 0, y: 0, z: -0.0027599335}
 --- !u!23 &2128484019
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8659,6 +8727,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_damage: 45
+  Kenron: {fileID: 38002298}
 --- !u!1 &2135013106
 GameObject:
   m_ObjectHideFlags: 0

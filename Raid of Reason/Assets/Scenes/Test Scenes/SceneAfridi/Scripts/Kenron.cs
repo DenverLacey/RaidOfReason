@@ -23,42 +23,36 @@ public class Kenron : BaseCharacter {
     private GameObject particle;
     [SerializeField]
     private GameObject swordParticle;
-    
-    // Use this for initialization
+    private BaseEnemy enemy;
+
+    public SkillManager manager;
+    public bool isActive = false;
+
     protected override void Awake () {
         base.Awake();
         m_Kenron = FindObjectOfType<Kenron>();
+        enemy = FindObjectOfType<BaseEnemy>();
         m_Amaterasu = GameObject.FindGameObjectWithTag("Amaterasu");
         m_KenronSkeleton = GetComponent<Rigidbody>();
 	}
 
-    // Update is called once per frame
     protected override void FixedUpdate() {
         if (m_Kenron != null)
         {
             Slash();
+            SkillChecker();
 			base.FixedUpdate();
         }
 	}
 
-    //Abilty 1: Flash Fire
-    public void FlashFire() {
-        if (m_Kenron != null)
-        {
-            GameObject temp = Instantiate(particle, transform.position + Vector3.down * 0.5f, Quaternion.Euler(270, 0, 0), transform);
-            Destroy(temp, 7);
-            SetDamage(60);
-            SetSpeed(15.0f);
-        }
-    }
-
     public void ChaosFlame() {
         if (m_Kenron != null && m_Amaterasu != null)
         {
+            isActive = true;
             GameObject temp = Instantiate(swordParticle, m_Amaterasu.transform.position + Vector3.zero * 0.5f, Quaternion.Euler(-90, 0, 0), m_Amaterasu.transform);
-            Destroy(temp, 30);
-            SetDamage(90);
-            SetHealth(40);         
+            SetDamage(50);
+            SetSpeed(20.0f);
+            Destroy(temp, 10);
         }
     }
 
@@ -76,12 +70,20 @@ public class Kenron : BaseCharacter {
         }
     }
 
-    public void ResetSkill()
-    {
-        if (m_Kenron != null)
+    public void SkillChecker() {
+        if (isActive == true && playerSkills.Find(skill => skill.Name == "Vile Infusion") != new SkillsAbilities())
         {
-            SetDamage(50);
-            SetSpeed(10.0f);
+            if (enemy.isDeadbByKenron == true)
+            {
+                this.m_maxHealth = m_maxHealth + 10;
+            }
+        }
+        if (isActive == true && playerSkills.Find(skill => skill.Name == "Blood Lust") != new SkillsAbilities())
+        {
+            if (enemy.isDeadbByKenron == true)
+            {
+                manager.m_Skills[0].m_currentCoolDown = manager.m_Skills[0].m_currentCoolDown - 2;
+            }
         }
     }
 
@@ -89,8 +91,9 @@ public class Kenron : BaseCharacter {
     {
         if (m_Kenron != null)
         {
-            SetDamage(50);
+            SetDamage(40);
             SetSpeed(10.0f);
+            isActive = false;
         }
     }
 

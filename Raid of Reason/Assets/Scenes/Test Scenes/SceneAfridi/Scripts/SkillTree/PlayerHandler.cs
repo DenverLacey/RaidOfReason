@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using XboxCtrlrInput;
 
 public class PlayerHandler : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class PlayerHandler : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab)) {
+        if (Input.GetKeyDown(KeyCode.Tab) || XCI.GetButtonDown(XboxButton.A, XboxController.Second)) {
             if (m_Canvas) {
                 m_SeeCanvas = !m_SeeCanvas;
                 m_Canvas.gameObject.SetActive(m_SeeCanvas);

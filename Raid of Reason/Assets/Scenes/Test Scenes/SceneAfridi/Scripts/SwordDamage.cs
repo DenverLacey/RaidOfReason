@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class SwordDamage : MonoBehaviour
 {
-   [SerializeField]private int m_damage;
+   [SerializeField]
+    private int m_damage;
+    public Kenron Kenron;
+
 	public void SetDamage(int damage)
 	{
 		this.m_damage = damage;
@@ -20,6 +23,12 @@ public class SwordDamage : MonoBehaviour
 			{
 				SetDamage(m_damage);
 				enemy.TakeDamage(m_damage);
+                if (Kenron.playerSkills.Find(skill => skill.Name == "Shuras Reckoning") != new SkillsAbilities()) {
+                    if (Kenron.isActive == true)
+                    {
+                        other.GetComponent<StatusEffectManager>().BurnEffect(4);
+                    }
+                }
 			}
 
 			Debug.Log("attack successful " + tag);

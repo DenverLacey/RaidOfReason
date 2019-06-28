@@ -6,11 +6,15 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Skill Tree/Add Skill")]
 public class SkillsAbilities : ScriptableObject 
 {
+    public string Name;
     public string Description;
     public Sprite Icon;
     public int pointsNeeded;
 
+    private BaseCharacter Base;
     public List<PlayerAttributes> affectedAttributes = new List<PlayerAttributes>();
+
+   // public static SkillsAbilities s_default = new SkillsAbilities();
 
     public void SetValues(GameObject skillDisplayObject, BaseCharacter Player) {
         if (skillDisplayObject) {
