@@ -18,6 +18,13 @@ public class Nashorn : BaseCharacter
     public float m_explosiveForce;
     public float m_explosiveRadius;
     
+    [Tooltip("Size of the area of effect for taunt ability")]
+    [SerializeField] float m_tauntRadius;
+
+    [Tooltip("How vulnerable Nashorn is while taunting (1.0 is default)")]
+    [SerializeField] float m_tauntVulnerability;
+
+    private List<BaseEnemy> m_nearbyEnemies = new List<BaseEnemy>();
 
     // 1 = Left Fist / 0 = Right Fist
     private uint m_gauntletIndex = 0;
@@ -83,7 +90,17 @@ public class Nashorn : BaseCharacter
 
     //Base Ability
     public void Spott() {
-        //Taunt
+        // set vulnerability
+        m_vulnerability = m_tauntVulnerability;
+
+        // get reference to all nearby enemies
+        m_nearbyEnemies.AddRange(FindObjectsOfType<BaseEnemy>());
+        m_nearbyEnemies.RemoveAll(e => (transform.position - e.transform.position).sqrMagnitude <= m_tauntRadius * m_tauntRadius);
+
+        // taunt all nearby enemies
+        foreach (BaseEnemy enemy in m_nearbyEnemies) {
+            enemy.Taunt();
+        }
     }
 
     //Ultimate
@@ -114,5 +131,13 @@ public class Nashorn : BaseCharacter
 
     public void ResetGauntlet() {
 
+    }
+
+    public void ResetSpott() {
+        ResetVulernability();
+        foreach (BaseEnemy enemy in m_nearbyEnemies) {
+            enemy.StopTaunt();
+        }
+        m_nearbyEnemies.Clear();
     }
 }

@@ -47,6 +47,9 @@ public abstract class BaseCharacter : MonoBehaviour {
     public TextMeshProUGUI m_SkillDisplay;
     public TextMeshProUGUI m_SkillMaxed;
 
+    // a multiplier for damage taken
+    protected float m_vulnerability;
+
     public int SkillPoints {
         get { return m_playerSkillPoints;  }
         set {
@@ -57,6 +60,7 @@ public abstract class BaseCharacter : MonoBehaviour {
 
     protected virtual void Awake () {
         m_currentHealth = m_maxHealth;
+        m_vulnerability = 1.0f;
         m_bActive = false;
         m_camera = FindObjectOfType<MultiTargetCamera>();
         m_SkillMaxed.gameObject.SetActive(false);
@@ -122,7 +126,7 @@ public abstract class BaseCharacter : MonoBehaviour {
 
     public virtual void TakeDamage(float damage)
     {
-        m_currentHealth -= damage;
+        m_currentHealth -= damage * m_vulnerability;
 
         if (m_currentHealth <= 0.0f)
         {
@@ -167,6 +171,18 @@ public abstract class BaseCharacter : MonoBehaviour {
     public float GetMaxHealth()
     {
         return m_maxHealth;
+    }
+
+    public float GetVulnerability() {
+        return m_vulnerability;
+    }
+
+    public void SetVulnerability(float vulnerability) {
+        m_vulnerability = vulnerability;
+    }
+
+    public void ResetVulernability() {
+        m_vulnerability = 1.0f;
     }
 
     public delegate void OnPointChange();

@@ -54,7 +54,10 @@ public class RangedEnemy : BaseEnemy {
 				m_timer = m_shootCooldown;
 			}
 		}
+	}
 
-		m_oldState = AI_STATE.ATTACK;
+	protected override void Taunted() {
+		m_target = m_nashorn.transform.position;
+		Attack();
 	}
 }

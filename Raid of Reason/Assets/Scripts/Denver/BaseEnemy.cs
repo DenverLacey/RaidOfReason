@@ -24,32 +24,39 @@ public abstract class BaseEnemy : MonoBehaviour
     protected BaseCharacter[] m_players;
 	protected Vector3 m_target;
 
+	protected Nashorn m_nashorn;
+
     //Afridi: I added this for my skill tree
     public bool isDeadbByKenron = false;
 
     protected enum AI_STATE {
 	    WANDER,
-	    ATTACK
+	    ATTACK,
+		TAUNTED
     };
 
 	protected AI_STATE m_currentState;
 	protected AI_STATE m_oldState;
 
     protected abstract void Attack();
+	protected abstract void Taunted();
 
     protected virtual void Start() {
         m_navMeshAgent = GetComponent<NavMeshAgent>();
         m_players = GameObject.FindObjectsOfType<BaseCharacter>();
+		m_nashorn = GameObject.FindObjectOfType<Nashorn>();
         m_currentState = AI_STATE.WANDER;
         m_oldState = m_currentState;
 		m_health = m_maxHealth;
     }
 
     protected virtual void Update() {
-    		if (m_stunned) return;
+    	if (m_stunned) return;
 		
 		// determine state
-		m_currentState = DetermineState();
+		if (m_currentState != AI_STATE.TAUNTED) {
+			m_currentState = DetermineState();
+		}
 
 		switch (m_currentState) {
 			case AI_STATE.WANDER:
@@ -60,11 +67,16 @@ public abstract class BaseEnemy : MonoBehaviour
 				Attack();
 				break;
 
+			case AI_STATE.TAUNTED:
+				Taunted();
+				break;
+
 			default:
 				Debug.LogError("State couldn't be determined!", this);
 				break;
 		}
 		m_navMeshAgent.destination = m_target;
+		m_oldState = m_currentState;
 	}
 
     protected virtual AI_STATE DetermineState() {
@@ -132,8 +144,6 @@ public abstract class BaseEnemy : MonoBehaviour
 
 		// set target destination
 		m_target = point;
-
-		m_oldState = AI_STATE.WANDER;
 	}
 
 	public virtual void TakeDamage(float damage) {
@@ -154,6 +164,15 @@ public abstract class BaseEnemy : MonoBehaviour
         if (duration > 0f) yield return new WaitForEndOfFrame();
         m_stunned = false;
     }
+	
+	public virtual void Taunt() {
+		m_currentState = AI_STATE.TAUNTED;
+		m_target = m_nashorn.transform.position;
+	}
+
+	public virtual void StopTaunt() {
+		m_currentState = AI_STATE.WANDER;
+	}
 
     //Afridi : Added this for skill tree
     private void OnTriggerEnter(Collider other)

@@ -62,4 +62,14 @@ public class MeleeEnemy : BaseEnemy
             m_meleeTimer = m_meleeCooldown;
         }
     }
+
+    public override void Taunt() {
+        base.Taunt();
+        m_targetPlayer = m_nashorn;
+    }
+
+    protected override void Taunted() {
+        m_target = m_targetPlayer.transform.position;
+        Attack();
+    }
 }

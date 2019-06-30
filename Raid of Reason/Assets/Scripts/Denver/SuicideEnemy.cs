@@ -42,11 +42,17 @@ public class SuicideEnemy : BaseEnemy
 				Attack();
 				break;
 
+            case AI_STATE.TAUNTED:
+                Taunted();
+                break;
+
 			default:
 				Debug.LogError("State couldn't be determined!", this);
 				break;
 		}
         if (!m_readyToExplode) m_navMeshAgent.destination = m_target;
+
+        m_oldState = m_currentState;
     }
 
     protected override AI_STATE DetermineState() {
@@ -72,8 +78,8 @@ public class SuicideEnemy : BaseEnemy
 
     protected override void Attack() {
     	if (Vector3.Distance(transform.position, m_target) > 2f && m_oldState == AI_STATE.ATTACK) {
-		return;
-	}
+		    return;
+	    }
 	
         if (Vector3.Distance(transform.position, m_target) <= m_attackRange || m_readyToExplode) {
             m_readyToExplode = true;
@@ -94,5 +100,10 @@ public class SuicideEnemy : BaseEnemy
                 Destroy(gameObject);
             }
         }
+    }
+
+    protected override void Taunted() {
+        m_target = m_nashorn.transform.position;
+        Attack();
     }
 }
