@@ -26,7 +26,7 @@ public class SwordDamage : MonoBehaviour
                 if (Kenron.playerSkills.Find(skill => skill.Name == "Shuras Reckoning") != new SkillsAbilities()) {
                     if (Kenron.isActive == true)
                     {
-                        other.GetComponent<StatusEffectManager>().BurnEffect(4);
+                       // other.GetComponent<StatusEffectManager>().BurnEffect(4);
                     }
                 }
 			}

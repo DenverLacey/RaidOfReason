@@ -29,7 +29,7 @@ public abstract class BaseCharacter : MonoBehaviour {
     public float m_maxHealth;
     public XboxController controller;
 
-    [HideInInspector]
+    //[HideInInspector]
     public float m_currentHealth;
     [SerializeField]
     public int m_playerSkillPoints;
@@ -63,7 +63,7 @@ public abstract class BaseCharacter : MonoBehaviour {
         m_vulnerability = 1.0f;
         m_bActive = false;
         m_camera = FindObjectOfType<MultiTargetCamera>();
-        m_SkillMaxed.gameObject.SetActive(false);
+        //m_SkillMaxed.gameObject.SetActive(false);
     }
 
     protected virtual void FixedUpdate()

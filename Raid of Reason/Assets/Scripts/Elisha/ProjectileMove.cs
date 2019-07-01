@@ -10,25 +10,23 @@ using UnityEngine;
 
 public class ProjectileMove : MonoBehaviour {
 
-    [SerializeField]
-    private float projectileLife;
-    [SerializeField]
-    private float projectileSpeed;
-
-    private float m_damage;
+    [SerializeField] private float m_projectileLife;
+    [SerializeField] private float m_projectileSpeed;
+    [SerializeField] private float m_healAmount;
+    [SerializeField] private float m_damage;
 
     public void SetDamage(float damage)
     {
         this.m_damage = damage;
     }
 
-	// Update is called once per frame
-	void Update () {
-		if(projectileSpeed != 0)
+    // Update is called once per frame
+    void Update () {
+		if(m_projectileSpeed != 0)
         {
-            transform.position += transform.forward * (projectileSpeed * Time.deltaTime);
-            projectileLife -= Time.deltaTime;
-            if(projectileLife <= 0f)
+            transform.position += transform.forward * (m_projectileSpeed * Time.deltaTime);
+            m_projectileLife -= Time.deltaTime;
+            if(m_projectileLife <= 0f)
             {
                 Destroy(gameObject);
             }
@@ -53,9 +51,22 @@ public class ProjectileMove : MonoBehaviour {
 
             Debug.Log("attack successful " + tag);
         }
-        else
+        else 
         {
-            Debug.Log("attack unsuccessful " + tag);
+            switch (other.gameObject.tag)
+            {
+                case "Kenron":
+                    Kenron m_kenron = other.gameObject.GetComponent<Kenron>();
+                    m_kenron.m_currentHealth += m_healAmount;
+                    break;
+                case "Nashorn":
+                    Nashorn m_nashorn = other.gameObject.GetComponent<Nashorn>();
+                    m_nashorn.m_currentHealth += m_healAmount;
+                    break;
+                default:
+                    Debug.Log("projectile missed player");
+                    break;
+            }
         }
 		Destroy(gameObject);
     }
