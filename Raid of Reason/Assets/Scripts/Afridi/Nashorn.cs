@@ -6,7 +6,6 @@ using XboxCtrlrInput;
 
 public class Nashorn : BaseCharacter
 {
-    public Nashorn m_Nashorn;
     public Rigidbody m_NashornSkeleton;
     public List<GameObject> m_gauntlets;
 
@@ -33,7 +32,6 @@ public class Nashorn : BaseCharacter
     {
         base.Awake();
         m_Collider.SetActive(false);
-        m_Nashorn = FindObjectOfType<Nashorn>();
         m_NashornSkeleton = GetComponent<Rigidbody>();
     }
 
@@ -52,13 +50,13 @@ public class Nashorn : BaseCharacter
     }
 
     protected override void Update() {
-        if (m_Nashorn != null) {
+        if (this.gameObject != null) {
             Punch();
         }
     }
 
     public void Punch() {
-        if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.Third) > 0.1)
+        if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.Second) > 0.1)
         {
             if (m_gauntletIndex == 0)
             {
@@ -73,7 +71,7 @@ public class Nashorn : BaseCharacter
                 m_Instaniate = Instantiate(m_Particle, m_gauntlets[1].transform.position + Vector3.forward * (m_gauntlets[1].transform.localScale.y / 2), Quaternion.Euler(-180, 0, 0), m_gauntlets[1].transform);
             }
         }
-        else if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.Third) < 0.1) {
+        else if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.Second) < 0.1) {
             if (m_gauntletIndex == 0)
             {
                 m_gauntlets[0].gameObject.transform.localPosition = new Vector3(-0.75f, 0, 0.0f);
@@ -89,50 +87,25 @@ public class Nashorn : BaseCharacter
     }
 
     //Base Ability
-    public void Spott() {
-        // set vulnerability
-        m_vulnerability = m_tauntVulnerability;
-
-        // get reference to all nearby enemies
-        m_nearbyEnemies.AddRange(FindObjectsOfType<BaseEnemy>());
-        m_nearbyEnemies.RemoveAll(e => (transform.position - e.transform.position).sqrMagnitude <= m_tauntRadius * m_tauntRadius);
-
-        // taunt all nearby enemies
-        foreach (BaseEnemy enemy in m_nearbyEnemies) {
-            enemy.Taunt();
-        }
-    }
-
-    //Ultimate
-    public void MachtDesSturms()
+    public void Spott()
     {
-        //Power of the Storm
-        if (m_Nashorn != null)
+        if (this.gameObject != null)
         {
-            GameObject temp = Instantiate(m_Particle_2, transform.position + Vector3.down * 0.5f, Quaternion.Euler(270, 0, 0), transform);
-            m_Collider.SetActive(true);
-            Collider[] colliders = Physics.OverlapSphere(m_Collider.transform.position, m_explosiveRadius);
+            // set vulnerability
+            m_vulnerability = m_tauntVulnerability;
 
-            foreach (Collider nearbyEnemy in colliders)
+            // get reference to all nearby enemies
+            m_nearbyEnemies.AddRange(FindObjectsOfType<BaseEnemy>());
+            m_nearbyEnemies.RemoveAll(e => (transform.position - e.transform.position).sqrMagnitude <= m_tauntRadius * m_tauntRadius);
+
+            // taunt all nearby enemies
+            foreach (BaseEnemy enemy in m_nearbyEnemies)
             {
-                Rigidbody rb = nearbyEnemy.GetComponent<Rigidbody>();
-                if (nearbyEnemy.tag == "Enemy")
-                {
-                    rb.AddExplosionForce(m_explosiveForce, m_Collider.transform.position, m_explosiveRadius);
-                    rb.GetComponent<BaseEnemy>().Stun(3f);
-                }
+                enemy.Taunt();
             }
-
-            m_Collider.SetActive(false);
-
-            Destroy(temp, 12);
         }
-    }   
-
-    public void ResetGauntlet() {
-
     }
-
+   
     public void ResetSpott() {
         ResetVulernability();
         foreach (BaseEnemy enemy in m_nearbyEnemies) {

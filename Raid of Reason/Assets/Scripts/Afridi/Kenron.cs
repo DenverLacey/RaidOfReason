@@ -14,8 +14,6 @@ using XboxCtrlrInput;
 
 public class Kenron : BaseCharacter {
 
-    //Kenron himself
-    public Kenron m_Kenron;
     public GameObject m_Amaterasu;
     public Rigidbody m_KenronSkeleton;
 
@@ -30,14 +28,13 @@ public class Kenron : BaseCharacter {
 
     protected override void Awake () {
         base.Awake();
-        m_Kenron = FindObjectOfType<Kenron>();
         enemy = FindObjectOfType<BaseEnemy>();
         m_Amaterasu = GameObject.FindGameObjectWithTag("Amaterasu");
         m_KenronSkeleton = GetComponent<Rigidbody>();
 	}
 
     protected override void FixedUpdate() {
-        if (m_Kenron != null)
+        if (this.gameObject != null)
         {
             Slash();
             SkillChecker();
@@ -46,7 +43,7 @@ public class Kenron : BaseCharacter {
 	}
 
     public void ChaosFlame() {
-        if (m_Kenron != null && m_Amaterasu != null)
+        if (this.gameObject != null && m_Amaterasu != null)
         {
             isActive = true;
             GameObject temp = Instantiate(swordParticle, m_Amaterasu.transform.position + Vector3.zero * 0.5f, Quaternion.Euler(-90, 0, 0), m_Amaterasu.transform);
@@ -71,25 +68,28 @@ public class Kenron : BaseCharacter {
     }
 
     public void SkillChecker() {
-        if (isActive == true && playerSkills.Find(skill => skill.Name == "Vile Infusion") != new SkillsAbilities())
+        if (this.gameObject != null)
         {
-            if (enemy.isDeadbByKenron == true)
+            if (isActive == true && playerSkills.Find(skill => skill.Name == "Vile Infusion") != new SkillsAbilities())
             {
-                this.m_maxHealth = m_maxHealth + 10;
+                if (enemy.isDeadbByKenron == true)
+                {
+                    this.m_maxHealth = m_maxHealth + 10;
+                }
             }
-        }
-        if (isActive == true && playerSkills.Find(skill => skill.Name == "Blood Lust") != new SkillsAbilities())
-        {
-            if (enemy.isDeadbByKenron == true)
+            if (isActive == true && playerSkills.Find(skill => skill.Name == "Blood Lust") != new SkillsAbilities())
             {
-                manager.m_Skills[0].m_currentCoolDown = manager.m_Skills[0].m_currentCoolDown - 2;
+                if (enemy.isDeadbByKenron == true)
+                {
+                    manager.m_Skills[0].m_currentCoolDown = manager.m_Skills[0].m_currentCoolDown - 2;
+                }
             }
         }
     }
 
     public void ResetSwordSkill()
     {
-        if (m_Kenron != null)
+        if (this.gameObject != null)
         {
             SetDamage(40);
             SetSpeed(10.0f);

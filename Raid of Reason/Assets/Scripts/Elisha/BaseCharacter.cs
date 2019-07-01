@@ -97,31 +97,33 @@ public abstract class BaseCharacter : MonoBehaviour {
 
     virtual protected void CharacterMovement() {
 
-        ///<summary> 
-        /// Handles the forward and backwards movement of the character via the xbox controller layout
-        /// </summary>
-        float axisX = XCI.GetAxis(XboxAxis.LeftStickX, controller) * m_controlSpeed;
-        float axisZ = XCI.GetAxis(XboxAxis.LeftStickY, controller) * m_controlSpeed;
+      
+            ///<summary> 
+            /// Handles the forward and backwards movement of the character via the xbox controller layout
+            /// </summary>
+            float axisX = XCI.GetAxis(XboxAxis.LeftStickX, controller) * m_controlSpeed;
+            float axisZ = XCI.GetAxis(XboxAxis.LeftStickY, controller) * m_controlSpeed;
 
-        Vector3 movement = m_camera.transform.TransformDirection(axisX, 0, axisZ);
-        transform.position += new Vector3(movement.x, 0, movement.z) * Time.deltaTime;
+            Vector3 movement = m_camera.transform.TransformDirection(axisX, 0, axisZ);
+            transform.position += new Vector3(movement.x, 0, movement.z) * Time.deltaTime;
 
-        /// <summary>
-        /// Handles the rotation of the character via the xbox controller layout
-        /// </summary>
-        float rotAxisX = XCI.GetAxis(XboxAxis.RightStickX, controller) * m_rotationSpeed;
-        float rotAxisZ = XCI.GetAxis(XboxAxis.RightStickY, controller) * m_rotationSpeed;
+            /// <summary>
+            /// Handles the rotation of the character via the xbox controller layout
+            /// </summary>
+            float rotAxisX = XCI.GetAxis(XboxAxis.RightStickX, controller) * m_rotationSpeed;
+            float rotAxisZ = XCI.GetAxis(XboxAxis.RightStickY, controller) * m_rotationSpeed;
 
-        Vector3 rawDir = m_camera.transform.TransformDirection(rotAxisX, 0, rotAxisZ);
-        Vector3 direction = new Vector3(rawDir.x, 0, rawDir.z);
+            Vector3 rawDir = m_camera.transform.TransformDirection(rotAxisX, 0, rotAxisZ);
+            Vector3 direction = new Vector3(rawDir.x, 0, rawDir.z);
 
-        if (direction.magnitude < 0.1f)
-        {
-            direction = prevRotDirection;
-        }
-        direction = direction.normalized;
-        prevRotDirection = direction;
-        transform.localRotation = Quaternion.LookRotation(direction);
+            if (direction.magnitude < 0.1f)
+            {
+                direction = prevRotDirection;
+            }
+            direction = direction.normalized;
+            prevRotDirection = direction;
+            transform.localRotation = Quaternion.LookRotation(direction);
+
     }
 
     public virtual void TakeDamage(float damage)

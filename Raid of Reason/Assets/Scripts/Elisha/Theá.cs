@@ -16,7 +16,6 @@ public class Theá : BaseCharacter
     private Vector3 hitLocation;
     private LayerMask layerMask;
     private GameObject temp;
-    public Theá m_thea;
     public Kenron m_kenron;
     public Nashorn m_Nashorn;
     [SerializeField]private float delay;
@@ -29,14 +28,13 @@ public class Theá : BaseCharacter
         base.Awake();
         isActive = false;
         m_Nashorn = FindObjectOfType<Nashorn>();
-		m_thea = FindObjectOfType<Theá>();
 		m_kenron = FindObjectOfType<Kenron>();
     }
 
     // Update is called once per frame
     protected override void FixedUpdate()
     {
-        if(m_thea != null)
+        if(this.gameObject != null)
         {
 			base.FixedUpdate();
 			Projectile();
@@ -47,7 +45,7 @@ public class Theá : BaseCharacter
     {
         counter += Time.deltaTime;
 
-        if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.First) > 0.1)
+        if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.Third) > 0.1)
         {
             shotCounter += Time.deltaTime;
 
@@ -58,14 +56,10 @@ public class Theá : BaseCharacter
                 counter = 0f;
             }
         }
-        else if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.First) < 0.1)
+        else if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.Third) < 0.1)
         {
             shotCounter = 0f;
         }
-    }
-
-    public void RipTide() {
-
     }
 
     public void GiftOfPoseidon()
