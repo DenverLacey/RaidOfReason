@@ -34,7 +34,6 @@ public abstract class BaseCharacter : MonoBehaviour {
     [SerializeField]
     public int m_playerSkillPoints;
 
-    public List<PlayerAttributes> attributes = new List<PlayerAttributes>();
     public List<SkillsAbilities> playerSkills = new List<SkillsAbilities>();
 
     private float m_rotationSpeed = 250.0f;

@@ -12,7 +12,7 @@ public class SkillsAbilities : ScriptableObject
     public int pointsNeeded;
 
     private BaseCharacter Base;
-    public List<PlayerAttributes> affectedAttributes = new List<PlayerAttributes>();
+
 
    // public static SkillsAbilities s_default = new SkillsAbilities();
 
@@ -49,23 +49,11 @@ public class SkillsAbilities : ScriptableObject
     }
 
     public bool GetSkill(BaseCharacter character) {
-        int i = 0;
-        List<PlayerAttributes>.Enumerator attributes = affectedAttributes.GetEnumerator();
-        while (attributes.MoveNext()) {
-            List<PlayerAttributes>.Enumerator playerAttr = character.attributes.GetEnumerator();
-            while (playerAttr.MoveNext()) {
-                if (attributes.Current.attribute.name.ToString() == playerAttr.Current.attribute.name.ToString()) {
-                    playerAttr.Current.amount += attributes.Current.amount;
-                    i++;
-                }
-            }
-            if (i > 0) {
-                character.m_playerSkillPoints -= this.pointsNeeded;
-                character.playerSkills.Add(this);
-                return true;
-            }
-        }
-        return false;
+
+        character.m_playerSkillPoints -= this.pointsNeeded;
+        character.playerSkills.Add(this);
+        return true;
+
     }
     
 }
