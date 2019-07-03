@@ -24,9 +24,10 @@ public class Nashorn : BaseCharacter
     [SerializeField] float m_tauntVulnerability;
 
     private List<BaseEnemy> m_nearbyEnemies = new List<BaseEnemy>();
-
+    public bool isActive = false;
     // 1 = Left Fist / 0 = Right Fist
     private uint m_gauntletIndex = 0;
+    public SkillManager manager;
 
     protected override void Awake()
     {
@@ -52,9 +53,19 @@ public class Nashorn : BaseCharacter
     protected override void Update() {
         if (this.gameObject != null) {
             Punch();
+            SkillChecker();
         }
     }
 
+    public void SkillChecker() {
+        if (this.gameObject != null && playerSkills.Count < 0)
+        {
+            if (isActive == true && playerSkills.Find(skill => skill.Name == "Roaring Thunder")) {
+                this.m_tauntRadius = m_tauntRadius + 5;
+                manager.m_Skills[1].m_currentCoolDown = manager.m_Skills[1].m_currentCoolDown - 5;
+            }
+        }
+    }
     public void Punch() {
         if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.Second) > 0.1)
         {
@@ -91,26 +102,32 @@ public class Nashorn : BaseCharacter
     {
         if (this.gameObject != null)
         {
+            isActive = true;
             // set vulnerability
             m_vulnerability = m_tauntVulnerability;
 
-            // get reference to all nearby enemies
-            m_nearbyEnemies.AddRange(FindObjectsOfType<BaseEnemy>());
-            m_nearbyEnemies.RemoveAll(e => (transform.position - e.transform.position).sqrMagnitude <= m_tauntRadius * m_tauntRadius);
+            m_nearbyEnemies = new List<BaseEnemy>(FindObjectsOfType<BaseEnemy>());
 
             // taunt all nearby enemies
             foreach (BaseEnemy enemy in m_nearbyEnemies)
             {
-                enemy.Taunt();
+                if ((transform.position - enemy.transform.position).sqrMagnitude <= m_tauntRadius * m_tauntRadius)
+                {
+                    enemy.Taunt();
+                }
             }
         }
     }
    
     public void ResetSpott() {
         ResetVulernability();
+        isActive = false;
+
         foreach (BaseEnemy enemy in m_nearbyEnemies) {
-            enemy.StopTaunt();
+            if (enemy.State == BaseEnemy.AI_STATE.TAUNTED)
+            {
+                enemy.StopTaunt();
+            }
         }
-        m_nearbyEnemies.Clear();
     }
 }

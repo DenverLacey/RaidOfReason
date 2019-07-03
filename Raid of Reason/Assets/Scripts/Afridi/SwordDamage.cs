@@ -23,10 +23,10 @@ public class SwordDamage : MonoBehaviour
 			{
 				SetDamage(m_damage);
 				enemy.TakeDamage(m_damage);
-                if (Kenron.playerSkills.Find(skill => skill.Name == "Shuras Reckoning") != new SkillsAbilities()) {
+                if (Kenron.playerSkills.Find(skill => skill.Name == "Shuras Reckoning") && Kenron.playerSkills.Count < 0) {
                     if (Kenron.isActive == true)
                     {
-                       // other.GetComponent<StatusEffectManager>().BurnEffect(4);
+                        other.GetComponent<StatusEffectManager>().ApplyBurn(4);
                     }
                 }
 			}

@@ -29,7 +29,7 @@ public abstract class BaseEnemy : MonoBehaviour
     //Afridi: I added this for my skill tree
     public bool isDeadbByKenron = false;
 
-    protected enum AI_STATE {
+    public enum AI_STATE {
 	    WANDER,
 	    ATTACK,
 		TAUNTED
@@ -37,6 +37,8 @@ public abstract class BaseEnemy : MonoBehaviour
 
 	protected AI_STATE m_currentState;
 	protected AI_STATE m_oldState;
+
+    public AI_STATE State { get => m_currentState; }
 
     protected abstract void Attack();
 	protected abstract void Taunted();
@@ -54,7 +56,7 @@ public abstract class BaseEnemy : MonoBehaviour
     	if (m_stunned) return;
 		
 		// determine state
-		if (m_currentState != AI_STATE.TAUNTED) {
+		if (m_currentState != AI_STATE.TAUNTED || m_target == null) {
 			m_currentState = DetermineState();
 		}
 

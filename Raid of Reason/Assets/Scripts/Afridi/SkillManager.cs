@@ -58,11 +58,11 @@ public class SkillManager : MonoBehaviour {
         }
         if (XCI.GetButtonDown(XboxButton.RightBumper, XboxController.Second))
         {
-            if (m_Skills[3].m_currentCoolDown >= m_Skills[3].m_coolDown)
+            if (m_Skills[1].m_currentCoolDown >= m_Skills[1].m_coolDown)
             {
                 m_Nashorn.Spott();
-                m_Skills[3].m_currentCoolDown = 0;
-                m_Skills[3].active = true;
+                m_Skills[1].m_currentCoolDown = 0;
+                m_Skills[1].active = true;
             }
         }
         else if (XCI.GetButtonUp(XboxButton.RightBumper, XboxController.Second))

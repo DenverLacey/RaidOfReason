@@ -16,19 +16,21 @@ public class Theá : BaseCharacter
     private Vector3 hitLocation;
     private LayerMask layerMask;
     private GameObject temp;
-    public Kenron m_kenron;
+    public Kenron m_Kenron;
     public Nashorn m_Nashorn;
     [SerializeField]private float delay;
     private float shotCounter;
     private float counter;
     bool isActive;
 
+    public SkillManager manager;
+
     protected override void Awake()
     {
         base.Awake();
         isActive = false;
         m_Nashorn = FindObjectOfType<Nashorn>();
-		m_kenron = FindObjectOfType<Kenron>();
+		m_Kenron = FindObjectOfType<Kenron>();
     }
 
     // Update is called once per frame
@@ -38,6 +40,7 @@ public class Theá : BaseCharacter
         {
 			base.FixedUpdate();
 			Projectile();
+            SkillChecker();
         }
     }
 
@@ -62,6 +65,39 @@ public class Theá : BaseCharacter
         }
     }
 
+    void SkillChecker() {
+        if (isActive == true && playerSkills.Find(skill => skill.name == "Settling Tide")) {
+            manager.m_Skills[3].m_currentCoolDown = manager.m_Skills[3].m_coolDown / 2;
+        }
+        if (playerSkills.Find(skill => skill.name == "Hydro Pressure"))
+        {
+            float healthcomparison = m_Kenron.m_currentHealth + m_Nashorn.m_currentHealth;
+
+            switch (healthcomparison) {
+                case 150:
+                    delay = 0.7f;
+                    m_damage = 13.0f;
+                    break;
+                case 130:
+                    delay = 0.5f;
+                    m_damage = 18.0f;
+                    break;
+                case 60:
+                    delay = 0.3f;
+                    m_damage = 24.0f;
+                    break;
+                case 25:
+                    delay = 0.1f;
+                    m_damage = 35.0f;
+                    break;
+                default:
+                    delay = 0.8f;
+                    m_damage = 8.0f;
+                    break;
+            }
+        }
+    }
+
     public void GiftOfPoseidon()
     {
         isActive = true;
@@ -70,13 +106,13 @@ public class Theá : BaseCharacter
         {
             for(int i = 0; i < 20; i++)
             {
-                SetHealth(50);
-				m_kenron.SetHealth(50);
-                m_Nashorn.SetHealth(50);
+                SetHealth(m_currentHealth + 50);
+				m_Kenron.SetHealth(m_Kenron.m_currentHealth + 50);
+                m_Nashorn.SetHealth(m_Nashorn.m_currentHealth + 50);
 				temp = Instantiate(waterPrefab, transform.position + Vector3.down * (transform.localScale.y / 2), Quaternion.Euler(90, 0, 0));
-				if (m_kenron != null)
+				if (m_Kenron != null)
 				{
-					temp = Instantiate(waterPrefab, m_kenron.transform.position + Vector3.down * (m_kenron.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), m_kenron.transform);
+					temp = Instantiate(waterPrefab, m_Kenron.transform.position + Vector3.down * (m_Kenron.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), m_Kenron.transform);
 				}
                 if (m_Nashorn != null)
                 {

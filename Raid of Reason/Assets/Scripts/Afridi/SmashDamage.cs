@@ -5,6 +5,7 @@ using UnityEngine;
 public class SmashDamage : MonoBehaviour
 {
     [SerializeField] private int m_damage;
+    public Nashorn Nashorn;
     public void SetDamage(int damage)
     {
         this.m_damage = damage;
@@ -20,6 +21,13 @@ public class SmashDamage : MonoBehaviour
             {
                 SetDamage(m_damage);
                 enemy.TakeDamage(m_damage);
+                if (Nashorn.playerSkills.Find(skill => skill.Name == "Shockwave") && Nashorn.playerSkills.Count < 0)
+                {
+                    if (Nashorn.isActive == true) {
+                        Vector3 direction = enemy.transform.position - other.transform.position;
+                        other.GetComponent<StatusEffectManager>().ApplyKnockBack(enemy.gameObject, direction, 1, 0.3f);
+                    }
+                }
             }
 
             Debug.Log("attack successful " + tag);

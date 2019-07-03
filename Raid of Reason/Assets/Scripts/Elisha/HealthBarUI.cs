@@ -19,8 +19,12 @@ public class HealthBarUI : MonoBehaviour
     void Update()
     {
         if (character)
-            healthBar.fillAmount = character.GetComponent<BaseCharacter>().m_currentHealth / character.GetComponent<BaseCharacter>().m_maxHealth;
-        else
+        {
+            healthBar.fillAmount = character.m_currentHealth / character.m_maxHealth;
+        }
+        else {
             healthBar.fillAmount = 0;
+        }
+
     }
 }
