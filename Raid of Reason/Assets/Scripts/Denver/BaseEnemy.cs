@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>
+/// Abstract BaseEnemy class from which all enemies derive from.
+/// </summary>
 [RequireComponent(typeof(NavMeshAgent))]
 public abstract class BaseEnemy : MonoBehaviour
 {
@@ -109,6 +112,15 @@ public abstract class BaseEnemy : MonoBehaviour
 		return s;
 	}
 
+	/// <summary>
+	/// Finds the closest point on the nav mesh to the source.
+	/// </summary>
+	/// <param name="source">
+	/// A Vector3. The source position that you want to know the closest point on the nav mesh.
+	/// </param>
+	/// <returns>
+	/// A Vector3. The closest point on the nav mesh to the source position.
+	/// </returns>
     protected Vector3 FindClosestPoint(Vector3 source) {
 
 		NavMeshHit hit;
@@ -148,6 +160,12 @@ public abstract class BaseEnemy : MonoBehaviour
 		m_target = point;
 	}
 
+	/// <summary>
+	/// Subtracts some damage from the enemy's health and will destroy enemy if it's dead.
+	/// </summary>
+	/// <param name="damage">
+	/// How much damage the enemy will sustain.
+	/// </param>
 	public virtual void TakeDamage(float damage) {
 		m_health -= damage;
 
@@ -156,17 +174,35 @@ public abstract class BaseEnemy : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Deactivates enemy's decision making for a duration.
+	/// </summary>
+	/// <param name="duration">
+	/// How long the enemy will be stunned for.
+	/// </param>
 	public virtual void Stun(float duration) {
 		m_stunned = true;
         StartCoroutine(StunReset(duration));
 	}
 
+	/// <summary>
+	/// Unstuns enemy after a duration.
+	/// </summary>
+	/// <param name="duration">
+	/// How long to wait before unstunning enemy.
+	/// </param>
+	/// <returns>
+	/// An IEnumerator. WaitForEndOfFrame
+	/// </returns>
     IEnumerator StunReset(float duration) {
         duration -= Time.deltaTime;
         if (duration > 0f) yield return new WaitForEndOfFrame();
         m_stunned = false;
     }
 	
+	/// <summary>
+	/// Sets enemy's current state to TAUNTED and sets enemy's target to nashorn.
+	/// </summary>
 	public virtual void Taunt() {
 		m_currentState = AI_STATE.TAUNTED;
 		m_target = m_nashorn.transform.position;

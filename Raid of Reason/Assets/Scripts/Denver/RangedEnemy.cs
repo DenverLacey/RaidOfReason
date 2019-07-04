@@ -2,6 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Author:	Denver
+/// Desc:	RangedEnemy class that derives from BaseEnemy.  RangedEnemy will shoot players from a
+///			distance.
+/// </summary>
+
+/// <summary>
+/// Enemy that will shoot players from a distance.
+/// </summary>
 public class RangedEnemy : BaseEnemy {
 
 	[Tooltip("Maximum distance at which the enemy will stand and shoot.")]
