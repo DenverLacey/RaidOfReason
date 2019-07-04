@@ -10,6 +10,7 @@ public class SpawnManager : MonoBehaviour
     public GameObject m_Suicide;
     public GameObject m_Melee;
     public GameObject m_Ranged;
+    public GameObject m_Horde;
 
     public void SpawnMelee() {
         m_Melee.SetActive(true);
@@ -26,5 +27,11 @@ public class SpawnManager : MonoBehaviour
     {
         m_Ranged.SetActive(true);
         Instantiate(m_Ranged, m_spawnPoints.position, m_spawnPoints.rotation);
+    }
+
+    public void SpawnHorde()
+    {
+        m_Horde.SetActive(true);
+        Instantiate(m_Horde, m_spawnPoints.position, m_spawnPoints.rotation);
     }
 }

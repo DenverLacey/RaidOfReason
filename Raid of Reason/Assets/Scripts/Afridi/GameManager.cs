@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour
     public GameObject m_Ranged;
     public int RangedSpawnRate;
 
+    public GameObject m_Horde;
+    public int HordeSpawnRate;
+
     public Transform[] spawnPoints;
     private bool capReached = false;
 
@@ -30,6 +33,7 @@ public class GameManager : MonoBehaviour
             InvokeRepeating("SpawnMelee", MeleeSpawnRate, MeleeSpawnRate);
             InvokeRepeating("SpawnRanged", RangedSpawnRate, RangedSpawnRate);
             InvokeRepeating("SpawnExplosive", ExplosiveSpawnRate, ExplosiveSpawnRate);
+            InvokeRepeating("SpawnHorde", HordeSpawnRate, HordeSpawnRate);
         }
         m_currentEnemiesInRoom = 0;
     }
@@ -47,6 +51,7 @@ public class GameManager : MonoBehaviour
             CancelInvoke("SpawnMelee");
             CancelInvoke("SpawnExplosive");
             CancelInvoke("SpawnRanged");
+            CancelInvoke("SpawnHorde");
             capReached = true;
         }
         if (capReached == true && m_currentEnemiesInRoom == 0) {
@@ -92,6 +97,19 @@ public class GameManager : MonoBehaviour
         temp.AddComponent<EnemyCounter>().Init(this);
         m_currentEnemiesInRoom++;
     }
+    public void SpawnHorde()
+    {
+        if (m_currentEnemiesInRoom >= numOfEnemies)
+        {
+            return;
+        }
+
+        int spawnPointIndex = Random.Range(0, spawnPoints.Length);
+        GameObject temp = Instantiate(m_Horde, spawnPoints[spawnPointIndex].position, spawnPoints[spawnPointIndex].rotation);
+        temp.AddComponent<EnemyCounter>().Init(this);
+        m_currentEnemiesInRoom++;
+    }
+
 
     public void OnEnemyDestroyed(EnemyCounter enemy) {
         m_currentEnemiesInRoom--;
