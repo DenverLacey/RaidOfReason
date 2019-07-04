@@ -78,13 +78,11 @@ public class Nashorn : BaseCharacter
             if (m_gauntletIndex == 0)
             {
                 m_gauntlets[0].gameObject.transform.localPosition = new Vector3(-0.75f, 0, 0.8f);
-                SetDamage(10);
                 m_Instaniate = Instantiate(m_Particle, m_gauntlets[0].transform.position + Vector3.forward * (m_gauntlets[0].transform.localScale.y / 2), Quaternion.Euler(-180, 0, 0), m_gauntlets[0].transform);
             }
             else if (m_gauntletIndex == 1)
             {
                 m_gauntlets[1].gameObject.transform.localPosition = new Vector3(0.75f, 0, 0.8f);
-                SetDamage(10);
                 m_Instaniate = Instantiate(m_Particle, m_gauntlets[1].transform.position + Vector3.forward * (m_gauntlets[1].transform.localScale.y / 2), Quaternion.Euler(-180, 0, 0), m_gauntlets[1].transform);
             }
         }

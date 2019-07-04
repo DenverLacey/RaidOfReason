@@ -1,17 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using XboxCtrlrInput;
 
 public class SmashDamage : MonoBehaviour
 {
     [SerializeField] private int m_damage;
     public Nashorn Nashorn;
-    private Rigidbody m_rigid;
 
-    private void Start()
-    {
-        m_rigid = GetComponent<Rigidbody>();
-    }
     public void SetDamage(int damage)
     {
         this.m_damage = damage;
@@ -23,15 +19,16 @@ public class SmashDamage : MonoBehaviour
         {
             BaseEnemy enemy = other.gameObject.GetComponent<BaseEnemy>();
 
-            if (enemy)
+            if (enemy && XCI.GetAxis(XboxAxis.RightTrigger, XboxController.Second) > 0.1)
             {
-                SetDamage(m_damage);
                 enemy.TakeDamage(m_damage);
+                enemy.GetComponent<MeshRenderer>().material.color = Color.red;
+                StartCoroutine(ResetMaterialColour(enemy, .2f));
                 if (Nashorn.playerSkills.Find(skill => skill.Name == "Shockwave"))
                 { 
-                    Vector3 direction = this.m_rigid.transform.position - enemy.transform.position;
-                    //other.GetComponent<StatusEffectManager>().ApplyKnockBack(enemy.gameObject, direction, 1, 0.3f);
-                    other.GetComponent<StatusEffectManager>().KnockBackEnemy(enemy.gameObject, direction);
+                    Vector3 direction = this.transform.position - enemy.transform.position;
+                    other.GetComponent<StatusEffectManager>().ApplyKnockBack(enemy.gameObject, direction, 1, 0.3f);
+                    //other.GetComponent<StatusEffectManager>().KnockBackEnemy(enemy.gameObject, direction);
                 }
             }
 
@@ -40,6 +37,16 @@ public class SmashDamage : MonoBehaviour
         else
         {
             Debug.Log("attack unsuccessful " + tag);
+        }
+    }
+
+    IEnumerator ResetMaterialColour(BaseEnemy enemy, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (enemy)
+        {
+            enemy.GetComponent<MeshRenderer>().material.color = Color.clear;
         }
     }
 }
