@@ -6,6 +6,12 @@ public class SmashDamage : MonoBehaviour
 {
     [SerializeField] private int m_damage;
     public Nashorn Nashorn;
+    private Rigidbody m_rigid;
+
+    private void Start()
+    {
+        m_rigid = GetComponent<Rigidbody>();
+    }
     public void SetDamage(int damage)
     {
         this.m_damage = damage;
@@ -23,8 +29,9 @@ public class SmashDamage : MonoBehaviour
                 enemy.TakeDamage(m_damage);
                 if (Nashorn.playerSkills.Find(skill => skill.Name == "Shockwave"))
                 { 
-                    Vector3 direction = this.gameObject.transform.position - enemy.transform.position;
-                    other.GetComponent<StatusEffectManager>().ApplyKnockBack(enemy.gameObject, direction, 1, 0.3f);
+                    Vector3 direction = this.m_rigid.transform.position - enemy.transform.position;
+                    //other.GetComponent<StatusEffectManager>().ApplyKnockBack(enemy.gameObject, direction, 1, 0.3f);
+                    other.GetComponent<StatusEffectManager>().KnockBackEnemy(enemy.gameObject, direction);
                 }
             }
 

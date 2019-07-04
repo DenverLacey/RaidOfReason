@@ -7,9 +7,11 @@ public class StatusEffectManager : MonoBehaviour
     private BaseEnemy enemy;
     private int remainingTicks;
     public int burnAmount;
+    private Rigidbody m_rigidBody;
 
     void Start() {
         enemy = GetComponent<BaseEnemy>();
+        m_rigidBody = GetComponent<Rigidbody>();
     }
 
     public void ApplyBurn(int ticks) {
@@ -27,6 +29,12 @@ public class StatusEffectManager : MonoBehaviour
     public void ApplyKnockBack(GameObject target, Vector3 direction, float length, float overtime) {
         direction = direction.normalized;
         StartCoroutine(KnockBack(target, direction, length, overtime));
+    }
+
+    public void KnockBackEnemy(GameObject target, Vector3 direction)
+    {
+        direction = direction.normalized;
+        StartCoroutine(Knock(target, direction));
     }
 
     IEnumerator Burn() {
@@ -50,6 +58,12 @@ public class StatusEffectManager : MonoBehaviour
             }
             timeleft -= Time.deltaTime;
         }
+        yield return null;
+    }
+
+    IEnumerator Knock(GameObject target, Vector3 direction)
+    {
+        m_rigidBody.AddForce(direction.normalized * -500f);
         yield return null;
     }
 }
