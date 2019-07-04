@@ -10,6 +10,7 @@ using UnityEngine;
 using XboxCtrlrInput;
 using TMPro;
 
+[RequireComponent(typeof(Animator))]
 public abstract class BaseCharacter : MonoBehaviour {
 
     public enum PlayerState
@@ -35,7 +36,7 @@ public abstract class BaseCharacter : MonoBehaviour {
     public int m_playerSkillPoints;
 
     public List<SkillsAbilities> playerSkills = new List<SkillsAbilities>();
-    //public Dictionary<string, SkillsAbilities> dicSkills = new Dictionary<string, SkillsAbilities>();
+    public Dictionary<string, SkillsAbilities> dicSkills = new Dictionary<string, SkillsAbilities>();
 
     private float m_rotationSpeed = 250.0f;
     private Vector3 direction;
@@ -58,12 +59,14 @@ public abstract class BaseCharacter : MonoBehaviour {
         }
     }
 
+    protected Animator m_animator;
 
     protected virtual void Awake () {
         m_currentHealth = m_maxHealth;
         m_vulnerability = 1.0f;
         m_bActive = false;
         m_camera = FindObjectOfType<MultiTargetCamera>();
+        m_animator = GetComponent<Animator>();
     }
 
     protected virtual void FixedUpdate()
@@ -96,34 +99,38 @@ public abstract class BaseCharacter : MonoBehaviour {
     }
 
     virtual protected void CharacterMovement() {
+        ///<summary> 
+        /// Handles the forward and backwards movement of the character via the xbox controller layout
+        /// </summary>
+        float axisX = XCI.GetAxis(XboxAxis.LeftStickX, controller) * m_controlSpeed;
+        float axisZ = XCI.GetAxis(XboxAxis.LeftStickY, controller) * m_controlSpeed;
+        Vector3 movement = m_camera.transform.TransformDirection(axisX, 0, axisZ);
+        transform.position += new Vector3(movement.x, 0, movement.z) * Time.deltaTime;
+        /// <summary>
+        /// Handles the rotation of the character via the xbox controller layout
+        /// </summary>
+        float rotAxisX = XCI.GetAxis(XboxAxis.RightStickX, controller) * m_rotationSpeed;
+        float rotAxisZ = XCI.GetAxis(XboxAxis.RightStickY, controller) * m_rotationSpeed;
+        Vector3 rawDir = m_camera.transform.TransformDirection(rotAxisX, 0, rotAxisZ);
+        Vector3 direction = new Vector3(rawDir.x, 0, rawDir.z);
+        if (direction.magnitude < 0.1f)
+        {
+            direction = prevRotDirection;
+        }
+        direction = direction.normalized;
+        prevRotDirection = direction;
+        transform.localRotation = Quaternion.LookRotation(direction);
 
-      
-            ///<summary> 
-            /// Handles the forward and backwards movement of the character via the xbox controller layout
-            /// </summary>
-            float axisX = XCI.GetAxis(XboxAxis.LeftStickX, controller) * m_controlSpeed;
-            float axisZ = XCI.GetAxis(XboxAxis.LeftStickY, controller) * m_controlSpeed;
+        // calculate angle between character's direction
+        float angleToCameraForward = Vector3.SignedAngle(direction, Vector3.forward, Vector3.up);
 
-            Vector3 movement = m_camera.transform.TransformDirection(axisX, 0, axisZ);
-            transform.position += new Vector3(movement.x, 0, movement.z) * Time.deltaTime;
+        // calculate animation movement vectors
+        Vector3 animationMovement = Quaternion.AngleAxis(angleToCameraForward, Vector3.up) * movement.normalized;
 
-            /// <summary>
-            /// Handles the rotation of the character via the xbox controller layout
-            /// </summary>
-            float rotAxisX = XCI.GetAxis(XboxAxis.RightStickX, controller) * m_rotationSpeed;
-            float rotAxisZ = XCI.GetAxis(XboxAxis.RightStickY, controller) * m_rotationSpeed;
-
-            Vector3 rawDir = m_camera.transform.TransformDirection(rotAxisX, 0, rotAxisZ);
-            Vector3 direction = new Vector3(rawDir.x, 0, rawDir.z);
-
-            if (direction.magnitude < 0.1f)
-            {
-                direction = prevRotDirection;
-            }
-            direction = direction.normalized;
-            prevRotDirection = direction;
-            transform.localRotation = Quaternion.LookRotation(direction);
-
+        // Set animator's movement floats
+        m_animator.SetFloat("MovX", animationMovement.x);
+        m_animator.SetFloat("MovZ", animationMovement.z);
+        m_animator.SetFloat("Speed", movement.magnitude);
     }
 
     public virtual void TakeDamage(float damage)
