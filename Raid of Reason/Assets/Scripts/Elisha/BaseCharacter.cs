@@ -35,6 +35,7 @@ public abstract class BaseCharacter : MonoBehaviour {
     public int m_playerSkillPoints;
 
     public List<SkillsAbilities> playerSkills = new List<SkillsAbilities>();
+    //public Dictionary<string, SkillsAbilities> dicSkills = new Dictionary<string, SkillsAbilities>();
 
     private float m_rotationSpeed = 250.0f;
     private Vector3 direction;
@@ -45,6 +46,7 @@ public abstract class BaseCharacter : MonoBehaviour {
     public MultiTargetCamera m_camera;
     public TextMeshProUGUI m_SkillDisplay;
     public TextMeshProUGUI m_SkillMaxed;
+
 
     // a multiplier for damage taken
     protected float m_vulnerability;
@@ -62,7 +64,6 @@ public abstract class BaseCharacter : MonoBehaviour {
         m_vulnerability = 1.0f;
         m_bActive = false;
         m_camera = FindObjectOfType<MultiTargetCamera>();
-        //m_SkillMaxed.gameObject.SetActive(false);
     }
 
     protected virtual void FixedUpdate()
@@ -131,8 +132,13 @@ public abstract class BaseCharacter : MonoBehaviour {
 
         if (m_currentHealth <= 0.0f)
         {
+            OnDeath();
             Destroy(gameObject);
         }
+    }
+
+    protected virtual void OnDeath()
+    {
     }
 
     virtual public void SetDamage(float damage)

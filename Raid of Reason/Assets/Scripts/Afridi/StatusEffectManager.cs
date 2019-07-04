@@ -5,7 +5,7 @@ using UnityEngine;
 public class StatusEffectManager : MonoBehaviour
 {
     private BaseEnemy enemy;
-    public List<int> burnTick = new List<int>();
+    private int remainingTicks;
     public int burnAmount;
 
     void Start() {
@@ -13,13 +13,14 @@ public class StatusEffectManager : MonoBehaviour
     }
 
     public void ApplyBurn(int ticks) {
-        if (burnTick.Count <= 0)
+        if (remainingTicks <= 0)
         {
-            burnTick.Add(ticks);
+            remainingTicks = ticks;
             StartCoroutine(Burn());
         }
-        else {
-            burnTick.Add(ticks);
+        else
+        {
+            remainingTicks += ticks;
         }
     }
 
@@ -29,12 +30,9 @@ public class StatusEffectManager : MonoBehaviour
     }
 
     IEnumerator Burn() {
-        while (burnTick.Count > 0) {
-            for (int i = 0; i < burnTick.Count; i++) {
-                burnTick[i]--;
-            }
-            enemy.m_maxHealth -= burnAmount;
-            burnTick.RemoveAll(i => i == 0);
+        for (; remainingTicks != 0; remainingTicks--)
+        {
+            enemy.TakeDamage(burnAmount);
             yield return new WaitForSeconds(0.75f);
         }
     }

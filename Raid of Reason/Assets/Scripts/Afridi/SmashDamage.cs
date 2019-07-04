@@ -21,12 +21,10 @@ public class SmashDamage : MonoBehaviour
             {
                 SetDamage(m_damage);
                 enemy.TakeDamage(m_damage);
-                if (Nashorn.playerSkills.Find(skill => skill.Name == "Shockwave") && Nashorn.playerSkills.Count < 0)
-                {
-                    if (Nashorn.isActive == true) {
-                        Vector3 direction = enemy.transform.position - other.transform.position;
-                        other.GetComponent<StatusEffectManager>().ApplyKnockBack(enemy.gameObject, direction, 1, 0.3f);
-                    }
+                if (Nashorn.playerSkills.Find(skill => skill.Name == "Shockwave"))
+                { 
+                    Vector3 direction = this.gameObject.transform.position - enemy.transform.position;
+                    other.GetComponent<StatusEffectManager>().ApplyKnockBack(enemy.gameObject, direction, 1, 0.3f);
                 }
             }
 

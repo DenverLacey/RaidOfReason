@@ -25,6 +25,8 @@ public class Nashorn : BaseCharacter
 
     private List<BaseEnemy> m_nearbyEnemies = new List<BaseEnemy>();
     public bool isActive = false;
+    private bool skillCheck = false;
+
     // 1 = Left Fist / 0 = Right Fist
     private uint m_gauntletIndex = 0;
     public SkillManager manager;
@@ -48,21 +50,25 @@ public class Nashorn : BaseCharacter
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
+        SkillChecker();
     }
 
     protected override void Update() {
         if (this.gameObject != null) {
             Punch();
-            SkillChecker();
         }
     }
 
     public void SkillChecker() {
-        if (this.gameObject != null && playerSkills.Count < 0)
+        if (this.gameObject != null)
         {
             if (isActive == true && playerSkills.Find(skill => skill.Name == "Roaring Thunder")) {
-                this.m_tauntRadius = m_tauntRadius + 5;
-                manager.m_Skills[1].m_currentCoolDown = manager.m_Skills[1].m_currentCoolDown - 5;
+                if (skillCheck == true)
+                {
+                    this.m_tauntRadius = m_tauntRadius + 5;
+                    manager.m_Skills[1].m_coolDown = manager.m_Skills[1].m_coolDown / 2;
+                    skillCheck = false;
+                }
             }
         }
     }
@@ -103,6 +109,7 @@ public class Nashorn : BaseCharacter
         if (this.gameObject != null)
         {
             isActive = true;
+            skillCheck = true;
             // set vulnerability
             m_vulnerability = m_tauntVulnerability;
 
@@ -122,6 +129,7 @@ public class Nashorn : BaseCharacter
     public void ResetSpott() {
         ResetVulernability();
         isActive = false;
+        skillCheck = true;
 
         foreach (BaseEnemy enemy in m_nearbyEnemies) {
             if (enemy.State == BaseEnemy.AI_STATE.TAUNTED)

@@ -14,6 +14,7 @@ using XboxCtrlrInput;
 
 public class Kenron : BaseCharacter {
 
+    public ChildKenron c_Kenron;
     public GameObject m_Amaterasu;
     public Rigidbody m_KenronSkeleton;
 
@@ -22,16 +23,17 @@ public class Kenron : BaseCharacter {
     [SerializeField]
     private GameObject swordParticle;
     private BaseEnemy enemy;
-    public Kenron Destructive;
 
     public SkillManager manager;
     public bool isActive = false;
+    public float timer = 4.0f;
 
     protected override void Awake () {
         base.Awake();
         enemy = FindObjectOfType<BaseEnemy>();
         m_Amaterasu = GameObject.FindGameObjectWithTag("Amaterasu");
         m_KenronSkeleton = GetComponent<Rigidbody>();
+        c_Kenron.gameObject.SetActive(false);
 	}
 
     protected override void FixedUpdate() {
@@ -70,9 +72,9 @@ public class Kenron : BaseCharacter {
     }
 
     public void SkillChecker() {
-        if (this.gameObject != null && playerSkills.Count < 0)
+        if (this.gameObject != null)
         {
-            if (isActive == true && playerSkills.Find(skill => skill.Name == "Vile Infusion"))
+            if (playerSkills.Find(skill => skill.Name == "Vile Infusion"))
             {
                 if (enemy.isDeadbByKenron == true)
                 {
@@ -88,16 +90,9 @@ public class Kenron : BaseCharacter {
             }
             if (playerSkills.Find(skill => skill.Name == "Curse of Amaterasu")) {
                 if (m_currentHealth <= 0.0f) {
-                    this.gameObject.SetActive(false);
-                    Kenron Curse = Instantiate(Destructive, this.gameObject.transform.position, this.gameObject.transform.rotation);
-                    float timer = 12.0f;
-                    timer -= Time.deltaTime;
-                    if (timer <= 0) {
-                        Destroy(Curse);
-                        this.gameObject.SetActive(false);
-                        SetHealth(20);
-                        SetDamage(40);
-                    }
+                    c_Kenron.CheckStatus();
+                    c_Kenron.transform.position = this.gameObject.transform.position;
+                    c_Kenron.gameObject.SetActive(true);
                 }
             }
         }

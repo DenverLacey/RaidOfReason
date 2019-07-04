@@ -22,6 +22,7 @@ public class Theá : BaseCharacter
     private float shotCounter;
     private float counter;
     bool isActive;
+    private bool skillActive = false;
 
     public SkillManager manager;
 
@@ -66,34 +67,29 @@ public class Theá : BaseCharacter
     }
 
     void SkillChecker() {
-        if (isActive == true && playerSkills.Find(skill => skill.name == "Settling Tide")) {
-            manager.m_Skills[3].m_currentCoolDown = manager.m_Skills[3].m_coolDown / 2;
+        if (skillActive == true && playerSkills.Find(skill => skill.name == "Settling Tide")) {
+            skillActive = false;
+            manager.m_Skills[2].m_coolDown = manager.m_Skills[2].m_coolDown / 2;
         }
         if (playerSkills.Find(skill => skill.name == "Hydro Pressure"))
         {
             float healthcomparison = m_Kenron.m_currentHealth + m_Nashorn.m_currentHealth;
 
-            switch (healthcomparison) {
-                case 150:
-                    delay = 0.7f;
-                    m_damage = 13.0f;
-                    break;
-                case 130:
-                    delay = 0.5f;
-                    m_damage = 18.0f;
-                    break;
-                case 60:
-                    delay = 0.3f;
-                    m_damage = 24.0f;
-                    break;
-                case 25:
-                    delay = 0.1f;
-                    m_damage = 35.0f;
-                    break;
-                default:
-                    delay = 0.8f;
-                    m_damage = 8.0f;
-                    break;
+            if (healthcomparison <= 150) {
+                delay = 0.7f;
+                m_damage = 13.0f;
+            }
+            if (healthcomparison <= 130) {
+                delay = 0.5f;
+                m_damage = 18.0f;
+            }
+            if (healthcomparison <= 60) {
+                delay = 0.3f;
+                m_damage = 24.0f;
+            }
+            if (healthcomparison <= 25) {
+                delay = 0.1f;
+                m_damage = 35.0f;
             }
         }
     }
@@ -101,6 +97,7 @@ public class Theá : BaseCharacter
     public void GiftOfPoseidon()
     {
         isActive = true;
+        skillActive = true;
         int m_coolDown = 20;
         if(isActive == true && m_coolDown == 20)
         {
