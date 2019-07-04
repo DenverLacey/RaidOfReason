@@ -103,7 +103,9 @@ public class Nashorn : BaseCharacter
         }
     }
 
-    //Base Ability
+    /// <summary>
+	/// Nashorn's base ability.
+	/// </summary>
     public void Spott()
     {
         if (this.gameObject != null)
@@ -126,6 +128,9 @@ public class Nashorn : BaseCharacter
         }
     }
    
+	/// <summary>
+	/// Reset's Nashorn's base ability.
+	/// </summary>
     public void ResetSpott() {
         ResetVulernability();
         isActive = false;
@@ -138,4 +143,12 @@ public class Nashorn : BaseCharacter
             }
         }
     }
+
+	protected override void OnDeath() {
+		foreach (BaseEnemy enemy in m_nearbyEnemies) {
+			if (enemy.State == BaseEnemy.AI_STATE.TAUNTED) {
+				enemy.StopTaunt();
+			}
+		}
+	}
 }
