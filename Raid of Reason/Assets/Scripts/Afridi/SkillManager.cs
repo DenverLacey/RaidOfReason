@@ -47,7 +47,7 @@ public class SkillManager : MonoBehaviour {
 
     public void FixedUpdate()
     {
-		if (XCI.GetButtonDown(XboxButton.RightBumper, XboxController.First))
+		if (XCI.GetAxis(XboxAxis.LeftTrigger, XboxController.First) > 0.1f)
         {
 			if (m_Skills[0].m_currentCoolDown >= m_Skills[0].m_coolDown)
 			{
@@ -56,7 +56,7 @@ public class SkillManager : MonoBehaviour {
 				m_Skills[0].active = true;
 			}
         }
-        if (XCI.GetButtonDown(XboxButton.RightBumper, XboxController.Second))
+        if (XCI.GetAxis(XboxAxis.LeftTrigger, XboxController.Second) > 0.1f)
         {
             if (m_Skills[1].m_currentCoolDown >= m_Skills[1].m_coolDown)
             {
@@ -65,11 +65,13 @@ public class SkillManager : MonoBehaviour {
                 m_Skills[1].active = true;
             }
         }
-        else if (XCI.GetButtonUp(XboxButton.RightBumper, XboxController.Second))
+        else if (XCI.GetAxis(XboxAxis.LeftTrigger, XboxController.Second) <= 0.1f)
         {
-            m_Nashorn.m_Collider.SetActive(false);
+			if (m_Nashorn) {
+				m_Nashorn.m_Collider.SetActive(false);
+			}
         }
-        if (XCI.GetButtonDown(XboxButton.RightBumper, XboxController.Third))
+        if (XCI.GetAxis(XboxAxis.LeftTrigger, XboxController.Third) > 0.1f)
         {
             if (m_Skills[2].m_currentCoolDown >= m_Skills[2].m_coolDown)
             {

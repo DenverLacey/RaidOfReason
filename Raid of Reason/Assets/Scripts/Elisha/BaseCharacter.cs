@@ -121,16 +121,18 @@ public abstract class BaseCharacter : MonoBehaviour {
         prevRotDirection = direction;
         transform.localRotation = Quaternion.LookRotation(direction);
 
-        // calculate angle between character's direction and forward
-        float angle = Vector3.SignedAngle(direction, Vector3.forward, Vector3.up);
+		if (m_animator) {
+			// calculate angle between character's direction and forward
+			float angle = Vector3.SignedAngle(direction, Vector3.forward, Vector3.up);
 
-        // rotate movement into world space to get animation movement
-        Vector3 animationMovement = Quaternion.AngleAxis(angle, Vector3.up) * movement.normalized;
+			// rotate movement into world space to get animation movement
+			Vector3 animationMovement = Quaternion.AngleAxis(angle, Vector3.up) * movement.normalized;
 
-        // set animator's movement floats
-        m_animator.SetFloat("MovX", animationMovement.x);
-        m_animator.SetFloat("MovZ", animationMovement.z);
-        m_animator.SetFloat("Speed", movement.magnitude);
+			// set animator's movement floats
+			m_animator.SetFloat("MovX", animationMovement.x);
+			m_animator.SetFloat("MovZ", animationMovement.z);
+			m_animator.SetFloat("Speed", movement.magnitude);
+		}
     }
 
     public virtual void TakeDamage(float damage)
