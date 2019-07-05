@@ -199,7 +199,7 @@ Transform:
   m_GameObject: {fileID: 279221441}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 1, z: 3}
+  m_LocalScale: {x: 10, y: 1, z: 10}
   m_Children:
   - {fileID: 552164217}
   - {fileID: 1610119599}
@@ -230,7 +230,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &408426305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -694,7 +694,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerState: 0
   m_damage: 1
-  m_controlSpeed: 1
+  m_movementSpeed: 0
   m_maxHealth: 50
   controller: 0
   m_currentHealth: 50
@@ -808,7 +808,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerState: 0
   m_damage: 0
-  m_controlSpeed: 5
+  m_movementSpeed: 10
   m_maxHealth: 10
   controller: 0
   m_currentHealth: 0
@@ -1136,9 +1136,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffd826d6373a5f249b041bd912aaa808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smoothTime: 1
-  minFOV: 60
-  maxFOV: 90
+  smoothTime: 0.2
+  minFOV: 40
+  maxFOV: 60
   sizeNormaliser: 50
   offset: {x: 15, y: 10.18, z: -17.28}
   targets:
