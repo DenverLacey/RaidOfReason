@@ -13,6 +13,7 @@ public class EnemyProjectile : MonoBehaviour
     private float m_timer;
     private int m_damage;
 
+
     // Start is called before the first frame update
     void Start() {
         m_timer = m_lifetime;

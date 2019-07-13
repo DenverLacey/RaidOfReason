@@ -7,6 +7,7 @@ public class StatusEffectManager : MonoBehaviour
     private BaseEnemy enemy;
     private int remainingTicks;
     public int burnAmount;
+    private bool burnOn = false;
     private Rigidbody m_rigidBody;
 
     void Start() {
@@ -41,6 +42,8 @@ public class StatusEffectManager : MonoBehaviour
         for (; remainingTicks != 0; remainingTicks--)
         {
             enemy.TakeDamage(burnAmount);
+            enemy.GetComponent<MeshRenderer>().material.color = Color.red;
+            StartCoroutine(ResetMaterialColour(enemy, 0.75f));
             yield return new WaitForSeconds(0.75f);
         }
     }
@@ -65,5 +68,15 @@ public class StatusEffectManager : MonoBehaviour
     {
         m_rigidBody.AddForce(direction.normalized * -500f);
         yield return null;
+    }
+
+    IEnumerator ResetMaterialColour(BaseEnemy enemy, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (enemy)
+        {
+            enemy.GetComponent<MeshRenderer>().material.color = Color.clear;
+        }
     }
 }

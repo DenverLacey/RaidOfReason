@@ -48,7 +48,6 @@ public abstract class BaseCharacter : MonoBehaviour {
     public TextMeshProUGUI m_SkillDisplay;
     public TextMeshProUGUI m_SkillMaxed;
 
-
     // a multiplier for damage taken
     protected float m_vulnerability;
 
@@ -121,23 +120,26 @@ public abstract class BaseCharacter : MonoBehaviour {
         prevRotDirection = direction;
         transform.localRotation = Quaternion.LookRotation(direction);
 
-		if (m_animator) {
-			// calculate angle between character's direction and forward
-			float angle = Vector3.SignedAngle(direction, Vector3.forward, Vector3.up);
+        if (m_animator)
+        {
+            // calculate angle between character's direction and forward
+            float angle = Vector3.SignedAngle(direction, Vector3.forward, Vector3.up);
 
-			// rotate movement into world space to get animation movement
-			Vector3 animationMovement = Quaternion.AngleAxis(angle, Vector3.up) * movement.normalized;
+            // rotate movement into world space to get animation movement
+            Vector3 animationMovement = Quaternion.AngleAxis(angle, Vector3.up) * movement.normalized;
 
-			// set animator's movement floats
-			m_animator.SetFloat("MovX", animationMovement.x);
-			m_animator.SetFloat("MovZ", animationMovement.z);
-			m_animator.SetFloat("Speed", movement.magnitude);
-		}
+            // set animator's movement floats
+            m_animator.SetFloat("MovX", animationMovement.x);
+            m_animator.SetFloat("MovZ", animationMovement.z);
+            m_animator.SetFloat("Speed", movement.magnitude);
+        }
     }
 
     public virtual void TakeDamage(float damage)
     {
         m_currentHealth -= damage * m_vulnerability;
+        GetComponent<MeshRenderer>().material.color = Color.red;
+        StartCoroutine(ResetMaterialColour(this.gameObject, .2f));
 
         if (m_currentHealth <= 0.0f)
         {
@@ -207,5 +209,14 @@ public abstract class BaseCharacter : MonoBehaviour {
     public void UpdateSkillPont(int amount) {
         m_playerSkillPoints += amount;
     }
-  
+
+    IEnumerator ResetMaterialColour(GameObject player, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (player)
+        {
+            player.GetComponent<MeshRenderer>().material.color = Color.clear;
+        }
+    }
 }

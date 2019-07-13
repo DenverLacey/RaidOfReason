@@ -25,6 +25,5 @@ public class HealthBarUI : MonoBehaviour
         else {
             healthBar.fillAmount = 0;
         }
-
     }
 }

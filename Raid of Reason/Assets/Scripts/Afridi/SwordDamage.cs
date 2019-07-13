@@ -19,15 +19,21 @@ public class SwordDamage : MonoBehaviour
 		{
 			BaseEnemy enemy = other.gameObject.GetComponent<BaseEnemy>();
 
-			if (enemy)
+            // if the player doesnt have shuras upgrade applied
+			if (enemy && !Kenron.playerSkills.Find(skill => skill.Name == "Shuras Reckoning"))
 			{
 				SetDamage(m_damage);
 				enemy.TakeDamage(m_damage);
-                if (Kenron.playerSkills.Find(skill => skill.Name == "Shuras Reckoning") && Kenron.isActive == true) {
-                        Debug.Log("BURNING");
-                        other.GetComponent<StatusEffectManager>().ApplyBurn(4);
-                }
+                enemy.GetComponent<MeshRenderer>().material.color = Color.red;
+                StartCoroutine(ResetMaterialColour(enemy, .2f));
 			}
+
+            // if the player does have shuras upgrade applied
+            if(enemy && Kenron.playerSkills.Find(skill => skill.Name == "Shuras Reckoning") && Kenron.isActive == true)
+            {
+                Debug.Log("BURNING");
+                other.GetComponent<StatusEffectManager>().ApplyBurn(4);
+            }
 
 			Debug.Log("attack successful " + tag);
 		}
@@ -36,4 +42,14 @@ public class SwordDamage : MonoBehaviour
 			Debug.Log("attack unsuccessful " + tag);
 		}
 	}
+
+    IEnumerator ResetMaterialColour(BaseEnemy enemy, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (enemy)
+        {
+            enemy.GetComponent<MeshRenderer>().material.color = Color.clear;
+        } 
+    }
 }

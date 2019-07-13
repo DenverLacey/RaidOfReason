@@ -47,6 +47,8 @@ public class ProjectileMove : MonoBehaviour {
             if (enemy)
             {
                 enemy.TakeDamage(m_damage);
+                enemy.GetComponent<MeshRenderer>().material.color = Color.red;
+                StartCoroutine(ResetMaterialColour(enemy, .2f));
             }
 
             Debug.Log("attack successful " + tag);
@@ -69,5 +71,15 @@ public class ProjectileMove : MonoBehaviour {
             }
         }
 		Destroy(gameObject);
+    }
+
+    IEnumerator ResetMaterialColour(BaseEnemy enemy, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (enemy)
+        {
+            GetComponent<MeshRenderer>().material.color = Color.clear;
+        }
     }
 }
