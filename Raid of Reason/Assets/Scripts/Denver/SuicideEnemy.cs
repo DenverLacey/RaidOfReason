@@ -90,7 +90,7 @@ public class SuicideEnemy : BaseEnemy
 
             if (m_timer <= 0.0f) {
                 foreach (var p in m_players) {
-			if (!p) continue;
+			        if (!p) continue;
                     if (Vector3.Distance(transform.position, p.transform.position) <= m_damageRange) {
                         p.TakeDamage(m_damage);
                     }

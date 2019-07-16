@@ -11,12 +11,14 @@ public abstract class BaseEnemy : MonoBehaviour
 {
 	[Tooltip("How far away the enemy can see the player from.")]
     [SerializeField] protected float m_viewRange;
+	public float ViewRange { get => m_viewRange; }
 
 	[Tooltip("Enemy's maximum amount of health.")]
 	[SerializeField] public int m_maxHealth;
 
 	[Tooltip("How much damage the enemy will deal.")]
 	[SerializeField] protected int m_damage;
+	public int Damage { get => m_damage; }
 
 	protected float m_health;
 	public float Health { get { return m_health; } }
@@ -25,7 +27,10 @@ public abstract class BaseEnemy : MonoBehaviour
 
     protected NavMeshAgent m_navMeshAgent;
     protected BaseCharacter[] m_players;
+	public BaseCharacter[] Players { get => m_players; }
+
 	protected Vector3 m_target;
+	public Vector3 Target { get => m_target; set => m_target = value; }
 
 	protected Nashorn m_nashorn;
 
