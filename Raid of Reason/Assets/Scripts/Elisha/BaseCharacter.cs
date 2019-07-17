@@ -73,8 +73,14 @@ public abstract class BaseCharacter : MonoBehaviour {
 		switch (playerState)
 		{
 			case PlayerState.ALIVE:
-				//Debug.Log("alive state activated");
-				CharacterMovement();
+                //Debug.Log("alive state activated");
+                if (XCI.IsPluggedIn(XboxController.Any))
+                {
+                    CharacterMovement();
+                }
+                else {
+                    PCCharacterMovement();
+                }
 				break;
 			case PlayerState.REVIVE:
 				Debug.Log("revive state activated");
@@ -133,6 +139,11 @@ public abstract class BaseCharacter : MonoBehaviour {
             m_animator.SetFloat("MovZ", animationMovement.z);
             m_animator.SetFloat("Speed", movement.magnitude);
         }
+    }
+
+
+    virtual protected void PCCharacterMovement() {
+        // Needs work
     }
 
     public virtual void TakeDamage(float damage)
