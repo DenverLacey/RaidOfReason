@@ -1,5 +1,5 @@
 ﻿//*
-// @Brief: Thea's main class, which handles her basic attacks, abilities and her ult which heals all players in the game to max health
+// Summary: Thea's main class, which handles her basic attacks, abilities and her ult which heals all players in the game to max health
 // Author: Elisha Anagnostakis
 // Date: 14/05/19 
 //*
@@ -12,19 +12,23 @@ using XboxCtrlrInput;
 public class Theá : BaseCharacter
 {
     [SerializeField] private GameObject waterPrefab;
-    public GameObject projectile;
+    [SerializeField] private GameObject projectile;
+    [SerializeField] private Kenron m_Kenron;
+    [SerializeField] private Nashorn m_Nashorn;
+    [SerializeField] private float delay;
+    [SerializeField] private SkillManager manager;
     private Vector3 hitLocation;
     private LayerMask layerMask;
     private GameObject temp;
-    public Kenron m_Kenron;
-    public Nashorn m_Nashorn;
-    [SerializeField]private float delay;
     private float shotCounter;
     private float counter;
-    bool isActive;
+    private bool isActive;
     private bool skillActive = false;
 
-    public SkillManager manager;
+    public float m_aoeGrowth;
+    public float m_minAOE;
+    public float m_maxAOE;
+    [SerializeField] private ParticleSystem m_aoeRadius;
 
     protected override void Awake()
     {
@@ -32,6 +36,13 @@ public class Theá : BaseCharacter
         isActive = false;
         m_Nashorn = FindObjectOfType<Nashorn>();
 		m_Kenron = FindObjectOfType<Kenron>();
+
+        m_aoeGrowth = 0f;
+        m_minAOE = 2f;
+        m_maxAOE = 10f;
+
+        ParticleSystem.MainModule ps_main = m_aoeRadius.main;
+        ParticleSystem.ShapeModule ps_shape = m_aoeRadius.shape;
     }
 
     // Update is called once per frame
@@ -45,6 +56,15 @@ public class Theá : BaseCharacter
         }
     }
 
+    protected override void Update()
+    {
+        base.Update();
+
+    }
+
+    /// <summary>
+    /// - Theas projectile instantiation and damage when pressing the trigger button.
+    /// </summary>
     public void Projectile()
     {
         counter += Time.deltaTime;
@@ -94,6 +114,10 @@ public class Theá : BaseCharacter
         }
     }
 
+    /// <summary>
+    /// - Thea has the ability to do a charge up time attack with scaling AOE and heal.
+    /// - The longer you hold the charge up the bigger the AOE is for players to be healed.
+    /// </summary>
     public void GiftOfPoseidon()
     {
         isActive = true;
@@ -126,4 +150,5 @@ public class Theá : BaseCharacter
             return;
         }
     }
+
 }
