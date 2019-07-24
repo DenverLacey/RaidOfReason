@@ -13,11 +13,13 @@ public class SightlineCondition : Behaviour
     /// <returns>
     /// A Behaviour.Result. If agent has a sightline with a player
     /// </returns>
-    public override Behaviour.Result Execute(BaseEnemy agent) {
+    public override Behaviour.Result Execute(EnemyData agent) {
         float closestDist = float.MaxValue;
         Vector3 closestTar = Vector3.zero;
 
         foreach (BaseCharacter player in agent.Players) {
+            if (!player) continue;
+
             Vector3 dir = player.transform.position - agent.transform.position;
             if (Physics.Raycast(agent.transform.position, dir, out RaycastHit info, closestDist)) {
                 if (info.collider.tag == "Enemy") {

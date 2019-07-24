@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using static Behaviour.Result;
+
 public class Sequence : Composite
 {
     /// <sumarry>
@@ -13,15 +15,15 @@ public class Sequence : Composite
     /// <returns>
     /// A Behaviour.Result. If children were successful or failed
     /// </returns>
-    public override Behaviour.Result Execute(BaseEnemy agent) {
+    public override Behaviour.Result Execute(EnemyData agent) {
         // run children's execute functions
         foreach (Behaviour child in m_children) {
             // propogate failure if child fails
-            if (child.Execute(agent) == Behaviour.Result.FAILURE) {
-                return Behaviour.Result.FAILURE;
+            if (child.Execute(agent) == FAILURE) {
+                return FAILURE;
             }
         }
         // propogate success if all children suceed
-        return Behaviour.Result.SUCCESS;
+        return SUCCESS;
     }
 }

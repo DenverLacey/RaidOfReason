@@ -31,7 +31,10 @@ public class EnemyData : MonoBehaviour {
     public float AttackTimer { get; private set; }
     public bool Attacking { get; private set; }
 
-    public NavMeshAgent m_navMeshAgent { get; private set; }
+    public BaseCharacter[] Players { get; private set; }
+    public Vector3 Target { get; set; }
+
+    public NavMeshAgent NavMeshAgent { get; private set; }
 
     // Afridi added this for the skill tree
     public bool isDeadbByKenron = false;
@@ -51,7 +54,7 @@ public class EnemyData : MonoBehaviour {
     /// <param name="attackCooldown">
     /// How often enemy will attack
     /// </param>
-    public void Init(float viewRange, int maxHealth, EnemyAttackRange attackRange, float attackCooldown)
+    public void Init(float viewRange, int maxHealth, EnemyAttackRange attackRange, float attackCooldown, BaseCharacter[] players)
     {
         ViewRange = viewRange;
 
@@ -63,6 +66,8 @@ public class EnemyData : MonoBehaviour {
         AttackCooldown = attackCooldown;
         AttackTimer = 0.0f;
 
-        m_navMeshAgent = GetComponent<NavMeshAgent>();
+        Players = players;
+
+        NavMeshAgent = GetComponent<NavMeshAgent>();
     }
 }

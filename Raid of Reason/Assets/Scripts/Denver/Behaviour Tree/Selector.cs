@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using static Behaviour.Result;
+
 public class Selector : Composite
 {
     /// <sumarry>
@@ -13,15 +15,15 @@ public class Selector : Composite
     /// <returns>
     /// A Behaviour.Result. If children were successful or failed
     /// </returns>
-    public override Behaviour.Result Execute(BaseEnemy agent) {
+    public override Behaviour.Result Execute(EnemyData agent) {
         // run children's execute functions
         foreach (Behaviour child in m_children) {
             // propogate success if child succeeds
-            if (child.Execute(agent) == Behaviour.Result.SUCCESS) {
-                return Behaviour.Result.SUCCESS;
+            if (child.Execute(agent) == SUCCESS) {
+                return SUCCESS;
             }
         }
         // propogate failure if all children fails
-        return Behaviour.Result.SUCCESS;
+        return FAILURE;
     }
 }

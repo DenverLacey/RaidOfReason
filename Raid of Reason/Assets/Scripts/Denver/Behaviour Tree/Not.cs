@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using static Behaviour.Result;
+
 public class Not : Behaviour
 {
     private Behaviour m_behaviour;
@@ -19,16 +21,16 @@ public class Not : Behaviour
     /// <returns>
     /// A Behaviour.Result. Behaviour's result notted
     /// </returns>
-    public override Behaviour.Result Execute(BaseEnemy agent) {
+    public override Result Execute(EnemyData agent) {
         switch (m_behaviour.Execute(agent)) {
-            case Behaviour.Result.FAILURE:
-                return Behaviour.Result.SUCCESS;
+            case FAILURE:
+                return SUCCESS;
 
-            case Behaviour.Result.SUCCESS:
-                return Behaviour.Result.FAILURE;
+            case SUCCESS:
+                return FAILURE;
 
             default:
-                return Behaviour.Result.RUNNING;
+                return RUNNING;
         }
     }
 }

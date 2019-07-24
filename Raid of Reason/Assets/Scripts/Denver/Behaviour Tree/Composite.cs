@@ -4,5 +4,9 @@ using UnityEngine;
 
 public abstract class Composite : Behaviour
 {
-    public List<Behaviour> m_children;
+    protected List<Behaviour> m_children = new List<Behaviour>();
+    
+    public void AddChild(Behaviour child) {
+        m_children.Add(child);
+    }
 }

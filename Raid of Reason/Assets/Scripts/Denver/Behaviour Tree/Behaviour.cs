@@ -11,5 +11,5 @@ public abstract class Behaviour
         RUNNING
     }
 
-    abstract public Result Execute(BaseEnemy agent);
+    abstract public Result Execute(EnemyData agent);
 }

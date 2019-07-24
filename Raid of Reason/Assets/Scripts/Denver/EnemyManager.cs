@@ -2,81 +2,94 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public struct EnemyTypeFloatPair {
+    public EnemyType key;
+    public float value;
+}
+
+[System.Serializable]
+public struct EnemyTypeEnemyAttackRangePair {
+    public EnemyType key;
+    public EnemyAttackRange value;
+}
+
+[System.Serializable]
+public struct EnemyTypeIntPair {
+    public EnemyType key;
+    public int value;
+}
+
+[System.Serializable]
+public struct EnemyTypeBehaviourTreePair {
+    public EnemyType key;
+    public BehaviourTree value;
+}
+
 public class EnemyManager : MonoBehaviour
 {
-    [Header("Enemy Type View Ranges")]
-    [SerializeField] private float m_suicideEnemyViewRange;
-    [SerializeField] private float m_meleeEnemyViewRange;
-    [SerializeField] private float m_rangeEnemyViewRange;
-    [SerializeField] private float m_spawnerEnemyViewRange;
+    [SerializeField] private List<EnemyTypeFloatPair> m_viewRanges;
+    Dictionary<EnemyType, float> m_viewRangeDict = new Dictionary<EnemyType, float>();
 
-    [Header("Enemy Type Attack Ranges")]
-    [SerializeField] private float m_suicideEnemyAttackRange;
-    [SerializeField] private float m_meleeEnemyAttackRange;
-    [SerializeField] private EnemyAttackRange m_rangeEnemyAttackRange;
-    [SerializeField] private EnemyAttackRange m_spawnerEnemyAttackRange;
+    [SerializeField] private List<EnemyTypeEnemyAttackRangePair> m_attackRanges;
+    Dictionary<EnemyType, EnemyAttackRange> m_attackRangeDict = new Dictionary<EnemyType, EnemyAttackRange>();
 
-    [Header("Enemy Type Attack Cooldowns")]
-    [SerializeField] private float m_suicideEnemyAttackCooldown;
-    [SerializeField] private float m_meleeEnemyAttackCooldown;
-    [SerializeField] private float m_rangeEnemyAttackCooldown;
-    [SerializeField] private float m_spawnerEnemyAttackCooldown;
+    [SerializeField] private List<EnemyTypeFloatPair> m_attackCooldowns;
+    Dictionary<EnemyType, float> m_attackCooldownDict = new Dictionary<EnemyType, float>();
 
-    [Header("Enemy Type Max Healths")]
-    [SerializeField] private int m_suicideEnemyMaxHealth;
-    [SerializeField] private int m_meleeEnemyMaxHealth;
-    [SerializeField] private int m_rangeEnemyMaxHealth;
-    [SerializeField] private int m_spawnerEnemyMaxHealth;
+    [SerializeField] private List<EnemyTypeIntPair> m_maxHealths;
+    Dictionary<EnemyType, int> m_maxHealthDict = new Dictionary<EnemyType, int>();
 
-    [Header("Enemy Type Damages")]
-    [SerializeField] private int m_suicideEnemyDamage;
-    [SerializeField] private int m_meleeEnemyDamage;
-    [SerializeField] private int m_rangeEnemyDamage;
+    [SerializeField] private List<EnemyTypeIntPair> m_damages;
+    Dictionary<EnemyType, int> m_damageDict = new Dictionary<EnemyType, int>();
 
-    [Header("Enemy Objects")]
+    [SerializeField] private List<EnemyTypeBehaviourTreePair> m_behaviourTrees;
+    Dictionary<EnemyType, BehaviourTree> m_behaviourTreeDict = new Dictionary<EnemyType, BehaviourTree>();
+
     [SerializeField] private EnemyData[] m_enemies;
+
+    private BaseCharacter[] m_players;
 
     // Start is called before the first frame update
     void Start() {
+        foreach (var range in m_viewRanges) {
+            m_viewRangeDict.Add(range.key, range.value);
+        }
+        foreach (var range in m_attackRanges) {
+            m_attackRangeDict.Add(range.key, range.value);
+        }
+        foreach (var cooldown in m_attackCooldowns) {
+            m_attackCooldownDict.Add(cooldown.key, cooldown.value);
+        }
+        foreach (var health in m_maxHealths) {
+            m_maxHealthDict.Add(health.key, health.value);
+        }
+        foreach (var damage in m_damages) {
+            m_damageDict.Add(damage.key, damage.value);
+        }
+        foreach (var tree in m_behaviourTrees) {
+            m_behaviourTreeDict.Add(tree.key, tree.value);
+        }
+
+        m_players = GameObject.FindObjectsOfType<BaseCharacter>();
         InitEnemies();
-        InitBehaviourTrees();
     }
 
-    private void InitEnemies() {
-        EnemyAttackRange suicideAttackRange;
-        suicideAttackRange.min = 0.0f;
-        suicideAttackRange.max = m_suicideEnemyAttackRange;
-
-        EnemyAttackRange meleeAttackRange;
-        meleeAttackRange.min = 0.0f;
-        meleeAttackRange.max = m_meleeEnemyAttackRange;
-
+    void Update() {
         foreach (EnemyData enemy in m_enemies) {
-            switch (enemy.Type) {
-                case EnemyType.SUICIDE:
-                    enemy.Init(m_suicideEnemyViewRange, m_suicideEnemyMaxHealth, suicideAttackRange, m_suicideEnemyAttackCooldown);
-                    break;
-                
-                case EnemyType.MELEE:
-                    enemy.Init(m_meleeEnemyViewRange, m_meleeEnemyMaxHealth, meleeAttackRange, m_meleeEnemyAttackCooldown);
-                    break;
-
-                case EnemyType.RANGE:
-                    enemy.Init(m_rangeEnemyViewRange, m_rangeEnemyMaxHealth, m_rangeEnemyAttackRange, m_rangeEnemyAttackCooldown);
-                    break;
-
-                case EnemyType.SPAWNER:
-                    enemy.Init(m_spawnerEnemyViewRange, m_spawnerEnemyMaxHealth, m_spawnerEnemyAttackRange, m_spawnerEnemyAttackCooldown);
-                    break;
-
-                default:
-                    Debug.LogError("Failed to initiailise enemy!", this);
-                    break;
-            }
+            m_behaviourTreeDict[enemy.Type].Execute(enemy);
         }
     }
 
-    private void InitBehaviourTrees() {
-
+    private void InitEnemies() {
+        foreach (EnemyData enemy in m_enemies) {
+            enemy.Init(
+                m_viewRangeDict         [enemy.Type],
+                m_maxHealthDict         [enemy.Type],
+                m_attackRangeDict       [enemy.Type],
+                m_attackCooldownDict    [enemy.Type],
+                m_players
+            );
+        }
     }
 }

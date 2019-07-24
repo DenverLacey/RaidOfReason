@@ -858,29 +858,68 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c7eed1f601291e48b235af20c607bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_suicideEnemyViewRange: 20
-  m_meleeEnemyViewRange: 20
-  m_rangeEnemyViewRange: 20
-  m_spawnerEnemyViewRange: 20
-  m_suicideEnemyAttackRange: 3
-  m_meleeEnemyAttackRange: 2
-  m_rangeEnemyAttackRange:
-    min: 15
-    max: 12
-  m_spawnerEnemyAttackRange:
-    min: 15
-    max: 12
-  m_suicideEnemyAttackCooldown: 0.75
-  m_meleeEnemyAttackCooldown: 1
-  m_rangeEnemyAttackCooldown: 0.5
-  m_spawnerEnemyAttackCooldown: 5
-  m_suicideEnemyMaxHealth: 100
-  m_meleeEnemyMaxHealth: 75
-  m_rangeEnemyMaxHealth: 50
-  m_spawnerEnemyMaxHealth: 150
-  m_suicideEnemyDamage: 34
-  m_meleeEnemyDamage: 25
-  m_rangeEnemyDamage: 20
+  m_viewRanges:
+  - key: 0
+    value: 20
+  - key: 1
+    value: 20
+  - key: 2
+    value: 20
+  - key: 3
+    value: 20
+  m_attackRanges:
+  - key: 0
+    value:
+      min: 2
+      max: 5
+  - key: 1
+    value:
+      min: 0
+      max: 1
+  - key: 2
+    value:
+      min: 10
+      max: 15
+  - key: 3
+    value:
+      min: 10
+      max: 15
+  m_attackCooldowns:
+  - key: 0
+    value: 0.75
+  - key: 1
+    value: 1
+  - key: 2
+    value: 0.5
+  - key: 3
+    value: 3
+  m_maxHealths:
+  - key: 0
+    value: 50
+  - key: 1
+    value: 100
+  - key: 2
+    value: 75
+  - key: 3
+    value: 150
+  m_damages:
+  - key: 0
+    value: 30
+  - key: 1
+    value: 10
+  - key: 2
+    value: 20
+  - key: 3
+    value: 0
+  m_behaviourTrees:
+  - key: 0
+    value: {fileID: 11400000, guid: 5d9720cf3161e3647b06dca4a4cdaec3, type: 2}
+  - key: 1
+    value: {fileID: 11400000, guid: b542af9dd2d49da4da648c07f64c66a9, type: 2}
+  - key: 2
+    value: {fileID: 11400000, guid: 56a9a1d56e09ec34d94563d8ade513f5, type: 2}
+  - key: 3
+    value: {fileID: 11400000, guid: b73531cb492de424c92ef138321d6965, type: 2}
   m_enemies:
   - {fileID: 1101484089}
 --- !u!4 &1090813719

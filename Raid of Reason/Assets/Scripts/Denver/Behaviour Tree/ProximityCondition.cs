@@ -13,11 +13,13 @@ public class ProximityCondition : Behaviour
     /// <returns>
     /// A Behaviour.Result. If agent is in proximity with a player
     /// </returns>
-    public override Behaviour.Result Execute(BaseEnemy agent) {
+    public override Behaviour.Result Execute(EnemyData agent) {
         float closestDist = float.MaxValue;
         Vector3 closestTar = Vector3.zero;
 
         foreach (BaseCharacter player in agent.Players) {
+            if (!player) continue;
+
             float sqrDistance = (player.transform.position - agent.transform.position).sqrMagnitude;
             if (sqrDistance < closestDist) {
                 closestDist = sqrDistance;
