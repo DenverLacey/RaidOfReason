@@ -15,8 +15,8 @@ public class Theá : BaseCharacter
     [SerializeField] private GameObject projectile;
     [SerializeField] private Kenron m_Kenron;
     [SerializeField] private Nashorn m_Nashorn;
-    [SerializeField] private float delay;
     [SerializeField] private SkillManager manager;
+    [SerializeField] private float delay;
     [SerializeField] private float m_aoeTimer;
     [SerializeField] private float m_aoeMax;
     [SerializeField] private float m_aoeGrowTime;
@@ -33,6 +33,8 @@ public class Theá : BaseCharacter
     private bool skillActive = false;
     private float m_aoeRadius;
 
+    public ParticleSystem m_aoeParticle;
+
     protected override void Awake()
     {
         base.Awake();
@@ -41,6 +43,8 @@ public class Theá : BaseCharacter
 		m_Kenron = FindObjectOfType<Kenron>();
         m_playerController = GetComponent<BaseCharacter>();
         m_aoeTimer = 0f;
+        //m_aoeParticle = GetComponentInChildren<ParticleSystem>();
+        m_aoeParticle.transform.position = this.gameObject.transform.position;
     }
 
     // Update is called once per frame
@@ -57,7 +61,6 @@ public class Theá : BaseCharacter
     protected override void Update()
     {
         base.Update();
-
     }
 
     /// <summary>
@@ -128,9 +131,10 @@ public class Theá : BaseCharacter
             m_aoeTimer += Time.deltaTime;
             m_aoeRadius = Mathf.Lerp(m_aoeRadius, m_aoeMax, m_aoeTimer / m_aoeGrowTime);
 
-            // turn on particle effect
-            //ParticleSystem.ShapeModule dome;
-            //dome.radius = m_aoeRadius;
+            ParticleSystem.ShapeModule aoeShape = m_aoeParticle.shape;
+            ParticleSystem.MainModule aoeMain = m_aoeParticle.main;
+            aoeShape.radius = m_aoeRadius;
+            m_aoeParticle.Play();
             
         }
 
@@ -164,6 +168,7 @@ public class Theá : BaseCharacter
             {
                 m_temp = Instantiate(waterPrefab, m_Nashorn.transform.position + Vector3.down * (m_Nashorn.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), m_Nashorn.transform);
             }
+            Destroy(m_temp);
         }
     }
 
@@ -175,6 +180,6 @@ public class Theá : BaseCharacter
         isActive = false;
         m_aoeRadius = m_aoeMin;
         m_playerController.controllerOn = true;
-        // turn off particle effect
+        m_aoeParticle.Stop();
     }
 }
