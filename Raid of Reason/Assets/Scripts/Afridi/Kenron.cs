@@ -5,33 +5,41 @@ using UnityEngine.UI;
 using XboxCtrlrInput;
 
 /*
- * Author: Afridi Rahim
-  Kenron's Skeleton that includes
-  - What he does
-  - How he does it
-  - How he interacts with others     
+  * Author: Afridi Rahim
+  *
+  * Summary: The Stats and Management of Kenrons Core Mechanics.
+           Manages his abilites and his skill tree as he improves within the
+           game
 */
 
 public class Kenron : BaseCharacter {
 
-    public ChildKenron c_Kenron;
-    public GameObject m_Amaterasu;
-    public Rigidbody m_KenronSkeleton;
-
-    [SerializeField]
-    private GameObject particle;
-    [SerializeField]
-    private GameObject swordParticle;
-    private BaseEnemy enemy;
+    [Tooltip("The Collider of Kenrons Sword")]
     public Collider Sword;
 
+    [Tooltip("The Aethereal Kenron that Spawns on Death")]
+    public ChildKenron c_Kenron;
+
+    [Tooltip("The Skill Manager that manages the skills of the players")]
     public SkillManager manager;
+
+    // Kenrons Rigid Body
+    private Rigidbody m_KenronSkeleton;
+    private BaseEnemy enemy;
+
+    private GameObject particle;
+
+    [Tooltip("The Collider of Kenrons Sword")]
+    public GameObject m_Amaterasu;
+    private GameObject swordParticle;
+
+    [Tooltip("The Collider of Kenrons Sword")]
     public bool isActive = false;
     private bool isDashing = false;
+    private bool m_triggerDown;
+
     public float dashTime;
     public float timer = 4.0f;
-
-    private bool m_triggerDown;
 
     protected override void Awake () {
         base.Awake();
