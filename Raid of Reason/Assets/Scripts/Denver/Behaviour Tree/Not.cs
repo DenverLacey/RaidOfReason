@@ -30,7 +30,7 @@ public class Not : Behaviour
                 return FAILURE;
 
             default:
-                return RUNNING;
+                return PENDING;
         }
     }
 }

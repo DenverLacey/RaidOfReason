@@ -26,6 +26,12 @@ public struct EnemyTypeBehaviourTreePair {
     public BehaviourTree value;
 }
 
+[System.Serializable]
+public struct EnemyTypeGameObjectPair {
+	public EnemyType key;
+	public GameObject value;
+}
+
 public class EnemyManager : MonoBehaviour
 {
     [SerializeField] private List<EnemyTypeFloatPair> m_viewRanges;
@@ -45,6 +51,9 @@ public class EnemyManager : MonoBehaviour
 
     [SerializeField] private List<EnemyTypeBehaviourTreePair> m_behaviourTrees;
     Dictionary<EnemyType, BehaviourTree> m_behaviourTreeDict = new Dictionary<EnemyType, BehaviourTree>();
+
+	[SerializeField] private List<EnemyTypeGameObjectPair> m_attackPrefabs;
+	Dictionary<EnemyType, GameObject> m_attackPrefabDict = new Dictionary<EnemyType, GameObject>();
 
     [SerializeField] private EnemyData[] m_enemies;
 
@@ -70,8 +79,11 @@ public class EnemyManager : MonoBehaviour
         foreach (var tree in m_behaviourTrees) {
             m_behaviourTreeDict.Add(tree.key, tree.value);
         }
+		foreach (var prefab in m_attackPrefabs) {
+			m_attackPrefabDict.Add(prefab.key, prefab.value);
+		}
 
-        m_players = GameObject.FindObjectsOfType<BaseCharacter>();
+        m_players = FindObjectsOfType<BaseCharacter>();
         InitEnemies();
     }
 
@@ -83,11 +95,13 @@ public class EnemyManager : MonoBehaviour
 
     private void InitEnemies() {
         foreach (EnemyData enemy in m_enemies) {
-            enemy.Init(
-                m_viewRangeDict         [enemy.Type],
-                m_maxHealthDict         [enemy.Type],
-                m_attackRangeDict       [enemy.Type],
-                m_attackCooldownDict    [enemy.Type],
+			enemy.Init(
+				m_viewRangeDict[enemy.Type],
+				m_maxHealthDict[enemy.Type],
+				m_attackRangeDict[enemy.Type],
+				m_attackCooldownDict[enemy.Type],
+				m_damageDict[enemy.Type],
+				m_attackPrefabDict[enemy.Type],
                 m_players
             );
         }

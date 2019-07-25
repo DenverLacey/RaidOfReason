@@ -21,7 +21,7 @@ public abstract class BaseEnemy : MonoBehaviour
 	public int Damage { get => m_damage; }
 
 	protected float m_health;
-	public float Health { get { return m_health; } }
+	public float Health { get => m_health; }
 	
 	protected bool m_stunned;
 
