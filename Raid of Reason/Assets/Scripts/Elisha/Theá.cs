@@ -17,18 +17,21 @@ public class Theá : BaseCharacter
     [SerializeField] private Nashorn m_Nashorn;
     [SerializeField] private float delay;
     [SerializeField] private SkillManager manager;
+    [SerializeField] private float m_aoeTimer;
+    [SerializeField] private float m_aoeMax;
+    [SerializeField] private float m_aoeGrowTime;
+    [SerializeField] private float m_aoeMin;
+    [SerializeField] private float m_GOPEffect;
+
+    private BaseCharacter m_playerController;
     private Vector3 hitLocation;
     private LayerMask layerMask;
-    private GameObject temp;
+    private GameObject m_temp;
     private float shotCounter;
     private float counter;
     private bool isActive;
     private bool skillActive = false;
-
-    public float m_aoeGrowth;
-    public float m_minAOE;
-    public float m_maxAOE;
-    [SerializeField] private ParticleSystem m_aoeRadius;
+    private float m_aoeRadius;
 
     protected override void Awake()
     {
@@ -36,13 +39,8 @@ public class Theá : BaseCharacter
         isActive = false;
         m_Nashorn = FindObjectOfType<Nashorn>();
 		m_Kenron = FindObjectOfType<Kenron>();
-
-        m_aoeGrowth = 0f;
-        m_minAOE = 2f;
-        m_maxAOE = 10f;
-
-        ParticleSystem.MainModule ps_main = m_aoeRadius.main;
-        ParticleSystem.ShapeModule ps_shape = m_aoeRadius.shape;
+        m_playerController = GetComponent<BaseCharacter>();
+        m_aoeTimer = 0f;
     }
 
     // Update is called once per frame
@@ -123,26 +121,17 @@ public class Theá : BaseCharacter
         isActive = true;
         skillActive = true;
         int m_coolDown = 20;
+
         if(isActive == true && m_coolDown == 20)
         {
-            for(int i = 0; i < 20; i++)
-            {
-                SetHealth(m_currentHealth + 50);
-				m_Kenron.SetHealth(m_Kenron.m_currentHealth + 50);
-                m_Nashorn.SetHealth(m_Nashorn.m_currentHealth + 50);
-				temp = Instantiate(waterPrefab, transform.position + Vector3.down * (transform.localScale.y / 2), Quaternion.Euler(90, 0, 0));
-				if (m_Kenron != null)
-				{
-					temp = Instantiate(waterPrefab, m_Kenron.transform.position + Vector3.down * (m_Kenron.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), m_Kenron.transform);
-				}
-                if (m_Nashorn != null)
-                {
-                    temp = Instantiate(waterPrefab, m_Nashorn.transform.position + Vector3.down * (m_Nashorn.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), m_Nashorn.transform);
-                }
-                m_coolDown--;
-            }
-            isActive = false;
-            Destroy(temp);
+            m_playerController.controllerOn = false;
+            m_aoeTimer += Time.deltaTime;
+            m_aoeRadius = Mathf.Lerp(m_aoeRadius, m_aoeMax, m_aoeTimer / m_aoeGrowTime);
+
+            // turn on particle effect
+            //ParticleSystem.ShapeModule dome;
+            //dome.radius = m_aoeRadius;
+            
         }
 
         if(isActive == false && m_coolDown <= 0)
@@ -151,4 +140,41 @@ public class Theá : BaseCharacter
         }
     }
 
+    /// <summary>
+    /// - checks the distance from both characters to thea and if they are within 
+    ///   range when the player releases the trigger, it will heal them according 
+    ///   to how long the player charges the heal.
+    /// </summary>
+    public void GiveHealth()
+    {
+        float sqrDistance = (m_Kenron.transform.position - m_Nashorn.transform.position).sqrMagnitude;
+
+        if(sqrDistance <= m_aoeRadius * m_aoeRadius)
+        {
+            m_Kenron.SetHealth(m_Kenron.m_currentHealth + m_aoeTimer * m_GOPEffect);
+            m_Nashorn.SetHealth(m_Nashorn.m_currentHealth + m_aoeTimer * m_GOPEffect);
+            SetHealth(m_currentHealth + m_aoeTimer * m_GOPEffect);
+
+            m_temp = Instantiate(waterPrefab, transform.position + Vector3.down * (transform.localScale.y / 2), Quaternion.Euler(90, 0, 0));
+            if (m_Kenron != null)
+            {
+                m_temp = Instantiate(waterPrefab, m_Kenron.transform.position + Vector3.down * (m_Kenron.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), m_Kenron.transform);
+            }
+            if (m_Nashorn != null)
+            {
+                m_temp = Instantiate(waterPrefab, m_Nashorn.transform.position + Vector3.down * (m_Nashorn.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), m_Nashorn.transform);
+            }
+        }
+    }
+
+    /// <summary>
+    /// - Resets Theas skill and changes the radius of the AOE to min.
+    /// </summary>
+    public void ResetGiftOfPoseidon()
+    {
+        isActive = false;
+        m_aoeRadius = m_aoeMin;
+        m_playerController.controllerOn = true;
+        // turn off particle effect
+    }
 }

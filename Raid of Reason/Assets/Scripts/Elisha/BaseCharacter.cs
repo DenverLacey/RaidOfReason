@@ -27,6 +27,9 @@ public abstract class BaseCharacter : MonoBehaviour {
     [SerializeField]
     private float m_movementSpeed;
 
+    [HideInInspector]
+    public bool controllerOn;
+
     public float m_maxHealth;
     public XboxController controller;
 
@@ -66,7 +69,8 @@ public abstract class BaseCharacter : MonoBehaviour {
         m_bActive = false;
         m_camera = FindObjectOfType<MultiTargetCamera>();
         m_animator = GetComponent<Animator>();
-    }
+        controllerOn = true;
+}
 
     protected virtual void FixedUpdate()
     {
@@ -104,40 +108,44 @@ public abstract class BaseCharacter : MonoBehaviour {
     }
 
     virtual protected void CharacterMovement() {
-        ///<summary> 
-        /// Handles the forward and backwards movement of the character via the xbox controller layout
-        /// </summary>
-        float axisX = XCI.GetAxis(XboxAxis.LeftStickX, controller) * m_movementSpeed;
-        float axisZ = XCI.GetAxis(XboxAxis.LeftStickY, controller) * m_movementSpeed;
-        Vector3 movement = m_camera.transform.TransformDirection(axisX, 0, axisZ);
-        transform.position += new Vector3(movement.x, 0, movement.z) * Time.deltaTime;
-        /// <summary>
-        /// Handles the rotation of the character via the xbox controller layout
-        /// </summary>
-        float rotAxisX = XCI.GetAxis(XboxAxis.RightStickX, controller) * m_rotationSpeed;
-        float rotAxisZ = XCI.GetAxis(XboxAxis.RightStickY, controller) * m_rotationSpeed;
-        Vector3 rawDir = m_camera.transform.TransformDirection(rotAxisX, 0, rotAxisZ);
-        Vector3 direction = new Vector3(rawDir.x, 0, rawDir.z);
-        if (direction.magnitude < 0.1f)
+
+        if (controllerOn)
         {
-            direction = prevRotDirection;
-        }
-		direction.Normalize();
-        prevRotDirection = direction;
-        transform.localRotation = Quaternion.LookRotation(direction);
+            ///<summary> 
+            /// Handles the forward and backwards movement of the character via the xbox controller layout
+            /// </summary>
+            float axisX = XCI.GetAxis(XboxAxis.LeftStickX, controller) * m_movementSpeed;
+            float axisZ = XCI.GetAxis(XboxAxis.LeftStickY, controller) * m_movementSpeed;
+            Vector3 movement = m_camera.transform.TransformDirection(axisX, 0, axisZ);
+            transform.position += new Vector3(movement.x, 0, movement.z) * Time.deltaTime;
+            /// <summary>
+            /// Handles the rotation of the character via the xbox controller layout
+            /// </summary>
+            float rotAxisX = XCI.GetAxis(XboxAxis.RightStickX, controller) * m_rotationSpeed;
+            float rotAxisZ = XCI.GetAxis(XboxAxis.RightStickY, controller) * m_rotationSpeed;
+            Vector3 rawDir = m_camera.transform.TransformDirection(rotAxisX, 0, rotAxisZ);
+            Vector3 direction = new Vector3(rawDir.x, 0, rawDir.z);
+            if (direction.magnitude < 0.1f)
+            {
+                direction = prevRotDirection;
+            }
+            direction.Normalize();
+            prevRotDirection = direction;
+            transform.localRotation = Quaternion.LookRotation(direction);
 
-        if (m_animator)
-        {
-            // calculate angle between character's direction and forward
-            float angle = Vector3.SignedAngle(direction, Vector3.forward, Vector3.up);
+            if (m_animator)
+            {
+                // calculate angle between character's direction and forward
+                float angle = Vector3.SignedAngle(direction, Vector3.forward, Vector3.up);
 
-            // rotate movement into world space to get animation movement
-            Vector3 animationMovement = Quaternion.AngleAxis(angle, Vector3.up) * movement.normalized;
+                // rotate movement into world space to get animation movement
+                Vector3 animationMovement = Quaternion.AngleAxis(angle, Vector3.up) * movement.normalized;
 
-            // set animator's movement floats
-            m_animator.SetFloat("MovX", animationMovement.x);
-            m_animator.SetFloat("MovZ", animationMovement.z);
-            m_animator.SetFloat("Speed", movement.magnitude);
+                // set animator's movement floats
+                m_animator.SetFloat("MovX", animationMovement.x);
+                m_animator.SetFloat("MovZ", animationMovement.z);
+                m_animator.SetFloat("Speed", movement.magnitude);
+            }
         }
     }
 
