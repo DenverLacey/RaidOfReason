@@ -26,7 +26,11 @@ public class Kenron : BaseCharacter {
 
     public SkillManager manager;
     public bool isActive = false;
+    private bool isDashing = false;
+    public float dashTime;
     public float timer = 4.0f;
+
+    private bool m_triggerDown;
 
     protected override void Awake () {
         base.Awake();
@@ -40,8 +44,8 @@ public class Kenron : BaseCharacter {
         if (this.gameObject != null)
         {
 			base.FixedUpdate();
-            Slash();
             SkillChecker();
+            Slash();
         }
 	}
 
@@ -60,15 +64,32 @@ public class Kenron : BaseCharacter {
     public void Slash() {
         if (m_Amaterasu != null)
         {
-            if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.First) > 0.1)
+            if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.First) > 0.1 && !m_triggerDown)
             {
+                m_triggerDown = true;
+
                 m_Amaterasu.transform.localRotation = Quaternion.Euler(0, 90, 0);
+                StartCoroutine(Dash());
             }
             else if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.First) < 0.1)
             {
+                m_triggerDown = false;
                 m_Amaterasu.transform.localRotation = Quaternion.Euler(0, 0, 0);
+                m_KenronSkeleton.velocity = Vector3.zero;
             }
         }
+    }
+
+    IEnumerator Dash()
+    {
+        if (!isDashing)
+        {
+            m_KenronSkeleton.AddForce(GetSpeed() * m_KenronSkeleton.transform.forward, ForceMode.Impulse);
+            isDashing = true;
+        }
+
+        yield return new WaitForSeconds(dashTime);
+        isDashing = false;
     }
 
     public void SkillChecker() {

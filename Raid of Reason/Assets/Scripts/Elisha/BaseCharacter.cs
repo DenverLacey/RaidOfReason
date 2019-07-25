@@ -188,7 +188,7 @@ public abstract class BaseCharacter : MonoBehaviour {
 
     public void SetSpeed(float speed)
     {
-        speed = m_movementSpeed;
+        m_movementSpeed = speed;
     }
 
     virtual public float GetDamage()

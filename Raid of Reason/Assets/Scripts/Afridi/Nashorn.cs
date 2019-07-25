@@ -75,25 +75,32 @@ public class Nashorn : BaseCharacter
     public void Punch() {
         if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.Second) > 0.1)
         {
+            SetSpeed(0.0f);
             if (m_gauntletIndex == 0)
             {
-                m_gauntlets[0].gameObject.transform.localPosition = new Vector3(-0.75f, 0, 0.8f);
+                SetSpeed(0.0f);
+                m_gauntlets[0].gameObject.transform.localPosition = new Vector3(-0.75f, 0, 0.8f);             
                 m_Instaniate = Instantiate(m_Particle, m_gauntlets[0].transform.position + Vector3.forward * (m_gauntlets[0].transform.localScale.y / 2), Quaternion.Euler(-180, 0, 0), m_gauntlets[0].transform);
             }
             else if (m_gauntletIndex == 1)
             {
+                SetSpeed(0.0f);
                 m_gauntlets[1].gameObject.transform.localPosition = new Vector3(0.75f, 0, 0.8f);
                 m_Instaniate = Instantiate(m_Particle, m_gauntlets[1].transform.position + Vector3.forward * (m_gauntlets[1].transform.localScale.y / 2), Quaternion.Euler(-180, 0, 0), m_gauntlets[1].transform);
             }
         }
-        else if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.Second) < 0.1) {
+        else if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.Second) < 0.1)
+        {
+            SetSpeed(0.0f);
             if (m_gauntletIndex == 0)
             {
-                m_gauntlets[0].gameObject.transform.localPosition = new Vector3(-0.75f, 0, 0.0f);
+                SetSpeed(15.0f);
+                m_gauntlets[0].gameObject.transform.localPosition = new Vector3(-0.75f, 0, 0.0f);                
                 m_gauntletIndex = 1;
                 Destroy(m_Instaniate);
             }
             else if (m_gauntletIndex == 1) {
+                SetSpeed(15.0f);
                 m_gauntlets[1].gameObject.transform.localPosition = new Vector3(0.75f, 0, 0.0f);
                 m_gauntletIndex = 0;
                 Destroy(m_Instaniate);
