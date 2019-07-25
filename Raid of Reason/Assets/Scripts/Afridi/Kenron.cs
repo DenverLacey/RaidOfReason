@@ -23,6 +23,7 @@ public class Kenron : BaseCharacter {
     [SerializeField]
     private GameObject swordParticle;
     private BaseEnemy enemy;
+    public Collider Sword;
 
     public SkillManager manager;
     public bool isActive = false;
@@ -38,6 +39,7 @@ public class Kenron : BaseCharacter {
         m_Amaterasu = GameObject.FindGameObjectWithTag("Amaterasu");
         m_KenronSkeleton = GetComponent<Rigidbody>();
         c_Kenron.gameObject.SetActive(false);
+        Sword.enabled = false;
 	}
 
     protected override void FixedUpdate() {
@@ -66,6 +68,7 @@ public class Kenron : BaseCharacter {
         {
             if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.First) > 0.1 && !m_triggerDown)
             {
+                Sword.enabled = true;
                 m_triggerDown = true;
 
                 m_Amaterasu.transform.localRotation = Quaternion.Euler(0, 90, 0);
@@ -73,6 +76,7 @@ public class Kenron : BaseCharacter {
             }
             else if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.First) < 0.1)
             {
+                Sword.enabled = false;
                 m_triggerDown = false;
                 m_Amaterasu.transform.localRotation = Quaternion.Euler(0, 0, 0);
                 m_KenronSkeleton.velocity = Vector3.zero;

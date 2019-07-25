@@ -16,6 +16,9 @@ public class Nashorn : BaseCharacter
 
     public float m_explosiveForce;
     public float m_explosiveRadius;
+
+    public Collider LeftGauntlet;
+    public Collider RightGauntlet;
     
     [Tooltip("Size of the area of effect for taunt ability")]
     [SerializeField] float m_tauntRadius;
@@ -34,6 +37,8 @@ public class Nashorn : BaseCharacter
     protected override void Awake()
     {
         base.Awake();
+        LeftGauntlet.enabled = false;
+        RightGauntlet.enabled = false;
         m_Collider.SetActive(false);
         m_NashornSkeleton = GetComponent<Rigidbody>();
     }
@@ -75,6 +80,8 @@ public class Nashorn : BaseCharacter
     public void Punch() {
         if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.Second) > 0.1)
         {
+            LeftGauntlet.enabled = true;
+            RightGauntlet.enabled = true;
             SetSpeed(0.0f);
             if (m_gauntletIndex == 0)
             {
@@ -91,6 +98,8 @@ public class Nashorn : BaseCharacter
         }
         else if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.Second) < 0.1)
         {
+            LeftGauntlet.enabled = false;
+            RightGauntlet.enabled = false;
             SetSpeed(0.0f);
             if (m_gauntletIndex == 0)
             {

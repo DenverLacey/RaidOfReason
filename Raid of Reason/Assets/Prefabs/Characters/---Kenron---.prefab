@@ -1413,6 +1413,7 @@ MonoBehaviour:
   playerState: 0
   m_damage: 20
   m_movementSpeed: 15
+  controllerOn: 0
   m_maxHealth: 100
   controller: 1
   m_currentHealth: 0
@@ -1427,8 +1428,10 @@ MonoBehaviour:
   particle: {fileID: 1186225012428732162, guid: 14477d58dd7a8ea4faec6e74cea8b4f1,
     type: 3}
   swordParticle: {fileID: 100004, guid: 1c20c7996d683754db1f0f62a361952c, type: 3}
+  Sword: {fileID: 6274874930775075319}
   manager: {fileID: 0}
   isActive: 0
+  dashTime: 0
   timer: 4
 --- !u!1 &6274874929302018828
 GameObject:
@@ -2131,20 +2134,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 3
---- !u!114 &6274874929586005532
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8464409842001339399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d2e13b62ce843746a5094dc163e339c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Kenron: {fileID: 6274874929271835749}
-  m_Child: {fileID: 6274874929586005532}
 --- !u!1 &6274874929681628891
 GameObject:
   m_ObjectHideFlags: 0
@@ -3950,6 +3939,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_damage: 20
   Kenron: {fileID: 6274874929271835749}
+--- !u!114 &6274874929586005532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8464409842001339399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2e13b62ce843746a5094dc163e339c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Kenron: {fileID: 6274874929271835749}
+  m_Child: {fileID: 6274874929586005532}
 --- !u!1001 &6274874929586005529
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3971,46 +3974,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 2268850298961720299, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
-        type: 3}
-      propertyPath: c_Kenron
-      value: 
-      objectReference: {fileID: 6274874929586005532}
-    - target: {fileID: 2268850298961720299, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
-        type: 3}
-      propertyPath: m_SkillMaxed
-      value: 
-      objectReference: {fileID: 6274874929479299256}
-    - target: {fileID: 2268850298961720299, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
-        type: 3}
-      propertyPath: m_SkillDisplay
-      value: 
-      objectReference: {fileID: 6274874930049916589}
-    - target: {fileID: 2268850298961720299, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
-        type: 3}
-      propertyPath: m_camera
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2268850298961720299, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
-        type: 3}
-      propertyPath: Destructive
-      value: 
-      objectReference: {fileID: 6274874929271835749}
-    - target: {fileID: 2268850298961720299, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
-        type: 3}
-      propertyPath: manager
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2268850298961720299, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
-        type: 3}
-      propertyPath: m_currentHealth
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 2268850298961720299, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
-        type: 3}
-      propertyPath: m_damage
-      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8668622199191288015, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
         type: 3}
@@ -4066,6 +4029,46 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268850298961720299, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
+        type: 3}
+      propertyPath: c_Kenron
+      value: 
+      objectReference: {fileID: 6274874929586005532}
+    - target: {fileID: 2268850298961720299, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
+        type: 3}
+      propertyPath: m_SkillMaxed
+      value: 
+      objectReference: {fileID: 6274874929479299256}
+    - target: {fileID: 2268850298961720299, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
+        type: 3}
+      propertyPath: m_SkillDisplay
+      value: 
+      objectReference: {fileID: 6274874930049916589}
+    - target: {fileID: 2268850298961720299, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
+        type: 3}
+      propertyPath: m_camera
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268850298961720299, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
+        type: 3}
+      propertyPath: Destructive
+      value: 
+      objectReference: {fileID: 6274874929271835749}
+    - target: {fileID: 2268850298961720299, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
+        type: 3}
+      propertyPath: manager
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268850298961720299, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
+        type: 3}
+      propertyPath: m_currentHealth
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268850298961720299, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
+        type: 3}
+      propertyPath: m_damage
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4897393a4c9139c4f9bb0bf6c0157a6f, type: 3}
