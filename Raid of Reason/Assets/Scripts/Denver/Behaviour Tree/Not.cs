@@ -8,7 +8,8 @@ public class Not : Behaviour
 {
     private Behaviour m_behaviour;
 
-    Not(Behaviour behaviour) {
+    Not(Behaviour behaviour) 
+	{
         m_behaviour = behaviour;
     }
 
@@ -21,8 +22,10 @@ public class Not : Behaviour
     /// <returns>
     /// A Behaviour.Result. Behaviour's result notted
     /// </returns>
-    public override Result Execute(EnemyData agent) {
-        switch (m_behaviour.Execute(agent)) {
+    public override Result Execute(EnemyData agent) 
+	{
+        switch (m_behaviour.Execute(agent)) 
+		{
             case FAILURE:
                 return SUCCESS;
 

@@ -162,7 +162,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: c468bbd7197236048a575b7442356c0a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -498,7 +498,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &552164217
 Transform:
   m_ObjectHideFlags: 0
@@ -695,6 +695,7 @@ MonoBehaviour:
   playerState: 0
   m_damage: 1
   m_movementSpeed: 0
+  controllerOn: 0
   m_maxHealth: 50
   controller: 0
   m_currentHealth: 50
@@ -707,12 +708,14 @@ MonoBehaviour:
   projectile: {fileID: 1119944734783606, guid: 4dab86d7c4169194e9d7640ac578ff72, type: 3}
   m_Kenron: {fileID: 0}
   m_Nashorn: {fileID: 0}
-  delay: 0
   manager: {fileID: 0}
-  m_aoeGrowth: 0
-  m_minAOE: 0
-  m_maxAOE: 0
-  m_aoeRadius: {fileID: 0}
+  delay: 0
+  m_aoeTimer: 0
+  m_aoeMax: 0
+  m_aoeGrowTime: 0
+  m_aoeMin: 0
+  m_GOPEffect: 0
+  m_aoeParticle: {fileID: 0}
 --- !u!1001 &1062636075
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -726,7 +729,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 3f27a5aa7f5b86b41870fa4d6228e254, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 3f27a5aa7f5b86b41870fa4d6228e254, type: 3}
       propertyPath: m_LocalPosition.x
@@ -817,6 +820,7 @@ MonoBehaviour:
   playerState: 0
   m_damage: 0
   m_movementSpeed: 10
+  controllerOn: 0
   m_maxHealth: 10
   controller: 0
   m_currentHealth: 0
@@ -825,13 +829,12 @@ MonoBehaviour:
   m_camera: {fileID: 1773922308}
   m_SkillDisplay: {fileID: 0}
   m_SkillMaxed: {fileID: 0}
+  Sword: {fileID: 0}
   c_Kenron: {fileID: 0}
-  m_Amaterasu: {fileID: 0}
-  m_KenronSkeleton: {fileID: 0}
-  particle: {fileID: 0}
-  swordParticle: {fileID: 0}
   manager: {fileID: 0}
+  m_Amaterasu: {fileID: 0}
   isActive: 0
+  dashTime: 0
   timer: 4
 --- !u!1 &1090813717
 GameObject:
@@ -874,12 +877,12 @@ MonoBehaviour:
   m_attackRanges:
   - key: 0
     value:
-      min: 2
-      max: 5
+      min: 5
+      max: 7
   - key: 1
     value:
       min: 0
-      max: 1
+      max: 2
   - key: 2
     value:
       min: 10
@@ -906,15 +909,7 @@ MonoBehaviour:
     value: 75
   - key: 3
     value: 150
-  m_damages:
-  - key: 0
-    value: 30
-  - key: 1
-    value: 10
-  - key: 2
-    value: 20
-  - key: 3
-    value: 0
+  m_attackDamages: []
   m_behaviourTrees:
   - key: 0
     value: {fileID: 11400000, guid: 5d9720cf3161e3647b06dca4a4cdaec3, type: 2}
@@ -982,8 +977,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ee021b62536bfc4caecab557ba45f1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_type: 0
-  s_float: 0
+  m_type: 1
   isDeadbByKenron: 0
 --- !u!195 &1101484090
 NavMeshAgent:
@@ -1037,7 +1031,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f2286d3e116d2764fa76328f42fee9a2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1073,7 +1067,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1101484088}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: -15.29}
+  m_LocalPosition: {x: 0, y: 0.5, z: -24.85}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1098,7 +1092,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1211197687
 Transform:
   m_ObjectHideFlags: 0
@@ -1206,7 +1200,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1610119599
 Transform:
   m_ObjectHideFlags: 0

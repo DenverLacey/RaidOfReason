@@ -1,7 +1,16 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Denver
+ * Description:	Abstract Behaviour class that all behaviours will derive from and also
+ *				encapsulates Result enum
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Abstract base class for all Behaviours
+/// </summary>
 public abstract class Behaviour
 {
     public enum Result
@@ -20,5 +29,5 @@ public abstract class Behaviour
 	/// <returns>
 	/// If behaviour was successful; if it failed or is pending
 	/// </returns>
-    abstract public Result Execute(EnemyData agent);
+    public abstract Result Execute(EnemyData agent);
 }

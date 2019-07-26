@@ -4,25 +4,30 @@ using UnityEngine;
 
 public class TauntEvent : Behaviour
 {
-    public override Result Execute(EnemyData agent) {
+    public override Result Execute(EnemyData agent) 
+	{
 		Nashorn nashorn = null;
 
-		foreach (var p in agent.Players) {
+		foreach (var p in agent.Players) 
+		{
 			nashorn = p as Nashorn;
 
 			if (nashorn) break;
 		}
 
-		if (!nashorn) {
+		if (!nashorn) 
+		{
 			return Result.FAILURE;
 		}
 
-		if (nashorn.isActive) {
+		if (nashorn.isActive) 
+		{
 			agent.Taunted = true;
 			agent.Target = nashorn.transform.position;
 			return Result.SUCCESS;
 		}
-		else {
+		else 
+		{
 			agent.Taunted = false;
 			return Result.FAILURE;
 		}

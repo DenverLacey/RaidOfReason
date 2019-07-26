@@ -1,13 +1,13 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Denver Lacey
+ * Description:	Wander class for WanderBehaviour of the Behaviour Tree
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using static Behaviour.Result;
-
-/*
- * Author: Denver Lacey
- * Description:	Wander class for WanderBehaviour of the Behaviour Tree
- */
 
 /// <summary>
 /// Performs Wander behaviour on an EnemyData object
@@ -23,26 +23,32 @@ public class Wander : Behaviour
 	/// <returns>
 	/// If agent can wander
 	/// </returns>
-	public override Result Execute(EnemyData agent) {
+	public override Result Execute(EnemyData agent) 
+	{
 		// don't find new position if already wandering
-		if ((agent.NavMeshAgent.destination - agent.transform.position).sqrMagnitude <=  .2f) {
+		if ((agent.NavMeshAgent.destination - agent.transform.position).sqrMagnitude >=  .3f) 
+		{
+			agent.NavMeshAgent.destination = agent.Target;
 			return SUCCESS;
 		}
 
-		// calculate direction from current position to new wander destination
-		float angle = Random.Range(0, 360);
-		Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
-		Vector3 direction = rotation.eulerAngles;
+		NavMeshTriangulation tris = NavMesh.CalculateTriangulation();
+	
+		// calculate indices of each vertex of a random triangle
+		int rawIndex = 3 * Random.Range(0, Mathf.FloorToInt(tris.indices.Length / 3));
+		int index1 = tris.indices[rawIndex];
+		int index2 = tris.indices[rawIndex + 1];
+		int index3 = tris.indices[rawIndex + 2];
 
-		Vector3 point = agent.transform.position + (direction * 5f);
-		point = agent.FindClosestPoint(point);
+		// calculate random offsets
+		float offset1 = Random.Range(.25f, .75f);
+		float offset2 = Random.Range(.25f, .75f);
 
-		// return failure if a valid point couldn't be found
-		if (point == Vector3.positiveInfinity) {
-			return FAILURE;
-		}
+		// move target point towards each vertex of the triangle by offsets
+		Vector3 point = tris.vertices[index1];
+		point = Vector3.Lerp(point, tris.vertices[index2], offset1);
+		point = Vector3.Lerp(point, tris.vertices[index3], offset2);
 
-		// set agent's target and destination
 		agent.Target = point;
 		agent.NavMeshAgent.destination = agent.Target;
 

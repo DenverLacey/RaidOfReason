@@ -1,4 +1,10 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Denver
+ * Description:	EnemyData class that holds all data for all enemy types and some functions to
+ *				alter that state from within the behaviour tree
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -17,6 +23,9 @@ public struct EnemyAttackRange {
     public float max;
 }
 
+/// <summary>
+/// Encapsulates all data for all enemy types
+/// </summary>
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyData : MonoBehaviour {
 
@@ -29,7 +38,7 @@ public class EnemyData : MonoBehaviour {
     public EnemyAttackRange AttackRange { get; private set; }
     public float AttackCooldown { get; private set; }
     public float AttackTimer { get; set; }
-	public int Damage { get; private set; }
+	public int AttackDamage { get; private set; }
     public bool Attacking { get; set; }
 	public bool Taunted { get; set; }
 	public bool Stunned { get; set; }
@@ -58,7 +67,7 @@ public class EnemyData : MonoBehaviour {
     /// <param name="attackCooldown">
     /// How often enemy will attack
     /// </param>
-    public void Init(float viewRange, int maxHealth, EnemyAttackRange attackRange, float attackCooldown, int damage, GameObject attackPrefab, BaseCharacter[] players)
+    public void Init(float viewRange, int maxHealth, EnemyAttackRange attackRange, float attackCooldown, int attackDamage, GameObject attackPrefab, BaseCharacter[] players)
     {
         ViewRange = viewRange;
         MaxHealth = maxHealth;
@@ -66,7 +75,7 @@ public class EnemyData : MonoBehaviour {
         AttackRange = attackRange;
         AttackCooldown = attackCooldown;
         AttackTimer = 0.0f;
-		Damage = damage;
+		AttackDamage = attackDamage;
 		AttackPrefab = attackPrefab;
 		Stunned = false;
         Players = players;
@@ -74,38 +83,54 @@ public class EnemyData : MonoBehaviour {
 		NavMeshAgent.destination = Vector3.positiveInfinity;
     }
 
-	public void Stun(float duration) {
+	/// <summary>
+	/// Stuns enemy for a given amount of seconds
+	/// </summary>
+	/// <param name="duration">
+	/// How long to stun enemy for in seconds
+	/// </param>
+	public void Stun(float duration) 
+	{
 		Stunned = true;
 		StartCoroutine(ResetStun(duration));
 	}
 
-	IEnumerator ResetStun(float duration) {
+	/// <summary>
+	/// Unstuns the enemy once a given amount of seconds has elapsed
+	/// </summary>
+	/// <param name="duration">
+	/// How long to wait before unstunning the enemy in seconds
+	/// </param>
+	/// <returns>
+	/// A WaitForSeconds
+	/// </returns>
+	IEnumerator ResetStun(float duration) 
+	{
 		yield return new WaitForSeconds(duration);
 		Stunned = false;
 	}
 
 	/// <summary>
-	/// Finds closest point to source on NavMesh
+	/// Decreases enemy's health by an amount
 	/// </summary>
-	/// <param name="source">
-	/// The position the enemy would like to go to
+	/// <param name="damage">
+	/// How much to decrease enemy's health
 	/// </param>
-	/// <returns>
-	/// Closest Point to source on NavMesh. Returns source if already on NavMesh. Returns positiveInfinity if none found
-	/// </returns>
-	public Vector3 FindClosestPoint(Vector3 source) {
-		NavMeshHit hit = new NavMeshHit();
-		int navMeshArea = NavMesh.GetAreaFromName("Walkable");
+	public void TakeDamage(int damage)
+	{
+		Health -= damage;
 
-		// if source is already on NavMesh
-		if (NavMesh.SamplePosition(source, out hit, 1, navMeshArea)) {
-			return source;
+		if (Health <= 0)
+		{
+			Die();
 		}
+	}
 
-		if (NavMesh.FindClosestEdge(source, out hit, navMeshArea)) {
-			return hit.position;
-		}
-
-		return Vector3.positiveInfinity;
+	/// <summary>
+	/// Destroys the enemy's GameObject
+	/// </summary>
+	public void Die()
+	{
+		Destroy(gameObject);
 	}
 }

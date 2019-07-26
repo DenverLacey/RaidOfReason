@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class StunnedCondition : Behaviour
 {
-	public override Result Execute(EnemyData agent) {
-		if (agent.Stunned) {
+	public override Result Execute(EnemyData agent) 
+	{
+		if (agent.Stunned) 
+		{
 			return Result.SUCCESS;
 		}
-		else {
+		else 
+		{
 			return Result.FAILURE;
 		}
 	}

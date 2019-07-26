@@ -1,27 +1,51 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Denver
+ * Description:	Attack behaviour for the Suicide Enemy Type
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Suicide Enemy's attack behaviour
+/// </summary>
 public class SuicideEnemyAttack : Behaviour
 {
-	public override Result Execute(EnemyData agent) {
+	/// <summary>
+	/// Performs attack behaviour on given Suicide Enemey agent
+	/// </summary>
+	/// <param name="agent">
+	/// Agent to perform behaviour on
+	/// </param>
+	/// <returns>
+	/// If attack was successfully executed
+	/// </returns>
+	public override Result Execute(EnemyData agent) 
+	{
 		agent.Attacking = true;
-		agent.StartCoroutine(Countdown(agent));
-		return Result.SUCCESS;
-	}
 
-	IEnumerator Countdown(EnemyData agent) {
-		yield return new WaitForSeconds(agent.AttackCooldown);
-		
-		foreach (var p in agent.Players) {
-			if (!p) continue;
-			float sqrDistance = (p.transform.position - agent.transform.position).sqrMagnitude;
-			if (sqrDistance <= agent.AttackRange.max * agent.AttackRange.max) {
-				p.TakeDamage(agent.Damage);
+		agent.Target = agent.transform.position;
+		agent.NavMeshAgent.destination = agent.Target;
+
+		agent.AttackTimer += Time.deltaTime;
+
+		if (agent.AttackTimer >= agent.AttackCooldown)
+		{
+			foreach (BaseCharacter p in agent.Players)
+			{
+				if (!p) { continue; }
+				float sqrDistance = (p.transform.position - agent.transform.position).sqrMagnitude;
+				if (sqrDistance <= agent.AttackRange.max * agent.AttackRange.max)
+				{
+					p.TakeDamage(agent.AttackDamage);
+				}
 			}
+
+			GameObject.Instantiate(agent.AttackPrefab, agent.transform.position, Quaternion.identity);
+			agent.Die();
 		}
 
-		GameObject.Instantiate(agent.AttackPrefab, agent.transform.position, Quaternion.identity);
-		MonoBehaviour.Destroy(agent);
+		return Result.SUCCESS;
 	}
 }
