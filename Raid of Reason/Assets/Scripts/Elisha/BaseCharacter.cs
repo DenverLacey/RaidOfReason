@@ -1,8 +1,7 @@
-﻿//*
-// @Brief: This class will be a base character class used to create our 3 main protagonists 
-// Author: Elisha Anagnostakis
-// Date: 14/05/19 
-//*
+﻿/* 
+ * Author: Elisha Anagnostakis
+ * Description: This class will be a base character class used to create our 3 main protagonists
+ */
 
 using System.Collections;
 using System.Collections.Generic;
