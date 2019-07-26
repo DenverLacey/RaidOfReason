@@ -136,7 +136,7 @@ public class Nashorn : BaseCharacter
         if (Gauntlets.Count == 2)
         {
             // If the Triggers has been pressed
-            if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.Second) > 0.1)
+            if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1)
             {
                 // Gauntlet Colliders are Enabled and Nashorn Becomes Stationary 
                 LeftGauntlet.enabled = true;
@@ -161,7 +161,7 @@ public class Nashorn : BaseCharacter
                 }
             }
             // or if the trigger isnt pressed
-            else if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.Second) < 0.1)
+            else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) < 0.1)
             {
                 // Disable colliders and reset speed
                 LeftGauntlet.enabled = false;

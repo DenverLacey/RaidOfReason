@@ -140,7 +140,7 @@ public class Kenron : BaseCharacter {
         if (Amaterasu != null)
         {
             // If the trigger has been pressed and the trigger down button is false
-            if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.First) > 0.1 && !m_triggerDown)
+            if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1 && !m_triggerDown)
             {
                 // Enables the Collider for Attack
                 swordCollider.enabled = true;
@@ -153,7 +153,7 @@ public class Kenron : BaseCharacter {
                 StartCoroutine(Dash());
             }
             // or if the trigger isnt pressed
-            else if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.First) < 0.1)
+            else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) < 0.1)
             {
                 // Disable the collider to prevent baseless attack
                 swordCollider.enabled = false;
