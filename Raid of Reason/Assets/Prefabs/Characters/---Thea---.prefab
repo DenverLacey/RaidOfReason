@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5001416120509848752}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -442.65, y: 114.24065, z: -87.23}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5001416120974427574}
@@ -110,6 +110,7 @@ MonoBehaviour:
   playerState: 0
   m_damage: 8
   m_movementSpeed: 0
+  controllerOn: 0
   m_maxHealth: 100
   controller: 3
   m_currentHealth: 0
@@ -123,8 +124,14 @@ MonoBehaviour:
   projectile: {fileID: 1119944734783606, guid: 4dab86d7c4169194e9d7640ac578ff72, type: 3}
   m_Kenron: {fileID: 0}
   m_Nashorn: {fileID: 0}
-  delay: 0.5
   manager: {fileID: 0}
+  delay: 0.5
+  m_aoeTimer: 0
+  m_aoeMax: 0
+  m_aoeGrowTime: 0
+  m_aoeMin: 0
+  m_GOPEffect: 0
+  m_aoeParticle: {fileID: 0}
 --- !u!54 &5001416120509848759
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3037,7 +3044,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5001416121934993675}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 445.63, y: -113.24065, z: 68.458405}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5001416120509848758}
