@@ -5,7 +5,9 @@ using XboxCtrlrInput;
 
 public class PlayerHandler : MonoBehaviour
 {
-    public BaseCharacter Player;
+    public Kenron kenronController;
+    public Nashorn nashornController;
+    public Theá theaController;
 
     [SerializeField]
     private Canvas m_KCanvas;
@@ -18,13 +20,15 @@ public class PlayerHandler : MonoBehaviour
 
     private void Update()
     {
-        if (XCI.GetButtonDown(XboxButton.A, XboxController.First)) {
-            if (m_KCanvas) {
+        if (XCI.GetButtonDown(XboxButton.A, kenronController.controller))
+        {
+            if (m_KCanvas)
+            {
                 m_SeeCanvas = !m_SeeCanvas;
                 m_KCanvas.gameObject.SetActive(m_SeeCanvas);
             }
         }
-        if (XCI.GetButtonDown(XboxButton.A, XboxController.Second))
+        if (XCI.GetButtonDown(XboxButton.A, nashornController.controller))
         {
             if (m_NCanvas)
             {
@@ -32,7 +36,7 @@ public class PlayerHandler : MonoBehaviour
                 m_NCanvas.gameObject.SetActive(m_SeeCanvas);
             }
         }
-        if (XCI.GetButtonDown(XboxButton.A, XboxController.Third))
+        if (XCI.GetButtonDown(XboxButton.A, theaController.controller))
         {
             if (m_TCanvas)
             {

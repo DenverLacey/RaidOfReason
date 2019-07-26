@@ -6,16 +6,19 @@ public class StatusEffectManager : MonoBehaviour
 {
     private BaseEnemy enemy;
     private int remainingTicks;
-    public int burnAmount;
     private bool burnOn = false;
     private Rigidbody m_rigidBody;
 
-    void Start() {
+    public int burnAmount;
+
+    void Start()
+    {
         enemy = GetComponent<BaseEnemy>();
         m_rigidBody = GetComponent<Rigidbody>();
     }
 
-    public void ApplyBurn(int ticks) {
+    public void ApplyBurn(int ticks)
+    {
         if (remainingTicks <= 0)
         {
             remainingTicks = ticks;
