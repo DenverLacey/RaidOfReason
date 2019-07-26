@@ -5,7 +5,9 @@ using XboxCtrlrInput;
 
 public class SmashDamage : MonoBehaviour
 {
-    [SerializeField] private int m_damage;
+    [SerializeField]
+    [Tooltip("How much damage the punches deal")]
+    private int m_damage;
     public Nashorn Nashorn;
 
     public void SetDamage(int damage)
@@ -28,7 +30,6 @@ public class SmashDamage : MonoBehaviour
                 { 
                     Vector3 direction = this.transform.position - enemy.transform.position;
                     other.GetComponent<StatusEffectManager>().ApplyKnockBack(enemy.gameObject, direction, 1, 0.3f);
-                    //other.GetComponent<StatusEffectManager>().KnockBackEnemy(enemy.gameObject, direction);
                 }
             }
 

@@ -4,128 +4,203 @@ using UnityEngine;
 using UnityEngine.UI;
 using XboxCtrlrInput;
 
+/*
+  * Author: Afridi Rahim
+  *
+  * Summary: The Stats and Management of Nashorns Core Mechanics.
+  *          Manages his abilites and his skill tree as he improves within the
+  *          game
+*/
+
 public class Nashorn : BaseCharacter
 {
-    public Rigidbody m_NashornSkeleton;
-    public List<GameObject> m_gauntlets;
+    [Tooltip("The Two Gauntlets That Nashorn Attacks With")]
+    public List<GameObject> Gauntlets;
 
-    public GameObject m_Particle;
-    public GameObject m_Particle_2;
-    private GameObject m_Instaniate;
-    public GameObject m_Collider;
-
-    public float m_explosiveForce;
-    public float m_explosiveRadius;
-
+    [Tooltip("The Collider of Nashorns Left Gauntlet")]
     public Collider LeftGauntlet;
+
+    [Tooltip("The Collider of Nashorns Right Gauntlet")]
     public Collider RightGauntlet;
-    
+
+    [Tooltip("The Skill Manager that manages the skills of the players")]
+    public SkillManager skillManager;
+
+    [Tooltip("Checks if Nashorns Skill is Active")]
+    public bool isActive;
+
+    [SerializeField]
     [Tooltip("Size of the area of effect for taunt ability")]
-    [SerializeField] float m_tauntRadius;
+    private float m_tauntRadius;
 
+    [SerializeField]
     [Tooltip("How vulnerable Nashorn is while taunting (1.0 is default)")]
-    [SerializeField] float m_tauntVulnerability;
+    private float m_tauntVulnerability;
 
+    [SerializeField]
+    [Tooltip("Particle Effect That Appears When Nashorn Taunts")]
+    private GameObject m_tauntParticle;
+
+    [SerializeField]
+    [Tooltip("Particle Effect That Appears When Nashorn Taunts")]
+    private GameObject m_gauntletParticle;
+
+    [SerializeField]
+    [Tooltip("Increased Radius from Nashorns Roaring Thunder ability")]
+    private float m_radiusIncreased;
+
+    // Amount of Nearby Enemies near Nashorn
     private List<BaseEnemy> m_nearbyEnemies = new List<BaseEnemy>();
-    public bool isActive = false;
-    private bool skillCheck = false;
 
-    // 1 = Left Fist / 0 = Right Fist
-    private uint m_gauntletIndex = 0;
-    public SkillManager manager;
+    // Swaps Between Left and Right Gauntlets: 0 = Left / 1 = Right
+    private uint u_gauntletIndex = 0;
+
+    // Nashorns Rigidbody
+    private Rigidbody m_nashornRigidBody;
+
+    // Empty Object for particle instantiating
+    private GameObject particleInstantiate;
 
     protected override void Awake()
     {
+        // Initialisation 
         base.Awake();
+        m_nashornRigidBody = GetComponent<Rigidbody>();
         LeftGauntlet.enabled = false;
         RightGauntlet.enabled = false;
-        m_Collider.SetActive(false);
-        m_NashornSkeleton = GetComponent<Rigidbody>();
-    }
+        isActive = false;
 
-    private void Start()
-    {
         for (int i = 0; i < 2; i++)
         {
             // Ignores the collider on the player
-            Physics.IgnoreCollision(GetComponent<Collider>(), m_gauntlets[i].GetComponent<Collider>(), true);
+            Physics.IgnoreCollision(GetComponent<Collider>(), 
+                                    Gauntlets[i].GetComponent<Collider>(), 
+                                    true);
         }
     }
 
     protected override void FixedUpdate()
     {
-        base.FixedUpdate();
-        SkillChecker();
+        // Empty Check
+        if (this.gameObject != null)
+        {
+            // Updates Player Movement
+            base.FixedUpdate();
+
+            // Checks Nashorns Skill Tree
+            SkillChecker();
+        }
     }
 
-    protected override void Update() {
-        if (this.gameObject != null) {
+    protected override void Update()
+    {
+        // Empty Check
+        if (this.gameObject != null)
+        {
+            // Allows Nashorn to perform Melee Punches 
             Punch();
         }
     }
 
-    public void SkillChecker() {
+    /// <summary>
+    /// Checks how many skills Nashorn has obtained from his skill tree
+    /// - Roaring Thunder: More Range for his Taunt and Cooldown is Halved
+    /// - Shock Wave: Melee now knocksback and has a chance to stun (Passive)
+    /// - Kinetic Discharge: Enemies now take damage when attacking Taunted Nashorn
+    /// - Macht Des Sturms: Chain Lightning attack that damages and stuns + team mates are granted electric damage (Stun Buff)
+    /// </summary>
+    public void SkillChecker()
+    {
+        // Empty Check
         if (this.gameObject != null)
         {
-            if (isActive == true && playerSkills.Find(skill => skill.Name == "Roaring Thunder")) {
-                if (skillCheck == true)
-                {
-                    this.m_tauntRadius = m_tauntRadius + 5;
-                    manager.m_Skills[1].m_coolDown = manager.m_Skills[1].m_coolDown / 2;
-                    skillCheck = false;
-                }
-            }
-        }
-    }
-    public void Punch() {
-        if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.Second) > 0.1)
-        {
-            LeftGauntlet.enabled = true;
-            RightGauntlet.enabled = true;
-            SetSpeed(0.0f);
-            if (m_gauntletIndex == 0)
+            // If the skill is active and the player has the named skill
+            if (isActive == true && playerSkills.Find(skill => skill.Name == "Roaring Thunder"))
             {
-                SetSpeed(0.0f);
-                m_gauntlets[0].gameObject.transform.localPosition = new Vector3(-0.75f, 0, 0.8f);             
-                m_Instaniate = Instantiate(m_Particle, m_gauntlets[0].transform.position + Vector3.forward * (m_gauntlets[0].transform.localScale.y / 2), Quaternion.Euler(-180, 0, 0), m_gauntlets[0].transform);
-            }
-            else if (m_gauntletIndex == 1)
-            {
-                SetSpeed(0.0f);
-                m_gauntlets[1].gameObject.transform.localPosition = new Vector3(0.75f, 0, 0.8f);
-                m_Instaniate = Instantiate(m_Particle, m_gauntlets[1].transform.position + Vector3.forward * (m_gauntlets[1].transform.localScale.y / 2), Quaternion.Euler(-180, 0, 0), m_gauntlets[1].transform);
-            }
-        }
-        else if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.Second) < 0.1)
-        {
-            LeftGauntlet.enabled = false;
-            RightGauntlet.enabled = false;
-            SetSpeed(0.0f);
-            if (m_gauntletIndex == 0)
-            {
-                SetSpeed(15.0f);
-                m_gauntlets[0].gameObject.transform.localPosition = new Vector3(-0.75f, 0, 0.0f);                
-                m_gauntletIndex = 1;
-                Destroy(m_Instaniate);
-            }
-            else if (m_gauntletIndex == 1) {
-                SetSpeed(15.0f);
-                m_gauntlets[1].gameObject.transform.localPosition = new Vector3(0.75f, 0, 0.0f);
-                m_gauntletIndex = 0;
-                Destroy(m_Instaniate);
+
+                // Returns increased Radius
+                this.m_tauntRadius = m_tauntRadius + m_radiusIncreased;
+
+                // Cooldown is halved
+                skillManager.m_Skills[1].m_coolDown = skillManager.m_Skills[1].m_coolDown / 2;
             }
         }
     }
 
     /// <summary>
-	/// Nashorn's base ability.
+    /// Nashorns Attack. By Pressing the Right Trigger, Nashorn Becomes Stationery and Punches his foes switching between fists
+    /// </summary>
+    public void Punch()
+    {
+        // Empty Check
+        if (Gauntlets.Count == 2)
+        {
+            // If the Triggers has been pressed
+            if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.Second) > 0.1)
+            {
+                // Gauntlet Colliders are Enabled and Nashorn Becomes Stationary 
+                LeftGauntlet.enabled = true;
+                RightGauntlet.enabled = true;
+                SetSpeed(0.0f);
+
+                // If its the left Gauntlet
+                if (u_gauntletIndex == 0)
+                {
+                    Gauntlets[0].gameObject.transform.localPosition = new Vector3(-0.75f, 0, 0.8f); // Will be Removed
+
+                    // Spawns a particle at the gauntlet that is attacking
+                    particleInstantiate = Instantiate(m_gauntletParticle, Gauntlets[0].transform.position + Vector3.forward * (Gauntlets[0].transform.localScale.y / 2), Quaternion.Euler(-180, 0, 0), Gauntlets[0].transform);
+                }
+                // If its the right Gauntlet
+                if (u_gauntletIndex == 1)
+                {
+                    Gauntlets[1].gameObject.transform.localPosition = new Vector3(0.75f, 0, 0.8f); // Will be Removed
+                    
+                    // Spawns a particle at the gauntlet that is attacking
+                    particleInstantiate = Instantiate(m_gauntletParticle, Gauntlets[1].transform.position + Vector3.forward * (Gauntlets[1].transform.localScale.y / 2), Quaternion.Euler(-180, 0, 0), Gauntlets[1].transform);
+                }
+            }
+            // or if the trigger isnt pressed
+            else if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.Second) < 0.1)
+            {
+                // Disable colliders and reset speed
+                LeftGauntlet.enabled = false;
+                RightGauntlet.enabled = false;
+                SetSpeed(10.0f);
+
+                // If its the left Gauntlet
+                if (u_gauntletIndex == 0)
+                {
+                    Gauntlets[0].gameObject.transform.localPosition = new Vector3(-0.75f, 0, 0.0f); // Will be Removed
+                    
+                    // Sets the index and destroys the particle
+                    u_gauntletIndex = 1;
+                    Destroy(particleInstantiate);
+                }
+                // If its the right Gauntlet
+                if (u_gauntletIndex == 1)
+                {
+                    Gauntlets[1].gameObject.transform.localPosition = new Vector3(0.75f, 0, 0.0f); // Will be Removed
+
+                    // Sets the index and destroys the particle
+                    u_gauntletIndex = 0;
+                    Destroy(particleInstantiate);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+	/// Nashorn's Ability. Boosting His Health up and reducing incoming damage he taunts all enemies to himself
 	/// </summary>
     public void Spott()
     {
+        // Empty Check
         if (this.gameObject != null)
         {
+            // Ability is active
             isActive = true;
-            skillCheck = true;
+
             // set vulnerability
             m_vulnerability = m_tauntVulnerability;
 
@@ -141,16 +216,21 @@ public class Nashorn : BaseCharacter
             }
         }
     }
-   
-	/// <summary>
-	/// Reset's Nashorn's base ability.
-	/// </summary>
-    public void ResetSpott() {
-        ResetVulernability();
-        isActive = false;
-        skillCheck = true;
 
-        foreach (BaseEnemy enemy in m_nearbyEnemies) {
+    /// <summary>
+    /// Resets Nashorns Stats back to his base after Spott is Used
+    /// </summary>
+    public void ResetSkill()
+    {
+        // Vulnerable once more
+        ResetVulernability();
+
+        // Skill no longer active
+        isActive = false;
+
+        // All Enemies are un-taunted
+        foreach (BaseEnemy enemy in m_nearbyEnemies)
+        {
             if (enemy.State == BaseEnemy.AI_STATE.TAUNTED)
             {
                 enemy.StopTaunt();
@@ -158,9 +238,15 @@ public class Nashorn : BaseCharacter
         }
     }
 
+    /// <summary>
+    /// When an Enemy dies, they must be stopped in thier taunt state
+    /// </summary>
 	protected override void OnDeath() {
-		foreach (BaseEnemy enemy in m_nearbyEnemies) {
-			if (enemy.State == BaseEnemy.AI_STATE.TAUNTED) {
+        // For any enemies dead, stop taunting
+		foreach (BaseEnemy enemy in m_nearbyEnemies)
+        {
+			if (enemy.State == BaseEnemy.AI_STATE.TAUNTED)
+            {
 				enemy.StopTaunt();
 			}
 		}

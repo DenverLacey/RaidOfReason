@@ -70,7 +70,8 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         //If the current amount is equal to the maximum number of enemies
-        if (m_currentEnemiesInRoom == numOfEnemies) {
+        if (m_currentEnemiesInRoom == numOfEnemies)
+        {
             // Cancels the Spawn Functions
             CancelInvoke("SpawnMelee");
             CancelInvoke("SpawnExplosive");
@@ -82,14 +83,15 @@ public class GameManager : MonoBehaviour
         }
 
         //If the maximum amount has been reached and current enemies are 0
-        if (m_capReached == true && m_currentEnemiesInRoom == 0) {
+        if (m_capReached == true && m_currentEnemiesInRoom == 0)
+        {
             // Calls Clear Room
             ClearedRoom();
         }
     }
 
     /// <summary>
-    /// - Spawns the Melee Enemy Type with its own Spawn Time
+    /// Spawns the Melee Enemy Type with its own Spawn Time
     /// </summary>
     public void SpawnMelee()
     {
@@ -115,7 +117,7 @@ public class GameManager : MonoBehaviour
 
 
     /// <summary>
-    /// - Spawns the Explosive Enemy Type with its own Spawn Time
+    /// Spawns the Explosive Enemy Type with its own Spawn Time
     /// </summary>
     public void SpawnExplosive()
     {
@@ -141,7 +143,7 @@ public class GameManager : MonoBehaviour
     
 
     /// <summary>
-    /// - Spawns the Ranged Enemy Type with its own Spawn Time
+    /// Spawns the Ranged Enemy Type with its own Spawn Time
     /// </summary>
     public void SpawnRanged()
     {
@@ -167,7 +169,7 @@ public class GameManager : MonoBehaviour
 
 
     /// <summary>
-    /// - Spawns the Horde Enemy Type with its own Spawn Time
+    /// Spawns the Horde Enemy Type with its own Spawn Time
     /// </summary>
     public void SpawnHorde()
     {
@@ -193,7 +195,7 @@ public class GameManager : MonoBehaviour
 
 
     /// <summary>
-    /// - Decrements the Current Number of Enemies in the room
+    /// Decrements the Current Number of Enemies in the room
     /// </summary>
     /// <param name="enemy"> The Enemy Killed </param>
     public void OnEnemyDestroyed(EnemyCounter enemy) {
@@ -201,10 +203,11 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// - The Victory Condition. When A room Is Cleared Each player gets 
-    ///   a skill point and the room is reset
+    /// The Victory Condition. When A room Is Cleared Each player gets a skill point and the room is reset
     /// </summary>
-    public void ClearedRoom() {
+    public void ClearedRoom()
+    {
+        // Resets Room and gives all player a point
         m_capReached = false;
         m_Kenron.m_playerSkillPoints++;
         m_Nashorn.m_playerSkillPoints++;

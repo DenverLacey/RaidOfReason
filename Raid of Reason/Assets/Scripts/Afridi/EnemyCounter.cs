@@ -15,19 +15,20 @@ public class EnemyCounter : MonoBehaviour
     public GameManager m_Manager;
 
     /// <summary>
-    /// - Initialises the Game Manager
+    /// Initialises the Game Manager
     /// </summary>
-    /// <param name="manager"> The Game Manager in the Game </param>
+    /// <param name="manager"> The Game Manager in the Current Game </param>
     public void Init(GameManager manager)
     {
         m_Manager = manager;
     }
 
     /// <summary>
-    /// - Destroys the Current Enemy from the Manager
+    /// Destroys the Current Enemy from the Manager
     /// </summary>
     public void OnDestroy()
     {
+        // Destroys the current enemy
         m_Manager.OnEnemyDestroyed(this);
     }
 
