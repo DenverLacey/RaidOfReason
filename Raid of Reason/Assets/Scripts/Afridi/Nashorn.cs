@@ -115,7 +115,7 @@ public class Nashorn : BaseCharacter
         if (this.gameObject != null)
         {
             // If the skill is active and the player has the named skill
-            if (isActive == true && playerSkills.Find(skill => skill.Name == "Roaring Thunder"))
+            if (isActive == true && m_playerSkills.Find(skill => skill.Name == "Roaring Thunder"))
             {
 
                 // Returns increased Radius
@@ -136,7 +136,7 @@ public class Nashorn : BaseCharacter
         if (Gauntlets.Count == 2)
         {
             // If the Triggers has been pressed
-            if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1)
+            if (XCI.GetAxis(XboxAxis.RightTrigger, m_controller) > 0.1)
             {
                 // Gauntlet Colliders are Enabled and Nashorn Becomes Stationary 
                 LeftGauntlet.enabled = true;
@@ -161,7 +161,7 @@ public class Nashorn : BaseCharacter
                 }
             }
             // or if the trigger isnt pressed
-            else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) < 0.1)
+            else if (XCI.GetAxis(XboxAxis.RightTrigger, m_controller) < 0.1)
             {
                 // Disable colliders and reset speed
                 LeftGauntlet.enabled = false;

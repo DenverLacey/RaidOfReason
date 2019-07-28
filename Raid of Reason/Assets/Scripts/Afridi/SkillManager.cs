@@ -67,7 +67,7 @@ public class SkillManager : MonoBehaviour {
     protected void Update()
     {
         // If the first players left trigger is pressed
-		if (XCI.GetAxis(XboxAxis.LeftTrigger, m_Kenron.controller) > 0.1f)
+		if (XCI.GetAxis(XboxAxis.LeftTrigger, m_Kenron.m_controller) > 0.1f)
         {
             // if the current cooldown is greater than the main
 			if (m_Skills[0].m_currentCoolDown >= m_Skills[0].m_coolDown)
@@ -83,7 +83,7 @@ public class SkillManager : MonoBehaviour {
         }
 
         // If the second players left trigger is pressed
-        if (XCI.GetAxis(XboxAxis.LeftTrigger, m_Nashorn.controller) > 0.1f)
+        if (XCI.GetAxis(XboxAxis.LeftTrigger, m_Nashorn.m_controller) > 0.1f)
         {
             // if the current cooldown is greater than the main
             if (m_Skills[1].m_currentCoolDown >= m_Skills[1].m_coolDown)
@@ -99,7 +99,7 @@ public class SkillManager : MonoBehaviour {
         }
 
         // If the third players left trigger is pressed
-        if (XCI.GetAxis(XboxAxis.LeftTrigger, m_theá.controller) > 0.1f)
+        if (XCI.GetAxis(XboxAxis.LeftTrigger, m_theá.m_controller) > 0.1f)
         {
             // if the current cooldown is greater than the main
             if (m_Skills[2].m_currentCoolDown >= m_Skills[2].m_coolDown)
@@ -111,7 +111,7 @@ public class SkillManager : MonoBehaviour {
             }
         } 
         // or else if the third players trigger is not pressed
-        else if (XCI.GetAxis(XboxAxis.LeftTrigger, m_theá.controller) < 0.1f)
+        else if (XCI.GetAxis(XboxAxis.LeftTrigger, m_theá.m_controller) < 0.1f)
         {
             if (m_Skills[2].active)
             {

@@ -8,6 +8,7 @@ public class PlayerHandler : MonoBehaviour
     public Kenron kenronController;
     public Nashorn nashornController;
     public Theá theaController;
+    public BaseCharacter Player;
 
     [SerializeField]
     private Canvas m_KCanvas;
@@ -20,7 +21,7 @@ public class PlayerHandler : MonoBehaviour
 
     private void Update()
     {
-        if (XCI.GetButtonDown(XboxButton.A, kenronController.controller))
+        if (XCI.GetButtonDown(XboxButton.A, kenronController.m_controller))
         {
             if (m_KCanvas)
             {
@@ -28,7 +29,7 @@ public class PlayerHandler : MonoBehaviour
                 m_KCanvas.gameObject.SetActive(m_SeeCanvas);
             }
         }
-        if (XCI.GetButtonDown(XboxButton.A, nashornController.controller))
+        if (XCI.GetButtonDown(XboxButton.A, nashornController.m_controller))
         {
             if (m_NCanvas)
             {
@@ -36,7 +37,7 @@ public class PlayerHandler : MonoBehaviour
                 m_NCanvas.gameObject.SetActive(m_SeeCanvas);
             }
         }
-        if (XCI.GetButtonDown(XboxButton.A, theaController.controller))
+        if (XCI.GetButtonDown(XboxButton.A, theaController.m_controller))
         {
             if (m_TCanvas)
             {

@@ -26,7 +26,7 @@ public class SmashDamage : MonoBehaviour
                 enemy.TakeDamage(m_damage);
                 enemy.GetComponent<MeshRenderer>().material.color = Color.red;
                 StartCoroutine(ResetMaterialColour(enemy, .2f));
-                if (Nashorn.playerSkills.Find(skill => skill.Name == "Shockwave"))
+                if (Nashorn.m_playerSkills.Find(skill => skill.Name == "Shockwave"))
                 { 
                     Vector3 direction = this.transform.position - enemy.transform.position;
                     other.GetComponent<StatusEffectManager>().ApplyKnockBack(enemy.gameObject, direction, 1, 0.3f);

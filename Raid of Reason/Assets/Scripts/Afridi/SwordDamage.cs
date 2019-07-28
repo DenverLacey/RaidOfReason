@@ -20,7 +20,7 @@ public class SwordDamage : MonoBehaviour
 			BaseEnemy enemy = other.gameObject.GetComponent<BaseEnemy>();
 
             // if the player doesnt have shuras upgrade applied
-			if (enemy && !Kenron.playerSkills.Find(skill => skill.Name == "Shuras Reckoning"))
+			if (enemy && !Kenron.m_playerSkills.Find(skill => skill.Name == "Shuras Reckoning"))
 			{
 				SetDamage(m_damage);
 				enemy.TakeDamage(m_damage);
@@ -29,7 +29,7 @@ public class SwordDamage : MonoBehaviour
 			}
 
             // if the player does have shuras upgrade applied
-            if(enemy && Kenron.playerSkills.Find(skill => skill.Name == "Shuras Reckoning") && Kenron.isActive == true)
+            if(enemy && Kenron.m_playerSkills.Find(skill => skill.Name == "Shuras Reckoning") && Kenron.isActive == true)
             {
                 Debug.Log("BURNING");
                 other.GetComponent<StatusEffectManager>().ApplyBurn(4);

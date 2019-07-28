@@ -140,7 +140,7 @@ public class Kenron : BaseCharacter {
         if (Amaterasu != null)
         {
             // If the trigger has been pressed and the trigger down button is false
-            if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1 && !m_triggerDown)
+            if (XCI.GetAxis(XboxAxis.RightTrigger, m_controller) > 0.1 && !m_triggerDown)
             {
                 // Enables the Collider for Attack
                 swordCollider.enabled = true;
@@ -153,7 +153,7 @@ public class Kenron : BaseCharacter {
                 StartCoroutine(Dash());
             }
             // or if the trigger isnt pressed
-            else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) < 0.1)
+            else if (XCI.GetAxis(XboxAxis.RightTrigger, m_controller) < 0.1)
             {
                 // Disable the collider to prevent baseless attack
                 swordCollider.enabled = false;
@@ -204,19 +204,19 @@ public class Kenron : BaseCharacter {
         if (this.gameObject != null)
         {
             // If Kenron has the skill specified and is killed by Kenron
-            if (playerSkills.Find(skill => skill.Name == "Vile Infusion") && m_Enemy.isDeadbByKenron)
+            if (m_playerSkills.Find(skill => skill.Name == "Vile Infusion") && m_Enemy.isDeadbByKenron)
             {
                 // Return a bit of health to Kenrons current health
                 this.m_currentHealth = m_currentHealth + m_healthGained;
             }
             // If Kenron has the skill specified and is killed by Kenron
-            if (isActive == true && playerSkills.Find(skill => skill.Name == "Blood Lust") && m_Enemy.isDeadbByKenron)
+            if (isActive == true && m_playerSkills.Find(skill => skill.Name == "Blood Lust") && m_Enemy.isDeadbByKenron)
             {
                 // Reduces the cooldown from Kenrons Cooldown 
                 skillManager.m_Skills[0].m_currentCoolDown = skillManager.m_Skills[0].m_currentCoolDown - m_cooldownReduced;
             }
             // If Kenron has the skill specificed and his health is less than or equal to 0
-            if (playerSkills.Find(skill => skill.Name == "Curse of Amaterasu") && m_currentHealth <= 0.0f)
+            if (m_playerSkills.Find(skill => skill.Name == "Curse of Amaterasu") && m_currentHealth <= 0.0f)
             {
                 // Disables Main kenron, Spawns and enables Child kenron at Main Kenrons position 
                 childKenron.CheckStatus();

@@ -38,7 +38,7 @@ public class SkillsAbilities : ScriptableObject
     }
 
     public bool EnableSkill(BaseCharacter character) {
-        List<SkillsAbilities>.Enumerator Skills = character.playerSkills.GetEnumerator();
+        List<SkillsAbilities>.Enumerator Skills = character.m_playerSkills.GetEnumerator();
         while (Skills.MoveNext()) {
             var CurrSkill = Skills.Current;
             if (CurrSkill.name == this.name) {
@@ -51,7 +51,7 @@ public class SkillsAbilities : ScriptableObject
     public bool GetSkill(BaseCharacter character) {
 
         character.m_playerSkillPoints -= this.pointsNeeded;
-        character.playerSkills.Add(this);
+        character.m_playerSkills.Add(this);
         return true;
 
     }
