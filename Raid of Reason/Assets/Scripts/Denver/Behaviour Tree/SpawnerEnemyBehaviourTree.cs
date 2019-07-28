@@ -5,11 +5,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Spawner Enemy Behaviour Tree", menuName = "Behaviour Trees/Behaviour Tree - Spawner")]
 public class SpawnerEnemyBehaviourTree : BehaviourTree
 {
-    SpawnerEnemyBehaviourTree() {
+    SpawnerEnemyBehaviourTree() 
+    {
 
     }
 
-    public override void Execute(EnemyData agent) {
+    public override void Execute(EnemyData agent) 
+    {
 
     }
 }

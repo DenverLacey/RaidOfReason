@@ -1,9 +1,16 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Denver
+ * Description: Not behaviour class the returns the opposite result when executed
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using static Behaviour.Result;
 
+/// <summary>
+/// Nots result given by behaviour
+/// </summary>
 public class Not : Behaviour
 {
     private Behaviour m_behaviour;
@@ -16,11 +23,11 @@ public class Not : Behaviour
     /// <summary>
     /// Flips behaviour's result
     /// </summary>
-     /// <param name="agent">
+    /// <param name="agent">
     /// The agent to execute behaviour on
     /// </param>
     /// <returns>
-    /// A Behaviour.Result. Behaviour's result notted
+    /// The opposite of m_behaviour's result
     /// </returns>
     public override Result Execute(EnemyData agent) 
 	{

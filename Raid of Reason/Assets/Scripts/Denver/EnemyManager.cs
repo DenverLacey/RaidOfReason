@@ -107,6 +107,10 @@ public class EnemyManager : MonoBehaviour
         InitEnemies();
     }
 
+	/// <summary>
+	/// Executes Behaviour Trees on each enemy the manager handles and
+	/// removes destroyed enemies from m_enemies
+	/// </summary>
     void Update() 
 	{
 		// remove all destroyed enemies from list

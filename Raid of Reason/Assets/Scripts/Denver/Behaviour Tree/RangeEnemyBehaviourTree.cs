@@ -5,11 +5,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Range Enemy Behaviour Tree", menuName = "Behaviour Trees/Behaviour Tree - Range")]
 public class RangeEnemyBehaviourTree : BehaviourTree
 {
-    RangeEnemyBehaviourTree() {
+    RangeEnemyBehaviourTree() 
+    {
 
     }
 
-    public override void Execute(EnemyData agent) {
+    public override void Execute(EnemyData agent) 
+    {
 
     }
 }
