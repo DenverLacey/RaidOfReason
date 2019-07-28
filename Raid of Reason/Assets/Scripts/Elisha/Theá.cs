@@ -1,55 +1,71 @@
-﻿//*
-// Summary: Thea's main class, which handles her basic attacks, abilities and her ult which heals all players in the game to max health
-// Author: Elisha Anagnostakis
-// Date: 14/05/19 
-//*
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using XboxCtrlrInput;
 
+/* 
+ * Author: Elisha_Anagnostakis
+ * Description: Thea's main class, which handles her basic attacks and abilities.
+ */
+
 public class Theá : BaseCharacter
 {
-    [SerializeField] private GameObject waterPrefab;
-    [SerializeField] private GameObject projectile;
-    [SerializeField] private Kenron m_Kenron;
-    [SerializeField] private Nashorn m_Nashorn;
-    [SerializeField] private SkillManager manager;
-    [SerializeField] private float delay;
-    [SerializeField] private float m_aoeTimer;
-    [SerializeField] private float m_aoeMax;
-    [SerializeField] private float m_aoeGrowTime;
-    [SerializeField] private float m_aoeMin;
-    [SerializeField] private float m_GOPEffect;
+    [SerializeField]
+    private GameObject m_waterPrefab;
+    [SerializeField]
+    private GameObject m_projectile;
+    [SerializeField]
+    private Kenron m_kenron;
+    [SerializeField]
+    private Nashorn m_nashorn;
+    [SerializeField]
+    private SkillManager m_skillManager;
+    [SerializeField]
+    private float m_projectileDelay;
+    [SerializeField]
+    private float m_AOETimer;
+    [SerializeField]
+    private float m_AOEMax;
+    [SerializeField]
+    private float m_AOEGrowTime;
+    [SerializeField]
+    private float m_AOEMin;
+    [SerializeField]
+    private float m_GOPEffect;
 
     private BaseCharacter m_playerController;
-    private Vector3 hitLocation;
-    private LayerMask layerMask;
+    private Vector3 m_hitLocation;
+    private LayerMask m_layerMask;
     private GameObject m_temp;
-    private float shotCounter;
-    private float counter;
-    private bool isActive;
-    private bool skillActive = false;
-    private float m_aoeRadius;
+    private float m_shotCounter;
+    private float m_counter;
+    private bool m_isActive;
+    private bool m_skillActive = false;
+    private float m_AOERadius;
 
-    public ParticleSystem m_aoeParticle;
+    public SphereCollider m_AOEParticle;
+    public GameObject m_AOEParticleObject;
 
+    /// <summary>
+    /// Gets called before Start.
+    /// </summary>
     protected override void Awake()
     {
         base.Awake();
-        isActive = false;
-        m_Nashorn = FindObjectOfType<Nashorn>();
-		m_Kenron = FindObjectOfType<Kenron>();
+        m_isActive = false;
+        m_nashorn = FindObjectOfType<Nashorn>();
+		m_kenron = FindObjectOfType<Kenron>();
         m_playerController = GetComponent<BaseCharacter>();
-        m_aoeTimer = 0f;
-        //m_aoeParticle = GetComponentInChildren<ParticleSystem>();
-        m_aoeParticle.transform.position = this.gameObject.transform.position;
+        m_AOETimer = 0f;
+        // Sets AOE particle transform to spawn on Thea.
+        m_AOEParticle.transform.position = this.gameObject.transform.position;
+        m_AOEParticleObject.transform.position = this.gameObject.transform.position;
     }
 
     // Update is called once per frame
     protected override void FixedUpdate()
     {
+        // If the player is alive.
         if(this.gameObject != null)
         {
 			base.FixedUpdate();
@@ -64,122 +80,137 @@ public class Theá : BaseCharacter
     }
 
     /// <summary>
-    /// - Theas projectile instantiation and damage when pressing the trigger button.
+    /// Theas projectile instantiation and damage when pressing the trigger button.
     /// </summary>
     public void Projectile()
     {
-        counter += Time.deltaTime;
+        m_counter += Time.deltaTime;
 
+        // If the player presses the right trigger button.
         if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.Third) > 0.1)
         {
-            shotCounter += Time.deltaTime;
+            // Start the shot counter.
+            m_shotCounter += Time.deltaTime;
 
-            if (counter > delay)
+            if (m_counter > m_projectileDelay)
             {
-                GameObject temp = Instantiate(projectile, transform.position + transform.forward * 2, transform.rotation);
+                // Instantiate projectile object.
+                GameObject temp = Instantiate(m_projectile, transform.position + transform.forward * 2, transform.rotation);
+                // Set projectile damage and move projectile.
 				temp.GetComponent<ProjectileMove>().SetDamage(m_damage);
-                counter = 0f;
+                // Reset counter.
+                m_counter = 0f;
             }
         }
+        // If player releases the right trigger button.
         else if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.Third) < 0.1)
         {
-            shotCounter = 0f;
+            // Reset the counter.
+            m_shotCounter = 0f;
         }
     }
 
     void SkillChecker() {
-        if (skillActive == true && playerSkills.Find(skill => skill.name == "Settling Tide")) {
-            skillActive = false;
-            manager.m_Skills[2].m_coolDown = manager.m_Skills[2].m_coolDown / 2;
+        if (m_skillActive == true && m_playerSkills.Find(skill => skill.name == "Settling Tide")) {
+            m_skillActive = false;
+            m_skillManager.m_Skills[2].m_coolDown = m_skillManager.m_Skills[2].m_coolDown / 2;
         }
-        if (playerSkills.Find(skill => skill.name == "Hydro Pressure"))
+        if (m_playerSkills.Find(skill => skill.name == "Hydro Pressure"))
         {
-            float healthcomparison = m_Kenron.m_currentHealth + m_Nashorn.m_currentHealth;
+            float healthcomparison = m_kenron.m_currentHealth + m_nashorn.m_currentHealth;
 
             if (healthcomparison <= 150) {
-                delay = 0.7f;
+                m_projectileDelay = 0.7f;
                 m_damage = 13.0f;
             }
             if (healthcomparison <= 130) {
-                delay = 0.5f;
+                m_projectileDelay = 0.5f;
                 m_damage = 18.0f;
             }
             if (healthcomparison <= 60) {
-                delay = 0.3f;
+                m_projectileDelay = 0.3f;
                 m_damage = 24.0f;
             }
             if (healthcomparison <= 25) {
-                delay = 0.1f;
+                m_projectileDelay = 0.1f;
                 m_damage = 35.0f;
             }
         }
     }
 
     /// <summary>
-    /// - Thea has the ability to do a charge up time attack with scaling AOE and heal.
-    /// - The longer you hold the charge up the bigger the AOE is for players to be healed.
+    /// Thea has the ability to do a charge up time attack with scaling AOE and heal.
+    /// The longer you hold the charge up, the bigger the AOE is which means 
+    /// the more health is healed when released. If players are in the AOE when 
+    /// the charge up is released the players will be healed the right amount.
     /// </summary>
     public void GiftOfPoseidon()
     {
-        isActive = true;
-        skillActive = true;
-        int m_coolDown = 20;
+        int coolDown = 20;
+        m_isActive = true;
+        m_skillActive = true;
 
-        if(isActive == true && m_coolDown == 20)
+        // Checks if player can use the ability.
+        if(m_isActive == true && coolDown == 20)
         {
-            m_playerController.controllerOn = false;
-            m_aoeTimer += Time.deltaTime;
-            m_aoeRadius = Mathf.Lerp(m_aoeRadius, m_aoeMax, m_aoeTimer / m_aoeGrowTime);
-
-            ParticleSystem.ShapeModule aoeShape = m_aoeParticle.shape;
-            ParticleSystem.MainModule aoeMain = m_aoeParticle.main;
-            aoeShape.radius = m_aoeRadius;
-            m_aoeParticle.Play();
-            
+            // Disable player movement and rotation.
+            m_playerController.m_controllerOn = false;
+            // Start AOE timer.
+            m_AOETimer += Time.deltaTime;
+            // Grow AOE radius.
+            m_AOERadius = Mathf.Lerp(m_AOERadius, m_AOEMax, m_AOETimer / m_AOEGrowTime);
+            // AOE visual particle radius grows in conjuction to the lerp.
+            m_AOEParticle.radius = m_AOERadius;
         }
 
-        if(isActive == false && m_coolDown <= 0)
+        // Checks if ability has been used.
+        if(m_isActive == false && coolDown <= 0)
         {
             return;
         }
     }
 
     /// <summary>
-    /// - checks the distance from both characters to thea and if they are within 
-    ///   range when the player releases the trigger, it will heal them according 
-    ///   to how long the player charges the heal.
+    /// checks the distance from both characters to thea and if they are within 
+    /// range when the player releases the trigger, it will heal them according 
+    /// to how long the player charges the heal.
     /// </summary>
     public void GiveHealth()
     {
-        float sqrDistance = (m_Kenron.transform.position - m_Nashorn.transform.position).sqrMagnitude;
+        // Calculates the magnitude.
+        float sqrDistance = (m_kenron.transform.position - m_nashorn.transform.position).sqrMagnitude;
 
-        if(sqrDistance <= m_aoeRadius * m_aoeRadius)
+        // Checks if players are in correct distance of the AOE to heal.
+        if(sqrDistance <= m_AOERadius * m_AOERadius)
         {
-            m_Kenron.SetHealth(m_Kenron.m_currentHealth + m_aoeTimer * m_GOPEffect);
-            m_Nashorn.SetHealth(m_Nashorn.m_currentHealth + m_aoeTimer * m_GOPEffect);
-            SetHealth(m_currentHealth + m_aoeTimer * m_GOPEffect);
+            // Heal all players based on how long the charge up was.
+            m_kenron.SetHealth(m_kenron.m_currentHealth + m_AOETimer * m_GOPEffect);
+            m_nashorn.SetHealth(m_nashorn.m_currentHealth + m_AOETimer * m_GOPEffect);
+            SetHealth(m_currentHealth + m_AOETimer * m_GOPEffect);
 
-            m_temp = Instantiate(waterPrefab, transform.position + Vector3.down * (transform.localScale.y / 2), Quaternion.Euler(90, 0, 0));
-            if (m_Kenron != null)
+            // Instantiate water particle on all players positions.
+            m_temp = Instantiate(m_waterPrefab, transform.position + Vector3.down * (transform.localScale.y / 2), Quaternion.Euler(90, 0, 0));
+            if (m_kenron != null)
             {
-                m_temp = Instantiate(waterPrefab, m_Kenron.transform.position + Vector3.down * (m_Kenron.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), m_Kenron.transform);
+                m_temp = Instantiate(m_waterPrefab, m_kenron.transform.position + Vector3.down * (m_kenron.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), m_kenron.transform);
             }
-            if (m_Nashorn != null)
+            if (m_nashorn != null)
             {
-                m_temp = Instantiate(waterPrefab, m_Nashorn.transform.position + Vector3.down * (m_Nashorn.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), m_Nashorn.transform);
+                m_temp = Instantiate(m_waterPrefab, m_nashorn.transform.position + Vector3.down * (m_nashorn.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), m_nashorn.transform);
             }
+            // Destroy particle effect.
             Destroy(m_temp);
         }
     }
 
     /// <summary>
-    /// - Resets Theas skill and changes the radius of the AOE to min.
+    /// Resets Theas skill and changes the radius of the AOE to min.
     /// </summary>
     public void ResetGiftOfPoseidon()
     {
-        isActive = false;
-        m_aoeRadius = m_aoeMin;
-        m_playerController.controllerOn = true;
-        m_aoeParticle.Stop();
+        m_isActive = false;
+        m_AOERadius = m_AOEMin;
+        // Enables player controls.
+        m_playerController.m_controllerOn = true;
     }
 }
