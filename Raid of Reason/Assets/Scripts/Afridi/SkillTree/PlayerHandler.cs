@@ -19,6 +19,13 @@ public class PlayerHandler : MonoBehaviour
 
     private bool m_SeeCanvas;
 
+    private void Awake()
+    {
+        kenronController = FindObjectOfType<Kenron>();
+        nashornController = FindObjectOfType<Nashorn>();
+        theaController = FindObjectOfType<Theá>();
+    }
+
     private void Update()
     {
         if (XCI.GetButtonDown(XboxButton.A, kenronController.m_controller))
