@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5001416120509848756}
   - component: {fileID: 5001416120509848753}
   - component: {fileID: 5001416120509848759}
+  - component: {fileID: 3278971660554522984}
   m_Layer: 0
   m_Name: Thea
   m_TagString: Thea
@@ -124,12 +125,12 @@ MonoBehaviour:
   m_kenron: {fileID: 0}
   m_nashorn: {fileID: 0}
   m_skillManager: {fileID: 0}
-  m_projectileDelay: 0
+  m_projectileDelay: 1
   m_AOETimer: 0
-  m_AOEMax: 0
-  m_AOEGrowTime: 0
-  m_AOEMin: 0
-  m_GOPEffect: 0
+  m_AOEMax: 10
+  m_AOEGrowTime: 1
+  m_AOEMin: 1
+  m_GOPEffect: 5
   m_AOEParticle: {fileID: 0}
   m_AOEParticleObject: {fileID: 0}
 --- !u!54 &5001416120509848759
@@ -148,6 +149,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 3
+--- !u!135 &3278971660554522984
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5001416120509848752}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5001416120642306138
 GameObject:
   m_ObjectHideFlags: 0

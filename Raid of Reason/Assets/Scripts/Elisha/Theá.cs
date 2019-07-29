@@ -23,8 +23,6 @@ public class Theá : BaseCharacter
     [SerializeField]
     private float m_projectileDelay;
     [SerializeField]
-    private float m_AOETimer;
-    [SerializeField]
     private float m_AOEMax;
     [SerializeField]
     private float m_AOEGrowTime;
@@ -42,9 +40,13 @@ public class Theá : BaseCharacter
     private bool m_isActive;
     private bool m_skillActive = false;
     private float m_AOERadius;
+    private float m_AOETimer;
 
-    public SphereCollider m_AOEParticle;
-    public GameObject m_AOEParticleObject;
+    public SphereCollider m_AOEParticleCollider;
+
+    [SerializeField]
+    private ParticleSystem m_AOEParticle;
+    private float m_particleRadius;
 
     /// <summary>
     /// Gets called before Start.
@@ -57,9 +59,11 @@ public class Theá : BaseCharacter
 		m_kenron = FindObjectOfType<Kenron>();
         m_playerController = GetComponent<BaseCharacter>();
         m_AOETimer = 0f;
+        m_AOEParticle = GetComponentInChildren<ParticleSystem>();
         // Sets AOE particle transform to spawn on Thea.
+        m_AOEParticleCollider.transform.position = this.gameObject.transform.position;
         m_AOEParticle.transform.position = this.gameObject.transform.position;
-        m_AOEParticleObject.transform.position = this.gameObject.transform.position;
+        m_AOEParticleCollider.enabled = false;
     }
 
     // Update is called once per frame
@@ -153,14 +157,28 @@ public class Theá : BaseCharacter
         // Checks if player can use the ability.
         if(m_isActive == true && coolDown == 20)
         {
-            // Disable player movement and rotation.
-            m_playerController.m_controllerOn = false;
+            //// Gives access to particle system shape module without creating an instance of Shape module.
+            //var temp = m_AOEParticle.shape;
+            //temp.radius = m_particleRadius;
+
+            //m_particleRadius = 1f;
+
+            // Enables collider for the ability.
+            m_AOEParticleCollider.enabled = true;
+
+            
             // Start AOE timer.
             m_AOETimer += Time.deltaTime;
+            // Disable player movement and rotation.
+            m_playerController.m_controllerOn = false;
             // Grow AOE radius.
             m_AOERadius = Mathf.Lerp(m_AOERadius, m_AOEMax, m_AOETimer / m_AOEGrowTime);
-            // AOE visual particle radius grows in conjuction to the lerp.
-            m_AOEParticle.radius = m_AOERadius;
+
+            // AOE collider radius grows in conjuction to the lerp.
+            m_AOEParticleCollider.radius = m_AOERadius;
+            Debug.Log("Collider radius: " + m_AOEParticleCollider.radius + "/n " + "Float radius: " + m_AOERadius);
+            // AOE particle radius grows in conjuction to the collider.
+            //m_particleRadius = m_AOEParticleCollider.radius;
         }
 
         // Checks if ability has been used.
@@ -178,29 +196,35 @@ public class Theá : BaseCharacter
     public void GiveHealth()
     {
         // Calculates the magnitude.
-        float sqrDistance = (m_kenron.transform.position - m_nashorn.transform.position).sqrMagnitude;
+        float sqrDistanceNash = (m_nashorn.transform.position - this.transform.position).sqrMagnitude;
+        // Calculates the magnitude.
+        float sqrDistanceKen = (m_kenron.transform.position - this.transform.position).sqrMagnitude;
 
-        // Checks if players are in correct distance of the AOE to heal.
-        if(sqrDistance <= m_AOERadius * m_AOERadius)
+        // Checks if Nashorn is in correct distance of the AOE to heal.
+        if (sqrDistanceNash <= m_AOERadius * m_AOERadius)
         {
-            // Heal all players based on how long the charge up was.
-            m_kenron.SetHealth(m_kenron.m_currentHealth + m_AOETimer * m_GOPEffect);
             m_nashorn.SetHealth(m_nashorn.m_currentHealth + m_AOETimer * m_GOPEffect);
-            SetHealth(m_currentHealth + m_AOETimer * m_GOPEffect);
-
-            // Instantiate water particle on all players positions.
-            m_temp = Instantiate(m_waterPrefab, transform.position + Vector3.down * (transform.localScale.y / 2), Quaternion.Euler(90, 0, 0));
-            if (m_kenron != null)
-            {
-                m_temp = Instantiate(m_waterPrefab, m_kenron.transform.position + Vector3.down * (m_kenron.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), m_kenron.transform);
-            }
+  
             if (m_nashorn != null)
             {
                 m_temp = Instantiate(m_waterPrefab, m_nashorn.transform.position + Vector3.down * (m_nashorn.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), m_nashorn.transform);
             }
-            // Destroy particle effect.
-            Destroy(m_temp);
+            Destroy(m_temp, 2f);
         }
+
+        // Checks if Kenron is in correct distance of the AOE to heal.
+        if (sqrDistanceKen <= m_AOERadius * m_AOERadius)
+        {
+            m_kenron.SetHealth(m_kenron.m_currentHealth + 50/* m_AOETimer * m_GOPEffect*/);
+            if (m_kenron != null)
+            {
+                m_temp = Instantiate(m_waterPrefab, m_kenron.transform.position + Vector3.down * (m_kenron.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), m_kenron.transform);
+            }
+            Destroy(m_temp, 2f);
+        }
+
+        // Heal Thea.
+        SetHealth(m_currentHealth + m_AOETimer * m_GOPEffect);
     }
 
     /// <summary>
@@ -208,9 +232,10 @@ public class Theá : BaseCharacter
     /// </summary>
     public void ResetGiftOfPoseidon()
     {
+        m_AOETimer = 0f;
         m_isActive = false;
         m_AOERadius = m_AOEMin;
-        // Enables player controls.
+        m_AOEParticleCollider.enabled = false;
         m_playerController.m_controllerOn = true;
     }
 }

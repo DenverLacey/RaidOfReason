@@ -49,6 +49,10 @@ public abstract class BaseCharacter : MonoBehaviour {
     protected bool m_bActive;
     protected Animator m_animator;
 
+    public ReviveAlly reviveAlly;
+    public float m_timeTillDeath;
+    public float m_timeToRevive;
+
     public int SkillPoints {
         get { return m_playerSkillPoints;  }
         set {
@@ -112,6 +116,10 @@ public abstract class BaseCharacter : MonoBehaviour {
             m_skillDisplay.gameObject.SetActive(false);
             m_skillMaxed.gameObject.SetActive(true);
         }
+
+        // Makes sure health doesnt exceed limit.
+        if (m_currentHealth >= m_maxHealth)
+            m_currentHealth = m_maxHealth;
     }
 
     /// <summary>
@@ -304,6 +312,17 @@ public abstract class BaseCharacter : MonoBehaviour {
     /// <param name="amount"></param>
     public void UpdateSkillPont(int amount) {
         m_playerSkillPoints += amount;
+    }
+
+    /// <summary>
+    /// Allows the user to access player states in other scripts.
+    /// </summary>
+    /// <param name="alive"></param>
+    /// <param name="revive"></param>
+    /// <param name="dead"></param>
+    public void SetPlayerState(PlayerState alive, PlayerState revive, PlayerState dead)
+    {
+        // TODO: give access to the states from other scripts.
     }
 
     /// <summary>
