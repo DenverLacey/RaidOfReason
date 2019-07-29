@@ -79,6 +79,7 @@ public class Kenron : BaseCharacter {
         m_Enemy = FindObjectOfType<BaseEnemy>();
         Amaterasu = GameObject.FindGameObjectWithTag("Amaterasu");
         m_kenronRigidBody = GetComponent<Rigidbody>();
+	childKenron = FindObjectOfType<ChildKenron>();
         childKenron.gameObject.SetActive(false);
         swordCollider.enabled = false;
         isDashing = false;
