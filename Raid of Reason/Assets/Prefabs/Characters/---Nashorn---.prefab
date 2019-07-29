@@ -952,34 +952,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d72675b89b94f14584ea295939b4dd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerState: 0
+  m_playerStates: 0
   m_damage: 13
   m_movementSpeed: 0
-  controllerOn: 0
-  m_maxHealth: 500
-  controller: 2
-  m_currentHealth: 100
   m_playerSkillPoints: 0
-  playerSkills: []
+  m_playerSkills: []
+  m_controllerOn: 0
+  m_maxHealth: 500
+  m_currentHealth: 100
+  m_controller: 0
   m_camera: {fileID: 0}
-  m_SkillDisplay: {fileID: 6062317349070734748}
-  m_SkillMaxed: {fileID: 6062317349253044467}
-  m_NashornSkeleton: {fileID: 6062317347766186556}
-  m_gauntlets:
+  m_skillDisplay: {fileID: 6062317349070734748}
+  m_skillMaxed: {fileID: 6062317349253044467}
+  Gauntlets:
   - {fileID: 6062317347736531620}
   - {fileID: 6062317349012019617}
-  m_Particle: {fileID: 100008, guid: 1ca16f2a31fb6a548ad8954bed1d321f, type: 3}
-  m_Particle_2: {fileID: 1628744458893394, guid: e243632bb3aff9549abdcfcc2ef0c4f0,
-    type: 3}
-  m_Collider: {fileID: 6062317348279266406}
-  m_explosiveForce: 950
-  m_explosiveRadius: 40
   LeftGauntlet: {fileID: 6062317347736531617}
   RightGauntlet: {fileID: 6062317349012019618}
+  skillManager: {fileID: 0}
+  isActive: 0
   m_tauntRadius: 100
   m_tauntVulnerability: 0.5
-  isActive: 0
-  manager: {fileID: 0}
+  m_tauntParticle: {fileID: 0}
+  m_gauntletParticle: {fileID: 0}
+  m_radiusIncreased: 0
 --- !u!1 &6062317347786876400
 GameObject:
   m_ObjectHideFlags: 0
@@ -4065,6 +4061,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaf5e952e0688c04790cdb7831af7681, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  kenronController: {fileID: 0}
+  nashornController: {fileID: 6062317347766186530}
+  theaController: {fileID: 0}
   Player: {fileID: 6062317347766186530}
   m_KCanvas: {fileID: 0}
   m_NCanvas: {fileID: 6062317348772037326}

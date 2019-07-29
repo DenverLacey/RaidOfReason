@@ -1410,25 +1410,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e4cf2bfe3871d8479b6c06907f61865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerState: 0
+  m_playerStates: 0
   m_damage: 20
   m_movementSpeed: 15
-  controllerOn: 0
-  m_maxHealth: 100
-  controller: 1
-  m_currentHealth: 0
   m_playerSkillPoints: 10
-  playerSkills: []
+  m_playerSkills: []
+  m_controllerOn: 0
+  m_maxHealth: 100
+  m_currentHealth: 0
+  m_controller: 0
   m_camera: {fileID: 0}
-  m_SkillDisplay: {fileID: 6274874930049916589}
-  m_SkillMaxed: {fileID: 6274874929479299256}
-  Sword: {fileID: 6274874930775075319}
-  c_Kenron: {fileID: 6274874929586005532}
-  manager: {fileID: 0}
-  m_Amaterasu: {fileID: 6274874930775075312}
+  m_skillDisplay: {fileID: 6274874930049916589}
+  m_skillMaxed: {fileID: 6274874929479299256}
+  swordCollider: {fileID: 6274874930775075319}
+  childKenron: {fileID: 6274874929586005532}
+  skillManager: {fileID: 0}
+  Amaterasu: {fileID: 6274874930775075312}
   isActive: 0
-  dashTime: 0
-  timer: 4
+  m_dashTime: 0.1
+  m_chaosFlameDamage: 70
+  m_chaosFlameSpeed: 25
+  m_particleTime: 10
+  m_healthGained: 0
+  m_cooldownReduced: 0
+  m_kenronParticle: {fileID: 0}
+  m_swordParticle: {fileID: 0}
 --- !u!1 &6274874929302018828
 GameObject:
   m_ObjectHideFlags: 0
@@ -2326,6 +2332,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaf5e952e0688c04790cdb7831af7681, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  kenronController: {fileID: 6274874929271835749}
+  nashornController: {fileID: 0}
+  theaController: {fileID: 0}
   Player: {fileID: 6274874929271835749}
   m_KCanvas: {fileID: 6274874930190977439}
   m_NCanvas: {fileID: 0}
@@ -3947,8 +3956,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d2e13b62ce843746a5094dc163e339c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Kenron: {fileID: 6274874929271835749}
-  m_Child: {fileID: 6274874929586005532}
+  Kenron: {fileID: 0}
+  Child: {fileID: 0}
 --- !u!1001 &6274874929586005529
 PrefabInstance:
   m_ObjectHideFlags: 0

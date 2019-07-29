@@ -107,31 +107,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8baf95e4419db134b9f59982c3b5e069, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerState: 0
+  m_playerStates: 0
   m_damage: 8
   m_movementSpeed: 0
-  controllerOn: 0
-  m_maxHealth: 100
-  controller: 3
-  m_currentHealth: 0
   m_playerSkillPoints: 0
-  playerSkills: []
+  m_playerSkills: []
+  m_controllerOn: 0
+  m_maxHealth: 100
+  m_currentHealth: 0
+  m_controller: 0
   m_camera: {fileID: 0}
-  m_SkillDisplay: {fileID: 5001416121697387086}
-  m_SkillMaxed: {fileID: 5001416120710545900}
-  waterPrefab: {fileID: 4153159892060089487, guid: 8d2906bfe6894dc40bebb3b9e1fcc21d,
-    type: 3}
-  projectile: {fileID: 1119944734783606, guid: 4dab86d7c4169194e9d7640ac578ff72, type: 3}
-  m_Kenron: {fileID: 0}
-  m_Nashorn: {fileID: 0}
-  manager: {fileID: 0}
-  delay: 0.5
-  m_aoeTimer: 0
-  m_aoeMax: 0
-  m_aoeGrowTime: 0
-  m_aoeMin: 0
+  m_skillDisplay: {fileID: 5001416121697387086}
+  m_skillMaxed: {fileID: 5001416120710545900}
+  m_waterPrefab: {fileID: 0}
+  m_projectile: {fileID: 0}
+  m_kenron: {fileID: 0}
+  m_nashorn: {fileID: 0}
+  m_skillManager: {fileID: 0}
+  m_projectileDelay: 0
+  m_AOETimer: 0
+  m_AOEMax: 0
+  m_AOEGrowTime: 0
+  m_AOEMin: 0
   m_GOPEffect: 0
-  m_aoeParticle: {fileID: 0}
+  m_AOEParticle: {fileID: 0}
+  m_AOEParticleObject: {fileID: 0}
 --- !u!54 &5001416120509848759
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3064,6 +3064,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaf5e952e0688c04790cdb7831af7681, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  kenronController: {fileID: 0}
+  nashornController: {fileID: 0}
+  theaController: {fileID: 5001416120509848753}
   Player: {fileID: 5001416120509848753}
   m_KCanvas: {fileID: 0}
   m_NCanvas: {fileID: 0}
