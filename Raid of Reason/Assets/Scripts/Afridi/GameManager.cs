@@ -11,6 +11,21 @@ using UnityEngine;
 */
 public class GameManager : MonoBehaviour
 {
+	private GameManager()
+	{
+		if (m_instance == null)
+		{
+			m_instance = this;
+		}
+		else
+		{
+			Destroy(gameObject);
+		}
+	}
+
+	private static GameManager m_instance = null;
+	public static GameManager Instance { get => m_instance; }
+
     [Tooltip("Number Of Enemies allowed to spawn in the room")]
     public int numOfEnemies;
     // The current amount of enemies spawned in the room
@@ -20,6 +35,8 @@ public class GameManager : MonoBehaviour
     private Kenron m_Kenron;
     private Nashorn m_Nashorn;
     private Theá m_Thea;
+
+	public BaseCharacter[] Players { get; private set; }
 
     [Tooltip("The Explosive Enemy")]
     public GameObject explosiveEnemy;
@@ -65,6 +82,8 @@ public class GameManager : MonoBehaviour
         m_Kenron = FindObjectOfType<Kenron>();
         m_Nashorn = FindObjectOfType<Nashorn>();
         m_Thea = FindObjectOfType<Theá>();
+
+		Players = new BaseCharacter[] { m_Kenron, m_Nashorn, m_Thea };
     }
 
     void Update()
