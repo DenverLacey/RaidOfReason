@@ -15,10 +15,6 @@ public class Theá : BaseCharacter
     [SerializeField]
     private GameObject m_projectile;
     [SerializeField]
-    private Kenron m_kenron;
-    [SerializeField]
-    private Nashorn m_nashorn;
-    [SerializeField]
     private SkillManager m_skillManager;
     [SerializeField]
     private float m_projectileDelay;
@@ -30,7 +26,13 @@ public class Theá : BaseCharacter
     private float m_AOEMin;
     [SerializeField]
     private float m_GOPEffect;
+    [SerializeField]
+    private SphereCollider m_AOEParticleCollider;
+    [SerializeField]
+    private ParticleSystem m_AOEParticle;
 
+    private Kenron m_kenron;
+    private Nashorn m_nashorn;
     private BaseCharacter m_playerController;
     private Vector3 m_hitLocation;
     private LayerMask m_layerMask;
@@ -41,12 +43,9 @@ public class Theá : BaseCharacter
     private bool m_skillActive = false;
     private float m_AOERadius;
     private float m_AOETimer;
-
-    public SphereCollider m_AOEParticleCollider;
-
-    [SerializeField]
-    private ParticleSystem m_AOEParticle;
     private float m_particleRadius;
+
+    ParticleSystem.ShapeModule aoe;
 
     /// <summary>
     /// Gets called before Start.
@@ -64,6 +63,7 @@ public class Theá : BaseCharacter
         m_AOEParticleCollider.transform.position = this.gameObject.transform.position;
         m_AOEParticle.transform.position = this.gameObject.transform.position;
         m_AOEParticleCollider.enabled = false;
+        aoe = m_AOEParticle.shape;
     }
 
     // Update is called once per frame
@@ -157,15 +157,8 @@ public class Theá : BaseCharacter
         // Checks if player can use the ability.
         if(m_isActive == true && coolDown == 20)
         {
-            //// Gives access to particle system shape module without creating an instance of Shape module.
-            //var temp = m_AOEParticle.shape;
-            //temp.radius = m_particleRadius;
-
-            //m_particleRadius = 1f;
-
             // Enables collider for the ability.
             m_AOEParticleCollider.enabled = true;
-
             
             // Start AOE timer.
             m_AOETimer += Time.deltaTime;
@@ -176,9 +169,10 @@ public class Theá : BaseCharacter
 
             // AOE collider radius grows in conjuction to the lerp.
             m_AOEParticleCollider.radius = m_AOERadius;
-            Debug.Log("Collider radius: " + m_AOEParticleCollider.radius + "/n " + "Float radius: " + m_AOERadius);
-            // AOE particle radius grows in conjuction to the collider.
-            //m_particleRadius = m_AOEParticleCollider.radius;
+            Debug.Log("Collider radius: " + m_AOEParticleCollider.radius + "Float radius: " + m_AOERadius);
+
+            // Temporary way of doing the particles.
+            aoe.radius = m_AOEParticleCollider.radius;
         }
 
         // Checks if ability has been used.
@@ -215,7 +209,7 @@ public class Theá : BaseCharacter
         // Checks if Kenron is in correct distance of the AOE to heal.
         if (sqrDistanceKen <= m_AOERadius * m_AOERadius)
         {
-            m_kenron.SetHealth(m_kenron.m_currentHealth + 50/* m_AOETimer * m_GOPEffect*/);
+            m_kenron.SetHealth(m_kenron.m_currentHealth +  m_AOETimer * m_GOPEffect);
             if (m_kenron != null)
             {
                 m_temp = Instantiate(m_waterPrefab, m_kenron.transform.position + Vector3.down * (m_kenron.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), m_kenron.transform);
@@ -237,5 +231,6 @@ public class Theá : BaseCharacter
         m_AOERadius = m_AOEMin;
         m_AOEParticleCollider.enabled = false;
         m_playerController.m_controllerOn = true;
+        aoe.radius = 1;
     }
 }
