@@ -1,6 +1,6 @@
 ﻿/*
  * Author: Denver
- * Description:	Behaviour Tree Scriptable Object for Melee Eenemy Type
+ * Description:	Behaviour Tree Scriptable Object for Melee Enemy Type
  */ 
 
 using System.Collections;
@@ -32,16 +32,16 @@ public class MeleeEnemyBehaviourTree : BehaviourTree
 		tauntSequence.AddChild(new TauntEvent());
 		tauntSequence.AddChild(abs);
 
-		Sequence viewRangeAttackSequence = new Sequence();
-		viewRangeAttackSequence.AddChild(new ViewRangeCondition());
-		viewRangeAttackSequence.AddChild(abs);
+		Sequence sightlineSequence = new Sequence();
+		sightlineSequence.AddChild(new SightlineCondition());
+		sightlineSequence.AddChild(abs);
 
 		Wander wander = new Wander();
 
 		// add components to behaviour tree
 		m_behaviourTree.AddChild(stunned);
 		m_behaviourTree.AddChild(tauntSequence);
-		m_behaviourTree.AddChild(viewRangeAttackSequence);
+		m_behaviourTree.AddChild(sightlineSequence);
 		m_behaviourTree.AddChild(wander);
     }
 

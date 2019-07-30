@@ -507,8 +507,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 552164216}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.0266666, y: 0.5, z: 2.1966667}
-  m_LocalScale: {x: 2.437667, y: 1, z: 0.33333334}
+  m_LocalPosition: {x: 2.0266666, y: 0.75, z: 2.1966667}
+  m_LocalScale: {x: 2.437667, y: 1.5, z: 0.33333334}
   m_Children: []
   m_Father: {fileID: 279221445}
   m_RootOrder: 0
@@ -692,30 +692,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8baf95e4419db134b9f59982c3b5e069, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerState: 0
+  m_playerStates: 0
   m_damage: 1
   m_movementSpeed: 0
-  controllerOn: 0
-  m_maxHealth: 50
-  controller: 0
-  m_currentHealth: 50
   m_playerSkillPoints: 0
-  playerSkills: []
+  m_playerSkills: []
+  m_controllerOn: 0
+  m_maxHealth: 50
+  m_currentHealth: 50
+  m_controller: 0
   m_camera: {fileID: 0}
-  m_SkillDisplay: {fileID: 0}
-  m_SkillMaxed: {fileID: 0}
-  waterPrefab: {fileID: 0}
-  projectile: {fileID: 1119944734783606, guid: 4dab86d7c4169194e9d7640ac578ff72, type: 3}
-  m_Kenron: {fileID: 0}
-  m_Nashorn: {fileID: 0}
-  manager: {fileID: 0}
-  delay: 0
-  m_aoeTimer: 0
-  m_aoeMax: 0
-  m_aoeGrowTime: 0
-  m_aoeMin: 0
+  m_skillDisplay: {fileID: 0}
+  m_skillMaxed: {fileID: 0}
+  reviveAlly: {fileID: 0}
+  m_timeTillDeath: 0
+  m_timeToRevive: 0
+  m_waterPrefab: {fileID: 0}
+  m_projectile: {fileID: 0}
+  m_kenron: {fileID: 0}
+  m_nashorn: {fileID: 0}
+  m_skillManager: {fileID: 0}
+  m_projectileDelay: 0
+  m_AOEMax: 0
+  m_AOEGrowTime: 0
+  m_AOEMin: 0
   m_GOPEffect: 0
-  m_aoeParticle: {fileID: 0}
+  m_AOEParticleCollider: {fileID: 0}
+  m_AOEParticle: {fileID: 0}
 --- !u!1001 &1062636075
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -730,6 +733,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 3f27a5aa7f5b86b41870fa4d6228e254, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 3f27a5aa7f5b86b41870fa4d6228e254, type: 3}
+      propertyPath: m_TagString
+      value: Kenron
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 3f27a5aa7f5b86b41870fa4d6228e254, type: 3}
       propertyPath: m_LocalPosition.x
@@ -799,12 +806,19 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1062636075}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1062636077 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: 3f27a5aa7f5b86b41870fa4d6228e254,
-    type: 3}
-  m_PrefabInstance: {fileID: 1062636075}
+--- !u!65 &1062636077
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062636076}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 30.37, y: 104.03, z: 29.15}
+  m_Center: {x: 0, y: 54.1, z: 0}
 --- !u!114 &1062636078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -817,25 +831,71 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e4cf2bfe3871d8479b6c06907f61865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerState: 0
+  m_playerStates: 0
   m_damage: 0
   m_movementSpeed: 10
-  controllerOn: 0
-  m_maxHealth: 10
-  controller: 0
-  m_currentHealth: 0
   m_playerSkillPoints: 0
-  playerSkills: []
+  m_playerSkills: []
+  m_controllerOn: 0
+  m_maxHealth: 100
+  m_currentHealth: 0
+  m_controller: 0
   m_camera: {fileID: 1773922308}
-  m_SkillDisplay: {fileID: 0}
-  m_SkillMaxed: {fileID: 0}
-  Sword: {fileID: 0}
-  c_Kenron: {fileID: 0}
-  manager: {fileID: 0}
-  m_Amaterasu: {fileID: 0}
+  m_skillDisplay: {fileID: 0}
+  m_skillMaxed: {fileID: 0}
+  reviveAlly: {fileID: 0}
+  m_timeTillDeath: 0
+  m_timeToRevive: 0
+  swordCollider: {fileID: 0}
+  childKenron: {fileID: 0}
+  skillManager: {fileID: 0}
+  Amaterasu: {fileID: 0}
   isActive: 0
-  dashTime: 0
-  timer: 4
+  m_dashTime: 0
+  m_chaosFlameDamage: 0
+  m_chaosFlameSpeed: 0
+  m_particleTime: 0
+  m_healthGained: 0
+  m_cooldownReduced: 0
+  m_kenronParticle: {fileID: 0}
+  m_swordParticle: {fileID: 0}
+--- !u!23 &1062636081
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062636076}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &1090813717
 GameObject:
   m_ObjectHideFlags: 0
@@ -909,7 +969,15 @@ MonoBehaviour:
     value: 75
   - key: 3
     value: 150
-  m_attackDamages: []
+  m_attackDamages:
+  - key: 0
+    value: 40
+  - key: 1
+    value: 20
+  - key: 2
+    value: 15
+  - key: 3
+    value: 0
   m_behaviourTrees:
   - key: 0
     value: {fileID: 11400000, guid: 5d9720cf3161e3647b06dca4a4cdaec3, type: 2}
@@ -977,7 +1045,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ee021b62536bfc4caecab557ba45f1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_type: 1
+  m_type: 2
   isDeadbByKenron: 0
 --- !u!195 &1101484090
 NavMeshAgent:
@@ -1101,8 +1169,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1211197686}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.98, y: 0.5, z: -1.5166668}
-  m_LocalScale: {x: 2.437667, y: 1, z: 0.33333334}
+  m_LocalPosition: {x: 0.98, y: 0.75, z: -1.5166668}
+  m_LocalScale: {x: 2.437667, y: 1.5, z: 0.33333334}
   m_Children: []
   m_Father: {fileID: 279221445}
   m_RootOrder: 2
@@ -1209,8 +1277,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1610119598}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.3466668, y: 0.5, z: -0.043333333}
-  m_LocalScale: {x: 2.437667, y: 1, z: 0.33333334}
+  m_LocalPosition: {x: -2.3466668, y: 0.75, z: -0.043333333}
+  m_LocalScale: {x: 2.437667, y: 1.5, z: 0.33333334}
   m_Children: []
   m_Father: {fileID: 279221445}
   m_RootOrder: 1
@@ -1384,11 +1452,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffd826d6373a5f249b041bd912aaa808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smoothTime: 0.2
-  minFOV: 40
-  maxFOV: 60
-  sizeNormaliser: 50
-  offset: {x: 15, y: 10.18, z: -17.28}
-  targets:
-  - {fileID: 1062636077}
-  cam: {fileID: 1773922306}
+  m_smoothTime: 0
+  m_FOVMin: 0
+  m_FOVMax: 0
+  m_sizeNormaliser: 0
+  m_offset: {x: 0, y: 0, z: 0}
+  m_targets: []
+  m_cam: {fileID: 0}

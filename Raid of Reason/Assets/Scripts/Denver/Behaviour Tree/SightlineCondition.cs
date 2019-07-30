@@ -32,10 +32,16 @@ public class SightlineCondition : Behaviour
         {
             if (!player) { continue; }
 
-            Vector3 dir = (player.transform.position - agent.transform.position).normalized;
-            if (Physics.Raycast(agent.transform.position, dir, out RaycastHit info, closestDist)) 
+            Vector3 playerPosition = player.transform.position;
+            playerPosition.y = 1f;
+
+            Vector3 dir = (playerPosition - agent.transform.position).normalized;
+            Vector3 origin = agent.transform.position;
+            origin.y = 1f;
+
+            if (Physics.Raycast(origin, dir, out RaycastHit info, closestDist)) 
             {
-                if (info.collider.tag == "Enemy") 
+                if (info.collider.tag == "Kenron" || info.collider.tag == "Nashorn" || info.collider.tag == "Thea") 
                 {
                     closestDist = info.distance;
                     closestTar = player.transform.position;

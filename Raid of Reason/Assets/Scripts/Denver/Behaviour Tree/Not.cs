@@ -15,7 +15,7 @@ public class Not : Behaviour
 {
     private Behaviour m_behaviour;
 
-    Not(Behaviour behaviour) 
+    public Not(Behaviour behaviour) 
 	{
         m_behaviour = behaviour;
     }

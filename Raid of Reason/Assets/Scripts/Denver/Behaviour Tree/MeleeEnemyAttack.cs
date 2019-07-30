@@ -28,6 +28,8 @@ public class MeleeEnemyAttack : Behaviour
 
 		agent.AttackTimer += Time.deltaTime;
 
+		agent.NavMeshAgent.destination = agent.transform.position;
+
 		if (agent.AttackTimer >= agent.AttackCooldown)
 		{
 			// reset attacking variables
