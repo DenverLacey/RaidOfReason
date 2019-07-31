@@ -587,6 +587,59 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 552164216}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &730294093
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 730294095}
+  - component: {fileID: 730294094}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &730294094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730294093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52b848c53e1ebcd418915859c93aa87f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numOfEnemies: 0
+  explosiveEnemy: {fileID: 0}
+  explosiveSpawnRate: 0
+  meleeEnemy: {fileID: 0}
+  meleeSpawnRate: 0
+  rangedEnemy: {fileID: 0}
+  rangedSpawnRate: 0
+  hordeEnemy: {fileID: 0}
+  hordeSpawnRate: 0
+  spawnPoints: []
+--- !u!4 &730294095
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730294093}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &756962980
 GameObject:
   m_ObjectHideFlags: 0
@@ -709,8 +762,6 @@ MonoBehaviour:
   m_timeToRevive: 0
   m_waterPrefab: {fileID: 0}
   m_projectile: {fileID: 0}
-  m_kenron: {fileID: 0}
-  m_nashorn: {fileID: 0}
   m_skillManager: {fileID: 0}
   m_projectileDelay: 0
   m_AOEMax: 0
@@ -977,7 +1028,7 @@ MonoBehaviour:
   - key: 2
     value: 15
   - key: 3
-    value: 0
+    value: 2
   m_behaviourTrees:
   - key: 0
     value: {fileID: 11400000, guid: 5d9720cf3161e3647b06dca4a4cdaec3, type: 2}
@@ -989,13 +1040,19 @@ MonoBehaviour:
     value: {fileID: 11400000, guid: b73531cb492de424c92ef138321d6965, type: 2}
   m_attackPrefabs:
   - key: 0
-    value: {fileID: 1965343156803978, guid: aa8d6482d70a23445b4b2a928ed1b845, type: 3}
+    value:
+    - {fileID: 1965343156803978, guid: aa8d6482d70a23445b4b2a928ed1b845, type: 3}
   - key: 1
-    value: {fileID: 0}
+    value:
+    - {fileID: 0}
   - key: 2
-    value: {fileID: 8483169830998266081, guid: caa8eaf46261ada4ab6a395f956d02f2, type: 3}
+    value:
+    - {fileID: 8483169830998266081, guid: caa8eaf46261ada4ab6a395f956d02f2, type: 3}
   - key: 3
-    value: {fileID: 0}
+    value:
+    - {fileID: 2848513512016245551, guid: da8e6d325e7c3cf4aab257a715185c28, type: 3}
+    - {fileID: 3733993896682152182, guid: 8fdb32bbdd7125549ad24c1910a643bb, type: 3}
+    - {fileID: 4793773342922824268, guid: 6019f0d76c02a1545ae3102f6197140d, type: 3}
   m_enemies:
   - {fileID: 1101484089}
 --- !u!4 &1090813719
@@ -1045,7 +1102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ee021b62536bfc4caecab557ba45f1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_type: 2
+  m_type: 3
   isDeadbByKenron: 0
 --- !u!195 &1101484090
 NavMeshAgent:
@@ -1134,13 +1191,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1101484088}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: -24.85}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 29.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1211197686
 GameObject:
   m_ObjectHideFlags: 0

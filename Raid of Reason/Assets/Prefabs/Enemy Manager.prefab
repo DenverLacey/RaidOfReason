@@ -1,0 +1,124 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6842663190349706494
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6842663190349706492}
+  - component: {fileID: 6842663190349706493}
+  m_Layer: 0
+  m_Name: Enemy Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6842663190349706492
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6842663190349706494}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.8284318, y: 8.666623, z: -19.06276}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6842663190349706493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6842663190349706494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c7eed1f601291e48b235af20c607bf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_viewRanges:
+  - key: 0
+    value: 20
+  - key: 1
+    value: 20
+  - key: 2
+    value: 20
+  - key: 3
+    value: 20
+  m_attackRanges:
+  - key: 0
+    value:
+      min: 5
+      max: 7
+  - key: 1
+    value:
+      min: 0
+      max: 2
+  - key: 2
+    value:
+      min: 10
+      max: 15
+  - key: 3
+    value:
+      min: 10
+      max: 15
+  m_attackCooldowns:
+  - key: 0
+    value: 0.75
+  - key: 1
+    value: 1
+  - key: 2
+    value: 0.5
+  - key: 3
+    value: 3
+  m_maxHealths:
+  - key: 0
+    value: 50
+  - key: 1
+    value: 100
+  - key: 2
+    value: 75
+  - key: 3
+    value: 150
+  m_attackDamages:
+  - key: 0
+    value: 40
+  - key: 1
+    value: 20
+  - key: 2
+    value: 15
+  - key: 3
+    value: 2
+  m_behaviourTrees:
+  - key: 0
+    value: {fileID: 11400000, guid: 5d9720cf3161e3647b06dca4a4cdaec3, type: 2}
+  - key: 1
+    value: {fileID: 11400000, guid: b542af9dd2d49da4da648c07f64c66a9, type: 2}
+  - key: 2
+    value: {fileID: 11400000, guid: 56a9a1d56e09ec34d94563d8ade513f5, type: 2}
+  - key: 3
+    value: {fileID: 11400000, guid: b73531cb492de424c92ef138321d6965, type: 2}
+  m_attackPrefabs:
+  - key: 0
+    value:
+    - {fileID: 1965343156803978, guid: aa8d6482d70a23445b4b2a928ed1b845, type: 3}
+  - key: 1
+    value:
+    - {fileID: 0}
+  - key: 2
+    value:
+    - {fileID: 8483169830998266081, guid: caa8eaf46261ada4ab6a395f956d02f2, type: 3}
+  - key: 3
+    value:
+    - {fileID: 2848513512016245551, guid: da8e6d325e7c3cf4aab257a715185c28, type: 3}
+    - {fileID: 3733993896682152182, guid: 8fdb32bbdd7125549ad24c1910a643bb, type: 3}
+    - {fileID: 4793773342922824268, guid: 6019f0d76c02a1545ae3102f6197140d, type: 3}
+  m_enemies:
+  - {fileID: 0}
