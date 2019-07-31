@@ -135,4 +135,12 @@ public class EnemyManager : MonoBehaviour
             );
         }
     }
+
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.tag == "Enemy")
+		{
+			m_enemies.Add(other.GetComponent<EnemyData>());
+		}
+	}
 }

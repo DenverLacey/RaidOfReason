@@ -93,11 +93,15 @@ public class Kenron : BaseCharacter {
         m_Enemy = FindObjectOfType<BaseEnemy>();
         Amaterasu = GameObject.FindGameObjectWithTag("Amaterasu");
         m_kenronRigidBody = GetComponent<Rigidbody>();
-	childKenron = FindObjectOfType<ChildKenron>();
+		childKenron = FindObjectOfType<ChildKenron>();
         childKenron.gameObject.SetActive(false);
         swordCollider.enabled = false;
         isDashing = false;
-    }
+
+		// set size of dash hit box
+		Vector3 hitBoxSize = new Vector3(m_dashCollider.size.x, m_dashCollider.size.y, m_dashDistance);
+		m_dashCollider.size = hitBoxSize;
+	}
 
     protected override void FixedUpdate()
     {
@@ -124,9 +128,6 @@ public class Kenron : BaseCharacter {
 			m_dashCollider.enabled = true;
 
 			// orient hit box
-			Vector3 hitBoxSize = new Vector3(m_dashCollider.size.x, m_dashCollider.size.y, m_dashDistance);
-			m_dashCollider.size = hitBoxSize;
-
 			m_dashCollider.transform.rotation = transform.rotation;
 			m_dashCollider.transform.position = transform.position + transform.forward * (m_dashDistance / 2f);
 

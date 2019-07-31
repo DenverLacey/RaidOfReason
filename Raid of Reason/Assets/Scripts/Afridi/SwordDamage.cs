@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SwordDamage : MonoBehaviour
 {
-   [SerializeField]
+	[SerializeField]
     private int m_damage;
     public Kenron kenron;
 
