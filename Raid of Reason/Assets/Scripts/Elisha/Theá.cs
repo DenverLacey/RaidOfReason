@@ -91,7 +91,7 @@ public class Theá : BaseCharacter
         m_counter += Time.deltaTime;
 
         // If the player presses the right trigger button.
-        if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.Third) > 0.1)
+        if (XCI.GetAxis(XboxAxis.RightTrigger, this.m_controller) > 0.1)
         {
             // Start the shot counter.
             m_shotCounter += Time.deltaTime;
@@ -107,7 +107,7 @@ public class Theá : BaseCharacter
             }
         }
         // If player releases the right trigger button.
-        else if (XCI.GetAxis(XboxAxis.RightTrigger, XboxController.Third) < 0.1)
+        else if (XCI.GetAxis(XboxAxis.RightTrigger, this.m_controller) < 0.1)
         {
             // Reset the counter.
             m_shotCounter = 0f;

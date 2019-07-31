@@ -31,6 +31,10 @@ public abstract class BaseCharacter : MonoBehaviour {
     public List<SkillsAbilities> m_playerSkills = new List<SkillsAbilities>();
     [SerializeField]
     public Dictionary<string, SkillsAbilities> m_dictSkills = new Dictionary<string, SkillsAbilities>();
+    [SerializeField]
+    private float m_healthUponRevive;
+    [SerializeField]
+    private float m_AOERevive;
 
     [HideInInspector]
     public bool m_controllerOn;
@@ -40,8 +44,7 @@ public abstract class BaseCharacter : MonoBehaviour {
     public MultiTargetCamera m_camera;
     public TextMeshProUGUI m_skillDisplay;
     public TextMeshProUGUI m_skillMaxed;
-
-    // a multiplier for damage taken
+   
     protected float m_vulnerability;
     private float m_rotationSpeed = 250.0f;
     private Vector3 m_direction;
@@ -49,9 +52,11 @@ public abstract class BaseCharacter : MonoBehaviour {
     protected bool m_bActive;
     protected Animator m_animator;
 
-    public ReviveAlly reviveAlly;
     public float m_timeTillDeath;
-    public float m_timeToRevive;
+    private float m_timeToRevive;
+    private bool m_isRevived = false;
+    private bool m_isReviving = false;
+    public SphereCollider m_AOEReviveCollider;
 
     public int SkillPoints {
         get { return m_playerSkillPoints;  }
@@ -70,6 +75,9 @@ public abstract class BaseCharacter : MonoBehaviour {
         m_camera = FindObjectOfType<MultiTargetCamera>();
         m_animator = GetComponent<Animator>();
         m_controllerOn = true;
+
+        m_AOEReviveCollider.enabled = false;
+        m_timeToRevive = 5f;
     }
 
     /// <summary>
@@ -93,12 +101,16 @@ public abstract class BaseCharacter : MonoBehaviour {
 				break;
 			case PlayerState.REVIVE:
 				Debug.Log("revive state activated");
-                // TODO: What will happen within the revive state.
+                ReviveTeamMate();
 				break;
 			case PlayerState.DEAD:
 				Debug.Log("dead state activated");
-                // TODO: What will happen in the dead state.
-				break;
+                // pops off the player thats dead from the camera to then focus on the remaining player alive
+                if (m_camera.m_targets.Count > 0)
+                {
+                    m_camera.m_targets.Remove(this.gameObject.transform);
+                }
+                break;
 
 			default:
                 Debug.Log("default");
@@ -197,7 +209,58 @@ public abstract class BaseCharacter : MonoBehaviour {
         {
             // Player revive state.
             OnDeath();
-            Destroy(gameObject);
+        }
+    }
+
+    /// <summary>
+    /// Checks if the downed player is in REVIVE state which then gives allies a chance to revive them.
+    /// </summary>
+    public void ReviveTeamMate()
+    {
+
+        foreach (var player in GameManager.Instance.Players)
+        {
+            if (player == this) { continue; }
+            float sqrDistance = (player.transform.position - this.transform.position).sqrMagnitude;
+
+            if (this.m_playerStates == PlayerState.REVIVE)
+            {
+                m_AOEReviveCollider.enabled = true;
+                m_AOEReviveCollider.radius = m_AOERevive;
+
+                if (sqrDistance <= m_AOERevive * m_AOERevive)
+                {
+                    // TODO: Show in UI the player can hold B to revive
+                    print("Hold B to revive");
+
+                    if (XCI.GetButton(XboxButton.B, player.m_controller))
+                    {
+                        m_isReviving = true;
+
+                        if (m_isReviving)
+                        {
+                            m_timeToRevive -= Time.deltaTime;
+
+                            // TODO: Start revive particle effect.
+                            if (m_timeToRevive <= 0f && m_isReviving)
+                            {
+                                m_isRevived = true;
+                                m_isReviving = false;
+
+                                m_playerStates = PlayerState.ALIVE;
+                                m_currentHealth = m_healthUponRevive;
+                                // TODO: Stop revive particle effect.
+                                m_timeToRevive = 5f;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    m_isReviving = false;
+                    m_timeToRevive = 5f;
+                }
+            }
         }
     }
 
@@ -206,7 +269,7 @@ public abstract class BaseCharacter : MonoBehaviour {
     /// </summary>
     protected virtual void OnDeath()
     {
-        // TODO: Player enters revive state.
+        m_playerStates = PlayerState.REVIVE;
     }
 
     /// <summary>
@@ -312,17 +375,6 @@ public abstract class BaseCharacter : MonoBehaviour {
     /// <param name="amount"></param>
     public void UpdateSkillPont(int amount) {
         m_playerSkillPoints += amount;
-    }
-
-    /// <summary>
-    /// Allows the user to access player states in other scripts.
-    /// </summary>
-    /// <param name="alive"></param>
-    /// <param name="revive"></param>
-    /// <param name="dead"></param>
-    public void SetPlayerState(PlayerState alive, PlayerState revive, PlayerState dead)
-    {
-        // TODO: give access to the states from other scripts.
     }
 
     /// <summary>
