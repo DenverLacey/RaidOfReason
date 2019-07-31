@@ -33,7 +33,21 @@ public class Kenron : BaseCharacter {
     [Tooltip("The Delay until the next Dash")]
     private float m_dashTime;
 
-    [SerializeField]
+	[SerializeField]
+	[Tooltip("Distance of Dash Attack")]
+	private float m_dashDistance;
+
+	[SerializeField]
+	[Tooltip("How quickly Kenron dashes")]
+	private float m_dashSpeed;
+
+	[SerializeField]
+	[Tooltip("Hit box for dash attack")]
+	private BoxCollider m_dashCollider;
+
+	private Vector3 m_dashPosition;
+
+	[SerializeField]
     [Tooltip("Kenrons Damage Boost whilst in Chaos Flame")]
     private float m_chaosFlameDamage;
 
@@ -100,12 +114,40 @@ public class Kenron : BaseCharacter {
 
     protected override void Update()
     {
-        // Empty Check
-        if (this.gameObject != null)
-        {
-            // Allows Kenron to Dash Forward Dealing Damage to any enemies at front
-            DashAttack();
-        }
+		// dash attack
+        if (XCI.GetAxis(XboxAxis.RightTrigger, m_controller) > 0.1f && !m_triggerDown)
+		{
+			// set boolean flags
+			m_triggerDown = true;
+			m_controllerOn = false;
+			isDashing = true;
+			m_dashCollider.enabled = true;
+
+			// orient hit box
+			Vector3 hitBoxSize = new Vector3(m_dashCollider.size.x, m_dashCollider.size.y, m_dashDistance);
+			m_dashCollider.size = hitBoxSize;
+
+			m_dashCollider.transform.rotation = transform.rotation;
+			m_dashCollider.transform.position = transform.position + transform.forward * (m_dashDistance / 2f);
+
+			// set dash position
+			m_dashPosition = transform.position + transform.forward * m_dashDistance;
+		}
+
+		if (isDashing)
+		{
+			transform.position = Vector3.Lerp(transform.position, m_dashPosition, m_dashSpeed * Time.deltaTime);
+
+			// if completed dash
+			if ((m_dashPosition - transform.position).sqrMagnitude <= 0.1f)
+			{
+				// reset boolean flags
+				m_triggerDown = false;
+				m_controllerOn = true;
+				isDashing = false;
+				m_dashCollider.enabled = false;
+			}
+		}
     }
 
     /// <summary>

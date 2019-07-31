@@ -20,19 +20,21 @@ public abstract class BaseCharacter : MonoBehaviour {
         DEAD
     }
 
-    [SerializeField]
-    private PlayerState m_playerStates;
+    public PlayerState playerState;
+
     [SerializeField]
     protected float m_damage;
+
     [SerializeField]
     private float m_movementSpeed;
+
     [SerializeField]
     public int m_playerSkillPoints;
+
     public List<SkillsAbilities> m_playerSkills = new List<SkillsAbilities>();
-    [SerializeField]
+
+	[SerializeField]
     public Dictionary<string, SkillsAbilities> m_dictSkills = new Dictionary<string, SkillsAbilities>();
-
-
 
     [HideInInspector]
     public bool m_controllerOn;
@@ -87,7 +89,7 @@ public abstract class BaseCharacter : MonoBehaviour {
     protected virtual void FixedUpdate()
     {
         // Checks the states of all derived players of this class.
-		switch (m_playerStates)
+		switch (playerState)
 		{
 			case PlayerState.ALIVE:
                 // If a controller is active.
@@ -223,7 +225,7 @@ public abstract class BaseCharacter : MonoBehaviour {
             float sqrDistance = (player.transform.position - this.transform.position).sqrMagnitude;
 
             // If the player is in a downed state.
-            if (this.m_playerStates == PlayerState.REVIVE)
+            if (this.playerState == PlayerState.REVIVE)
             {
                 // Enable thier revive collider.
                 m_AOEReviveCollider.enabled = true;
@@ -241,7 +243,7 @@ public abstract class BaseCharacter : MonoBehaviour {
                 if(m_timeTillDeath <= 0 && !m_isRevived)
                 {
                     // Kill the player 
-                    this.m_playerStates = PlayerState.DEAD;
+                    this.playerState = PlayerState.DEAD;
                     this.gameObject.SetActive(false);
                 }
 
@@ -272,7 +274,7 @@ public abstract class BaseCharacter : MonoBehaviour {
                                 m_isReviving = false;
 
                                 // Change them to the ALIVE state.
-                                m_playerStates = PlayerState.ALIVE;
+                                playerState = PlayerState.ALIVE;
                                 // Give the player some health when they get back up.
                                 this.m_currentHealth = m_healthUponRevive;
                                 // TODO: Stop revive particle effect.
@@ -302,7 +304,7 @@ public abstract class BaseCharacter : MonoBehaviour {
     /// </summary>
     protected virtual void OnDeath()
     {
-        m_playerStates = PlayerState.REVIVE;
+        playerState = PlayerState.REVIVE;
     }
 
     /// <summary>

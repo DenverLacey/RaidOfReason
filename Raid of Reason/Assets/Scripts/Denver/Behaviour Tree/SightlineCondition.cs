@@ -31,8 +31,9 @@ public class SightlineCondition : Behaviour
         foreach (BaseCharacter player in GameManager.Instance.Players) 
         {
             if (!player) { continue; }
+			if (player.playerState == BaseCharacter.PlayerState.REVIVE) { continue; }
 
-            Vector3 playerPosition = player.transform.position;
+			Vector3 playerPosition = player.transform.position;
             playerPosition.y = 1f;
 
             Vector3 dir = (playerPosition - agent.transform.position).normalized;

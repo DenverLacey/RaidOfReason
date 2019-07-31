@@ -6,12 +6,8 @@ public class SwordDamage : MonoBehaviour
 {
    [SerializeField]
     private int m_damage;
-    public Kenron Kenron;
+    public Kenron kenron;
 
-	public void SetDamage(int damage)
-	{
-		this.m_damage = damage;
-	}
 	public void OnTriggerEnter(Collider other)
 	{
 		string tag = other.gameObject.tag;
@@ -20,16 +16,15 @@ public class SwordDamage : MonoBehaviour
 			BaseEnemy enemy = other.gameObject.GetComponent<BaseEnemy>();
 
             // if the player doesnt have shuras upgrade applied
-			if (enemy && !Kenron.m_playerSkills.Find(skill => skill.Name == "Shuras Reckoning"))
+			if (enemy && !kenron.m_playerSkills.Find(skill => skill.Name == "Shuras Reckoning"))
 			{
-				SetDamage(m_damage);
 				enemy.TakeDamage(m_damage);
                 enemy.GetComponent<MeshRenderer>().material.color = Color.red;
                 StartCoroutine(ResetMaterialColour(enemy, .2f));
 			}
 
             // if the player does have shuras upgrade applied
-            if(enemy && Kenron.m_playerSkills.Find(skill => skill.Name == "Shuras Reckoning") && Kenron.isActive == true)
+            if(enemy && kenron.m_playerSkills.Find(skill => skill.Name == "Shuras Reckoning") && kenron.isActive == true)
             {
                 Debug.Log("BURNING");
                 other.GetComponent<StatusEffectManager>().ApplyBurn(4);
