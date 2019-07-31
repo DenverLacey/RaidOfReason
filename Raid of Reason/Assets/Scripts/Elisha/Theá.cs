@@ -12,24 +12,41 @@ public class Theá : BaseCharacter
 {
     [SerializeField]
     private GameObject m_waterPrefab;
+
     [SerializeField]
+    [Tooltip("Insert Theas projectile object.")]
     private GameObject m_projectile;
+
+    [SerializeField]
+    [Tooltip("How long of a delay will it take for her next projectile to instiantiate?")]
+    private float m_projectileDelay;
+
     [SerializeField]
     private SkillManager m_skillManager;
+
     [SerializeField]
-    private float m_projectileDelay;
-    [SerializeField]
-    private float m_AOEMax;
-    [SerializeField]
-    private float m_AOEGrowTime;
-    [SerializeField]
-    private float m_AOEMin;
-    [SerializeField]
-    private float m_GOPEffect;
-    [SerializeField]
+    [Tooltip("AOE collider that grows over time.")]
     private SphereCollider m_AOEParticleCollider;
+
     [SerializeField]
+    [Tooltip("The AOE particle used for visual effect.")]
     private ParticleSystem m_AOEParticle;
+
+    [SerializeField]
+    [Tooltip("How big can Thea's AOE get?")]
+    private float m_AOEMax;
+
+    [SerializeField]
+    [Tooltip("What is Thea's minimum radius of her AOE.")]
+    private float m_AOEMin;
+
+    [SerializeField]
+    [Tooltip("How fast will Thea's AOE grow?")]
+    private float m_AOEGrowTime;
+
+    [SerializeField]
+    [Tooltip("How much the Gift of Poseidon heals by?")]
+    private float m_GOPEffect;
 
     private Kenron m_kenron;
     private Nashorn m_nashorn;

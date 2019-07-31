@@ -22,44 +22,62 @@ public abstract class BaseCharacter : MonoBehaviour {
 
     public PlayerState playerState;
 
+    public float m_maxHealth;
+    public float m_currentHealth;
+
     [SerializeField]
+    [Tooltip("How long can a player be in revive state before they die?")]
+    private float m_deathTimer;
+
+    [SerializeField]
+    [Tooltip("How much damage will the player deal?")]
     protected float m_damage;
 
     [SerializeField]
+    [Tooltip("Hpw fast will the player move?")]
     private float m_movementSpeed;
+
+    [Tooltip("Pick what controller this player is.")]
+    public XboxController m_controller;
+
+    [SerializeField]
+    [Tooltip("How long will it take the player to revive his teammate?")]
+    private float m_reviveTimer;
+
+    [SerializeField]
+    [Tooltip("How big is the radius of the revive?")]
+    private float m_reviveRadius;
+
+    [SerializeField]
+    [Tooltip("How much health will the player get back when revived?")]
+    private float m_healthUponRevive;
+
+    [Space]
 
     [SerializeField]
     public int m_playerSkillPoints;
 
     public List<SkillsAbilities> m_playerSkills = new List<SkillsAbilities>();
-
-	[SerializeField]
+    [Space]
     public Dictionary<string, SkillsAbilities> m_dictSkills = new Dictionary<string, SkillsAbilities>();
 
     [HideInInspector]
     public bool m_controllerOn;
-    public float m_maxHealth;
-    public float m_currentHealth;
-    public XboxController m_controller;
     public MultiTargetCamera m_camera;
     public TextMeshProUGUI m_skillDisplay;
     public TextMeshProUGUI m_skillMaxed;
+    protected Animator m_animator;
+    public SphereCollider m_reviveColliderRadius;
    
     protected float m_vulnerability;
+    protected bool m_bActive;
+
     private float m_rotationSpeed = 250.0f;
     private Vector3 m_direction;
     private Vector3 m_prevRotDirection = Vector3.forward;
-    protected bool m_bActive;
-    protected Animator m_animator;
-
-    //public float m_timeTillDeath;
-    private float m_timeToRevive;
     private bool m_isRevived = false;
     private bool m_isReviving = false;
-    public SphereCollider m_AOEReviveCollider;
-    public float m_AOERevive;
-    public float m_healthUponRevive;
-    public float m_timeTillDeath;
+
 
     public int SkillPoints {
         get { return m_playerSkillPoints;  }
@@ -79,8 +97,8 @@ public abstract class BaseCharacter : MonoBehaviour {
         m_animator = GetComponent<Animator>();
         m_controllerOn = true;
 
-        m_AOEReviveCollider.enabled = false;
-        m_timeToRevive = 5f;
+        m_reviveColliderRadius.enabled = false;
+        m_reviveTimer = 5f;
     }
 
     /// <summary>
@@ -228,19 +246,19 @@ public abstract class BaseCharacter : MonoBehaviour {
             if (this.playerState == PlayerState.REVIVE)
             {
                 // Enable thier revive collider.
-                m_AOEReviveCollider.enabled = true;
+                m_reviveColliderRadius.enabled = true;
                 // Have the colliders radius equal the AOE float radius.
-                m_AOEReviveCollider.radius = m_AOERevive;
+                m_reviveColliderRadius.radius = m_reviveRadius;
 
                 // Checks to see if player isnt getting revived.
                 if (!m_isReviving)
                 {
                     // Starts the timer that the player can be in revive state for.
-                    m_timeTillDeath -= Time.deltaTime;
+                    m_deathTimer -= Time.deltaTime;
                 }
 
                 // If the timer is 0 and the player hasnt been revived.
-                if(m_timeTillDeath <= 0 && !m_isRevived)
+                if(m_deathTimer <= 0 && !m_isRevived)
                 {
                     // Kill the player 
                     this.playerState = PlayerState.DEAD;
@@ -248,7 +266,7 @@ public abstract class BaseCharacter : MonoBehaviour {
                 }
 
                 // Checks if the 2 players that are alive are within the revive distance.
-                if (sqrDistance <= m_AOERevive * m_AOERevive)
+                if (sqrDistance <= m_reviveRadius * m_reviveRadius)
                 {
                     // TODO: Show in UI the player can hold B to revive
                     Debug.Log("Hold B to revive");
@@ -263,11 +281,11 @@ public abstract class BaseCharacter : MonoBehaviour {
                         if (m_isReviving)
                         {
                             // Start the revive timer.
-                            m_timeToRevive -= Time.deltaTime;
+                            m_reviveTimer -= Time.deltaTime;
 
                             // TODO: Start revive particle effect.
                             // If the revive timer hits 0 and the player is reviving.
-                            if (m_timeToRevive <= 0f && m_isReviving)
+                            if (m_reviveTimer <= 0f && m_isReviving)
                             {
                                 // Player revived.
                                 m_isRevived = true;
@@ -279,16 +297,16 @@ public abstract class BaseCharacter : MonoBehaviour {
                                 this.m_currentHealth = m_healthUponRevive;
                                 // TODO: Stop revive particle effect.
                                 // Reset timer.
-                                m_timeToRevive = 5f;
+                                m_reviveTimer = 5f;
                                 // Disable the revive collider.
-                                m_AOEReviveCollider.enabled = false;
+                                m_reviveColliderRadius.enabled = false;
                             }
                         }
                     }
                     // If the user lets go of the revive button, reset the timer for reviving.
                     else if(XCI.GetButtonUp(XboxButton.B, player.m_controller))
                     {
-                        m_timeToRevive = 5f;
+                        m_reviveTimer = 5f;
                     }
                 }
                 else

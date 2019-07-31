@@ -1,5 +1,49 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1228667984045387494
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3878829685956162847}
+  - component: {fileID: 2199128655337803380}
+  m_Layer: 0
+  m_Name: ReviveCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3878829685956162847
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1228667984045387494}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6274874929271835744}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &2199128655337803380
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1228667984045387494}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6274874928721932402
 GameObject:
   m_ObjectHideFlags: 0
@@ -1316,10 +1360,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6274874929271835747}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.01, z: -6.96}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6274874930775075313}
+  - {fileID: 3878829685956162847}
   m_Father: {fileID: 6274874929699390167}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1410,24 +1455,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e4cf2bfe3871d8479b6c06907f61865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_playerStates: 0
+  playerState: 0
+  m_maxHealth: 100
+  m_currentHealth: 0
+  m_deathTimer: 20
   m_damage: 20
   m_movementSpeed: 15
+  m_controller: 3
+  m_reviveTimer: 5
+  m_reviveRadius: 5
+  m_healthUponRevive: 50
   m_playerSkillPoints: 10
   m_playerSkills: []
   m_controllerOn: 0
-  m_maxHealth: 100
-  m_currentHealth: 0
-  m_controller: 0
   m_camera: {fileID: 0}
   m_skillDisplay: {fileID: 6274874930049916589}
   m_skillMaxed: {fileID: 6274874929479299256}
+  m_reviveColliderRadius: {fileID: 2199128655337803380}
   swordCollider: {fileID: 6274874930775075319}
   childKenron: {fileID: 6274874929586005532}
   skillManager: {fileID: 0}
   Amaterasu: {fileID: 6274874930775075312}
   isActive: 0
   m_dashTime: 0.1
+  m_dashDistance: 0
+  m_dashSpeed: 0
+  m_dashCollider: {fileID: 0}
   m_chaosFlameDamage: 70
   m_chaosFlameSpeed: 25
   m_particleTime: 10
@@ -3943,7 +3996,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_damage: 20
-  Kenron: {fileID: 6274874929271835749}
+  kenron: {fileID: 0}
 --- !u!114 &6274874929586005532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3965,6 +4018,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6274874929699390167}
     m_Modifications:
+    - target: {fileID: 2477906026665673246, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
+        type: 3}
+      propertyPath: m_Name
+      value: AetherealKenron
+      objectReference: {fileID: 0}
+    - target: {fileID: 2477906026665673246, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 8668622199191288015, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3973,12 +4036,12 @@ PrefabInstance:
     - target: {fileID: 8668622199191288015, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.01
       objectReference: {fileID: 0}
     - target: {fileID: 8668622199191288015, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -6.96
       objectReference: {fileID: 0}
     - target: {fileID: 8668622199191288015, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
         type: 3}
@@ -4020,41 +4083,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2477906026665673246, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
-        type: 3}
-      propertyPath: m_Name
-      value: AetherealKenron
-      objectReference: {fileID: 0}
-    - target: {fileID: 2477906026665673246, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 2268850298961720299, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
-        type: 3}
-      propertyPath: m_damage
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 2268850298961720299, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
-        type: 3}
-      propertyPath: m_currentHealth
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 2268850298961720299, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
-        type: 3}
-      propertyPath: m_SkillDisplay
-      value: 
-      objectReference: {fileID: 6274874930049916589}
-    - target: {fileID: 2268850298961720299, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
-        type: 3}
-      propertyPath: m_SkillMaxed
-      value: 
-      objectReference: {fileID: 6274874929479299256}
-    - target: {fileID: 2268850298961720299, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
-        type: 3}
-      propertyPath: c_Kenron
-      value: 
-      objectReference: {fileID: 6274874929586005532}
     - target: {fileID: 1496590939940779359, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4065,6 +4093,41 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2268850298961720299, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
+        type: 3}
+      propertyPath: m_currentHealth
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268850298961720299, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
+        type: 3}
+      propertyPath: m_damage
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268850298961720299, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
+        type: 3}
+      propertyPath: m_controller
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268850298961720299, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
+        type: 3}
+      propertyPath: m_skillDisplay
+      value: 
+      objectReference: {fileID: 6274874930049916589}
+    - target: {fileID: 2268850298961720299, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
+        type: 3}
+      propertyPath: m_skillMaxed
+      value: 
+      objectReference: {fileID: 6274874929479299256}
+    - target: {fileID: 2268850298961720299, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
+        type: 3}
+      propertyPath: childKenron
+      value: 
+      objectReference: {fileID: 6274874929586005532}
+    - target: {fileID: 2268850298961720299, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
+        type: 3}
+      propertyPath: Amaterasu
+      value: 
+      objectReference: {fileID: 593857031402910525}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4897393a4c9139c4f9bb0bf6c0157a6f, type: 3}
 --- !u!4 &3412026982654205654 stripped
@@ -4076,6 +4139,12 @@ Transform:
 --- !u!1 &8464409842001339399 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2477906026665673246, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
+    type: 3}
+  m_PrefabInstance: {fileID: 6274874929586005529}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &593857031402910525 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6857038649991173412, guid: 4897393a4c9139c4f9bb0bf6c0157a6f,
     type: 3}
   m_PrefabInstance: {fileID: 6274874929586005529}
   m_PrefabAsset: {fileID: 0}
