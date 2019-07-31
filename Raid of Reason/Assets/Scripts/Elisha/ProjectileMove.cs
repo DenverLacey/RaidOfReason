@@ -17,7 +17,7 @@ public class ProjectileMove : MonoBehaviour {
     [SerializeField]
     private float m_healAmount;
     [SerializeField]
-    private float m_damage;
+    private int m_damage;
 
     /// <summary>
     /// Sets the damage dealt by the projectile.
@@ -25,7 +25,7 @@ public class ProjectileMove : MonoBehaviour {
     /// <param name="damage"></param>
     public void SetDamage(float damage)
     {
-        this.m_damage = damage;
+        this.m_damage = (int)damage;
     }
 
     // Update is called once per frame
@@ -62,7 +62,7 @@ public class ProjectileMove : MonoBehaviour {
         if (tag == "Enemy")
         {
             // Create non member variable that holds all data to do with the enemy.
-            BaseEnemy enemy = other.gameObject.GetComponent<BaseEnemy>();
+            EnemyData enemy = other.gameObject.GetComponent<EnemyData>();
             // If True
             if (enemy)
             {
@@ -105,7 +105,7 @@ public class ProjectileMove : MonoBehaviour {
     /// <param name="enemy"></param>
     /// <param name="delay"></param>
     /// <returns> Enemy data and float value. </returns>
-    IEnumerator ResetMaterialColour(BaseEnemy enemy, float delay)
+    IEnumerator ResetMaterialColour(EnemyData enemy, float delay)
     {
         // Suspends the coroutine execution for the given amount of seconds.
         yield return new WaitForSeconds(delay);
@@ -114,7 +114,7 @@ public class ProjectileMove : MonoBehaviour {
         if (enemy)
         {
             // Change enemy mesh colour back to the original colour.
-            GetComponent<MeshRenderer>().material.color = Color.clear;
+            enemy.GetComponent<MeshRenderer>().material.color = Color.clear;
         }
     }
 }

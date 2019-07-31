@@ -27,7 +27,7 @@ public class Nashorn : BaseCharacter
     public SkillManager skillManager;
 
     [Tooltip("Checks if Nashorns Skill is Active")]
-    public bool isActive;
+    public bool isTaunting;
 
     [SerializeField]
     [Tooltip("Size of the area of effect for taunt ability")]
@@ -68,7 +68,7 @@ public class Nashorn : BaseCharacter
         m_nashornRigidBody = GetComponent<Rigidbody>();
         LeftGauntlet.enabled = false;
         RightGauntlet.enabled = false;
-        isActive = false;
+        isTaunting = false;
 
         for (int i = 0; i < 2; i++)
         {
@@ -115,7 +115,7 @@ public class Nashorn : BaseCharacter
         if (this.gameObject != null)
         {
             // If the skill is active and the player has the named skill
-            if (isActive == true && m_playerSkills.Find(skill => skill.Name == "Roaring Thunder"))
+            if (isTaunting == true && m_playerSkills.Find(skill => skill.Name == "Roaring Thunder"))
             {
 
                 // Returns increased Radius
@@ -195,26 +195,11 @@ public class Nashorn : BaseCharacter
 	/// </summary>
     public void Spott()
     {
-        // Empty Check
-        if (this.gameObject != null)
-        {
-            // Ability is active
-            isActive = true;
+		// Ability is active
+		isTaunting = true;
 
-            // set vulnerability
-            m_vulnerability = m_tauntVulnerability;
-
-            m_nearbyEnemies = new List<BaseEnemy>(FindObjectsOfType<BaseEnemy>());
-
-            // taunt all nearby enemies
-            foreach (BaseEnemy enemy in m_nearbyEnemies)
-            {
-                if ((transform.position - enemy.transform.position).sqrMagnitude <= m_tauntRadius * m_tauntRadius)
-                {
-                    enemy.Taunt();
-                }
-            }
-        }
+		// set vulnerability
+		m_vulnerability = m_tauntVulnerability;
     }
 
     /// <summary>
@@ -226,7 +211,7 @@ public class Nashorn : BaseCharacter
         ResetVulernability();
 
         // Skill no longer active
-        isActive = false;
+        isTaunting = false;
 
         // All Enemies are un-taunted
         foreach (BaseEnemy enemy in m_nearbyEnemies)

@@ -24,27 +24,17 @@ public class TauntEvent : Behaviour
     /// </returns>
     public override Result Execute(EnemyData agent) 
 	{
-		Nashorn nashorn = null;
-
-		foreach (var p in GameManager.Instance.Players) 
-		{
-			nashorn = p as Nashorn;
-
-			if (nashorn) { break; }
-		}
-
-		if (!nashorn) 
+		if (!GameManager.Instance.Nashorn)
 		{
 			return FAILURE;
 		}
-
-		if (nashorn.isActive) 
+		else if (GameManager.Instance.Nashorn.isTaunting)
 		{
 			agent.Taunted = true;
-			agent.Target = nashorn.transform.position;
+			agent.Target = GameManager.Instance.Nashorn.transform.position;
 			return SUCCESS;
 		}
-		else 
+		else
 		{
 			agent.Taunted = false;
 			return FAILURE;

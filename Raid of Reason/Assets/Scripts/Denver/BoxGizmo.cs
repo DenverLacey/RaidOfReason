@@ -17,11 +17,6 @@ public class BoxGizmo : MonoBehaviour
 	[Tooltip("Collider to use as Gizmo")]
 	private BoxCollider m_collider;
 
-	private void OnEnable()
-	{
-		m_collider = GetComponent<BoxCollider>();
-	}
-
 	/// <summary>
 	/// Draws Box Collider as cube gizmo
 	/// </summary>

@@ -13,7 +13,7 @@ public class SwordDamage : MonoBehaviour
 		string tag = other.gameObject.tag;
 		if (tag == "Enemy")
 		{
-			BaseEnemy enemy = other.gameObject.GetComponent<BaseEnemy>();
+			EnemyData enemy = other.gameObject.GetComponent<EnemyData>();
 
             // if the player doesnt have shuras upgrade applied
 			if (enemy && !kenron.m_playerSkills.Find(skill => skill.Name == "Shuras Reckoning"))
@@ -38,13 +38,17 @@ public class SwordDamage : MonoBehaviour
 		}
 	}
 
-    IEnumerator ResetMaterialColour(BaseEnemy enemy, float delay)
+    IEnumerator ResetMaterialColour(EnemyData enemy, float delay)
     {
         yield return new WaitForSeconds(delay);
 
-        if (enemy)
-        {
-            enemy.GetComponent<MeshRenderer>().material.color = Color.clear;
-        } 
+		if (enemy)
+		{
+			MeshRenderer renderer = enemy.GetComponent<MeshRenderer>();
+			if (renderer)
+			{
+				renderer.material.color = Color.clear;
+			}
+		}
     }
 }

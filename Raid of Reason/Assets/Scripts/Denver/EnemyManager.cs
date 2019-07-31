@@ -84,7 +84,6 @@ public class EnemyManager : MonoBehaviour
 
 	private Dictionary<EnemyType, GameObject[]> m_attackPrefabDict = new Dictionary<EnemyType, GameObject[]>();
 
-    [SerializeField]
 	private List<EnemyData> m_enemies = new List<EnemyData>();
 
     // Start is called before the first frame update
@@ -98,8 +97,6 @@ public class EnemyManager : MonoBehaviour
         foreach (var damage in m_attackDamages)		{ m_attackDamageDict.Add(damage.key, damage.value); }
         foreach (var tree in m_behaviourTrees)		{ m_behaviourTreeDict.Add(tree.key, tree.value); }
 		foreach (var prefab in m_attackPrefabs)		{ m_attackPrefabDict.Add(prefab.key, prefab.value); }
-
-        InitEnemies();
     }
 
 	/// <summary>
@@ -119,28 +116,30 @@ public class EnemyManager : MonoBehaviour
     }
 
 	/// <summary>
-	/// Calls Init function for every enemy the manager handles
+	/// Calls enemy's init function and adds them to list of enemies for the manager to handle
 	/// </summary>
-    private void InitEnemies() 
+	/// <param name="enemy">
+	/// Enemy to initialise
+	/// </param>
+    private void InitEnemy(EnemyData enemy) 
 	{
-        foreach (EnemyData enemy in m_enemies) 
-		{
-			enemy.Init(
-				m_viewRangeDict[enemy.Type],
-				m_maxHealthDict[enemy.Type],
-				m_attackRangeDict[enemy.Type],
-				m_attackCooldownDict[enemy.Type],
-				m_attackDamageDict[enemy.Type],
-				m_attackPrefabDict[enemy.Type]
-            );
-        }
+		enemy.Init(
+			m_viewRangeDict[enemy.Type],
+			m_maxHealthDict[enemy.Type],
+			m_attackRangeDict[enemy.Type],
+			m_attackCooldownDict[enemy.Type],
+			m_attackDamageDict[enemy.Type],
+			m_attackPrefabDict[enemy.Type]
+           );
+
+		m_enemies.Add(enemy);
     }
 
 	private void OnTriggerEnter(Collider other)
 	{
 		if (other.tag == "Enemy")
 		{
-			m_enemies.Add(other.GetComponent<EnemyData>());
+			InitEnemy(other.GetComponent<EnemyData>());
 		}
 	}
 }

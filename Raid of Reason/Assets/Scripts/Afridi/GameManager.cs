@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     private Theá m_Thea;
 
 	public Kenron Kenron { get => m_Kenron; }
-	public Nashorn Nashron { get => m_Nashorn; }
+	public Nashorn Nashorn { get => m_Nashorn; }
 	public Theá Thea { get => m_Thea; }
 
 	public BaseCharacter[] Players { get; private set; }
@@ -70,17 +70,17 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        //If the maximum amount of enemies haven't been spawned
-        if (m_capReached == false)
-        {
-            // Repedeately Spawns The Types of enemies depnding on type and Rate
-            InvokeRepeating("SpawnMelee", meleeSpawnRate, meleeSpawnRate);
-            InvokeRepeating("SpawnRanged", rangedSpawnRate, rangedSpawnRate);
-            InvokeRepeating("SpawnExplosive", explosiveSpawnRate, explosiveSpawnRate);
-            InvokeRepeating("SpawnHorde", hordeSpawnRate, hordeSpawnRate);
-        }
-        // Sets the current amount to 0
-        m_currentEnemiesInRoom = 0;
+        ////If the maximum amount of enemies haven't been spawned
+        //if (m_capReached == false)
+        //{
+        //    // Repedeately Spawns The Types of enemies depnding on type and Rate
+        //    InvokeRepeating("SpawnMelee", meleeSpawnRate, meleeSpawnRate);
+        //    InvokeRepeating("SpawnRanged", rangedSpawnRate, rangedSpawnRate);
+        //    InvokeRepeating("SpawnExplosive", explosiveSpawnRate, explosiveSpawnRate);
+        //    InvokeRepeating("SpawnHorde", hordeSpawnRate, hordeSpawnRate);
+        //}
+        //// Sets the current amount to 0
+        //m_currentEnemiesInRoom = 0;
 
         // Finds All Three Players within the game
         m_Kenron = FindObjectOfType<Kenron>();
@@ -92,25 +92,25 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        //If the current amount is equal to the maximum number of enemies
-        if (m_currentEnemiesInRoom == numOfEnemies)
-        {
-            // Cancels the Spawn Functions
-            CancelInvoke("SpawnMelee");
-            CancelInvoke("SpawnExplosive");
-            CancelInvoke("SpawnRanged");
-            CancelInvoke("SpawnHorde");
+        ////If the current amount is equal to the maximum number of enemies
+        //if (m_currentEnemiesInRoom == numOfEnemies)
+        //{
+        //    // Cancels the Spawn Functions
+        //    CancelInvoke("SpawnMelee");
+        //    CancelInvoke("SpawnExplosive");
+        //    CancelInvoke("SpawnRanged");
+        //    CancelInvoke("SpawnHorde");
 
-            //Cap has been reached is set to true
-            m_capReached = true;
-        }
+        //    //Cap has been reached is set to true
+        //    m_capReached = true;
+        //}
 
-        //If the maximum amount has been reached and current enemies are 0
-        if (m_capReached == true && m_currentEnemiesInRoom == 0)
-        {
-            // Calls Clear Room
-            ClearedRoom();
-        }
+        ////If the maximum amount has been reached and current enemies are 0
+        //if (m_capReached == true && m_currentEnemiesInRoom == 0)
+        //{
+        //    // Calls Clear Room
+        //    ClearedRoom();
+        //}
     }
 
     /// <summary>
