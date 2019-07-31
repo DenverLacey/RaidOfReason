@@ -85,14 +85,18 @@ public class RangeEnemyBehaviourTree : BehaviourTree
 		NavMeshHit hit;
         var area = NavMesh.GetAreaFromName("Walkable");
 
-		if (NavMesh.SamplePosition(source, out hit, tolerance, area)) {
-			if (hit.hit) {
+		if (NavMesh.SamplePosition(source, out hit, tolerance, area))
+		{
+			if (hit.hit)
+			{
 				return source;
 			}
 		}
 
-		if (NavMesh.FindClosestEdge(source, out hit, area)) {
-			if (hit.hit) {
+		if (NavMesh.FindClosestEdge(source, out hit, area))
+		{
+			if (hit.hit)
+			{
 				return hit.position;
 			}
 		}

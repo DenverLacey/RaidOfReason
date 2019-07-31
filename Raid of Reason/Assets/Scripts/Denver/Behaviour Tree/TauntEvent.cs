@@ -26,7 +26,7 @@ public class TauntEvent : Behaviour
 	{
 		Nashorn nashorn = null;
 
-		foreach (var p in agent.Players) 
+		foreach (var p in GameManager.Instance.Players) 
 		{
 			nashorn = p as Nashorn;
 

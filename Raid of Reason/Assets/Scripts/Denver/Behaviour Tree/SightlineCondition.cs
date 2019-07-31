@@ -28,7 +28,7 @@ public class SightlineCondition : Behaviour
         float closestDist = float.MaxValue;
         Vector3 closestTar = Vector3.zero;
 
-        foreach (BaseCharacter player in agent.Players) 
+        foreach (BaseCharacter player in GameManager.Instance.Players) 
         {
             if (!player) { continue; }
 

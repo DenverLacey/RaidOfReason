@@ -37,10 +37,10 @@ public struct EnemyTypeBehaviourTreePair
 }
 
 [System.Serializable]
-public struct EnemyTypeGameObjectPair 
+public struct EnemyTypeGameObjectsPair 
 {
 	public EnemyType key;
-	public GameObject value;
+	public GameObject[] value;
 }
 
 /// <summary>
@@ -80,14 +80,12 @@ public class EnemyManager : MonoBehaviour
 	private Dictionary<EnemyType, BehaviourTree> m_behaviourTreeDict = new Dictionary<EnemyType, BehaviourTree>();
 
 	[SerializeField]
-	private List<EnemyTypeGameObjectPair> m_attackPrefabs;
+	private List<EnemyTypeGameObjectsPair> m_attackPrefabs;
 
-	private Dictionary<EnemyType, GameObject> m_attackPrefabDict = new Dictionary<EnemyType, GameObject>();
+	private Dictionary<EnemyType, GameObject[]> m_attackPrefabDict = new Dictionary<EnemyType, GameObject[]>();
 
     [SerializeField]
 	private List<EnemyData> m_enemies = new List<EnemyData>();
-
-    private BaseCharacter[] m_players;
 
     // Start is called before the first frame update
     void Start() 
@@ -100,9 +98,6 @@ public class EnemyManager : MonoBehaviour
         foreach (var damage in m_attackDamages)		{ m_attackDamageDict.Add(damage.key, damage.value); }
         foreach (var tree in m_behaviourTrees)		{ m_behaviourTreeDict.Add(tree.key, tree.value); }
 		foreach (var prefab in m_attackPrefabs)		{ m_attackPrefabDict.Add(prefab.key, prefab.value); }
-
-		// get reference to players
-        m_players = FindObjectsOfType<BaseCharacter>();
 
         InitEnemies();
     }
@@ -136,8 +131,7 @@ public class EnemyManager : MonoBehaviour
 				m_attackRangeDict[enemy.Type],
 				m_attackCooldownDict[enemy.Type],
 				m_attackDamageDict[enemy.Type],
-				m_attackPrefabDict[enemy.Type],
-                m_players
+				m_attackPrefabDict[enemy.Type]
             );
         }
     }

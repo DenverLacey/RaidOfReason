@@ -32,7 +32,7 @@ public class SuicideEnemyAttack : Behaviour
 
 		if (agent.AttackTimer >= agent.AttackCooldown)
 		{
-			foreach (BaseCharacter p in agent.Players)
+			foreach (BaseCharacter p in GameManager.Instance.Players)
 			{
 				if (!p) { continue; }
 				float sqrDistance = (p.transform.position - agent.transform.position).sqrMagnitude;
@@ -42,8 +42,8 @@ public class SuicideEnemyAttack : Behaviour
 				}
 			}
 
-			GameObject.Instantiate(agent.AttackPrefab, agent.transform.position, Quaternion.identity);
-			agent.Die();
+			GameObject.Instantiate(agent.AttackPrefabs[0], agent.transform.position, Quaternion.identity);
+			agent.OnDeath();
 		}
 
 		return Result.SUCCESS;

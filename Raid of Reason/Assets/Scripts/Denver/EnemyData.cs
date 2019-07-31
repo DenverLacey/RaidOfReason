@@ -45,13 +45,13 @@ public class EnemyData : MonoBehaviour
     public bool Attacking { get; set; }
 	public bool Taunted { get; set; }
 	public bool Stunned { get; set; }
-	public GameObject AttackPrefab { get; private set; }
-	
-    public BaseCharacter[] Players { get; private set; }
+	public GameObject[] AttackPrefabs { get; private set; }
+
     public Vector3 Target { get; set; }
 
     public NavMeshAgent NavMeshAgent { get; private set; }
 
+	[HideInInspector]
     // Afridi added this for the skill tree
     public bool isDeadbByKenron = false;
 
@@ -73,13 +73,13 @@ public class EnemyData : MonoBehaviour
 	/// <param name="attackDamage">
 	/// How much damage enemy's attack deals
 	/// </param>
-	/// <param name="attackPrefab">
+	/// <param name="attackPrefabs">
 	/// effect object of enemy's attack
 	/// </param>
 	/// <param name="players">
 	/// References to player objects
 	/// </param>
-    public void Init(float viewRange, int maxHealth, EnemyAttackRange attackRange, float attackCooldown, int attackDamage, GameObject attackPrefab, BaseCharacter[] players)
+    public void Init(float viewRange, int maxHealth, EnemyAttackRange attackRange, float attackCooldown, int attackDamage, GameObject[] attackPrefabs)
     {
         ViewRange = viewRange;
         MaxHealth = maxHealth;
@@ -88,9 +88,8 @@ public class EnemyData : MonoBehaviour
         AttackCooldown = attackCooldown;
         AttackTimer = 0.0f;
 		AttackDamage = attackDamage;
-		AttackPrefab = attackPrefab;
+		AttackPrefabs = attackPrefabs;
 		Stunned = false;
-        Players = players;
         NavMeshAgent = GetComponent<NavMeshAgent>();
 		NavMeshAgent.destination = transform.position;
     }
@@ -134,14 +133,14 @@ public class EnemyData : MonoBehaviour
 
 		if (Health <= 0)
 		{
-			Die();
+			OnDeath();
 		}
 	}
 
 	/// <summary>
 	/// Destroys the enemy's GameObject
 	/// </summary>
-	public void Die()
+	public void OnDeath()
 	{
 		Destroy(gameObject);
 	}
