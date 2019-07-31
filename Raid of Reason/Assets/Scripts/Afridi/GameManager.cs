@@ -36,6 +36,10 @@ public class GameManager : MonoBehaviour
     private Nashorn m_Nashorn;
     private Theá m_Thea;
 
+	public Kenron Kenron { get => m_Kenron; }
+	public Nashorn Nashron { get => m_Nashorn; }
+	public Theá Thea { get => m_Thea; }
+
 	public BaseCharacter[] Players { get; private set; }
 
     [Tooltip("The Explosive Enemy")]
