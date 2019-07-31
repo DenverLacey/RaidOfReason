@@ -7,6 +7,7 @@ public class SwordDamage : MonoBehaviour
 	[SerializeField]
     private int m_damage;
     public Kenron kenron;
+    public Nashorn nashorn;
 
 	public void OnTriggerEnter(Collider other)
 	{
@@ -30,6 +31,17 @@ public class SwordDamage : MonoBehaviour
                 other.GetComponent<StatusEffectManager>().ApplyBurn(4);
             }
 
+            if (kenron.nashornBuffGiven == true && nashorn.isTaunting == true)
+            {
+                float randomValue = Random.value;
+                if (nashorn.stunChance < randomValue)
+                {
+                    other.GetComponent<StatusEffectManager>().ApplyStun(1.5f);
+                }
+            }
+            else if (nashorn.isTaunting == false) {
+                kenron.nashornBuffGiven = false;
+            }
 			Debug.Log("attack successful " + tag);
 		}
 		else

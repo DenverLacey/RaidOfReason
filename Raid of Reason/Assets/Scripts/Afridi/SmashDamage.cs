@@ -31,6 +31,7 @@ public class SmashDamage : MonoBehaviour
                     Vector3 direction = this.transform.position - enemy.transform.position;
                     other.GetComponent<StatusEffectManager>().ApplyKnockBack(enemy.gameObject, direction, 1, 0.3f);
                 }
+                
             }
 
             Debug.Log("attack successful " + tag);

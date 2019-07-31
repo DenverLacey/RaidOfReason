@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1737,6 +1737,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5001416120509848753, guid: 918bd5026542483419744051db69f039,
+        type: 3}
+      propertyPath: m_controller
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 918bd5026542483419744051db69f039, type: 3}
@@ -5815,14 +5820,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffd826d6373a5f249b041bd912aaa808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smoothTime: 0.3
-  minFOV: 0
-  maxFOV: 120
-  sizeNormaliser: 30
-  offset: {x: -18.23, y: 13.01, z: -18.43}
-  targets:
-  - {fileID: 0}
-  cam: {fileID: 1396501168}
+  m_smoothTime: 0
+  m_FOVMin: 0
+  m_FOVMax: 0
+  m_sizeNormaliser: 0
+  m_offset: {x: 0, y: 0, z: 0}
+  m_targets: []
+  m_cam: {fileID: 0}
 --- !u!1 &1404716724
 GameObject:
   m_ObjectHideFlags: 0
@@ -7437,6 +7441,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_movementSpeed
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6062317347766186530, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
+        type: 3}
+      propertyPath: m_controller
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6062317347766186557, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
         type: 3}

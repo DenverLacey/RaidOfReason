@@ -19,6 +19,9 @@ public class ProjectileMove : MonoBehaviour {
     [SerializeField]
     private int m_damage;
 
+    public Theá theaInst;
+    public Nashorn nashornInst;
+
     /// <summary>
     /// Sets the damage dealt by the projectile.
     /// </summary>
@@ -68,6 +71,21 @@ public class ProjectileMove : MonoBehaviour {
             {
                 // Enemy takes damage.
                 enemy.TakeDamage(m_damage);
+                
+                //NASHORN ABILITY
+                if (theaInst.nashornBuffGiven == true && nashornInst.isTaunting == true)
+                {
+                    float randomValue = Random.value;
+                    if (nashornInst.stunChance < randomValue)
+                    {
+                        other.gameObject.GetComponent<StatusEffectManager>().ApplyStun(1.5f);
+                    }
+                }
+                else if (nashornInst.isTaunting == false)
+                {
+                    theaInst.nashornBuffGiven = false;
+                }
+
                 // Enemy mesh colour changes to red.
                 enemy.GetComponent<MeshRenderer>().material.color = Color.red;
                 // Change the enemy back to their original mesh colour after .2 seconds of being hit.

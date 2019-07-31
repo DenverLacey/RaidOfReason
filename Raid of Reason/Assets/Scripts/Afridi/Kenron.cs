@@ -41,13 +41,11 @@ public class Kenron : BaseCharacter {
 	[Tooltip("How quickly Kenron dashes")]
 	private float m_dashSpeed;
 
-	[SerializeField]
-	[Tooltip("Hit box for dash attack")]
-	private BoxCollider m_dashCollider;
+    [SerializeField]
+    [Tooltip("Hit box for dash attack")]
+    private BoxCollider m_dashCollider;
 
-	private Vector3 m_dashPosition;
-
-	[SerializeField]
+    [SerializeField]
     [Tooltip("Kenrons Damage Boost whilst in Chaos Flame")]
     private float m_chaosFlameDamage;
 
@@ -80,6 +78,12 @@ public class Kenron : BaseCharacter {
     
     // Enemy reference used for skill checking
     private BaseEnemy m_Enemy;
+
+    // Desired position to dash
+    private Vector3 m_dashPosition;
+
+    // A bool that checks if nashorn has give kenron his buff
+    public bool nashornBuffGiven = false;
 
     // Checks if Kenron is Dashing or Not
     private bool isDashing;

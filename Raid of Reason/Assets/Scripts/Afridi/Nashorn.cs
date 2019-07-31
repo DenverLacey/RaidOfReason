@@ -49,6 +49,17 @@ public class Nashorn : BaseCharacter
     [Tooltip("Increased Radius from Nashorns Roaring Thunder ability")]
     private float m_radiusIncreased;
 
+    [Tooltip("Chance of Stun dealt by Nashorns Macht Des Sturms ability")]
+    public float stunChance;
+
+    [SerializeField]
+    [Tooltip("Damage done by Chain Lightning dealt by Macht Des Sturms ability")]
+    private float m_lightningDamage;
+
+    [SerializeField]
+    [Tooltip("Range Chain Lightning spreads dealt by Macht Des Sturms ability")]
+    private float m_lightningRadius;
+
     // Amount of Nearby Enemies near Nashorn
     private List<BaseEnemy> m_nearbyEnemies = new List<BaseEnemy>();
 
@@ -57,6 +68,21 @@ public class Nashorn : BaseCharacter
 
     // Nashorns Rigidbody
     private Rigidbody m_nashornRigidBody;
+
+    // Kenron Instance
+    private Kenron m_Kenron;
+
+    // Thea Instance
+    private Theá m_Thea;
+
+    // Skill is active check
+    public bool isActive;
+
+    // Container for Enemy position
+    public List<Vector3> listofPosition;
+
+    // Chain lightning visual
+    public LineRenderer lineRenderer;
 
     // Empty Object for particle instantiating
     private GameObject particleInstantiate;
@@ -69,6 +95,9 @@ public class Nashorn : BaseCharacter
         LeftGauntlet.enabled = false;
         RightGauntlet.enabled = false;
         isTaunting = false;
+        isActive = false;
+        m_Thea = FindObjectOfType<Theá>();
+        m_Kenron = FindObjectOfType<Kenron>();
 
         for (int i = 0; i < 2; i++)
         {
@@ -123,6 +152,61 @@ public class Nashorn : BaseCharacter
 
                 // Cooldown is halved
                 skillManager.m_Skills[1].m_coolDown = skillManager.m_Skills[1].m_coolDown / 2;
+            }
+
+            // If the skill is active and the player has the named skill
+            if (isTaunting == true && m_playerSkills.Find(skill => skill.Name == "Kinetic Discharge"))
+            {
+                
+            }
+
+            // If the skill is active and the player has the named skill
+            if (isTaunting == true && m_playerSkills.Find(skill => skill.Name == "Macht Des Sturms"))
+            {
+                // Gives his allies his stun buff
+                m_Kenron.nashornBuffGiven = true;
+                m_Thea.nashornBuffGiven = true;
+
+                if (isActive == true)
+                {
+                    Ray ray = new Ray(transform.position, transform.forward);
+                    RaycastHit hit;
+
+                    lineRenderer.SetPosition(0, ray.origin);
+                    lineRenderer.SetPosition(1, ray.GetPoint(100));
+
+                    if (Physics.Raycast(transform.position, transform.forward, out hit, 100))
+                    {
+                        lineRenderer.SetPosition(1, hit.point);
+                        ChainLightning();
+                    }
+                    isActive = false;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Chain Lightning Attack
+    /// </summary>
+    public void ChainLightning()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, m_lightningRadius);
+
+        listofPosition[1] = hitColliders[1].transform.position;
+        listofPosition[2] = hitColliders[2].transform.position;
+        listofPosition[3] = hitColliders[3].transform.position;
+        listofPosition[4] = hitColliders[4].transform.position;
+
+        lineRenderer.SetPositions(listofPosition.ToArray());
+
+        foreach (Collider hitCol in hitColliders)
+        {
+            Debug.Log(hitCol.gameObject.name);
+            BaseEnemy enemy = hitCol.transform.GetComponent<BaseEnemy>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(m_lightningDamage);
             }
         }
     }
@@ -197,6 +281,9 @@ public class Nashorn : BaseCharacter
     {
 		// Ability is active
 		isTaunting = true;
+
+        // Set active
+        isActive = true;
 
 		// set vulnerability
 		m_vulnerability = m_tauntVulnerability;

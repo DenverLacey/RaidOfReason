@@ -35,10 +35,10 @@ public class StatusEffectManager : MonoBehaviour
         StartCoroutine(KnockBack(target, direction, length, overtime));
     }
 
-    public void KnockBackEnemy(GameObject target, Vector3 direction)
-    {
-        direction = direction.normalized;
-        StartCoroutine(Knock(target, direction));
+    public void ApplyStun(float duration) {
+        // Get Denver to make a stun function for enemies
+        // enemy.Stun();
+        StartCoroutine(Stun());
     }
 
     IEnumerator Burn() {
@@ -49,6 +49,12 @@ public class StatusEffectManager : MonoBehaviour
             StartCoroutine(ResetMaterialColour(enemy, 0.75f));
             yield return new WaitForSeconds(0.75f);
         }
+    }
+
+    IEnumerator Stun() {
+        yield return null;
+
+        yield return new WaitForSeconds(0.2f);
     }
 
     IEnumerator KnockBack(GameObject target, Vector3 direction, float length, float overtime) {
@@ -64,12 +70,6 @@ public class StatusEffectManager : MonoBehaviour
             }
             timeleft -= Time.deltaTime;
         }
-        yield return null;
-    }
-
-    IEnumerator Knock(GameObject target, Vector3 direction)
-    {
-        m_rigidBody.AddForce(direction.normalized * -500f);
         yield return null;
     }
 

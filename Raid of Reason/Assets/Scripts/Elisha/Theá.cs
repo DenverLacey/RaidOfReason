@@ -64,6 +64,8 @@ public class Theá : BaseCharacter
 
     ParticleSystem.ShapeModule aoe;
 
+    public bool nashornBuffGiven = false;
+
     /// <summary>
     /// Gets called before Start.
     /// </summary>
