@@ -21,27 +21,26 @@ public class MeleeEnemyBehaviourTree : BehaviourTree
 	MeleeEnemyBehaviourTree()
 	{
 		// create components for the behaviour tree
-		// create the attack behaviour sequence
-		Sequence abs = new Sequence();
-		abs.AddChild(new MaxAttackRangeCondition());
-		abs.AddChild(new MeleeEnemyAttack());
-
 		StunnedCondition stunned = new StunnedCondition();
 
-		Sequence tauntSequence = new Sequence();
-		tauntSequence.AddChild(new TauntEvent());
-		tauntSequence.AddChild(abs);
-
 		Sequence sightlineSequence = new Sequence();
+		sightlineSequence.AddChild(new ViewRangeCondition());
 		sightlineSequence.AddChild(new SightlineCondition());
-		sightlineSequence.AddChild(abs);
+
+		Selector tauntSelector = new Selector();
+		tauntSelector.AddChild(new TauntEvent());
+		tauntSelector.AddChild(sightlineSequence);
+
+		Sequence attackSequence = new Sequence();
+		attackSequence.AddChild(tauntSelector);
+		attackSequence.AddChild(new MaxAttackRangeCondition());
+		attackSequence.AddChild(new MeleeEnemyAttack());
 
 		Wander wander = new Wander();
 
 		// add components to behaviour tree
 		m_behaviourTree.AddChild(stunned);
-		m_behaviourTree.AddChild(tauntSequence);
-		m_behaviourTree.AddChild(sightlineSequence);
+		m_behaviourTree.AddChild(attackSequence);
 		m_behaviourTree.AddChild(wander);
     }
 

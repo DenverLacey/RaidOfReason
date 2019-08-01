@@ -35,7 +35,7 @@ public class SpawnerEnemyAttack : Behaviour
 				spawnVector = Quaternion.AngleAxis(angle * i, Vector3.up) * spawnVector;
 				spawnVector *= 2f;
 
-				Object.Instantiate(agent.AttackPrefabs[randIdx], spawnVector + agent.transform.position, agent.transform.rotation);
+				GameObject.Instantiate(agent.AttackPrefabs[randIdx], spawnVector + agent.transform.position, agent.transform.rotation);
 			}
 		}
 

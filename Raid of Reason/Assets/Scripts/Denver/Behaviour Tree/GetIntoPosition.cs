@@ -1,32 +1,24 @@
-﻿/*
- * Author: Denver
- * Description: Fallback Behaviour class which makes an enemy avoid a player
- */
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Behaviour.Result;
 
-/// <summary>
-/// Makes an enemy avoid a player
-/// </summary>
-public class Fallback : Behaviour
+public class GetIntoPosition : Behaviour
 {
-    /// <summary>
-	/// Performs fallback behaviour on given enemy agent
+	/// <summary>
+	/// Sets agent's destination to be in position to attack at range
 	/// </summary>
 	/// <param name="agent">
 	/// Agent to perform behaviour on
 	/// </param>
 	/// <returns>
-	/// If path away from player was found
+	/// If path to player was found
 	/// </returns>
-    public override Result Execute(EnemyData agent)
-    {
-		// calculate destination away from player
+	public override Result Execute(EnemyData agent)
+	{
 		// calculate destination
 		Vector3 direction = (agent.transform.position - agent.Target).normalized;
+
 		float avgAttackRange = (agent.AttackRange.max + agent.AttackRange.min) / 2f;
 		Vector3 destination = agent.Target + direction * avgAttackRange;
 
@@ -34,5 +26,5 @@ public class Fallback : Behaviour
 		agent.NavMeshAgent.destination = destination;
 
 		return SUCCESS;
-    }
+	}
 }

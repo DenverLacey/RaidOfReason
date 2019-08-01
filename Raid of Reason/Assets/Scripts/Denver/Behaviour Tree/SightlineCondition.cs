@@ -25,39 +25,19 @@ public class SightlineCondition : Behaviour
     /// </returns>
     public override Result Execute(EnemyData agent) 
     {
-        float closestDist = float.MaxValue;
-        Vector3 closestTar = Vector3.zero;
+		Vector3 playerPosition = agent.Target;
+		playerPosition.y = 1f;
+		Vector3 dir = (playerPosition - agent.transform.position).normalized;
+		Vector3 origin = agent.transform.position;
+		origin.y = 1f;
 
-        foreach (BaseCharacter player in GameManager.Instance.Players) 
-        {
-            if (!player) { continue; }
-			if (player.playerState == BaseCharacter.PlayerState.REVIVE) { continue; }
-
-			Vector3 playerPosition = player.transform.position;
-            playerPosition.y = 1f;
-
-            Vector3 dir = (playerPosition - agent.transform.position).normalized;
-            Vector3 origin = agent.transform.position;
-            origin.y = 1f;
-
-            if (Physics.Raycast(origin, dir, out RaycastHit info, closestDist)) 
-            {
-                if (info.collider.tag == "Kenron" || info.collider.tag == "Nashorn" || info.collider.tag == "Thea") 
-                {
-                    closestDist = info.distance;
-                    closestTar = player.transform.position;
-                }
-            }
-        }
-
-        if (closestDist <= agent.ViewRange) 
-        {
-            agent.Target = closestTar;
-            return SUCCESS;
-        }
-        else 
-        {
-            return FAILURE;
-        }
+		if (Physics.Raycast(origin, dir, out RaycastHit info, agent.ViewRange)) 
+		{
+			if (info.collider.tag == "Kenron" || info.collider.tag == "Nashorn" || info.collider.tag == "Thea")
+			{
+				return SUCCESS;
+			}
+		}
+		return FAILURE;
     }
 }

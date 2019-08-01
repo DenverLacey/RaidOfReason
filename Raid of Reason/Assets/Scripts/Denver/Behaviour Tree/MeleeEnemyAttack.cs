@@ -24,8 +24,12 @@ public class MeleeEnemyAttack : Behaviour
 	/// </returns>
     public override Result Execute(EnemyData agent)
 	{
-		agent.Attacking = true;
+		// rotate to face player
+		Vector3 direciton = (agent.Target - agent.transform.position).normalized;
+		Quaternion desiredRotation = Quaternion.LookRotation(direciton, Vector3.up);
+		agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, desiredRotation, .25f);
 
+		agent.Attacking = true;
 		agent.AttackTimer += Time.deltaTime;
 
 		agent.NavMeshAgent.destination = agent.transform.position;
@@ -46,6 +50,10 @@ public class MeleeEnemyAttack : Behaviour
 				{
 					player.TakeDamage(agent.AttackDamage);
 				}
+			}
+			else
+			{
+				return FAILURE;
 			}
 		}
 

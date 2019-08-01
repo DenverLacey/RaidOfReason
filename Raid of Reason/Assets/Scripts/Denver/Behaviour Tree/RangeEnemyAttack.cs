@@ -21,19 +21,17 @@ public class RangeEnemyAttack : Behaviour
         Quaternion desiredRotation = Quaternion.LookRotation(direciton, Vector3.up);
         agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, desiredRotation, .25f);
 
-        // attack player
-        agent.Attacking = true;
+		// attack player
+		agent.Attacking = true;
         agent.AttackTimer += Time.deltaTime;
 
         if (agent.AttackTimer >= agent.AttackCooldown)
         {
             // reset attacking variables
             agent.Attacking = false;
-            agent.AttackTimer = 0f;
+			agent.AttackTimer = 0f;
 
-            agent.NavMeshAgent.destination = agent.transform.position;
-
-            EnemyProjectile projectile = GameObject.Instantiate(agent.AttackPrefabs[0], agent.transform.position + agent.transform.forward * 2f, agent.transform.rotation).GetComponent<EnemyProjectile>();
+            EnemyProjectile projectile = GameObject.Instantiate(agent.AttackPrefabs[0], agent.transform.position + agent.transform.forward, agent.transform.rotation).GetComponent<EnemyProjectile>();
 
             if (projectile)
             {

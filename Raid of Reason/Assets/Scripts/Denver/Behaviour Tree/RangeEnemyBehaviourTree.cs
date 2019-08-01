@@ -21,40 +21,36 @@ public class RangeEnemyBehaviourTree : BehaviourTree
 	/// </summary>
     RangeEnemyBehaviourTree() 
     {
-        // create compoenents for behaviour tree
-        // Attack Behaviour Selector
-        Sequence fallbackSeqeunce = new Sequence();
-        fallbackSeqeunce.AddChild(new MinAttackRangeCondition());
-        fallbackSeqeunce.AddChild(new Fallback());
+		// create compoenents for behaviour tree
+		StunnedCondition stunned = new StunnedCondition();
 
-        Sequence advanceSequence = new Sequence();
-        advanceSequence.AddChild(new Not(new MaxAttackRangeCondition()));
-        advanceSequence.AddChild(new Advance());
+		Selector tauntSelector = new Selector();
+		tauntSelector.AddChild(new TauntEvent());
+		tauntSelector.AddChild(new ViewRangeCondition());
 
-        RangeEnemyAttack attack = new RangeEnemyAttack();
+		Selector outsideRangeSelector = new Selector();
+		outsideRangeSelector.AddChild(new MinAttackRangeCondition());
+		outsideRangeSelector.AddChild(new Not(new MaxAttackRangeCondition()));
 
-        Selector abs = new Selector();
-        abs.AddChild(fallbackSeqeunce);
-        abs.AddChild(advanceSequence);
-        abs.AddChild(attack);
+		Sequence getIntoPositionSequence = new Sequence();
+		getIntoPositionSequence.AddChild(outsideRangeSelector);
+		getIntoPositionSequence.AddChild(new GetIntoPosition());
 
-        // other components
-        StunnedCondition stunned = new StunnedCondition();
+		Selector shootSelector = new Selector();
+		shootSelector.AddChild(getIntoPositionSequence);
+		shootSelector.AddChild(new RangeEnemyAttack());
 
-        Sequence tauntSequence = new Sequence();
-        tauntSequence.AddChild(new TauntEvent());
-        tauntSequence.AddChild(abs);
+		Sequence attackSequence = new Sequence();
+		attackSequence.AddChild(tauntSelector);
+		attackSequence.AddChild(new SightlineCondition());
+		attackSequence.AddChild(shootSelector);
 
-        Sequence sightlineSequence = new Sequence();
-        sightlineSequence.AddChild(new SightlineCondition());
-        sightlineSequence.AddChild(abs);
+		Wander wander = new Wander();
 
-        Wander wander = new Wander();
-
-        m_behaviourTree.AddChild(stunned);
-        m_behaviourTree.AddChild(tauntSequence);
-        m_behaviourTree.AddChild(sightlineSequence);
-        m_behaviourTree.AddChild(wander);
+		// add components to behaviour tree
+		m_behaviourTree.AddChild(stunned);
+		m_behaviourTree.AddChild(attackSequence);
+		m_behaviourTree.AddChild(wander);
     }
 
     /// <summary>

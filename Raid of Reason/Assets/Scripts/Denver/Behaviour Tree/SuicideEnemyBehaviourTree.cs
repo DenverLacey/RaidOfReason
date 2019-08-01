@@ -21,31 +21,29 @@ public class SuicideEnemyBehaviourTree : BehaviourTree
     SuicideEnemyBehaviourTree()
 	{
 		// create behaviour tree components
-		SuicideEnemyAttack attackBehaviour = new SuicideEnemyAttack();
+		SuicideEnemyAttack attack = new SuicideEnemyAttack();
 
-		// attack behaviour sequence
-		Sequence abs = new Sequence();
-		abs.AddChild(new MinAttackRangeCondition());
-		abs.AddChild(attackBehaviour);
+		StunnedCondition stunned = new StunnedCondition();
 
-		Sequence alreadyAttackingSequqnce = new Sequence();
-		alreadyAttackingSequqnce.AddChild(new AttackingCondition());
-		alreadyAttackingSequqnce.AddChild(attackBehaviour);
+		Sequence isAttackingSequence = new Sequence();
+		isAttackingSequence.AddChild(new AttackingCondition());
+		isAttackingSequence.AddChild(attack);
 
-		Sequence tauntSequence = new Sequence();
-		tauntSequence.AddChild(new TauntEvent());
-		tauntSequence.AddChild(abs);
+		Selector tauntSelector = new Selector();
+		tauntSelector.AddChild(new TauntEvent());
+		tauntSelector.AddChild(new ViewRangeCondition());
 
-		Sequence viewRangeAttackSequence = new Sequence();
-		viewRangeAttackSequence.AddChild(new ViewRangeCondition());
-		viewRangeAttackSequence.AddChild(abs);
+		Sequence attackSequence = new Sequence();
+		attackSequence.AddChild(tauntSelector);
+		attackSequence.AddChild(new MinAttackRangeCondition());
+		attackSequence.AddChild(attack);
 
 		Wander wander = new Wander();
 
 		// add components to behaviour tree
-		m_behaviourTree.AddChild(alreadyAttackingSequqnce);
-		m_behaviourTree.AddChild(tauntSequence);
-		m_behaviourTree.AddChild(viewRangeAttackSequence);
+		m_behaviourTree.AddChild(stunned);
+		m_behaviourTree.AddChild(isAttackingSequence);
+		m_behaviourTree.AddChild(attackSequence);
 		m_behaviourTree.AddChild(wander);
     }
 

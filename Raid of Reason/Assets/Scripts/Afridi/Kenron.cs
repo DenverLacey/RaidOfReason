@@ -133,7 +133,7 @@ public class Kenron : BaseCharacter {
     protected override void Update()
     {
 		// dash attack
-		if (XCI.GetAxis(XboxAxis.RightTrigger, m_controller) > 0.1f && !m_triggerDown)
+		if (XCI.GetAxis(XboxAxis.RightTrigger, m_controller) > 0.1f && m_controllerOn && !m_triggerDown)
 		{
 			// set boolean flags
 			m_triggerDown = true;

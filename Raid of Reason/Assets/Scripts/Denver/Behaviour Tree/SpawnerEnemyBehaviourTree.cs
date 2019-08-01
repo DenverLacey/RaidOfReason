@@ -10,38 +10,34 @@ public class SpawnerEnemyBehaviourTree : BehaviourTree
     SpawnerEnemyBehaviourTree() 
     {
 		// create components for behaviour tree
-		// attack behaviour selector
-		Sequence fallbackSequence = new Sequence();
-		fallbackSequence.AddChild(new MinAttackRangeCondition());
-		fallbackSequence.AddChild(new Fallback());
-
-		Sequence advanceSequence = new Sequence();
-		advanceSequence.AddChild(new Not(new MaxAttackRangeCondition()));
-		advanceSequence.AddChild(new Advance());
-
-		SpawnerEnemyAttack attack = new SpawnerEnemyAttack();
-
-		Selector abs = new Selector();
-		abs.AddChild(fallbackSequence);
-		abs.AddChild(advanceSequence);
-		abs.AddChild(attack);
-
 		StunnedCondition stunned = new StunnedCondition();
 
-		Sequence tauntSequence = new Sequence();
-		tauntSequence.AddChild(new TauntEvent());
-		tauntSequence.AddChild(abs);
+		Selector tauntSelector = new Selector();
+		tauntSelector.AddChild(new TauntEvent());
+		tauntSelector.AddChild(new ViewRangeCondition());
 
-		Sequence sightlineSequence = new Sequence();
-		sightlineSequence.AddChild(new SightlineCondition());
-		sightlineSequence.AddChild(abs);
+		Selector outsideRangeSelector = new Selector();
+		outsideRangeSelector.AddChild(new MinAttackRangeCondition());
+		outsideRangeSelector.AddChild(new MaxAttackRangeCondition());
+
+		Sequence getIntoPositionSequence = new Sequence();
+		getIntoPositionSequence.AddChild(outsideRangeSelector);
+		getIntoPositionSequence.AddChild(new GetIntoPosition());
+
+		Selector attackSelector = new Selector();
+		attackSelector.AddChild(getIntoPositionSequence);
+		attackSelector.AddChild(new SpawnerEnemyAttack());
+
+		Sequence attackSequence = new Sequence();
+		attackSequence.AddChild(tauntSelector);
+		attackSequence.AddChild(new SightlineCondition());
+		attackSequence.AddChild(attackSelector);
 
 		Wander wander = new Wander();
 
-		// add components to behaviour tree
+		// add compoenents to behaviour tree
 		m_behaviourTree.AddChild(stunned);
-		m_behaviourTree.AddChild(tauntSequence);
-		m_behaviourTree.AddChild(sightlineSequence);
+		m_behaviourTree.AddChild(attackSequence);
 		m_behaviourTree.AddChild(wander);
     }
 
