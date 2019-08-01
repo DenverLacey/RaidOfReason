@@ -35,7 +35,7 @@ public abstract class BaseCharacter : MonoBehaviour {
 
     [SerializeField]
     [Tooltip("Hpw fast will the player move?")]
-    private float m_movementSpeed;
+    protected float m_movementSpeed;
 
     [Tooltip("Pick what controller this player is.")]
     public XboxController m_controller;
@@ -72,11 +72,13 @@ public abstract class BaseCharacter : MonoBehaviour {
     protected float m_vulnerability;
     protected bool m_bActive;
 
-    private float m_rotationSpeed = 250.0f;
+    protected float m_rotationSpeed = 250.0f;
     private Vector3 m_direction;
-    private Vector3 m_prevRotDirection = Vector3.forward;
+    protected Vector3 m_prevRotDirection = Vector3.forward;
     private bool m_isRevived = false;
     private bool m_isReviving = false;
+
+    public GameObject reviveParticle;
 
 
     public int SkillPoints {
@@ -99,6 +101,7 @@ public abstract class BaseCharacter : MonoBehaviour {
 
         m_reviveColliderRadius.enabled = false;
         m_reviveTimer = 5f;
+        reviveParticle.transform.position = this.transform.position;
     }
 
     /// <summary>
@@ -278,6 +281,7 @@ public abstract class BaseCharacter : MonoBehaviour {
                                 // Player revived.
                                 m_isRevived = true;
                                 m_isReviving = false;
+                                reviveParticle.SetActive(false);
 
                                 // Change them to the ALIVE state.
                                 playerState = PlayerState.ALIVE;
@@ -311,6 +315,8 @@ public abstract class BaseCharacter : MonoBehaviour {
     protected virtual void OnDeath()
     {
         playerState = PlayerState.REVIVE;
+        transform.Rotate(90, 0, 0, Space.Self);
+        reviveParticle.SetActive(true);
     }
 
     /// <summary>

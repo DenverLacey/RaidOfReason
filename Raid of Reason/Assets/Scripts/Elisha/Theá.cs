@@ -48,12 +48,30 @@ public class Theá : BaseCharacter
     [Tooltip("How much the Gift of Poseidon heals by?")]
     private float m_GOPEffect;
 
+    [SerializeField]
+    [Tooltip("How fast will Thea's cursor move?")]
+    private float aimCursorSpeed;
+
+    public float m_aimCursorRadius;
+    private Vector3 newLocation;
+
+
+
+    //[SerializeField]
+    //[Tooltip("???")]
+    //private Transform minCursorPosition;
+
+    //[SerializeField]
+    //[Tooltip("???")]
+    //private Transform maxCursorPosition;
+
     private Kenron m_kenron;
     private Nashorn m_nashorn;
     private BaseCharacter m_playerController;
     private Vector3 m_hitLocation;
     private LayerMask m_layerMask;
     private GameObject m_temp;
+    private GameObject m_aimCursor;
     private float m_shotCounter;
     private float m_counter;
     private bool m_isActive;
@@ -61,10 +79,9 @@ public class Theá : BaseCharacter
     private float m_AOERadius;
     private float m_AOETimer;
     private float m_particleRadius;
+    public bool nashornBuffGiven = false;
 
     ParticleSystem.ShapeModule aoe;
-
-    public bool nashornBuffGiven = false;
 
     /// <summary>
     /// Gets called before Start.
@@ -78,11 +95,11 @@ public class Theá : BaseCharacter
         m_playerController = GetComponent<BaseCharacter>();
         m_AOETimer = 0f;
         m_AOEParticle = GetComponentInChildren<ParticleSystem>();
-        // Sets AOE particle transform to spawn on Thea.
         m_AOEParticleCollider.transform.position = this.gameObject.transform.position;
         m_AOEParticle.transform.position = this.gameObject.transform.position;
         m_AOEParticleCollider.enabled = false;
         aoe = m_AOEParticle.shape;
+        m_aimCursor = GameObject.FindGameObjectWithTag("AimCursor");
     }
 
     // Update is called once per frame
@@ -94,12 +111,71 @@ public class Theá : BaseCharacter
 			base.FixedUpdate();
 			Projectile();
             SkillChecker();
+            CharacterMovement();
         }
     }
 
-    protected override void Update()
+    protected override void CharacterMovement()
     {
-        base.Update();
+        // Checks if player is active.
+        if (m_controllerOn)
+        {
+            // Calculates the x axis of the left stick (left and right movement).
+            float axisX = XCI.GetAxis(XboxAxis.LeftStickX, m_controller) * m_movementSpeed;
+            // Calculates the z axis of the left stick (forward and backward movement).
+            float axisZ = XCI.GetAxis(XboxAxis.LeftStickY, m_controller) * m_movementSpeed;
+            // Makes sure Player movement is relative to the direction of the cameras forward.
+            Vector3 movement = m_camera.transform.TransformDirection(axisX, 0, axisZ);
+            transform.position += new Vector3(movement.x, 0, movement.z) * Time.deltaTime;
+
+            // Calculates the x axis of the right stick (left and right movement).
+            float cursorAxisX = XCI.GetAxis(XboxAxis.RightStickX, m_controller) * aimCursorSpeed;
+            // Calculates the z axis of the right stick (forward and backward movement).
+            float cursorAxisZ = XCI.GetAxis(XboxAxis.RightStickY, m_controller) * aimCursorSpeed;
+
+            Vector3 cursorMovement = m_camera.transform.TransformDirection(cursorAxisX, 0, cursorAxisZ);
+            cursorMovement.y = 0f;
+
+            m_aimCursor.transform.position += cursorMovement * Time.deltaTime;
+
+            Vector3 direction = (m_aimCursor.transform.position - transform.position).normalized;
+            direction.y = 0f;
+
+            transform.rotation = Quaternion.LookRotation(direction);
+
+            //Vector3 clampedPosition = m_aimCursor.transform.position;
+            //clampedPosition.x = Mathf.Clamp(clampedPosition.x, minCursorPosition.position.x, maxCursorPosition.position.x);
+            //clampedPosition.z = Mathf.Clamp(clampedPosition.z, minCursorPosition.position.z, maxCursorPosition.position.z);
+            //m_aimCursor.transform.position = clampedPosition;
+
+            // Thea is the centre position of the cursor radius.
+            Vector3 centerPosition = transform.localPosition;
+            // Find the distance between Thea and the cursor.
+            float distance = Vector3.Distance(m_aimCursor.transform.position, centerPosition);
+
+            // Radius 
+            if(distance > m_aimCursorRadius)
+            {
+                Vector3 fromOriginToObject = m_aimCursor.transform.position - centerPosition; 
+                fromOriginToObject *= m_aimCursorRadius / distance;
+                m_aimCursor.transform.position = centerPosition + fromOriginToObject;
+            } 
+
+
+            if (m_animator)
+            {
+                // Calculate angle between character's direction and forward
+                float angle = Vector3.SignedAngle(Vector3.forward, Vector3.forward, Vector3.up);
+
+                // Rotate movement into world space to get animation movement
+                Vector3 animationMovement = Quaternion.AngleAxis(angle, Vector3.up) * movement.normalized;
+
+                // Set animator's movement floats
+                m_animator.SetFloat("MovX", animationMovement.x);
+                m_animator.SetFloat("MovZ", animationMovement.z);
+                m_animator.SetFloat("Speed", movement.magnitude);
+            }
+        }
     }
 
     /// <summary>
@@ -214,7 +290,7 @@ public class Theá : BaseCharacter
         float sqrDistanceKen = (m_kenron.transform.position - this.transform.position).sqrMagnitude;
 
         // Checks if Nashorn is in correct distance of the AOE to heal.
-        if (sqrDistanceNash <= m_AOERadius * m_AOERadius)
+        if (sqrDistanceNash <= m_AOERadius * m_AOERadius && m_controllerOn)
         {
             m_nashorn.SetHealth(m_nashorn.m_currentHealth + m_AOETimer * m_GOPEffect);
   
@@ -226,7 +302,7 @@ public class Theá : BaseCharacter
         }
 
         // Checks if Kenron is in correct distance of the AOE to heal.
-        if (sqrDistanceKen <= m_AOERadius * m_AOERadius)
+        if (sqrDistanceKen <= m_AOERadius * m_AOERadius && m_controllerOn)
         {
             m_kenron.SetHealth(m_kenron.m_currentHealth +  m_AOETimer * m_GOPEffect);
             if (m_kenron != null)
