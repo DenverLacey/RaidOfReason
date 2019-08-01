@@ -31,19 +31,9 @@ public class Advance : Behaviour
         float avgAttackRange = (agent.AttackRange.max + agent.AttackRange.min) / 2f;
         Vector3 destination = agent.Target + direction * avgAttackRange;
 
-        // find closest point on nav mesh
-        destination = RangeEnemyBehaviourTree.FindClosestPoint(destination, agent.transform.lossyScale.y);
-
-        if (destination != Vector3.positiveInfinity)
-        {
-            // set destination
-            agent.NavMeshAgent.destination = destination;
-            
-            return SUCCESS;
-        }
-        else
-        {
-            return FAILURE;
-        }
+		// set destination
+		agent.NavMeshAgent.destination = destination;
+		
+		return SUCCESS;
     }
 }

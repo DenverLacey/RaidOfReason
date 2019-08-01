@@ -33,7 +33,7 @@ public class RangeEnemyAttack : Behaviour
 
             agent.NavMeshAgent.destination = agent.transform.position;
 
-            EnemyProjectile projectile = GameObject.Instantiate(agent.AttackPrefabs[0], agent.transform.position + agent.transform.forward, agent.transform.rotation).GetComponent<EnemyProjectile>();
+            EnemyProjectile projectile = GameObject.Instantiate(agent.AttackPrefabs[0], agent.transform.position + agent.transform.forward * 2f, agent.transform.rotation).GetComponent<EnemyProjectile>();
 
             if (projectile)
             {

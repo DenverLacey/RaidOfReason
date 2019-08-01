@@ -26,19 +26,12 @@ public class Fallback : Behaviour
     {
         // calculate destination away from player
         Vector3 direction = (agent.transform.position - agent.Target).normalized;
-        Vector3 destination = agent.Target + direction * agent.AttackRange.min;
+        Vector3 destination = agent.Target + direction * (agent.AttackRange.min + 1f);
 		destination.y = agent.transform.position.y;
 
         // set destination
         agent.NavMeshAgent.destination = destination;
 
-        if (agent.NavMeshAgent.hasPath)
-        {
-            return SUCCESS;
-        }
-        else
-        {
-            return FAILURE; 
-        }
+		return SUCCESS;
     }
 }
