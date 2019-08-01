@@ -36,7 +36,6 @@ public class StatusEffectManager : MonoBehaviour
     }
 
     public void ApplyStun(float duration) {
-        // Get Denver to make a stun function for enemies
         // enemy.Stun();
         StartCoroutine(Stun());
     }

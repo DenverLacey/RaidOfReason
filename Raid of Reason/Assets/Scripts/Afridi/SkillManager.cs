@@ -66,63 +66,76 @@ public class SkillManager : MonoBehaviour {
     /// </summary>
     protected void Update()
     {
-        // If the first players left trigger is pressed
-		if (XCI.GetAxis(XboxAxis.LeftTrigger, m_Kenron.m_controller) > 0.1f)
+        // Empty Check
+        if (m_Kenron != null)
         {
-            // if the current cooldown is greater than the main
-			if (m_Skills[0].m_currentCoolDown >= m_Skills[0].m_coolDown)
-			{
-                // Activate Ability
-				m_Kenron.ChaosFlame();
-
-                // Skill is Reset and has been Activated
-				m_Skills[0].m_currentCoolDown = 0;
-				m_Skills[0].active = true;
-                m_Skills[0].reset = true;
-			}
-        }
-
-        // If the second players left trigger is pressed
-        if (XCI.GetAxis(XboxAxis.LeftTrigger, m_Nashorn.m_controller) > 0.1f)
-        {
-            // if the current cooldown is greater than the main
-            if (m_Skills[1].m_currentCoolDown >= m_Skills[1].m_coolDown)
+            // If the first players left trigger is pressed
+            if (XCI.GetAxis(XboxAxis.LeftTrigger, m_Kenron.m_controller) > 0.1f)
             {
-                // Activate Ability
-                m_Nashorn.Spott();
+                // if the current cooldown is greater than the main
+                if (m_Skills[0].m_currentCoolDown >= m_Skills[0].m_coolDown)
+                {
+                    // Activate Ability
+                    m_Kenron.ChaosFlame();
 
-                // Skill is Reset and has been Activated
-                m_Skills[1].m_currentCoolDown = 0;
-                m_Skills[1].active = true;
-                m_Skills[1].reset = true;
+                    // Skill is Reset and has been Activated
+                    m_Skills[0].m_currentCoolDown = 0;
+                    m_Skills[0].active = true;
+                    m_Skills[0].reset = true;
+                }
             }
         }
 
-        // If the third players left trigger is pressed
-        if (XCI.GetAxis(XboxAxis.LeftTrigger, m_theá.m_controller) > 0.1f)
+        // Empty Check
+        if (m_Nashorn != null)
         {
-            // if the current cooldown is greater than the main
-            if (m_Skills[2].m_currentCoolDown >= m_Skills[2].m_coolDown)
-            {
-                // Activate Ability
-                m_theá.GiftOfPoseidon();
-                // Skill is Active
-                m_Skills[2].active = true;
-            }
-        } 
-        // or else if the third players trigger is not pressed
-        else if (XCI.GetAxis(XboxAxis.LeftTrigger, m_theá.m_controller) < 0.1f)
-        {
-            if (m_Skills[2].active)
-            {
-                // Skill is Reset and has been Deactivated
-                m_Skills[2].m_currentCoolDown = 0;
-                m_Skills[2].active = false;
-                m_Skills[2].reset = true;
 
-                // Grants health and resets
-                m_theá.GiveHealth();
-                m_theá.ResetGiftOfPoseidon();
+            // If the second players left trigger is pressed
+            if (XCI.GetAxis(XboxAxis.LeftTrigger, m_Nashorn.m_controller) > 0.1f)
+            {
+                // if the current cooldown is greater than the main
+                if (m_Skills[1].m_currentCoolDown >= m_Skills[1].m_coolDown)
+                {
+                    // Activate Ability
+                    m_Nashorn.Spott();
+
+                    // Skill is Reset and has been Activated
+                    m_Skills[1].m_currentCoolDown = 0;
+                    m_Skills[1].active = true;
+                    m_Skills[1].reset = true;
+                }
+            }
+        }
+
+        // Empty Check
+        if (m_theá != null)
+        {
+            // If the third players left trigger is pressed
+            if (XCI.GetAxis(XboxAxis.LeftTrigger, m_theá.m_controller) > 0.1f)
+            {
+                // if the current cooldown is greater than the main
+                if (m_Skills[2].m_currentCoolDown >= m_Skills[2].m_coolDown)
+                {
+                    // Activate Ability
+                    m_theá.GiftOfPoseidon();
+                    // Skill is Active
+                    m_Skills[2].active = true;
+                }
+            }
+            // or else if the third players trigger is not pressed
+            else if (XCI.GetAxis(XboxAxis.LeftTrigger, m_theá.m_controller) < 0.1f)
+            {
+                if (m_Skills[2].active)
+                {
+                    // Skill is Reset and has been Deactivated
+                    m_Skills[2].m_currentCoolDown = 0;
+                    m_Skills[2].active = false;
+                    m_Skills[2].reset = true;
+
+                    // Grants health and resets
+                    m_theá.GiveHealth();
+                    m_theá.ResetGiftOfPoseidon();
+                }
             }
         }
 

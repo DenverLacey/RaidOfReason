@@ -79,13 +79,17 @@ public class Nashorn : BaseCharacter
     public bool isActive;
 
     // Container for Enemy position
-    public List<Vector3> listofPosition;
+    public List<Vector3> listOfPosition;
 
     // Chain lightning visual
     public LineRenderer lineRenderer;
 
     // Empty Object for particle instantiating
     private GameObject particleInstantiate;
+
+    // Will Be Removed
+    private bool RightPunch;
+    private bool LeftPunch;
 
     protected override void Awake()
     {
@@ -96,6 +100,8 @@ public class Nashorn : BaseCharacter
         RightGauntlet.enabled = false;
         isTaunting = false;
         isActive = false;
+        RightPunch = false;
+        LeftPunch = false;
         m_Thea = FindObjectOfType<Theá>();
         m_Kenron = FindObjectOfType<Kenron>();
 
@@ -193,12 +199,12 @@ public class Nashorn : BaseCharacter
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, m_lightningRadius);
 
-        listofPosition[1] = hitColliders[1].transform.position;
-        listofPosition[2] = hitColliders[2].transform.position;
-        listofPosition[3] = hitColliders[3].transform.position;
-        listofPosition[4] = hitColliders[4].transform.position;
+        listOfPosition[1] = hitColliders[1].transform.position;
+        listOfPosition[2] = hitColliders[2].transform.position;
+        listOfPosition[3] = hitColliders[3].transform.position;
+        listOfPosition[4] = hitColliders[4].transform.position;
 
-        lineRenderer.SetPositions(listofPosition.ToArray());
+        lineRenderer.SetPositions(listOfPosition.ToArray());
 
         foreach (Collider hitCol in hitColliders)
         {
@@ -228,18 +234,20 @@ public class Nashorn : BaseCharacter
                 SetSpeed(0.0f);
 
                 // If its the left Gauntlet
-                if (u_gauntletIndex == 0)
+                if (u_gauntletIndex == 0 && LeftPunch == false)
                 {
                     Gauntlets[0].gameObject.transform.localPosition = new Vector3(-0.75f, 0, 0.8f); // Will be Removed
 
+                    LeftPunch = true;
                     // Spawns a particle at the gauntlet that is attacking
                     particleInstantiate = Instantiate(m_gauntletParticle, Gauntlets[0].transform.position + Vector3.forward * (Gauntlets[0].transform.localScale.y / 2), Quaternion.Euler(-180, 0, 0), Gauntlets[0].transform);
                 }
                 // If its the right Gauntlet
-                if (u_gauntletIndex == 1)
+                if (u_gauntletIndex == 1 && RightPunch == false)
                 {
                     Gauntlets[1].gameObject.transform.localPosition = new Vector3(0.75f, 0, 0.8f); // Will be Removed
-                    
+
+                    RightPunch = true;
                     // Spawns a particle at the gauntlet that is attacking
                     particleInstantiate = Instantiate(m_gauntletParticle, Gauntlets[1].transform.position + Vector3.forward * (Gauntlets[1].transform.localScale.y / 2), Quaternion.Euler(-180, 0, 0), Gauntlets[1].transform);
                 }
@@ -253,19 +261,21 @@ public class Nashorn : BaseCharacter
                 SetSpeed(10.0f);
 
                 // If its the left Gauntlet
-                if (u_gauntletIndex == 0)
+                if (u_gauntletIndex == 0 && LeftPunch == true)
                 {
                     Gauntlets[0].gameObject.transform.localPosition = new Vector3(-0.75f, 0, 0.0f); // Will be Removed
-                    
+
+                    LeftPunch = false;
                     // Sets the index and destroys the particle
                     u_gauntletIndex = 1;
                     Destroy(particleInstantiate);
                 }
                 // If its the right Gauntlet
-                if (u_gauntletIndex == 1)
+                if (u_gauntletIndex == 1 && RightPunch == true)
                 {
                     Gauntlets[1].gameObject.transform.localPosition = new Vector3(0.75f, 0, 0.0f); // Will be Removed
 
+                    RightPunch = false;
                     // Sets the index and destroys the particle
                     u_gauntletIndex = 0;
                     Destroy(particleInstantiate);
@@ -299,28 +309,12 @@ public class Nashorn : BaseCharacter
 
         // Skill no longer active
         isTaunting = false;
-
-        // All Enemies are un-taunted
-        foreach (BaseEnemy enemy in m_nearbyEnemies)
-        {
-            if (enemy.State == BaseEnemy.AI_STATE.TAUNTED)
-            {
-                enemy.StopTaunt();
-            }
-        }
     }
 
     /// <summary>
     /// When an Enemy dies, they must be stopped in thier taunt state
     /// </summary>
-	protected override void OnDeath() {
-        // For any enemies dead, stop taunting
-		foreach (BaseEnemy enemy in m_nearbyEnemies)
-        {
-			if (enemy.State == BaseEnemy.AI_STATE.TAUNTED)
-            {
-				enemy.StopTaunt();
-			}
-		}
+	protected override void OnDeath()
+    {
 	}
 }

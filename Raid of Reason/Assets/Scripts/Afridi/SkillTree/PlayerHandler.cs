@@ -5,9 +5,6 @@ using XboxCtrlrInput;
 
 public class PlayerHandler : MonoBehaviour
 {
-    public Kenron kenronController;
-    public Nashorn nashornController;
-    public Theá theaController;
     public BaseCharacter Player;
 
     [SerializeField]
@@ -19,33 +16,20 @@ public class PlayerHandler : MonoBehaviour
 
     private bool m_SeeCanvas;
 
-    private void Awake()
-    {
-        kenronController = FindObjectOfType<Kenron>();
-        nashornController = FindObjectOfType<Nashorn>();
-        theaController = FindObjectOfType<Theá>();
-    }
-
     private void Update()
     {
-        if (XCI.GetButtonDown(XboxButton.A, kenronController.m_controller))
+        if (XCI.GetButtonDown(XboxButton.A, Player.m_controller))
         {
             if (m_KCanvas)
             {
                 m_SeeCanvas = !m_SeeCanvas;
                 m_KCanvas.gameObject.SetActive(m_SeeCanvas);
             }
-        }
-        if (XCI.GetButtonDown(XboxButton.A, nashornController.m_controller))
-        {
             if (m_NCanvas)
             {
                 m_SeeCanvas = !m_SeeCanvas;
                 m_NCanvas.gameObject.SetActive(m_SeeCanvas);
             }
-        }
-        if (XCI.GetButtonDown(XboxButton.A, theaController.m_controller))
-        {
             if (m_TCanvas)
             {
                 m_SeeCanvas = !m_SeeCanvas;
