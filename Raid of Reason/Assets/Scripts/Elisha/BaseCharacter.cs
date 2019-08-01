@@ -110,15 +110,8 @@ public abstract class BaseCharacter : MonoBehaviour {
 		switch (playerState)
 		{
 			case PlayerState.ALIVE:
-                // If a controller is active.
-                if (XCI.IsPluggedIn(XboxController.Any))
-                {
-                    // Call this.
-                    CharacterMovement();
-                }
-                else {
-                    PCCharacterMovement();
-                }
+                // Call this.
+                CharacterMovement();
 				break;
 			case PlayerState.REVIVE:
                 ReviveTeamMate();
@@ -173,7 +166,7 @@ public abstract class BaseCharacter : MonoBehaviour {
             float rotAxisZ = XCI.GetAxis(XboxAxis.RightStickY, m_controller) * m_rotationSpeed;
             // Makes sure Player rotation is relative to the direction of the cameras forward.
             Vector3 rawDir = m_camera.transform.TransformDirection(rotAxisX, 0, rotAxisZ);
-            Vector3 direction = new Vector3(rawDir.x, 0, rawDir.z);
+            Vector3 direction = new Vector3(rawDir.x, 0, rawDir.z); 
             // Checks if the magnitude of the vector is less than 0.1
             if (direction.magnitude < 0.1f)
             {
@@ -201,11 +194,6 @@ public abstract class BaseCharacter : MonoBehaviour {
                 m_animator.SetFloat("Speed", movement.magnitude);
             }
         }
-    }
-
-
-    virtual protected void PCCharacterMovement() {
-        // TODO: Needs work according to Afridis comment.
     }
 
     /// <summary>

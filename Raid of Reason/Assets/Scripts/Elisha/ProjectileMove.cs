@@ -73,18 +73,18 @@ public class ProjectileMove : MonoBehaviour {
                 enemy.TakeDamage(m_damage);
                 
                 //NASHORN ABILITY
-                if (theaInst.nashornBuffGiven == true && nashornInst.isTaunting == true)
-                {
-                    float randomValue = Random.value;
-                    if (nashornInst.stunChance < randomValue)
-                    {
-                        other.gameObject.GetComponent<StatusEffectManager>().ApplyStun(1.5f);
-                    }
-                }
-                else if (nashornInst.isTaunting == false)
-                {
-                    theaInst.nashornBuffGiven = false;
-                }
+                //if (theaInst.nashornBuffGiven == true && nashornInst.isTaunting == true)
+                //{
+                //    float randomValue = Random.value;
+                //    if (nashornInst.stunChance < randomValue)
+                //    {
+                //        other.gameObject.GetComponent<StatusEffectManager>().ApplyStun(1.5f);
+                //    }
+                //}
+                //else if (nashornInst.isTaunting == false)
+                //{
+                //    theaInst.nashornBuffGiven = false;
+                //}
 
                 // Enemy mesh colour changes to red.
                 enemy.GetComponent<MeshRenderer>().material.color = Color.red;

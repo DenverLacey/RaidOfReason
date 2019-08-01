@@ -138,8 +138,8 @@ public class MovePlayer : MonoBehaviour
 		
 		// Left stick movement
 		newPosition = transform.position;
-		float axisX = XCI.GetAxis(XboxAxis.LeftStickX, controller);
-		float axisY = XCI.GetAxis(XboxAxis.LeftStickY, controller);
+		float axisX = XCI.GetAxisRaw(XboxAxis.LeftStickX, controller);
+		float axisY = XCI.GetAxisRaw(XboxAxis.LeftStickY, controller);
 		float newPosX = newPosition.x + (axisX * maxMoveSpeed * Time.deltaTime);
 		float newPosZ = newPosition.z + (axisY * maxMoveSpeed * Time.deltaTime);
 		newPosition = new Vector3(newPosX, transform.position.y, newPosZ);
@@ -148,8 +148,8 @@ public class MovePlayer : MonoBehaviour
 		
 		// Right stick movement
 		newPosition = transform.position;
-		axisX = XCI.GetAxis(XboxAxis.RightStickX, controller);
-		axisY = XCI.GetAxis(XboxAxis.RightStickY, controller);
+		axisX = XCI.GetAxisRaw(XboxAxis.RightStickX, controller);
+		axisY = XCI.GetAxisRaw(XboxAxis.RightStickY, controller);
 		newPosX = newPosition.x + (axisX * maxMoveSpeed * 0.3f * Time.deltaTime);
 		newPosZ = newPosition.z + (axisY * maxMoveSpeed * 0.3f * Time.deltaTime);
 		newPosition = new Vector3(newPosX, transform.position.y, newPosZ);
