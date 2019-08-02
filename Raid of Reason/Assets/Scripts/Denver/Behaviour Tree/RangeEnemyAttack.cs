@@ -35,7 +35,7 @@ public class RangeEnemyAttack : Behaviour
 
             if (projectile)
             {
-                projectile.SetDamage(agent.AttackDamage);
+                projectile.Init(agent.AttackDamage, agent);
             }
         }
 
