@@ -28,6 +28,7 @@ public struct EnemyAttackRange
 /// <summary>
 /// Encapsulates all data for all enemy types
 /// </summary>
+[RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyData : MonoBehaviour 
 {
@@ -51,25 +52,33 @@ public class EnemyData : MonoBehaviour
 
     public NavMeshAgent NavMeshAgent { get; private set; }
 
+	public Rigidbody Rigidbody { get; private set; }
+
 	[HideInInspector]
     // Afridi added this for the skill tree
     public bool isDeadbByKenron = false;
 
-    /// <summary>
-    /// Initialises the enemy's values
-    /// </summary>
-    /// <param name="viewRange">
-    /// How far away enemy can see player
-    /// </param>
-    /// <param name="maxHealth">
-    /// Maximum health of enemy
-    /// </param>
-    /// <param name="attackRange">
-    /// Distance range in which enemy will attack
-    /// </param>
-    /// <param name="attackCooldown">
-    /// How often enemy will attack
-    /// </param>
+	private void Start()
+	{
+		Rigidbody = GetComponent<Rigidbody>();
+		NavMeshAgent.destination = transform.position;
+	}
+
+	/// <summary>
+	/// Initialises the enemy's values
+	/// </summary>
+	/// <param name="viewRange">
+	/// How far away enemy can see player
+	/// </param>
+	/// <param name="maxHealth">
+	/// Maximum health of enemy
+	/// </param>
+	/// <param name="attackRange">
+	/// Distance range in which enemy will attack
+	/// </param>
+	/// <param name="attackCooldown">
+	/// How often enemy will attack
+	/// </param>
 	/// <param name="attackDamage">
 	/// How much damage enemy's attack deals
 	/// </param>
@@ -79,7 +88,7 @@ public class EnemyData : MonoBehaviour
 	/// <param name="players">
 	/// References to player objects
 	/// </param>
-    public void Init(float viewRange, int maxHealth, EnemyAttackRange attackRange, float attackCooldown, int attackDamage, GameObject[] attackPrefabs)
+	public void Init(float viewRange, int maxHealth, EnemyAttackRange attackRange, float attackCooldown, int attackDamage, GameObject[] attackPrefabs)
     {
         ViewRange = viewRange;
         MaxHealth = maxHealth;
@@ -91,7 +100,6 @@ public class EnemyData : MonoBehaviour
 		AttackPrefabs = attackPrefabs;
 		Stunned = false;
         NavMeshAgent = GetComponent<NavMeshAgent>();
-		NavMeshAgent.destination = transform.position;
     }
 
 	/// <summary>
@@ -143,5 +151,10 @@ public class EnemyData : MonoBehaviour
 	public void OnDeath()
 	{
 		Destroy(gameObject);
+	}
+
+	private void Update()
+	{
+		Debug.DrawLine(transform.position, NavMeshAgent.destination, Color.green, Time.deltaTime);
 	}
 }

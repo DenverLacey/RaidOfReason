@@ -18,7 +18,6 @@ public class GetIntoPosition : Behaviour
 	{
 		// calculate destination
 		Vector3 direction = (agent.transform.position - agent.Target).normalized;
-
 		float avgAttackRange = (agent.AttackRange.max + agent.AttackRange.min) / 2f;
 		Vector3 destination = agent.Target + direction * avgAttackRange;
 

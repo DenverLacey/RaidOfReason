@@ -1065,11 +1065,12 @@ MonoBehaviour:
   m_skillDisplay: {fileID: 6062317349070734748}
   m_skillMaxed: {fileID: 6062317349253044467}
   m_reviveColliderRadius: {fileID: 6100002640439945486}
+  reviveParticle: {fileID: 0}
   Gauntlets:
   - {fileID: 6062317347736531620}
   - {fileID: 6062317349012019617}
   LeftGauntlet: {fileID: 6062317347736531617}
-  RightGauntlet: {fileID: 6062317349012019618}
+  RightGauntlet: {fileID: 322454197646652413}
   skillManager: {fileID: 0}
   isTaunting: 0
   m_tauntRadius: 100
@@ -2605,6 +2606,7 @@ GameObject:
   - component: {fileID: 6062317349012019645}
   - component: {fileID: 6062317349012019618}
   - component: {fileID: 6062317349012019619}
+  - component: {fileID: 322454197646652413}
   m_Layer: 0
   m_Name: RightGauntlet
   m_TagString: Untagged
@@ -2699,6 +2701,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_damage: 13
   Nashorn: {fileID: 6062317347766186530}
+--- !u!136 &322454197646652413
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6062317349012019617}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.93572605
+  m_Height: 2.3290424
+  m_Direction: 2
+  m_Center: {x: 0.05480627, y: 0, z: -0.6745212}
 --- !u!1 &6062317349070734723
 GameObject:
   m_ObjectHideFlags: 0
