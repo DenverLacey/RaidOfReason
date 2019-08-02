@@ -116,9 +116,11 @@ public abstract class BaseCharacter : MonoBehaviour {
                 // Call this.
                 CharacterMovement();
 				break;
+
 			case PlayerState.REVIVE:
                 ReviveTeamMate();
 				break;
+
 			case PlayerState.DEAD:
                 // Player gets removed from camera array.
                 if (m_camera.m_targets.Count > 0)
@@ -282,6 +284,8 @@ public abstract class BaseCharacter : MonoBehaviour {
                                 m_isRevived = true;
                                 m_isReviving = false;
                                 reviveParticle.SetActive(false);
+                                m_controllerOn = true;
+                                GameManager.Instance.Thea.m_aimCursor.SetActive(true);
 
                                 // Change them to the ALIVE state.
                                 playerState = PlayerState.ALIVE;
@@ -315,6 +319,12 @@ public abstract class BaseCharacter : MonoBehaviour {
     protected virtual void OnDeath()
     {
         playerState = PlayerState.REVIVE;
+        if(GameManager.Instance.Thea.playerState == PlayerState.REVIVE)
+        {
+            GameManager.Instance.Thea.m_aimCursor.SetActive(false);
+        }
+        
+        m_controllerOn = false;
         transform.Rotate(90, 0, 0, Space.Self);
         reviveParticle.SetActive(true);
     }
