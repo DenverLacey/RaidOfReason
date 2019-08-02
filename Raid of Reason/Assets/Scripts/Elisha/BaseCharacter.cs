@@ -70,6 +70,9 @@ public abstract class BaseCharacter : MonoBehaviour {
     protected Animator m_animator;
     public SphereCollider m_reviveColliderRadius;
     public GameObject reviveParticle;
+
+    [HideInInspector]
+    public bool IsBeingRevived { get; private set; }
    
     protected float m_vulnerability;
     protected bool m_bActive;
@@ -77,7 +80,6 @@ public abstract class BaseCharacter : MonoBehaviour {
     private Vector3 m_direction;
     protected Vector3 m_prevRotDirection = Vector3.forward;
     private bool m_isRevived = false;
-    private bool m_isReviving = false;
     private MeshRenderer m_renderer;
     private Color m_originalColour;
 
@@ -104,7 +106,8 @@ public abstract class BaseCharacter : MonoBehaviour {
         m_controllerOn = true;
         m_bActive = false;
         m_reviveColliderRadius.enabled = false;
-        reviveParticle.transform.position = this.transform.position;
+        reviveParticle.transform.position = this.gameObject.transform.position;
+        reviveParticle.SetActive(false);
     }
 
     /// <summary>
@@ -145,6 +148,16 @@ public abstract class BaseCharacter : MonoBehaviour {
         {
             m_skillDisplay.gameObject.SetActive(false);
             m_skillMaxed.gameObject.SetActive(true);
+        }
+
+        if (XCI.GetButton(XboxButton.B))
+        {
+            ReviveTeammates();
+        }
+        else
+        {
+            IsBeingRevived = false;
+            m_reviveTimer = 5f;
         }
 
         // Makes sure health doesnt exceed limit.
@@ -221,6 +234,58 @@ public abstract class BaseCharacter : MonoBehaviour {
             // Player revive state.
             OnDeath();
         }
+    } 
+
+    void ReviveTeammates()
+    {
+        // checks if a player needs to be healed
+        foreach (var player in GameManager.Instance.Players)
+        {
+            // don't check self
+            if (player == this) { continue; }
+
+            // check if player outside revive range
+            float sqrDistance = (player.transform.position - transform.position).sqrMagnitude;
+            if (sqrDistance > m_reviveRadius * m_reviveRadius) { continue; }
+            
+            // check if player doesn't need to be revived
+            if (player.playerState != PlayerState.REVIVE) { continue; }
+
+
+            player.IsBeingRevived = true;
+
+            // Start the revive timer.
+            player.m_reviveTimer -= Time.deltaTime;
+
+            // TODO: Start revive particle effect.
+            // If the revive timer hits 0.
+            if (player.m_reviveTimer <= 0)
+            {
+                // Player revived.
+                player.m_isRevived = true;
+                player.IsBeingRevived = false;
+                reviveParticle.SetActive(false);
+                player.m_controllerOn = true;
+                // Disable the revive collider.
+                player.m_reviveColliderRadius.enabled = false;
+                GameManager.Instance.Thea.m_aimCursor.SetActive(true);
+
+                // Change them to the ALIVE state.
+                player.playerState = PlayerState.ALIVE;
+                // Give the player some health when they get back up.
+                player.m_currentHealth = m_healthUponRevive;
+                // TODO: Stop revive particle effect.
+                // Reset timer.
+                player.m_reviveTimer = 5f;
+            }
+            
+            if(player.m_deathTimer <= 0)
+            {
+                // Kill the player 
+                player.playerState = PlayerState.DEAD;
+                player.gameObject.SetActive(false);
+            }
+        }
     }
 
     /// <summary>
@@ -231,21 +296,23 @@ public abstract class BaseCharacter : MonoBehaviour {
         // Cycles through every instance of the players in the game.
         foreach (var player in GameManager.Instance.Players)
         {
-            // Checks for the 2 other players that are not down.
+            // Don't check yourself.
             if (player == this) { continue; }
+
             // Calculates the distance between the downed player and the other players.
             float sqrDistance = (player.transform.position - this.transform.position).sqrMagnitude;
 
-            // If the player is in a downed state.
-            if (this.playerState == PlayerState.REVIVE)
+            // If player is reviving me
+            if (player.IsBeingRevived)
             {
-                // Enable thier revive collider.
+                // Enable revive collider.
                 m_reviveColliderRadius.enabled = true;
+
                 // Have the colliders radius equal the AOE float radius.
                 m_reviveColliderRadius.radius = m_reviveRadius;
 
                 // Checks to see if player isnt getting revived.
-                if (!m_isReviving)
+                if (!IsBeingRevived)
                 {
                     // Starts the timer that the player can be in revive state for.
                     m_deathTimer -= Time.deltaTime;
@@ -269,21 +336,21 @@ public abstract class BaseCharacter : MonoBehaviour {
                     if (XCI.GetButton(XboxButton.B, player.m_controller))
                     {
                         // Means they are reviving the player.
-                        m_isReviving = true;
+                        IsBeingRevived = true;
 
                         // If thats true.
-                        if (m_isReviving)
+                        if (IsBeingRevived)
                         {
                             // Start the revive timer.
                             m_reviveTimer -= Time.deltaTime;
 
                             // TODO: Start revive particle effect.
                             // If the revive timer hits 0 and the player is reviving.
-                            if (m_reviveTimer <= 0f && m_isReviving)
+                            if (m_reviveTimer <= 0f && IsBeingRevived)
                             {
                                 // Player revived.
                                 m_isRevived = true;
-                                m_isReviving = false;
+                                IsBeingRevived = false;
                                 reviveParticle.SetActive(false);
                                 m_controllerOn = true;
                                 GameManager.Instance.Thea.m_aimCursor.SetActive(true);
@@ -308,7 +375,7 @@ public abstract class BaseCharacter : MonoBehaviour {
                 }
                 else
                 {
-                    m_isReviving = false;
+                    IsBeingRevived = false;
                 }
             }
         }
@@ -328,6 +395,11 @@ public abstract class BaseCharacter : MonoBehaviour {
         m_controllerOn = false;
         transform.Rotate(90, 0, 0, Space.Self);
         reviveParticle.SetActive(true);
+        m_deathTimer -= Time.deltaTime;
+        // Enable revive collider.
+        m_reviveColliderRadius.enabled = true;
+        // Have the colliders radius equal the AOE float radius.
+        m_reviveColliderRadius.radius = m_reviveRadius;
     }
 
     /// <summary>

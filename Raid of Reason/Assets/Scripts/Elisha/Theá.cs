@@ -349,6 +349,7 @@ public class Theá : BaseCharacter
 
         // Heal Thea.
         SetHealth(m_currentHealth + m_AOETimer * m_GOPEffect);
+        
 
         if (m_skillActive = true & m_playerSkills.Find(skill => skill.name == "Serenade Of Water"))
         {
