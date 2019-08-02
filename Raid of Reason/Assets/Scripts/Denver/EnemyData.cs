@@ -28,6 +28,7 @@ public struct EnemyAttackRange
 /// <summary>
 /// Encapsulates all data for all enemy types
 /// </summary>
+[RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyData : MonoBehaviour 
@@ -59,8 +60,11 @@ public class EnemyData : MonoBehaviour
     // Afridi added this for the skill tree
     public bool isDeadbByKenron = false;
 
+	private MeshRenderer m_renderer;
+
 	private void Start()
 	{
+		m_renderer = GetComponent<MeshRenderer>();
 		Rigidbody = GetComponent<Rigidbody>();
 		NavMeshAgent = GetComponent<NavMeshAgent>();
 		NavMeshAgent.destination = transform.position;
@@ -140,10 +144,24 @@ public class EnemyData : MonoBehaviour
 	{
 		Health -= damage;
 
+		IndicateHit();
+
 		if (Health <= 0)
 		{
 			OnDeath();
 		}
+	}
+
+	void IndicateHit()
+	{
+		m_renderer.material.color = Color.red;
+		StartCoroutine(ResetColour(.2f));
+	}
+
+	IEnumerator ResetColour(float duration)
+	{
+		yield return new WaitForSeconds(duration);
+		m_renderer.material.color = Color.clear;
 	}
 
 	/// <summary>
