@@ -51,6 +51,7 @@ public class EnemyData : MonoBehaviour
     public Vector3 Target { get; set; }
 
     public NavMeshAgent NavMeshAgent { get; private set; }
+	public Vector3 PendingDestination { get; set; }
 
 	public Rigidbody Rigidbody { get; private set; }
 
@@ -61,6 +62,7 @@ public class EnemyData : MonoBehaviour
 	private void Start()
 	{
 		Rigidbody = GetComponent<Rigidbody>();
+		NavMeshAgent = GetComponent<NavMeshAgent>();
 		NavMeshAgent.destination = transform.position;
 	}
 
@@ -99,7 +101,6 @@ public class EnemyData : MonoBehaviour
 		AttackDamage = attackDamage;
 		AttackPrefabs = attackPrefabs;
 		Stunned = false;
-        NavMeshAgent = GetComponent<NavMeshAgent>();
     }
 
 	/// <summary>
