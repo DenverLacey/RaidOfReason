@@ -47,9 +47,12 @@ public class MeleeEnemyAttack : Behaviour
 				BaseCharacter player = hit.collider.GetComponent<BaseCharacter>();
 
 				if (player)
-				{
+				{                    
 					player.TakeDamage(agent.AttackDamage);
-				}
+                    if (player.tag == "Nashorn")
+                        agent.isAttackingNashorn = true;
+
+                }
 			}
 			else
 			{

@@ -71,6 +71,8 @@ public class EnemyProjectile : MonoBehaviour
         {
             BaseCharacter player = other.GetComponent<BaseCharacter>();
             player.TakeDamage(m_damage);
+            if (other.tag == "Nashorn")
+                m_parent.isAttackingNashorn = true;          
         }
         
 		if (other.tag != "EnemyManager")

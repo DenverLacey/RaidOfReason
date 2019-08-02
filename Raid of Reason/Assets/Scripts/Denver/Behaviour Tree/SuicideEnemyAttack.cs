@@ -39,6 +39,8 @@ public class SuicideEnemyAttack : Behaviour
 				if (sqrDistance <= agent.AttackRange.max * agent.AttackRange.max)
 				{
 					p.TakeDamage(agent.AttackDamage);
+                    if (p.tag == "Nashorn")
+                        agent.isAttackingNashorn = true;                     
 				}
 			}
 

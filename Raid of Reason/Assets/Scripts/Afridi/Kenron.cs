@@ -77,7 +77,7 @@ public class Kenron : BaseCharacter {
     private Rigidbody m_kenronRigidBody;
     
     // Enemy reference used for skill checking
-    private BaseEnemy m_Enemy;
+    private EnemyData m_Enemy;
 
     // Desired position to dash
     private Vector3 m_dashPosition;
@@ -94,7 +94,7 @@ public class Kenron : BaseCharacter {
     protected override void Awake () {
         // Initalisation
         base.Awake();
-        m_Enemy = FindObjectOfType<BaseEnemy>();
+        m_Enemy = FindObjectOfType<EnemyData>();
         Amaterasu = GameObject.FindGameObjectWithTag("Amaterasu");
         m_kenronRigidBody = GetComponent<Rigidbody>();
 

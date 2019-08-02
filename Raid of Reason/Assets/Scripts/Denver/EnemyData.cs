@@ -60,6 +60,10 @@ public class EnemyData : MonoBehaviour
     // Afridi added this for the skill tree
     public bool isDeadbByKenron = false;
 
+    [HideInInspector]
+    // Afridi added this for the skill tree
+    public bool isAttackingNashorn = true;
+
 	private MeshRenderer m_renderer;
 
 	private void Start()

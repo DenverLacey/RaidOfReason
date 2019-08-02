@@ -19,7 +19,7 @@ public class SmashDamage : MonoBehaviour
         string tag = other.gameObject.tag;
         if (tag == "Enemy")
         {
-            BaseEnemy enemy = other.gameObject.GetComponent<BaseEnemy>();
+            EnemyData enemy = other.gameObject.GetComponent<EnemyData>();
 
             if (enemy && XCI.GetAxis(XboxAxis.RightTrigger, XboxController.Second) > 0.1)
             {
@@ -42,7 +42,7 @@ public class SmashDamage : MonoBehaviour
         }
     }
 
-    IEnumerator ResetMaterialColour(BaseEnemy enemy, float delay)
+    IEnumerator ResetMaterialColour(EnemyData enemy, float delay)
     {
         yield return new WaitForSeconds(delay);
 

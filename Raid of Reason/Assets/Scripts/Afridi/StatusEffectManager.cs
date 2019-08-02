@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StatusEffectManager : MonoBehaviour
 {
-    private BaseEnemy enemy;
+    private EnemyData enemy;
     private int remainingTicks;
     private bool burnOn = false;
     private Rigidbody m_rigidBody;
@@ -13,7 +13,7 @@ public class StatusEffectManager : MonoBehaviour
 
     void Start()
     {
-        enemy = GetComponent<BaseEnemy>();
+        enemy = GetComponent<EnemyData>();
         m_rigidBody = GetComponent<Rigidbody>();
     }
 
@@ -72,7 +72,7 @@ public class StatusEffectManager : MonoBehaviour
         yield return null;
     }
 
-    IEnumerator ResetMaterialColour(BaseEnemy enemy, float delay)
+    IEnumerator ResetMaterialColour(EnemyData enemy, float delay)
     {
         yield return new WaitForSeconds(delay);
 

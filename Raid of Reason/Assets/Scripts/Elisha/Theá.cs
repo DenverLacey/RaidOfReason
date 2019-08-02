@@ -52,10 +52,23 @@ public class Theá : BaseCharacter
     [Tooltip("How fast will Thea's cursor move?")]
     private float aimCursorSpeed;
 
+    [Tooltip("How much health thea passively heals with her first skill")]
+    public float healthRegenerated;
+
+    [Tooltip("The delay between how much health thea passively with her first skill")]
+    public float regenEachFrame;
+
+    [SerializeField]
+    private List<EnemyData> m_nearbyEnemies = new List<EnemyData>();
+
+    [Tooltip("hpw much the enemies are knockbacked by theas third skill")]
+    public float knockbackForce;
+
     public float m_aimCursorRadius;
+
     private Vector3 newLocation;
 
-
+    private bool m_isHealthRegen;
 
     //[SerializeField]
     //[Tooltip("???")]
@@ -71,7 +84,7 @@ public class Theá : BaseCharacter
     private Vector3 m_hitLocation;
     private LayerMask m_layerMask;
     private GameObject m_temp;
-    private GameObject m_aimCursor;
+    public GameObject m_aimCursor;
     private float m_shotCounter;
     private float m_counter;
     private bool m_isActive;
@@ -90,6 +103,7 @@ public class Theá : BaseCharacter
     {
         base.Awake();
         m_isActive = false;
+        m_isHealthRegen = false;
         m_nashorn = FindObjectOfType<Nashorn>();
 		m_kenron = FindObjectOfType<Kenron>();
         m_playerController = GetComponent<BaseCharacter>();
@@ -209,31 +223,56 @@ public class Theá : BaseCharacter
         }
     }
 
-    void SkillChecker() {
-        if (m_skillActive == true && m_playerSkills.Find(skill => skill.name == "Settling Tide")) {
-            m_skillActive = false;
+    void SkillChecker()
+    {
+        if (m_playerSkills.Find(skill => skill.name == "Settling Tide"))
+        {
             m_skillManager.m_Skills[2].m_coolDown = m_skillManager.m_Skills[2].m_coolDown / 2;
+            if (m_currentHealth != m_maxHealth && !m_isHealthRegen)
+            {
+                StartCoroutine(HealthOverTime());
+            }
         }
-        if (m_playerSkills.Find(skill => skill.name == "Hydro Pressure"))
+        if (m_playerSkills.Find(skill => skill.name == "Oceans Ally"))
         {
             float healthcomparison = m_kenron.m_currentHealth + m_nashorn.m_currentHealth;
 
-            if (healthcomparison <= 150) {
+            if (healthcomparison <= 150)
+            {
                 m_projectileDelay = 0.7f;
                 m_damage = 13.0f;
             }
-            if (healthcomparison <= 130) {
+            if (healthcomparison <= 130)
+            {
                 m_projectileDelay = 0.5f;
                 m_damage = 18.0f;
             }
-            if (healthcomparison <= 60) {
+            if (healthcomparison <= 60)
+            {
                 m_projectileDelay = 0.3f;
                 m_damage = 24.0f;
             }
-            if (healthcomparison <= 25) {
+            if (healthcomparison <= 25)
+            {
                 m_projectileDelay = 0.1f;
                 m_damage = 35.0f;
             }
+        }
+        if (m_skillActive == true && m_playerSkills.Find(skill => skill.name == "Hydro Pressure"))
+        {
+            foreach (EnemyData enemy in m_nearbyEnemies) {
+                if ((transform.position - enemy.transform.position).sqrMagnitude <= m_AOERadius * m_AOERadius) {
+                    enemy.Stun(0.5f);
+                    enemy.Rigidbody.AddExplosionForce(knockbackForce, transform.position, m_AOERadius, 0, ForceMode.Impulse);
+                    enemy.TakeDamage(enemy.AttackDamage / 2);
+                }
+            }
+        }
+        if (m_skillActive == true && m_playerSkills.Find(skill => skill.name == "Serenade of Water"))
+        {
+            m_kenron.SetHealth(m_kenron.m_currentHealth + m_AOETimer * m_GOPEffect * 1.5f);
+            m_nashorn.SetHealth(m_nashorn.m_currentHealth + m_AOETimer * m_GOPEffect * 1.5f);
+            m_skillManager.m_Skills[2].m_coolDown = m_skillManager.m_Skills[2].m_coolDown + 3;
         }
     }
 
@@ -327,5 +366,18 @@ public class Theá : BaseCharacter
         m_AOEParticleCollider.enabled = false;
         m_playerController.m_controllerOn = true;
         aoe.radius = 1;
+    }
+
+    private IEnumerator HealthOverTime() {
+        m_isHealthRegen = true;
+        while (m_currentHealth < m_maxHealth) {
+            Regenerate();
+            yield return new WaitForSeconds(regenEachFrame);
+        }
+        m_isHealthRegen = false;
+    }
+
+    public void Regenerate() {
+        m_currentHealth += healthRegenerated;
     }
 }

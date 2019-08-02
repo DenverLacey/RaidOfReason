@@ -60,9 +60,6 @@ public class Nashorn : BaseCharacter
     [Tooltip("Range Chain Lightning spreads dealt by Macht Des Sturms ability")]
     private float m_lightningRadius;
 
-    // Amount of Nearby Enemies near Nashorn
-    private List<BaseEnemy> m_nearbyEnemies = new List<BaseEnemy>();
-
     // Swaps Between Left and Right Gauntlets: 0 = Left / 1 = Right
     private uint u_gauntletIndex = 0;
 
@@ -87,6 +84,10 @@ public class Nashorn : BaseCharacter
     // Empty Object for particle instantiating
     private GameObject particleInstantiate;
 
+    // Nearby enemies
+    [SerializeField]
+    public EnemyData enemies;
+
     // Will Be Removed
     private bool RightPunch;
     private bool LeftPunch;
@@ -96,7 +97,7 @@ public class Nashorn : BaseCharacter
         // Initialisation 
         base.Awake();
         m_nashornRigidBody = GetComponent<Rigidbody>();
-        LeftGauntlet.enabled = false;
+        LeftGauntlet.gameObject.SetActive(false);
         RightGauntlet.enabled = false;
         isTaunting = false;
         isActive = false;
@@ -163,8 +164,10 @@ public class Nashorn : BaseCharacter
             // If the skill is active and the player has the named skill
             if (isTaunting == true && m_playerSkills.Find(skill => skill.Name == "Kinetic Discharge"))
             {
-                
-            }
+                if (enemies.isAttackingNashorn == true) {
+                    enemies.TakeDamage(enemies.AttackDamage);
+                }
+            } 
 
             // If the skill is active and the player has the named skill
             if (isTaunting == true && m_playerSkills.Find(skill => skill.Name == "Macht Des Sturms"))
@@ -209,10 +212,10 @@ public class Nashorn : BaseCharacter
         foreach (Collider hitCol in hitColliders)
         {
             Debug.Log(hitCol.gameObject.name);
-            BaseEnemy enemy = hitCol.transform.GetComponent<BaseEnemy>();
+            EnemyData enemy = hitCol.transform.GetComponent<EnemyData>();
             if (enemy != null)
             {
-                enemy.TakeDamage(m_lightningDamage);
+                enemy.TakeDamage(0);
             }
         }
     }
