@@ -24,6 +24,8 @@ public class EnemyProjectile : MonoBehaviour
     private float m_timer;
     private int m_damage;
 
+	private EnemyData m_parent;
+
     // Start is called before the first frame update
     void Start() 
     {
@@ -42,16 +44,20 @@ public class EnemyProjectile : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Sets projectile's damage
-    /// </summary>
-    /// <param name="damage">
-    /// What to set projectile's damage to
-    /// </param>
-    public void SetDamage(int damage) 
-    {
-        m_damage = damage;
-    }
+	/// <summary>
+	/// Initialises Enemy projectile
+	/// </summary>
+	/// <param name="damage">
+	/// How much damage projectile will inflict
+	/// </param>
+	/// <param name="parent">
+	/// Who fired projectile
+	/// </param>
+    public void Init(int damage, EnemyData parent)
+	{
+		m_damage = damage;
+		m_parent = parent;
+	}
 
     /// <summary>
     /// Deals damage to collided object if hit player

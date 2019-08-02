@@ -13,9 +13,9 @@ public class GameManager : MonoBehaviour
 {
 	private GameManager()
 	{
-		if (m_instance == null)
+		if (ms_instance == null)
 		{
-			m_instance = this;
+			ms_instance = this;
 		}
 		else
 		{
@@ -23,8 +23,8 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	private static GameManager m_instance = null;
-	public static GameManager Instance { get => m_instance; }
+	private static GameManager ms_instance = null;
+	public static GameManager Instance { get => ms_instance; }
 
     [Tooltip("Number Of Enemies allowed to spawn in the room")]
     public int numOfEnemies;

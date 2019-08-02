@@ -33,6 +33,7 @@ public class TauntEvent : Behaviour
 			agent.Taunted = true;
 			agent.Target = GameManager.Instance.Nashorn.transform.position;
 			agent.NavMeshAgent.destination = agent.Target;
+
 			return SUCCESS;
 		}
 		else
