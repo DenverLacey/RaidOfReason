@@ -97,7 +97,7 @@ public class Nashorn : BaseCharacter
         // Initialisation 
         base.Awake();
         m_nashornRigidBody = GetComponent<Rigidbody>();
-        LeftGauntlet.gameObject.SetActive(false);
+        LeftGauntlet.enabled = false;
         RightGauntlet.enabled = false;
         isTaunting = false;
         isActive = false;

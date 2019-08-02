@@ -131,7 +131,6 @@ public class SkillManager : MonoBehaviour {
                     m_Skills[2].m_currentCoolDown = 0;
                     m_Skills[2].active = false;
                     m_Skills[2].reset = true;
-
                     // Grants health and resets
                     m_theá.GiveHealth();
                     m_theá.ResetGiftOfPoseidon();

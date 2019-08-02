@@ -64,19 +64,14 @@ public class Theá : BaseCharacter
     [Tooltip("hpw much the enemies are knockbacked by theas third skill")]
     public float knockbackForce;
 
+    // Runs once check
+    private bool neverDone;
+
     public float m_aimCursorRadius;
 
     private Vector3 newLocation;
 
     private bool m_isHealthRegen;
-
-    //[SerializeField]
-    //[Tooltip("???")]
-    //private Transform minCursorPosition;
-
-    //[SerializeField]
-    //[Tooltip("???")]
-    //private Transform maxCursorPosition;
 
     private Kenron m_kenron;
     private Nashorn m_nashorn;
@@ -88,7 +83,7 @@ public class Theá : BaseCharacter
     private float m_shotCounter;
     private float m_counter;
     private bool m_isActive;
-    private bool m_skillActive = false;
+    public bool m_skillActive;
     private float m_AOERadius;
     private float m_AOETimer;
     private float m_particleRadius;
@@ -103,6 +98,7 @@ public class Theá : BaseCharacter
     {
         base.Awake();
         m_isActive = false;
+        neverDone = true;
         m_isHealthRegen = false;
         m_nashorn = FindObjectOfType<Nashorn>();
 		m_kenron = FindObjectOfType<Kenron>();
@@ -227,7 +223,11 @@ public class Theá : BaseCharacter
     {
         if (m_playerSkills.Find(skill => skill.name == "Settling Tide"))
         {
-            m_skillManager.m_Skills[2].m_coolDown = m_skillManager.m_Skills[2].m_coolDown / 2;
+            if (neverDone == true)
+            {
+                m_skillManager.m_Skills[2].m_coolDown = m_skillManager.m_Skills[2].m_coolDown / 2;
+                neverDone = false;
+            }
             if (m_currentHealth != m_maxHealth && !m_isHealthRegen)
             {
                 StartCoroutine(HealthOverTime());
@@ -258,21 +258,17 @@ public class Theá : BaseCharacter
                 m_damage = 35.0f;
             }
         }
-        if (m_skillActive == true && m_playerSkills.Find(skill => skill.name == "Hydro Pressure"))
+        if (m_isActive == true && m_playerSkills.Find(skill => skill.name == "Hydro Pressure"))
         {
+            m_nearbyEnemies = new List<EnemyData>(FindObjectsOfType<EnemyData>());
             foreach (EnemyData enemy in m_nearbyEnemies) {
-                if ((transform.position - enemy.transform.position).sqrMagnitude <= m_AOERadius * m_AOERadius) {
+                float sqrDistance = (this.transform.position - enemy.transform.position).sqrMagnitude;
+                if (sqrDistance <= m_AOERadius * m_AOERadius) {
                     enemy.Stun(0.5f);
                     enemy.Rigidbody.AddExplosionForce(knockbackForce, transform.position, m_AOERadius, 0, ForceMode.Impulse);
-                    enemy.TakeDamage(enemy.AttackDamage / 2);
+                    enemy.TakeDamage(-5);
                 }
             }
-        }
-        if (m_skillActive == true && m_playerSkills.Find(skill => skill.name == "Serenade of Water"))
-        {
-            m_kenron.SetHealth(m_kenron.m_currentHealth + m_AOETimer * m_GOPEffect * 1.5f);
-            m_nashorn.SetHealth(m_nashorn.m_currentHealth + m_AOETimer * m_GOPEffect * 1.5f);
-            m_skillManager.m_Skills[2].m_coolDown = m_skillManager.m_Skills[2].m_coolDown + 3;
         }
     }
 
@@ -286,13 +282,12 @@ public class Theá : BaseCharacter
     {
         int coolDown = 20;
         m_isActive = true;
-        m_skillActive = true;
+        // Enables collider for the ability.
+        m_AOEParticleCollider.enabled = true;
 
         // Checks if player can use the ability.
-        if(m_isActive == true && coolDown == 20)
+        if (m_isActive == true && coolDown == 20)
         {
-            // Enables collider for the ability.
-            m_AOEParticleCollider.enabled = true;
             
             // Start AOE timer.
             m_AOETimer += Time.deltaTime;
@@ -307,10 +302,11 @@ public class Theá : BaseCharacter
 
             // Temporary way of doing the particles.
             aoe.radius = m_AOEParticleCollider.radius;
+            m_skillActive = true;
         }
 
         // Checks if ability has been used.
-        if(m_isActive == false && coolDown <= 0)
+        if (m_isActive == false && coolDown <= 0)
         {
             return;
         }
@@ -329,7 +325,7 @@ public class Theá : BaseCharacter
         float sqrDistanceKen = (m_kenron.transform.position - this.transform.position).sqrMagnitude;
 
         // Checks if Nashorn is in correct distance of the AOE to heal.
-        if (sqrDistanceNash <= m_AOERadius * m_AOERadius && m_controllerOn)
+        if (sqrDistanceNash <= m_AOERadius * m_AOERadius && GameManager.Instance.Nashorn.m_controllerOn)
         {
             m_nashorn.SetHealth(m_nashorn.m_currentHealth + m_AOETimer * m_GOPEffect);
   
@@ -341,7 +337,7 @@ public class Theá : BaseCharacter
         }
 
         // Checks if Kenron is in correct distance of the AOE to heal.
-        if (sqrDistanceKen <= m_AOERadius * m_AOERadius && m_controllerOn)
+        if (sqrDistanceKen <= m_AOERadius * m_AOERadius && GameManager.Instance.Kenron.m_controllerOn)
         {
             m_kenron.SetHealth(m_kenron.m_currentHealth +  m_AOETimer * m_GOPEffect);
             if (m_kenron != null)
@@ -353,6 +349,14 @@ public class Theá : BaseCharacter
 
         // Heal Thea.
         SetHealth(m_currentHealth + m_AOETimer * m_GOPEffect);
+
+        if (m_skillActive = true & m_playerSkills.Find(skill => skill.name == "Serenade Of Water"))
+        {
+            m_kenron.SetHealth(m_kenron.m_currentHealth * 1.5f);
+            m_nashorn.SetHealth(m_nashorn.m_currentHealth * 1.5f);
+            SetHealth(m_currentHealth * 1.5f);
+            m_skillActive = false;
+        }
     }
 
     /// <summary>

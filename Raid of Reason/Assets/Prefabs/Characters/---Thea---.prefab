@@ -4678,7 +4678,7 @@ Transform:
   m_LocalScale: {x: 0.32185, y: 0.32185048, z: 0.32185048}
   m_Children: []
   m_Father: {fileID: 5001416121934993673}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!212 &4221397178345414773
 SpriteRenderer:
@@ -4765,7 +4765,7 @@ Transform:
   - {fileID: 764046756}
   - {fileID: 3456074162209955034}
   m_Father: {fileID: 5001416121934993673}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5001416120509848762
 MeshFilter:
@@ -4855,6 +4855,7 @@ MonoBehaviour:
   m_skillDisplay: {fileID: 5001416121697387086}
   m_skillMaxed: {fileID: 5001416120710545900}
   m_reviveColliderRadius: {fileID: 8084003851013154582}
+  reviveParticle: {fileID: 0}
   m_waterPrefab: {fileID: 4153159892060089487, guid: 8d2906bfe6894dc40bebb3b9e1fcc21d,
     type: 3}
   m_projectile: {fileID: 1119944734783606, guid: 4dab86d7c4169194e9d7640ac578ff72,
@@ -4868,7 +4869,12 @@ MonoBehaviour:
   m_AOEGrowTime: 200
   m_GOPEffect: 15
   aimCursorSpeed: 25
+  healthRegenerated: 0
+  regenEachFrame: 0
+  m_nearbyEnemies: []
+  knockbackForce: 0
   m_aimCursorRadius: 20
+  m_aimCursor: {fileID: 0}
   nashornBuffGiven: 0
 --- !u!54 &5001416120509848759
 Rigidbody:
@@ -7798,8 +7804,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 712390767793034776}
   - {fileID: 5001416120509848758}
+  - {fileID: 712390767793034776}
   - {fileID: 5001416120941746697}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -7816,9 +7822,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaf5e952e0688c04790cdb7831af7681, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  kenronController: {fileID: 0}
-  nashornController: {fileID: 0}
-  theaController: {fileID: 5001416120509848753}
   Player: {fileID: 5001416120509848753}
   m_KCanvas: {fileID: 0}
   m_NCanvas: {fileID: 0}
