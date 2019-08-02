@@ -11,6 +11,7 @@ using TMPro;
  */
 
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(MeshRenderer))]
 public abstract class BaseCharacter : MonoBehaviour {
 
     public enum PlayerState
@@ -68,18 +69,17 @@ public abstract class BaseCharacter : MonoBehaviour {
     public TextMeshProUGUI m_skillMaxed;
     protected Animator m_animator;
     public SphereCollider m_reviveColliderRadius;
+    public GameObject reviveParticle;
    
     protected float m_vulnerability;
     protected bool m_bActive;
-
     protected float m_rotationSpeed = 250.0f;
     private Vector3 m_direction;
     protected Vector3 m_prevRotDirection = Vector3.forward;
     private bool m_isRevived = false;
     private bool m_isReviving = false;
-
-    public GameObject reviveParticle;
-
+    private MeshRenderer m_renderer;
+    private Color m_originalColour;
 
     public int SkillPoints {
         get { return m_playerSkillPoints;  }
@@ -92,15 +92,18 @@ public abstract class BaseCharacter : MonoBehaviour {
     /// This will be called first.
     /// </summary>
     protected virtual void Awake () {
-        m_currentHealth = m_maxHealth;
-        m_vulnerability = 1.0f;
-        m_bActive = false;
+
+        m_renderer = GetComponent<MeshRenderer>();
+        // Gets the original colour of the player.
+        m_originalColour = m_renderer.sharedMaterial.color;
         m_camera = FindObjectOfType<MultiTargetCamera>();
         m_animator = GetComponent<Animator>();
-        m_controllerOn = true;
-
-        m_reviveColliderRadius.enabled = false;
+        m_currentHealth = m_maxHealth;
+        m_vulnerability = 1.0f;
         m_reviveTimer = 5f;
+        m_controllerOn = true;
+        m_bActive = false;
+        m_reviveColliderRadius.enabled = false;
         reviveParticle.transform.position = this.transform.position;
     }
 
@@ -209,10 +212,8 @@ public abstract class BaseCharacter : MonoBehaviour {
     {
         // Take an amount of damage from the players current health.
         m_currentHealth -= damage * m_vulnerability;
-        // Change the players mesh colour to red.
-        GetComponent<MeshRenderer>().material.color = Color.red;
-        // Change the player back to their original mesh colour after .2 seconds of being hit.
-        StartCoroutine(ResetMaterialColour(this.gameObject, .2f));
+        // Player damage indicator.
+        IndicateHit();
 
         // If player has no health.
         if (m_currentHealth <= 0.0f)
@@ -451,5 +452,17 @@ public abstract class BaseCharacter : MonoBehaviour {
             // Change players mesh colour back to the original colour.
             player.GetComponent<MeshRenderer>().material.color = Color.clear;
         }
+    }
+
+    void IndicateHit()
+    {
+        m_renderer.material.color = Color.red;
+        StartCoroutine(ResetColour(.2f));
+    }
+
+    IEnumerator ResetColour(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        m_renderer.material.color = m_originalColour;
     }
 }
