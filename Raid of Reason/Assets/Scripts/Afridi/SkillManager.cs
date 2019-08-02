@@ -111,7 +111,7 @@ public class SkillManager : MonoBehaviour {
         if (m_theá != null)
         {
             // If the third players left trigger is pressed
-            if (XCI.GetAxis(XboxAxis.LeftTrigger, m_theá.m_controller) > 0.1f)
+            if (XCI.GetAxis(XboxAxis.LeftTrigger, m_theá.m_controller) > 0.1f && m_theá.playerState == BaseCharacter.PlayerState.ALIVE)
             {
                 // if the current cooldown is greater than the main
                 if (m_Skills[2].m_currentCoolDown >= m_Skills[2].m_coolDown)
@@ -132,8 +132,11 @@ public class SkillManager : MonoBehaviour {
                     m_Skills[2].active = false;
                     m_Skills[2].reset = true;
                     // Grants health and resets
-                    m_theá.GiveHealth();
-                    m_theá.ResetGiftOfPoseidon();
+                    if (m_theá.playerState == BaseCharacter.PlayerState.ALIVE)
+                    {
+                        m_theá.GiveHealth();
+                        m_theá.ResetGiftOfPoseidon();
+                    }
                 }
             }
         }
