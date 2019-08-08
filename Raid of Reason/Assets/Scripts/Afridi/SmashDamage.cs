@@ -5,15 +5,9 @@ using XboxCtrlrInput;
 
 public class SmashDamage : MonoBehaviour
 {
-    [SerializeField]
-    [Tooltip("How much damage the punches deal")]
-    private int m_damage;
     public Nashorn Nashorn;
+    public Kenron Kenron;
 
-    public void SetDamage(int damage)
-    {
-        this.m_damage = damage;
-    }
     public void OnTriggerEnter(Collider other)
     {
         string tag = other.gameObject.tag;
@@ -21,9 +15,9 @@ public class SmashDamage : MonoBehaviour
         {
             EnemyData enemy = other.gameObject.GetComponent<EnemyData>();
 
-            if (enemy && XCI.GetAxis(XboxAxis.RightTrigger, XboxController.Second) > 0.1)
+            if (enemy && XCI.GetAxis(XboxAxis.RightTrigger, Nashorn.m_controller) > 0.1)
             {
-                enemy.TakeDamage(m_damage);
+                enemy.TakeDamage(Nashorn.GetDamage());
                 enemy.GetComponent<MeshRenderer>().material.color = Color.red;
                 StartCoroutine(ResetMaterialColour(enemy, .2f));
                 if (Nashorn.m_playerSkills.Find(skill => skill.Name == "Shockwave"))
@@ -31,7 +25,9 @@ public class SmashDamage : MonoBehaviour
                     Vector3 direction = this.transform.position - enemy.transform.position;
                     other.GetComponent<StatusEffectManager>().ApplyKnockBack(enemy.gameObject, direction, 1, 0.3f);
                 }
-                
+                if (Kenron.m_playerSkills.Find(skill => skill.Name == "Shuras Reckoning") && Kenron.isActive == true) {
+                    other.GetComponent<StatusEffectManager>().ApplyBurn(4);
+                }
             }
 
             Debug.Log("attack successful " + tag);

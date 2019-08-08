@@ -66,12 +66,27 @@ public class Kenron : BaseCharacter {
     private float m_cooldownReduced;
 
     [SerializeField]
+    [Tooltip("The Radius that effects the enemies with Kenrons Shuras Awakening Skill")]
+    private float m_damageRadius;
+
+    [SerializeField]
+    [Tooltip("The Damage dealth within the radius hit by Kenrons Shuras Awakening Skill")]
+    private float m_damageWithin;
+
+    [SerializeField]
     [Tooltip("Particle Effect That Appears on the Kenrons Body When Chaos Flame is Active")]
     private GameObject m_kenronParticle;
 
     [SerializeField]
     [Tooltip("Particle Effect That Appears on the Sword When Chaos Flame is Active")]
     private GameObject m_swordParticle;
+
+    [SerializeField]
+    [Tooltip("Effect when Cursed Kenron Spawns")]
+    private GameObject m_CurseEffect;
+
+    // Radius Checker for Shuras Recknoning
+    private RaycastHit hit;
 
     // Kenrons Rigid Body
     private Rigidbody m_kenronRigidBody;
@@ -90,6 +105,9 @@ public class Kenron : BaseCharacter {
 
     // Checks if a specific trigger on the controller is pressed
     private bool m_triggerDown;
+
+    // Sets the burn 
+    public bool isBurning;
 
     protected override void Awake () {
         // Initalisation
@@ -111,6 +129,7 @@ public class Kenron : BaseCharacter {
 		}
 
         isDashing = false;
+        isBurning = false;
 
 		// set size of dash hit box
 		Vector3 hitBoxSize = new Vector3(m_dashCollider.size.x, m_dashCollider.size.y, m_maxDashDistance);
@@ -195,9 +214,11 @@ public class Kenron : BaseCharacter {
         {
             // Sets the Skill to be Active
             isActive = true;
+            isBurning = true;
 
             // Instantiates a Particle at the Sword
             GameObject temp = Instantiate(m_swordParticle, Amaterasu.transform.position + Vector3.zero * 0.5f, Quaternion.Euler(-90, 0, 0), Amaterasu.transform);
+            GameObject part = Instantiate(m_kenronParticle, transform.position + Vector3.down * 0.5f, Quaternion.Euler(270, 0, 0), transform);
 
             // Halves his Health and sets a higher Damage/Speed
             SetHealth(m_currentHealth / 2);
@@ -206,6 +227,7 @@ public class Kenron : BaseCharacter {
 
             // Destroys the Particle after 10 Seconds
             Destroy(temp, m_particleTime);
+            Destroy(part, m_particleTime);
         }
     }
 
@@ -278,6 +300,18 @@ public class Kenron : BaseCharacter {
     }
 
     /// <summary>
+    /// The Effects that are given to the enemies/players when Kenrons third skill is active
+    /// </summary>
+    IEnumerator ShurasReckoningEffect() {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, m_damageRadius, LayerMask.GetMask("Enemy"));
+        foreach (Collider hit in hitColliders)
+        {
+            hit.GetComponent<StatusEffectManager>().ApplyBurn(3);
+        }
+        yield return new WaitForSeconds(3);
+    }
+
+    /// <summary>
     /// Checks how many skills Kenron has obtained from his skill tree
     /// - Vile Infusion: Kenron Gains Health Back for each kill (Passive)
     /// - Blood Lust: Kenrons Cooldown is reduced
@@ -296,10 +330,19 @@ public class Kenron : BaseCharacter {
                 this.m_currentHealth = m_currentHealth + m_healthGained;
             }
             // If Kenron has the skill specified and is killed by Kenron
-            if (isActive == true && m_playerSkills.Find(skill => skill.Name == "Blood Lust") && m_Enemy.isDeadbByKenron)
+            if (isActive == true && m_playerSkills.Find(skill => skill.Name == "Bloodlust") && m_Enemy.isDeadbByKenron)
             {
                 // Reduces the cooldown from Kenrons Cooldown 
                 skillManager.m_Skills[0].m_currentCoolDown = skillManager.m_Skills[0].m_currentCoolDown - m_cooldownReduced;
+            }
+            // if the player does have shuras upgrade applied
+            if (m_playerSkills.Find(skill => skill.Name == "Shuras Reckoning") && isActive == true)
+            {
+                if (isBurning)
+                {
+                    StartCoroutine(ShurasReckoningEffect());
+                    isBurning = false;
+                }
             }
             // If Kenron has the skill specificed and his health is less than or equal to 0
             if (m_playerSkills.Find(skill => skill.Name == "Curse of Amaterasu") && m_currentHealth <= 0.0f)
@@ -308,8 +351,10 @@ public class Kenron : BaseCharacter {
 				{
 					// Disables Main kenron, Spawns and enables Child kenron at Main Kenrons position 
 					childKenron.CheckStatus();
-					childKenron.transform.position = this.gameObject.transform.position;
+                    childKenron.transform.position = this.gameObject.transform.position;
 					childKenron.gameObject.SetActive(true);
+                    GameObject part = Instantiate(m_CurseEffect, childKenron.transform.position + Vector3.down * 0.5f, Quaternion.Euler(270, 0, 0), transform);
+                    Destroy(part, childKenron.timer);
 				}
             }
         }
@@ -327,6 +372,7 @@ public class Kenron : BaseCharacter {
             SetDamage(40);
             SetSpeed(15.0f);
             isActive = false;
+            isBurning = true;
         }
     }
 }

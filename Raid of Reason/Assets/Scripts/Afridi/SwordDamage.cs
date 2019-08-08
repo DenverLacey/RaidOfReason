@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class SwordDamage : MonoBehaviour
 {
-	[SerializeField]
-    private int m_damage;
     public Kenron kenron;
     public Nashorn nashorn;
 
@@ -15,11 +13,12 @@ public class SwordDamage : MonoBehaviour
 		if (tag == "Enemy")
 		{
 			EnemyData enemy = other.gameObject.GetComponent<EnemyData>();
+            enemy.TakeDamage(kenron.GetDamage());
 
             // if the player doesnt have shuras upgrade applied
-			if (enemy && !kenron.m_playerSkills.Find(skill => skill.Name == "Shuras Reckoning"))
+            if (enemy && !kenron.m_playerSkills.Find(skill => skill.Name == "Shuras Reckoning"))
 			{
-				enemy.TakeDamage(m_damage);
+				enemy.TakeDamage(kenron.GetDamage());
                 enemy.GetComponent<MeshRenderer>().material.color = Color.red;
                 StartCoroutine(ResetMaterialColour(enemy, .2f));
 			}
@@ -29,6 +28,12 @@ public class SwordDamage : MonoBehaviour
             {
                 Debug.Log("BURNING");
                 other.GetComponent<StatusEffectManager>().ApplyBurn(4);
+            }
+
+            if (enemy.Health <= 0) {
+                enemy.isDeadbByKenron = true;
+                kenron.SkillChecker();
+                enemy.isDeadbByKenron = false;
             }
 
             //if (kenron.nashornBuffGiven == true && nashorn.isTaunting == true)

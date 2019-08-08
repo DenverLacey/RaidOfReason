@@ -19,7 +19,8 @@ public class ChildKenron : MonoBehaviour
     public ChildKenron Child;
 
     //Temporary Addition
-    private float m_Timer = 4.0f;
+    [Tooltip("Time until Main Kenron Comes back")]
+    public float timer = 4.0f;
 
 
     public void Update()
@@ -27,8 +28,8 @@ public class ChildKenron : MonoBehaviour
         // Right now this is a timer, but how it works is that once Main Kenron is revived, the Child Kenron will still be active
         if (Kenron.m_currentHealth <= 0.0f)
         {
-            m_Timer -= Time.deltaTime;
-            if (m_Timer <= 0.0f)
+            timer -= Time.deltaTime;
+            if (timer <= 0.0f)
             {
                 //Enables Main Kenron with Weakened stats and disables Child Kenron
                 Child.gameObject.SetActive(false);

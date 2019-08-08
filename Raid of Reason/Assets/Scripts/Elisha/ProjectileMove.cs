@@ -83,12 +83,17 @@ public class ProjectileMove : MonoBehaviour {
                     GameManager.Instance.Thea.nashornBuffGiven = false;
                 }
 
+                if (GameManager.Instance.Kenron.m_playerSkills.Find(skill => skill.Name == "Shuras Reckoning") && GameManager.Instance.Kenron.isActive == true)
+                {
+                    other.gameObject.GetComponent<StatusEffectManager>().ApplyBurn(4);
+                }
+
                 // Enemy mesh colour changes to red.
                 enemy.GetComponent<MeshRenderer>().material.color = Color.red;
                 // Change the enemy back to their original mesh colour after .2 seconds of being hit.
                 StartCoroutine(ResetMaterialColour(enemy, .2f));
             }
-            Debug.Log("attack successful " + tag);
+
         }
         else // If above statment is false.
         {
