@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using XboxCtrlrInput;
 
 /*
   * Author: Afridi Rahim
@@ -39,6 +40,10 @@ public class GameManager : MonoBehaviour
 	public Kenron Kenron { get => m_Kenron; }
 	public Nashorn Nashorn { get => m_Nashorn; }
 	public Theá Thea { get => m_Thea; }
+
+	public XboxController KenronController { get; set; }
+	public XboxController NashornController { get; set; }
+	public XboxController TheaController { get; set; }
 
 	public BaseCharacter[] Players { get; private set; }
 
