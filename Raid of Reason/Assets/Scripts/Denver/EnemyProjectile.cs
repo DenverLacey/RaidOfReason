@@ -22,7 +22,7 @@ public class EnemyProjectile : MonoBehaviour
     private float m_speed;
 
     private float m_timer;
-    private int m_damage;
+    private float m_damage;
 
 	private EnemyData m_parent;
 
@@ -53,7 +53,7 @@ public class EnemyProjectile : MonoBehaviour
 	/// <param name="parent">
 	/// Who fired projectile
 	/// </param>
-    public void Init(int damage, EnemyData parent)
+    public void Init(float damage, EnemyData parent)
 	{
 		m_damage = damage;
 		m_parent = parent;

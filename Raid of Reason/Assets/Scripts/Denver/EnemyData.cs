@@ -38,12 +38,12 @@ public class EnemyData : MonoBehaviour
 
 	public EnemyType Type { get => m_type; }
     public float ViewRange { get; private set; }
-    public int MaxHealth { get; private set; }
-    public int Health { get; private set; }
+    public float MaxHealth { get; private set; }
+    public float Health { get; private set; }
     public EnemyAttackRange AttackRange { get; private set; }
     public float AttackCooldown { get; private set; }
     public float AttackTimer { get; set; }
-	public int AttackDamage { get; private set; }
+	public float AttackDamage { get; private set; }
     public bool Attacking { get; set; }
 	public bool Taunted { get; set; }
 	public bool Stunned { get; set; }
@@ -98,7 +98,7 @@ public class EnemyData : MonoBehaviour
 	/// <param name="players">
 	/// References to player objects
 	/// </param>
-	public void Init(float viewRange, int maxHealth, EnemyAttackRange attackRange, float attackCooldown, int attackDamage, GameObject[] attackPrefabs)
+	public void Init(float viewRange, float maxHealth, EnemyAttackRange attackRange, float attackCooldown, float attackDamage, GameObject[] attackPrefabs)
     {
         ViewRange = viewRange;
         MaxHealth = maxHealth;
@@ -144,7 +144,7 @@ public class EnemyData : MonoBehaviour
 	/// <param name="damage">
 	/// How much to decrease enemy's health
 	/// </param>
-	public void TakeDamage(int damage)
+	public void TakeDamage(float damage)
 	{
 		Health -= damage;
 

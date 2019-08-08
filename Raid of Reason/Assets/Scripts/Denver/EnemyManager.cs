@@ -23,13 +23,6 @@ public struct EnemyTypeEnemyAttackRangePair
 }
 
 [System.Serializable]
-public struct EnemyTypeIntPair 
-{
-    public EnemyType key;
-    public int value;
-}
-
-[System.Serializable]
 public struct EnemyTypeBehaviourTreePair 
 {
     public EnemyType key;
@@ -65,14 +58,14 @@ public class EnemyManager : MonoBehaviour
 	private Dictionary<EnemyType, float> m_attackCooldownDict = new Dictionary<EnemyType, float>();
 
 	[SerializeField]
-	private List<EnemyTypeIntPair> m_maxHealths;
+	private List<EnemyTypeFloatPair> m_maxHealths;
 
-	private Dictionary<EnemyType, int> m_maxHealthDict = new Dictionary<EnemyType, int>();
+	private Dictionary<EnemyType, float> m_maxHealthDict = new Dictionary<EnemyType, float>();
 
     [SerializeField]
-	private List<EnemyTypeIntPair> m_attackDamages;
+	private List<EnemyTypeFloatPair> m_attackDamages;
 
-	private Dictionary<EnemyType, int> m_attackDamageDict = new Dictionary<EnemyType, int>();
+	private Dictionary<EnemyType, float> m_attackDamageDict = new Dictionary<EnemyType, float>();
 
     [SerializeField]
 	private List<EnemyTypeBehaviourTreePair> m_behaviourTrees;
