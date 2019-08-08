@@ -142,9 +142,9 @@ public class Kenron : BaseCharacter {
 			m_dashCollider.enabled = true;
 
 			// calculate desired dash position
-			int layer = LayerMask.NameToLayer("DashIgnore");
+			int layerMask = LayerMask.GetMask("Enemy", "Player");
 			RaycastHit hit = new RaycastHit();
-			if (Physics.Raycast(transform.position, transform.forward, out hit, m_maxDashDistance, layer))
+			if (Physics.Raycast(transform.position, transform.forward, out hit, m_maxDashDistance, layerMask))
 			{
 				m_dashPosition = hit.point;
 				m_dashPosition -= transform.forward * transform.lossyScale.x;
