@@ -4,35 +4,30 @@ using UnityEngine;
 
 public class SwordDamage : MonoBehaviour
 {
-    public Kenron kenron;
-    public Nashorn nashorn;
-
 	public void OnTriggerEnter(Collider other)
 	{
-		string tag = other.gameObject.tag;
-		if (tag == "Enemy")
+		if (other.gameObject.tag == "Enemy")
 		{
 			EnemyData enemy = other.gameObject.GetComponent<EnemyData>();
-            enemy.TakeDamage(kenron.GetDamage());
+            enemy.TakeDamage(GameManager.Instance.Kenron.GetDamage());
 
             // if the player doesnt have shuras upgrade applied
-            if (enemy && !kenron.m_playerSkills.Find(skill => skill.Name == "Shuras Reckoning"))
+            if (enemy && !GameManager.Instance.Kenron.m_playerSkills.Find(skill => skill.Name == "Shuras Reckoning"))
 			{
-				enemy.TakeDamage(kenron.GetDamage());
+				enemy.TakeDamage(GameManager.Instance.Kenron.GetDamage());
                 enemy.GetComponent<MeshRenderer>().material.color = Color.red;
-                StartCoroutine(ResetMaterialColour(enemy, .2f));
+                StartCoroutine(ResetMaterialColour(enemy, 0.2f));
 			}
 
             // if the player does have shuras upgrade applied
-            if(enemy && kenron.m_playerSkills.Find(skill => skill.Name == "Shuras Reckoning") && kenron.isActive == true)
+            if(enemy && GameManager.Instance.Kenron.m_playerSkills.Find(skill => skill.Name == "Shuras Reckoning") && GameManager.Instance.Kenron.isActive == true)
             {
-                Debug.Log("BURNING");
                 other.GetComponent<StatusEffectManager>().ApplyBurn(4);
             }
 
             if (enemy.Health <= 0) {
                 enemy.isDeadbByKenron = true;
-                kenron.SkillChecker();
+                GameManager.Instance.Kenron.SkillChecker();
                 enemy.isDeadbByKenron = false;
             }
 
@@ -47,11 +42,7 @@ public class SwordDamage : MonoBehaviour
             //else if (nashorn.isTaunting == false) {
             //    kenron.nashornBuffGiven = false;
             //}
-			Debug.Log("attack successful " + tag);
-		}
-		else
-		{
-			Debug.Log("attack unsuccessful " + tag);
+
 		}
 	}
 

@@ -85,9 +85,6 @@ public class Kenron : BaseCharacter {
     [Tooltip("Effect when Cursed Kenron Spawns")]
     private GameObject m_CurseEffect;
 
-    // Radius Checker for Shuras Recknoning
-    private RaycastHit hit;
-
     // Kenrons Rigid Body
     private Rigidbody m_kenronRigidBody;
     
@@ -151,57 +148,15 @@ public class Kenron : BaseCharacter {
 
     protected override void Update()
     {
-		// dash attack
-		if (XCI.GetAxis(XboxAxis.RightTrigger, m_controller) > 0.1f && m_controllerOn && !m_triggerDown)
-		{
-			// set boolean flags
-			m_triggerDown = true;
-			m_controllerOn = false;
-			isDashing = true;
-			m_dashCollider.enabled = true;
+        // Empty Check
+        if (this.gameObject != null)
+        {
+            // Updates Player Movement
+            base.Update();
 
-			// calculate desired dash position
-			int layerMask = LayerMask.GetMask("Enemy", "Player");
-			RaycastHit hit = new RaycastHit();
-			if (Physics.Raycast(transform.position, transform.forward, out hit, m_maxDashDistance, layerMask))
-			{
-				m_dashPosition = hit.point;
-				m_dashPosition -= transform.forward * transform.lossyScale.x;
-			}
-			else
-			{
-				m_dashPosition = transform.position + transform.forward * m_maxDashDistance;
-			}
-
-			// size hit box
-			float dashDistance = (m_dashPosition - transform.position).magnitude;
-			Vector3 hitBoxSize = new Vector3(m_dashCollider.size.x, m_dashCollider.size.y, dashDistance);
-			m_dashCollider.size = hitBoxSize;
-
-			// rotate hit box
-			m_dashCollider.transform.rotation = transform.rotation;
-
-			// position hit box
-			m_dashCollider.transform.position = transform.position + transform.forward * (dashDistance / 2f);
-		}
-		else if (XCI.GetAxis(XboxAxis.RightTrigger, m_controller) < 0.1f && !isDashing)
-		{
-			m_triggerDown = false;
-		}
-
-		if (isDashing)
-		{
-			transform.position = Vector3.Lerp(transform.position, m_dashPosition, m_dashSpeed * Time.deltaTime);
-
-			// if completed dash
-			if ((m_dashPosition - transform.position).sqrMagnitude <= 0.1f)
-			{
-				// reset boolean flags
-				m_controllerOn = true;
-				isDashing = false;
-				m_dashCollider.enabled = false;
-			}
-		}
+            // Uses his Dash
+            DashAttack();
+        }
     }
 
     /// <summary>
@@ -236,42 +191,59 @@ public class Kenron : BaseCharacter {
     /// </summary>
     public void DashAttack()
     {
-        // Empty Check
-        if (Amaterasu != null)
+        // dash attack
+        if (XCI.GetAxis(XboxAxis.RightTrigger, m_controller) > 0.1f && m_controllerOn && !m_triggerDown)
         {
-            // If the trigger has been pressed and the trigger down button is false
-            if (XCI.GetAxis(XboxAxis.RightTrigger, m_controller) > 0.1 && !m_triggerDown)
+            // set boolean flags
+            m_triggerDown = true;
+            m_controllerOn = false;
+            isDashing = true;
+            m_dashCollider.enabled = true;
+
+            // calculate desired dash position
+            int enemyLayer = LayerMask.NameToLayer("Enemy");
+            int playerLayer = LayerMask.NameToLayer("Player");
+            int layerMask = 0;
+            layerMask |= enemyLayer;
+            layerMask |= playerLayer;
+            RaycastHit hit = new RaycastHit();
+            if (Physics.Raycast(transform.position, transform.forward, out hit, m_maxDashDistance, layerMask))
             {
-				// Enables the Collider for Attack
-				if (swordCollider)
-				{
-					swordCollider.enabled = true;
-				}
-
-                // Trigger is down set to true
-                m_triggerDown = true;
-
-                Amaterasu.transform.localRotation = Quaternion.Euler(0, 90, 0); // Will be Removed
-
-                // Starts the Cool down of the Dash to prevent infinite dash
-                StartCoroutine(Dash());
+                m_dashPosition = hit.point;
+                m_dashPosition -= transform.forward * transform.lossyScale.x;
             }
-            // or if the trigger isnt pressed
-            else if (XCI.GetAxis(XboxAxis.RightTrigger, m_controller) < 0.1)
+            else
             {
-				if (swordCollider)
-				{
-					// Disable the collider to prevent baseless attack
-					swordCollider.enabled = false;
-				}
+                m_dashPosition = transform.position + transform.forward * m_maxDashDistance;
+            }
 
-                // Trigger is set to false
-                m_triggerDown = false;
+            // size hit box
+            float dashDistance = (m_dashPosition - transform.position).magnitude;
+            Vector3 hitBoxSize = new Vector3(m_dashCollider.size.x, m_dashCollider.size.y, dashDistance);
+            m_dashCollider.size = hitBoxSize;
 
-                Amaterasu.transform.localRotation = Quaternion.Euler(0, 0, 0); // Will be Removed
+            // rotate hit box
+            m_dashCollider.transform.rotation = transform.rotation;
 
-                // Sets Kenron Velocity to zero to prevent sliding 
-                m_kenronRigidBody.velocity = Vector3.zero;
+            // position hit box
+            m_dashCollider.transform.position = transform.position + transform.forward * (dashDistance / 2f);
+        }
+        else if (XCI.GetAxis(XboxAxis.RightTrigger, m_controller) < 0.1f && !isDashing)
+        {
+            m_triggerDown = false;
+        }
+
+        if (isDashing)
+        {
+            transform.position = Vector3.Lerp(transform.position, m_dashPosition, m_dashSpeed * Time.deltaTime);
+
+            // if completed dash
+            if ((m_dashPosition - transform.position).sqrMagnitude <= 0.1f)
+            {
+                // reset boolean flags
+                m_controllerOn = true;
+                isDashing = false;
+                m_dashCollider.enabled = false;
             }
         }
     }
@@ -347,15 +319,14 @@ public class Kenron : BaseCharacter {
             // If Kenron has the skill specificed and his health is less than or equal to 0
             if (m_playerSkills.Find(skill => skill.Name == "Curse of Amaterasu") && m_currentHealth <= 0.0f)
             {
-				if (childKenron)
+                //GameObject part = Instantiate(m_CurseEffect, childKenron.transform.position + Vector3.down * 0.5f, Quaternion.Euler(270, 0, 0), transform);
+				if (childKenron != null)
 				{
 					// Disables Main kenron, Spawns and enables Child kenron at Main Kenrons position 
+					childKenron.gameObject.SetActive(true);                  
 					childKenron.CheckStatus();
-                    childKenron.transform.position = this.gameObject.transform.position;
-					childKenron.gameObject.SetActive(true);
-                    GameObject part = Instantiate(m_CurseEffect, childKenron.transform.position + Vector3.down * 0.5f, Quaternion.Euler(270, 0, 0), transform);
-                    Destroy(part, childKenron.timer);
 				}
+                //Destroy(part, 15);
             }
         }
     }

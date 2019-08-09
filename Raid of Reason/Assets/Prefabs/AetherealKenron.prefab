@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 2418696165401112933}
   - component: {fileID: 6613786586598565895}
   - component: {fileID: 6070767901650353861}
-  - component: {fileID: 2268850298961720299}
+  - component: {fileID: 2407567015201047152}
+  - component: {fileID: 6920736783162853241}
   m_Layer: 0
   m_Name: AetherealKenron
   m_TagString: Kenron
@@ -33,6 +34,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1496590939940779359}
+  - {fileID: 4166056438265729007}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -111,7 +113,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 3
---- !u!114 &2268850298961720299
+--- !u!114 &2407567015201047152
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,28 +122,122 @@ MonoBehaviour:
   m_GameObject: {fileID: 2477906026665673246}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e4cf2bfe3871d8479b6c06907f61865, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d2e13b62ce843746a5094dc163e339c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerState: 0
-  m_damage: 60
-  m_controlSpeed: 10
-  m_maxHealth: 50
-  controller: 1
+  m_maxHealth: 0
   m_currentHealth: 0
+  m_deathTimer: 0
+  m_damage: 0
+  m_movementSpeed: 0
+  m_controller: 0
+  m_reviveTimer: 0
+  m_reviveRadius: 0
+  m_healthUponRevive: 0
   m_playerSkillPoints: 0
-  playerSkills: []
+  m_playerSkills: []
+  m_controllerOn: 0
   m_camera: {fileID: 0}
-  m_SkillDisplay: {fileID: 0}
-  m_SkillMaxed: {fileID: 0}
-  m_Amaterasu: {fileID: 6857038649991173412}
-  m_KenronSkeleton: {fileID: 6070767901650353861}
-  particle: {fileID: 1186225012428732162, guid: 14477d58dd7a8ea4faec6e74cea8b4f1,
-    type: 3}
-  swordParticle: {fileID: 100004, guid: 1c20c7996d683754db1f0f62a361952c, type: 3}
-  Destructive: {fileID: 0}
-  manager: {fileID: 0}
-  isActive: 0
+  m_skillDisplay: {fileID: 0}
+  m_skillMaxed: {fileID: 0}
+  m_reviveColliderRadius: {fileID: 0}
+  reviveParticle: {fileID: 0}
+  Child: {fileID: 0}
+  m_dashTime: 0
+  m_maxDashDistance: 0
+  m_dashSpeed: 0
+  m_dashCollider: {fileID: 0}
+  swordCollider: {fileID: 0}
+  Amaterasu: {fileID: 0}
+  nashornBuffGiven: 0
+--- !u!95 &6920736783162853241
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2477906026665673246}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &2744783201431100588
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4166056438265729007}
+  - component: {fileID: 1759469140455930753}
+  - component: {fileID: 5313765807685928630}
+  - component: {fileID: 8469008370879640636}
+  m_Layer: 9
+  m_Name: Dash Hit Box
+  m_TagString: Amaterasu
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4166056438265729007
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2744783201431100588}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.16851833, y: -1, z: 7.075432}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8668622199191288015}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &1759469140455930753
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2744783201431100588}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &5313765807685928630
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2744783201431100588}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8469008370879640636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2744783201431100588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35ce05d2e64cd76439eb4369617bece8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  kenron: {fileID: 0}
+  nashorn: {fileID: 0}
 --- !u!1 &6857038649991173412
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,7 +250,6 @@ GameObject:
   - component: {fileID: 4773969686521430395}
   - component: {fileID: 6218477691220846872}
   - component: {fileID: 2490306131420305672}
-  - component: {fileID: 5545407520991264365}
   m_Layer: 0
   m_Name: Amaterasu
   m_TagString: Amaterasu
@@ -234,17 +329,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1.1781235}
   m_Center: {x: 0, y: 0, z: -0.0027599335}
---- !u!114 &5545407520991264365
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6857038649991173412}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35ce05d2e64cd76439eb4369617bece8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_damage: 70
-  Kenron: {fileID: 2268850298961720299}

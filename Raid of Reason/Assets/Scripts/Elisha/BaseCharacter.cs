@@ -108,6 +108,7 @@ public abstract class BaseCharacter : MonoBehaviour {
         m_reviveColliderRadius.enabled = false;
         reviveParticle.transform.position = this.gameObject.transform.position;
         reviveParticle.SetActive(false);
+        m_skillDisplay.text = m_playerSkillPoints.ToString();
     }
 
     /// <summary>
@@ -137,7 +138,6 @@ public abstract class BaseCharacter : MonoBehaviour {
                 Debug.Log("default");
 				break;
 		}
-        m_skillDisplay.text = m_playerSkillPoints.ToString();
 	}
 
     /// <summary>
