@@ -131,6 +131,8 @@ public class Kenron : BaseCharacter {
 		// set size of dash hit box
 		Vector3 hitBoxSize = new Vector3(m_dashCollider.size.x, m_dashCollider.size.y, m_maxDashDistance);
 		m_dashCollider.size = hitBoxSize;
+
+		GameManager.Instance.GiveCharacterReference(this);
 	}
 
     protected override void FixedUpdate()
@@ -192,7 +194,7 @@ public class Kenron : BaseCharacter {
     public void DashAttack()
     {
         // dash attack
-        if (XCI.GetAxis(XboxAxis.RightTrigger, m_controller) > 0.1f && m_controllerOn && !m_triggerDown)
+        if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1f && m_controllerOn && !m_triggerDown)
         {
             // set boolean flags
             m_triggerDown = true;
@@ -228,7 +230,7 @@ public class Kenron : BaseCharacter {
             // position hit box
             m_dashCollider.transform.position = transform.position + transform.forward * (dashDistance / 2f);
         }
-        else if (XCI.GetAxis(XboxAxis.RightTrigger, m_controller) < 0.1f && !isDashing)
+        else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) < 0.1f && !isDashing)
         {
             m_triggerDown = false;
         }

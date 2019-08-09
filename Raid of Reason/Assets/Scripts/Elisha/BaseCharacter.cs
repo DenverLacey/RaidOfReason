@@ -39,7 +39,7 @@ public abstract class BaseCharacter : MonoBehaviour {
     protected float m_movementSpeed;
 
     [Tooltip("Pick what controller this player is.")]
-    public XboxController m_controller;
+    public XboxController controller;
 
     [SerializeField]
     [Tooltip("How long will it take the player to revive his teammate?")]
@@ -177,17 +177,17 @@ public abstract class BaseCharacter : MonoBehaviour {
         if (m_controllerOn)
         {
             // Calculates the x axis of the left stick (left and right movement).
-            float axisX = XCI.GetAxis(XboxAxis.LeftStickX, m_controller) * m_movementSpeed;
+            float axisX = XCI.GetAxis(XboxAxis.LeftStickX, controller) * m_movementSpeed;
             // Calculates the z axis of the left stick (forward and backward movement).
-            float axisZ = XCI.GetAxis(XboxAxis.LeftStickY, m_controller) * m_movementSpeed;
+            float axisZ = XCI.GetAxis(XboxAxis.LeftStickY, controller) * m_movementSpeed;
             // Makes sure Player movement is relative to the direction of the cameras forward.
             Vector3 movement = m_camera.transform.TransformDirection(axisX, 0, axisZ);
             transform.position += new Vector3(movement.x, 0, movement.z) * Time.deltaTime;
 
             // Calculates the rotation on the x axis of the right stick.
-            float rotAxisX = XCI.GetAxis(XboxAxis.RightStickX, m_controller) * m_rotationSpeed;
+            float rotAxisX = XCI.GetAxis(XboxAxis.RightStickX, controller) * m_rotationSpeed;
             // Calculates the rotation on the z axis of the right stick.
-            float rotAxisZ = XCI.GetAxis(XboxAxis.RightStickY, m_controller) * m_rotationSpeed;
+            float rotAxisZ = XCI.GetAxis(XboxAxis.RightStickY, controller) * m_rotationSpeed;
             // Makes sure Player rotation is relative to the direction of the cameras forward.
             Vector3 rawDir = m_camera.transform.TransformDirection(rotAxisX, 0, rotAxisZ);
             Vector3 direction = new Vector3(rawDir.x, 0, rawDir.z); 
@@ -336,7 +336,7 @@ public abstract class BaseCharacter : MonoBehaviour {
                     Debug.Log("Hold B to revive");
 
                     // Checks if the player holds the B button
-                    if (XCI.GetButton(XboxButton.B, player.m_controller))
+                    if (XCI.GetButton(XboxButton.B, player.controller))
                     {
                         // Means they are reviving the player.
                         IsBeingRevived = true;
@@ -371,7 +371,7 @@ public abstract class BaseCharacter : MonoBehaviour {
                         }
                     }
                     // If the user lets go of the revive button, reset the timer for reviving.
-                    else if(XCI.GetButtonUp(XboxButton.B, player.m_controller))
+                    else if(XCI.GetButtonUp(XboxButton.B, player.controller))
                     {
                         m_reviveTimer = 5f;
                     }

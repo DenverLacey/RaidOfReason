@@ -18,7 +18,7 @@ public class PlayerHandler : MonoBehaviour
 
     private void Update()
     {
-        if (XCI.GetButtonDown(XboxButton.A, Player.m_controller))
+        if (XCI.GetButtonDown(XboxButton.A, Player.controller))
         {
             if (m_KCanvas)
             {

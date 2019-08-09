@@ -29,7 +29,7 @@ public class EnemyCounter : MonoBehaviour
     public void OnDestroy()
     {
         // Destroys the current enemy
-        m_Manager.OnEnemyDestroyed(this);
+        // m_Manager.OnEnemyDestroyed(this);
     }
 
 }

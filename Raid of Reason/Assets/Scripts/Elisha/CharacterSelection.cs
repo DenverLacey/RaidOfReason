@@ -6,6 +6,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using XboxCtrlrInput;
 
 public enum Character
@@ -138,27 +139,14 @@ public class CharacterSelection : MonoBehaviour
 	{
 		foreach (var pair in m_characterToControllerMap)
 		{
-			switch (pair.Key)
-			{
-				case Character.KENRON:
-					GameManager.Instance.KenronController = pair.Value;
-					break;
-
-				case Character.NASHORN:
-					GameManager.Instance.NashornController = pair.Value;
-					break;
-
-				case Character.THEA:
-					GameManager.Instance.TheaController = pair.Value;
-					break;
-
-				default:
-					Debug.LogErrorFormat("{0} controller couldn't be assigned to a character. Error Value: {1}", pair.Value, pair.Key);
-					break;
-			}
+			GameManager.Instance.AddController(pair.Key, pair.Value);
 		}
 
-		// TODO: Move to next scene
+		// load next scene
+		if (SceneManager.sceneCount > 0)
+		{
+			SceneManager.LoadScene(1);
+		}
 	}
 
 	private bool UnlockButtonByCharacter(Character character)

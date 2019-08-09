@@ -11,7 +11,7 @@ public class SmashDamage : MonoBehaviour
         {
             EnemyData enemy = other.gameObject.GetComponent<EnemyData>();
 
-            if (enemy && XCI.GetAxis(XboxAxis.RightTrigger, GameManager.Instance.Nashorn.m_controller) > 0.1)
+            if (enemy && XCI.GetAxis(XboxAxis.RightTrigger, GameManager.Instance.Nashorn.controller) > 0.1)
             {
                 enemy.TakeDamage(GameManager.Instance.Nashorn.GetDamage());
                 enemy.GetComponent<MeshRenderer>().material.color = Color.red;

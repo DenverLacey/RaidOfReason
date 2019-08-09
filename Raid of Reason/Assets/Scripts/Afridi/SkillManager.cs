@@ -61,7 +61,7 @@ public class SkillManager : MonoBehaviour {
         if (GameManager.Instance.Kenron != null)
         {
             // If the first players left trigger is pressed
-            if (XCI.GetAxis(XboxAxis.LeftTrigger, GameManager.Instance.Kenron.m_controller) > 0.1f)
+            if (XCI.GetAxis(XboxAxis.LeftTrigger, GameManager.Instance.Kenron.controller) > 0.1f)
             {
                 // if the current cooldown is greater than the main
                 if (m_Skills[0].m_currentCoolDown >= m_Skills[0].m_coolDown)
@@ -82,7 +82,7 @@ public class SkillManager : MonoBehaviour {
         {
 
             // If the second players left trigger is pressed
-            if (XCI.GetAxis(XboxAxis.LeftTrigger, GameManager.Instance.Nashorn.m_controller) > 0.1f)
+            if (XCI.GetAxis(XboxAxis.LeftTrigger, GameManager.Instance.Nashorn.controller) > 0.1f)
             {
                 // if the current cooldown is greater than the main
                 if (m_Skills[1].m_currentCoolDown >= m_Skills[1].m_coolDown)
@@ -102,7 +102,7 @@ public class SkillManager : MonoBehaviour {
         if (GameManager.Instance.Thea != null)
         {
             // If the third players left trigger is pressed
-            if (XCI.GetAxis(XboxAxis.LeftTrigger, GameManager.Instance.Thea.m_controller) > 0.1f && GameManager.Instance.Thea.playerState == BaseCharacter.PlayerState.ALIVE)
+            if (XCI.GetAxis(XboxAxis.LeftTrigger, GameManager.Instance.Thea.controller) > 0.1f && GameManager.Instance.Thea.playerState == BaseCharacter.PlayerState.ALIVE)
             {
                 // if the current cooldown is greater than the main
                 if (m_Skills[2].m_currentCoolDown >= m_Skills[2].m_coolDown)
@@ -114,7 +114,7 @@ public class SkillManager : MonoBehaviour {
                 }
             }
             // or else if the third players trigger is not pressed
-            else if (XCI.GetAxis(XboxAxis.LeftTrigger, GameManager.Instance.Thea.m_controller) < 0.1f)
+            else if (XCI.GetAxis(XboxAxis.LeftTrigger, GameManager.Instance.Thea.controller) < 0.1f)
             {
                 if (m_Skills[2].active)
                 {

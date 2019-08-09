@@ -110,6 +110,8 @@ public class Theá : BaseCharacter
         m_AOEParticleCollider.enabled = false;
         aoe = m_AOEParticle.shape;
         m_aimCursor = GameObject.FindGameObjectWithTag("AimCursor");
+
+		GameManager.Instance.GiveCharacterReference(this);
     }
 
     // Update is called once per frame
@@ -131,17 +133,17 @@ public class Theá : BaseCharacter
         if (m_controllerOn)
         {
             // Calculates the x axis of the left stick (left and right movement).
-            float axisX = XCI.GetAxis(XboxAxis.LeftStickX, m_controller) * m_movementSpeed;
+            float axisX = XCI.GetAxis(XboxAxis.LeftStickX, controller) * m_movementSpeed;
             // Calculates the z axis of the left stick (forward and backward movement).
-            float axisZ = XCI.GetAxis(XboxAxis.LeftStickY, m_controller) * m_movementSpeed;
+            float axisZ = XCI.GetAxis(XboxAxis.LeftStickY, controller) * m_movementSpeed;
             // Makes sure Player movement is relative to the direction of the cameras forward.
             Vector3 movement = m_camera.transform.TransformDirection(axisX, 0, axisZ);
             transform.position += new Vector3(movement.x, 0, movement.z) * Time.deltaTime;
 
             // Calculates the x axis of the right stick (left and right movement).
-            float cursorAxisX = XCI.GetAxis(XboxAxis.RightStickX, m_controller) * aimCursorSpeed;
+            float cursorAxisX = XCI.GetAxis(XboxAxis.RightStickX, controller) * aimCursorSpeed;
             // Calculates the z axis of the right stick (forward and backward movement).
-            float cursorAxisZ = XCI.GetAxis(XboxAxis.RightStickY, m_controller) * aimCursorSpeed;
+            float cursorAxisZ = XCI.GetAxis(XboxAxis.RightStickY, controller) * aimCursorSpeed;
 
             Vector3 cursorMovement = m_camera.transform.TransformDirection(cursorAxisX, 0, cursorAxisZ);
             cursorMovement.y = 0f;
@@ -196,7 +198,7 @@ public class Theá : BaseCharacter
         m_counter += Time.deltaTime;
 
         // If the player presses the right trigger button.
-        if (XCI.GetAxis(XboxAxis.RightTrigger, this.m_controller) > 0.1)
+        if (XCI.GetAxis(XboxAxis.RightTrigger, this.controller) > 0.1)
         {
             // Start the shot counter.
             m_shotCounter += Time.deltaTime;
@@ -212,7 +214,7 @@ public class Theá : BaseCharacter
             }
         }
         // If player releases the right trigger button.
-        else if (XCI.GetAxis(XboxAxis.RightTrigger, this.m_controller) < 0.1)
+        else if (XCI.GetAxis(XboxAxis.RightTrigger, this.controller) < 0.1)
         {
             // Reset the counter.
             m_shotCounter = 0f;
