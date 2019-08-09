@@ -5,27 +5,23 @@ using XboxCtrlrInput;
 
 public class SmashDamage : MonoBehaviour
 {
-    public Nashorn Nashorn;
-    public Kenron Kenron;
-
     public void OnTriggerEnter(Collider other)
     {
-        string tag = other.gameObject.tag;
-        if (tag == "Enemy")
+        if (other.gameObject.tag == "Enemy")
         {
             EnemyData enemy = other.gameObject.GetComponent<EnemyData>();
 
-            if (enemy && XCI.GetAxis(XboxAxis.RightTrigger, Nashorn.m_controller) > 0.1)
+            if (enemy && XCI.GetAxis(XboxAxis.RightTrigger, GameManager.Instance.Nashorn.m_controller) > 0.1)
             {
-                enemy.TakeDamage(Nashorn.GetDamage());
+                enemy.TakeDamage(GameManager.Instance.Nashorn.GetDamage());
                 enemy.GetComponent<MeshRenderer>().material.color = Color.red;
                 StartCoroutine(ResetMaterialColour(enemy, .2f));
-                if (Nashorn.m_playerSkills.Find(skill => skill.Name == "Shockwave"))
+                if (GameManager.Instance.Nashorn.m_playerSkills.Find(skill => skill.Name == "Shockwave"))
                 { 
                     Vector3 direction = this.transform.position - enemy.transform.position;
                     other.GetComponent<StatusEffectManager>().ApplyKnockBack(enemy.gameObject, direction, 1, 0.3f);
                 }
-                if (Kenron.m_playerSkills.Find(skill => skill.Name == "Shuras Reckoning") && Kenron.isActive == true) {
+                if (GameManager.Instance.Kenron.m_playerSkills.Find(skill => skill.Name == "Shuras Reckoning") && GameManager.Instance.Kenron.isActive == true) {
                     other.GetComponent<StatusEffectManager>().ApplyBurn(4);
                 }
             }

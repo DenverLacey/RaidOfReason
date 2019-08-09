@@ -14,8 +14,16 @@ public class PlayerCursor : MonoBehaviour
 
 	private Vector2 m_input;
 
+	private CharacterSelection m_characterSelection;
+
+	private void Start()
+	{
+		m_characterSelection = FindObjectOfType<CharacterSelection>();
+	}
+
 	private void Update()
 	{
+		// movement
 		if (controller == XboxController.Any)
 		{
 			return;
@@ -30,6 +38,12 @@ public class PlayerCursor : MonoBehaviour
 
 		// move cursor
 		transform.Translate(m_input.x, m_input.y, 0);
+
+		// deselecting character
+		if (XCI.GetButtonDown(XboxButton.B, controller))
+		{
+			m_characterSelection.DeselectCharacter(this);
+		}
 	}
 
 

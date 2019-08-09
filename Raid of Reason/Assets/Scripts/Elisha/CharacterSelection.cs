@@ -30,6 +30,13 @@ public class CharacterSelection : MonoBehaviour
 
 	private Dictionary<Character, XboxController> m_characterToControllerMap = new Dictionary<Character, XboxController>();
 
+	private CharacterButton[] m_characterButtons;
+
+	private void Start()
+	{
+		m_characterButtons = FindObjectsOfType<CharacterButton>();
+	}
+
 	private void Update()
 	{
 		// assign controllers
@@ -74,12 +81,12 @@ public class CharacterSelection : MonoBehaviour
 		m_playerPanels[(int)cursor.controller - 1].infoPanels[(int)character].SetActive(false);
 	}
 
-	public void SelectCharacter(Character character, PlayerCursor cursor)
+	public bool SelectCharacter(Character character, PlayerCursor cursor)
 	{
-		// check if character is available
+		// check if character is available or if controller already controlling a character
 		if (m_characterToControllerMap.ContainsKey(character))
 		{
-			return;
+			return false;
 		}
 
 		// check if controller is already controlling another character
@@ -94,10 +101,37 @@ public class CharacterSelection : MonoBehaviour
 				}
 			}
 			m_characterToControllerMap.Remove(match);
+
+			UnlockButtonByCharacter(match);
 		}
 
 		// add character controller pair
 		m_characterToControllerMap[character] = cursor.controller;
+
+		return true;
+	}
+
+	public bool DeselectCharacter(PlayerCursor cursor)
+	{
+		// check if cursor exists in dictionary
+		if (m_characterToControllerMap.ContainsValue(cursor.controller))
+		{
+			// remove from character controller map
+			Character match = Character.KENRON;
+			foreach (var pair in m_characterToControllerMap)
+			{
+				if (pair.Value == cursor.controller)
+				{
+					match = pair.Key;
+					break;
+				}
+			}
+			m_characterToControllerMap.Remove(match);
+
+			UnlockButtonByCharacter(match);
+			return true;
+		}
+		return false;
 	}
 
 	public void AcceptSelection()
@@ -123,5 +157,20 @@ public class CharacterSelection : MonoBehaviour
 					break;
 			}
 		}
+
+		// TODO: Move to next scene
+	}
+
+	private bool UnlockButtonByCharacter(Character character)
+	{
+		foreach (var button in m_characterButtons)
+		{
+			if (button.Character == character)
+			{
+				button.Unlock();
+				return true;
+			}
+		}
+		return false;
 	}
 }

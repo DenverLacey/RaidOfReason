@@ -64,7 +64,10 @@ public abstract class BaseCharacter : MonoBehaviour {
 
     [HideInInspector]
     public bool m_controllerOn;
+
+	[HideInInspector]
     public MultiTargetCamera m_camera;
+
     public TextMeshProUGUI m_skillDisplay;
     public TextMeshProUGUI m_skillMaxed;
     protected Animator m_animator;

@@ -56,7 +56,7 @@ public class ProjectileMove : MonoBehaviour {
     /// </summary>
     /// <param name="other"></param>
     public void OnCollisionEnter(Collision other)
-    {
+	{
         string tag = other.gameObject.tag;
         // If the projectile hits an object with the tag 'Enemy'.
         if (tag == "Enemy")

@@ -14,6 +14,10 @@ using XboxCtrlrInput;
 
 public class Nashorn : BaseCharacter
 {
+	[SerializeField]
+	[Tooltip("How quickly Nashorn can punch")]
+	private float m_attackSpeed;
+
     [Tooltip("The Two Gauntlets That Nashorn Attacks With")]
     public List<GameObject> Gauntlets;
 
@@ -60,9 +64,6 @@ public class Nashorn : BaseCharacter
     [Tooltip("Range Chain Lightning spreads dealt by Macht Des Sturms ability")]
     private float m_lightningRadius;
 
-    // Swaps Between Left and Right Gauntlets: 0 = Left / 1 = Right
-    private uint u_gauntletIndex = 0;
-
     // Nashorns Rigidbody
     private Rigidbody m_nashornRigidBody;
 
@@ -88,9 +89,7 @@ public class Nashorn : BaseCharacter
     [SerializeField]
     public EnemyData enemies;
 
-    // Will Be Removed
-    private bool RightPunch;
-    private bool LeftPunch;
+	private float m_attackTimer;
 
     protected override void Awake()
     {
@@ -101,8 +100,6 @@ public class Nashorn : BaseCharacter
         RightGauntlet.enabled = false;
         isTaunting = false;
         isActive = false;
-        RightPunch = false;
-        LeftPunch = false;
         m_Thea = FindObjectOfType<Theá>();
         m_Kenron = FindObjectOfType<Kenron>();
 
@@ -231,29 +228,16 @@ public class Nashorn : BaseCharacter
             // If the Triggers has been pressed
             if (XCI.GetAxis(XboxAxis.RightTrigger, m_controller) > 0.1)
             {
+				// reset timer
+				m_attackTimer = 0.0f;
+
                 // Gauntlet Colliders are Enabled and Nashorn Becomes Stationary 
                 LeftGauntlet.enabled = true;
                 RightGauntlet.enabled = true;
                 SetSpeed(0.0f);
 
-                // If its the left Gauntlet
-                if (u_gauntletIndex == 0 && LeftPunch == false)
-                {
-                    Gauntlets[0].gameObject.transform.localPosition = new Vector3(-0.75f, 0, 0.8f); // Will be Removed
-
-                    LeftPunch = true;
-                    // Spawns a particle at the gauntlet that is attacking
-                    particleInstantiate = Instantiate(m_gauntletParticle, Gauntlets[0].transform.position + Vector3.forward * (Gauntlets[0].transform.localScale.y / 2), Quaternion.Euler(-180, 0, 0), Gauntlets[0].transform);
-                }
-                // If its the right Gauntlet
-                if (u_gauntletIndex == 1 && RightPunch == false)
-                {
-                    Gauntlets[1].gameObject.transform.localPosition = new Vector3(0.75f, 0, 0.8f); // Will be Removed
-
-                    RightPunch = true;
-                    // Spawns a particle at the gauntlet that is attacking
-                    particleInstantiate = Instantiate(m_gauntletParticle, Gauntlets[1].transform.position + Vector3.forward * (Gauntlets[1].transform.localScale.y / 2), Quaternion.Euler(-180, 0, 0), Gauntlets[1].transform);
-                }
+				// alternate arm
+				m_animator.SetBool("Attack", true);
             }
             // or if the trigger isnt pressed
             else if (XCI.GetAxis(XboxAxis.RightTrigger, m_controller) < 0.1)
@@ -263,26 +247,7 @@ public class Nashorn : BaseCharacter
                 RightGauntlet.enabled = false;
                 SetSpeed(10.0f);
 
-                // If its the left Gauntlet
-                if (u_gauntletIndex == 0 && LeftPunch == true)
-                {
-                    Gauntlets[0].gameObject.transform.localPosition = new Vector3(-0.75f, 0, 0.0f); // Will be Removed
-
-                    LeftPunch = false;
-                    // Sets the index and destroys the particle
-                    u_gauntletIndex = 1;
-                    Destroy(particleInstantiate);
-                }
-                // If its the right Gauntlet
-                if (u_gauntletIndex == 1 && RightPunch == true)
-                {
-                    Gauntlets[1].gameObject.transform.localPosition = new Vector3(0.75f, 0, 0.0f); // Will be Removed
-
-                    RightPunch = false;
-                    // Sets the index and destroys the particle
-                    u_gauntletIndex = 0;
-                    Destroy(particleInstantiate);
-                }
+				m_animator.SetBool("Attack", false);
             }
         }
     }
