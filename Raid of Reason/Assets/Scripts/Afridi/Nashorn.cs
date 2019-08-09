@@ -14,10 +14,6 @@ using XboxCtrlrInput;
 
 public class Nashorn : BaseCharacter
 {
-	[SerializeField]
-	[Tooltip("How quickly Nashorn can punch")]
-	private float m_attackSpeed;
-
     [Tooltip("The Two Gauntlets That Nashorn Attacks With")]
     public List<GameObject> Gauntlets;
 
@@ -88,8 +84,6 @@ public class Nashorn : BaseCharacter
     // Nearby enemies
     [SerializeField]
     public EnemyData enemies;
-
-	private float m_attackTimer;
 
     protected override void Awake()
     {
@@ -228,9 +222,6 @@ public class Nashorn : BaseCharacter
             // If the Triggers has been pressed
             if (XCI.GetAxis(XboxAxis.RightTrigger, m_controller) > 0.1)
             {
-				// reset timer
-				m_attackTimer = 0.0f;
-
                 // Gauntlet Colliders are Enabled and Nashorn Becomes Stationary 
                 LeftGauntlet.enabled = true;
                 RightGauntlet.enabled = true;

@@ -41,11 +41,6 @@ public class SkillManager : MonoBehaviour {
     [Tooltip("A List of How Many Main Skills the Players Have")]
     public List<Skills> m_Skills;
 
-    // All Thre Players
-    public Kenron m_Kenron;
-    public Theá m_theá;
-    public Nashorn m_Nashorn;
-
     protected void Awake()
     {
         // Intialisation 
@@ -54,10 +49,6 @@ public class SkillManager : MonoBehaviour {
             // Sets the Cooldown
             skill.m_currentCoolDown = skill.m_coolDown;
         }
-
-		m_theá = FindObjectOfType<Theá>();
-		m_Kenron = FindObjectOfType<Kenron>();
-        m_Nashorn = FindObjectOfType<Nashorn>();
     }
 
     /// <summary>
@@ -67,16 +58,16 @@ public class SkillManager : MonoBehaviour {
     protected void Update()
     {
         // Empty Check
-        if (m_Kenron != null)
+        if (GameManager.Instance.Kenron != null)
         {
             // If the first players left trigger is pressed
-            if (XCI.GetAxis(XboxAxis.LeftTrigger, m_Kenron.m_controller) > 0.1f)
+            if (XCI.GetAxis(XboxAxis.LeftTrigger, GameManager.Instance.Kenron.m_controller) > 0.1f)
             {
                 // if the current cooldown is greater than the main
                 if (m_Skills[0].m_currentCoolDown >= m_Skills[0].m_coolDown)
                 {
                     // Activate Ability
-                    m_Kenron.ChaosFlame();
+                    GameManager.Instance.Kenron.ChaosFlame();
 
                     // Skill is Reset and has been Activated
                     m_Skills[0].m_currentCoolDown = 0;
@@ -87,17 +78,17 @@ public class SkillManager : MonoBehaviour {
         }
 
         // Empty Check
-        if (m_Nashorn != null)
+        if (GameManager.Instance.Nashorn != null)
         {
 
             // If the second players left trigger is pressed
-            if (XCI.GetAxis(XboxAxis.LeftTrigger, m_Nashorn.m_controller) > 0.1f)
+            if (XCI.GetAxis(XboxAxis.LeftTrigger, GameManager.Instance.Nashorn.m_controller) > 0.1f)
             {
                 // if the current cooldown is greater than the main
                 if (m_Skills[1].m_currentCoolDown >= m_Skills[1].m_coolDown)
                 {
                     // Activate Ability
-                    m_Nashorn.Spott();
+                    GameManager.Instance.Nashorn.Spott();
 
                     // Skill is Reset and has been Activated
                     m_Skills[1].m_currentCoolDown = 0;
@@ -108,22 +99,22 @@ public class SkillManager : MonoBehaviour {
         }
 
         // Empty Check
-        if (m_theá != null)
+        if (GameManager.Instance.Thea != null)
         {
             // If the third players left trigger is pressed
-            if (XCI.GetAxis(XboxAxis.LeftTrigger, m_theá.m_controller) > 0.1f && m_theá.playerState == BaseCharacter.PlayerState.ALIVE)
+            if (XCI.GetAxis(XboxAxis.LeftTrigger, GameManager.Instance.Thea.m_controller) > 0.1f && GameManager.Instance.Thea.playerState == BaseCharacter.PlayerState.ALIVE)
             {
                 // if the current cooldown is greater than the main
                 if (m_Skills[2].m_currentCoolDown >= m_Skills[2].m_coolDown)
                 {
                     // Activate Ability
-                    m_theá.GiftOfPoseidon();
+                    GameManager.Instance.Thea.GiftOfPoseidon();
                     // Skill is Active
                     m_Skills[2].active = true;
                 }
             }
             // or else if the third players trigger is not pressed
-            else if (XCI.GetAxis(XboxAxis.LeftTrigger, m_theá.m_controller) < 0.1f)
+            else if (XCI.GetAxis(XboxAxis.LeftTrigger, GameManager.Instance.Thea.m_controller) < 0.1f)
             {
                 if (m_Skills[2].active)
                 {
@@ -132,10 +123,10 @@ public class SkillManager : MonoBehaviour {
                     m_Skills[2].active = false;
                     m_Skills[2].reset = true;
                     // Grants health and resets
-                    if (m_theá.playerState == BaseCharacter.PlayerState.ALIVE)
+                    if (GameManager.Instance.Thea.playerState == BaseCharacter.PlayerState.ALIVE)
                     {
-                        m_theá.GiveHealth();
-                        m_theá.ResetGiftOfPoseidon();
+                        GameManager.Instance.Thea.GiveHealth();
+                        GameManager.Instance.Thea.ResetGiftOfPoseidon();
                     }
                 }
             }

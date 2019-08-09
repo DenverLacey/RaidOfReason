@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3878829685956162847}
   - component: {fileID: 2199128655337803380}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ReviveCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,8 +101,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35ce05d2e64cd76439eb4369617bece8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  kenron: {fileID: 0}
-  nashorn: {fileID: 0}
 --- !u!54 &9024896798257931196
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -154,18 +152,18 @@ MonoBehaviour:
   m_maxHealth: 100
   m_currentHealth: 0
   m_deathTimer: 20
-  m_damage: 20
+  m_damage: 33
   m_movementSpeed: 15
-  m_controller: 3
+  m_controller: 1
   m_reviveTimer: 5
   m_reviveRadius: 5
-  m_healthUponRevive: 50
+  m_healthUponRevive: 25
   m_playerSkillPoints: 10
   m_playerSkills: []
   m_controllerOn: 0
   m_camera: {fileID: 0}
-  m_skillDisplay: {fileID: 0}
-  m_skillMaxed: {fileID: 0}
+  m_skillDisplay: {fileID: 6274874930049916589}
+  m_skillMaxed: {fileID: 6274874929479299256}
   m_reviveColliderRadius: {fileID: 2199128655337803380}
   reviveParticle: {fileID: 100006, guid: 60bc526f4be1e044ab9e46340b82ffb3, type: 3}
   swordCollider: {fileID: 0}
@@ -175,7 +173,7 @@ MonoBehaviour:
   isActive: 0
   m_dashTime: 0.1
   m_maxDashDistance: 10
-  m_dashSpeed: 10
+  m_dashSpeed: 15
   m_dashCollider: {fileID: 8127437655268787968}
   m_chaosFlameDamage: 70
   m_chaosFlameSpeed: 25
@@ -909,7 +907,7 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -1069,7 +1067,7 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -1459,7 +1457,7 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -1769,7 +1767,7 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -1929,7 +1927,7 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -2374,7 +2372,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaf5e952e0688c04790cdb7831af7681, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
+  Player: {fileID: 3669397548289971863}
   m_KCanvas: {fileID: 6274874930190977439}
   m_NCanvas: {fileID: 0}
   m_TCanvas: {fileID: 0}
@@ -3059,7 +3057,7 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -3375,7 +3373,7 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -3785,7 +3783,7 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -3888,7 +3886,7 @@ GameObject:
   - component: {fileID: 6274874930775075313}
   - component: {fileID: 6274874930775075317}
   - component: {fileID: 6274874930775075316}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Amaterasu
   m_TagString: Amaterasu
   m_Icon: {fileID: 0}
@@ -3963,6 +3961,14 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: 73aaba7b5b9d38848b2e6c09daea56e5, type: 3}
       propertyPath: m_Name
+      value: Kenron
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 73aaba7b5b9d38848b2e6c09daea56e5, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 73aaba7b5b9d38848b2e6c09daea56e5, type: 3}
+      propertyPath: m_TagString
       value: Kenron
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 73aaba7b5b9d38848b2e6c09daea56e5, type: 3}
