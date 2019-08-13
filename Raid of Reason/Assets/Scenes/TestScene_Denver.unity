@@ -2959,21 +2959,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52b848c53e1ebcd418915859c93aa87f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numOfEnemies: 30
-  explosiveEnemy: {fileID: 0}
-  explosiveSpawnRate: 0
-  meleeEnemy: {fileID: 0}
-  meleeSpawnRate: 0
-  rangedEnemy: {fileID: 0}
-  rangedSpawnRate: 0
-  hordeEnemy: {fileID: 0}
-  hordeSpawnRate: 0
-  spawnPoints:
-  - {fileID: 465744022}
-  - {fileID: 1072728751}
-  - {fileID: 229635229}
-  - {fileID: 1753805238}
-  - {fileID: 1395842081}
 --- !u!1 &1338994998
 GameObject:
   m_ObjectHideFlags: 0
@@ -3130,11 +3115,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2374662972281697512, guid: 918bd5026542483419744051db69f039,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5001416121934993675, guid: 918bd5026542483419744051db69f039,
         type: 3}
       propertyPath: m_Name
@@ -3143,6 +3123,15 @@ PrefabInstance:
     - target: {fileID: 5001416121934993675, guid: 918bd5026542483419744051db69f039,
         type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 764046752, guid: 918bd5026542483419744051db69f039, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2374662972281697512, guid: 918bd5026542483419744051db69f039,
+        type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3278971660554522984, guid: 918bd5026542483419744051db69f039,
@@ -3159,10 +3148,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 2.31
-      objectReference: {fileID: 0}
-    - target: {fileID: 764046752, guid: 918bd5026542483419744051db69f039, type: 3}
-      propertyPath: m_Layer
-      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 542764386818887905, guid: 918bd5026542483419744051db69f039,
         type: 3}
@@ -3632,6 +3617,89 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6062317349350728768, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
+        type: 3}
+      propertyPath: m_Name
+      value: '---Nashorn---'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6062317349350728768, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8658002114787066654, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1425690750321983233, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
+        type: 3}
+      propertyPath: m_maxHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1425690750321983233, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
+        type: 3}
+      propertyPath: m_movementSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1425690750321983233, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
+        type: 3}
+      propertyPath: m_skillDisplay
+      value: 
+      objectReference: {fileID: 694308160}
+    - target: {fileID: 1425690750321983233, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
+        type: 3}
+      propertyPath: m_skillMaxed
+      value: 
+      objectReference: {fileID: 146138030}
+    - target: {fileID: 1425690750321983233, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
+        type: 3}
+      propertyPath: m_reviveColliderRadius
+      value: 
+      objectReference: {fileID: 1695213136}
+    - target: {fileID: 1425690750321983233, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
+        type: 3}
+      propertyPath: reviveParticle
+      value: 
+      objectReference: {fileID: 417870988}
+    - target: {fileID: 1425690750321983233, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
+        type: 3}
+      propertyPath: RightGauntlet
+      value: 
+      objectReference: {fileID: 398162857}
+    - target: {fileID: 1425690750321983233, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
+        type: 3}
+      propertyPath: LeftGauntlet
+      value: 
+      objectReference: {fileID: 1941587238}
+    - target: {fileID: 1425690750321983233, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
+        type: 3}
+      propertyPath: skillManager
+      value: 
+      objectReference: {fileID: 1578306635}
+    - target: {fileID: 1425690750321983233, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
+        type: 3}
+      propertyPath: Gauntlets.Array.data[1]
+      value: 
+      objectReference: {fileID: 398162854}
+    - target: {fileID: 1425690750321983233, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
+        type: 3}
+      propertyPath: Gauntlets.Array.data[0]
+      value: 
+      objectReference: {fileID: 1941587235}
+    - target: {fileID: 1425690750321983233, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
+        type: 3}
+      propertyPath: m_controller
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6982419413465887326, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
         type: 3}
       propertyPath: m_Drag
@@ -3658,11 +3726,6 @@ PrefabInstance:
       value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8658002114787066726, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 8658002114787066654, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
         type: 3}
       propertyPath: m_Layer
       value: 9
@@ -3867,66 +3930,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
-    - target: {fileID: 1425690750321983233, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
-        type: 3}
-      propertyPath: m_maxHealth
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1425690750321983233, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
-        type: 3}
-      propertyPath: m_movementSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1425690750321983233, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
-        type: 3}
-      propertyPath: m_skillDisplay
-      value: 
-      objectReference: {fileID: 694308160}
-    - target: {fileID: 1425690750321983233, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
-        type: 3}
-      propertyPath: m_skillMaxed
-      value: 
-      objectReference: {fileID: 146138030}
-    - target: {fileID: 1425690750321983233, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
-        type: 3}
-      propertyPath: m_reviveColliderRadius
-      value: 
-      objectReference: {fileID: 1695213136}
-    - target: {fileID: 1425690750321983233, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
-        type: 3}
-      propertyPath: reviveParticle
-      value: 
-      objectReference: {fileID: 417870988}
-    - target: {fileID: 1425690750321983233, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
-        type: 3}
-      propertyPath: RightGauntlet
-      value: 
-      objectReference: {fileID: 398162857}
-    - target: {fileID: 1425690750321983233, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
-        type: 3}
-      propertyPath: LeftGauntlet
-      value: 
-      objectReference: {fileID: 1941587238}
-    - target: {fileID: 1425690750321983233, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
-        type: 3}
-      propertyPath: skillManager
-      value: 
-      objectReference: {fileID: 1578306635}
-    - target: {fileID: 1425690750321983233, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
-        type: 3}
-      propertyPath: Gauntlets.Array.data[1]
-      value: 
-      objectReference: {fileID: 398162854}
-    - target: {fileID: 1425690750321983233, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
-        type: 3}
-      propertyPath: Gauntlets.Array.data[0]
-      value: 
-      objectReference: {fileID: 1941587235}
-    - target: {fileID: 1425690750321983233, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
-        type: 3}
-      propertyPath: m_controller
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 1640791714681658936, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -3961,24 +3964,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6062317349350728768, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
-        type: 3}
-      propertyPath: m_Name
-      value: '---Nashorn---'
-      objectReference: {fileID: 0}
-    - target: {fileID: 6062317349350728768, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6062317349350728771, guid: ba8aa6ac4d8cefa4ebf4e4eac3da1045,
         type: 3}
@@ -4459,9 +4444,6 @@ MonoBehaviour:
     m_skillIcon: {fileID: 857945459}
     active: 0
     reset: 0
-  m_Kenron: {fileID: 0}
-  "m_the\xE1": {fileID: 0}
-  m_Nashorn: {fileID: 0}
 --- !u!4 &1578306636
 Transform:
   m_ObjectHideFlags: 0
@@ -4501,6 +4483,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: kenron
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6274874929699390166, guid: f19aa9029e855f844a879f717c4d74bd,
+        type: 3}
+      propertyPath: m_Name
+      value: '---Kenron---'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6274874929699390166, guid: f19aa9029e855f844a879f717c4d74bd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6274874930775075312, guid: f19aa9029e855f844a879f717c4d74bd,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 3669397548289971863, guid: f19aa9029e855f844a879f717c4d74bd,
         type: 3}
       propertyPath: m_skillDisplay
@@ -4530,24 +4535,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: kenron
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6274874929699390166, guid: f19aa9029e855f844a879f717c4d74bd,
-        type: 3}
-      propertyPath: m_Name
-      value: '---Kenron---'
-      objectReference: {fileID: 0}
-    - target: {fileID: 6274874929699390166, guid: f19aa9029e855f844a879f717c4d74bd,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6274874929271835749, guid: f19aa9029e855f844a879f717c4d74bd,
         type: 3}
@@ -4585,11 +4572,6 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 593857031402910525, guid: f19aa9029e855f844a879f717c4d74bd,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 6274874930775075312, guid: f19aa9029e855f844a879f717c4d74bd,
         type: 3}
       propertyPath: m_Layer
       value: 9

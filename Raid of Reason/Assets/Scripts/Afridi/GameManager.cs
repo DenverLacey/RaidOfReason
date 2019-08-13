@@ -35,14 +35,15 @@ public class GameManager : MonoBehaviour
 
 	public List<BaseCharacter> Players { get; private set; }
 
-	private XboxController?[] m_controllers = new XboxController?[]
+	private XboxController[] m_controllers = new XboxController[]
 	{
-		null, null, null
+		XboxController.Any, XboxController.Any, XboxController.Any
 	};
 
 	private void Awake()
 	{
 		DontDestroyOnLoad(gameObject);
+		Players = new List<BaseCharacter>();
 	}
 
 	public void GiveCharacterReference<T>(T character) where T : BaseCharacter
@@ -52,9 +53,9 @@ public class GameManager : MonoBehaviour
 			Kenron = character as Kenron;
 			Players.Add(Kenron);
 
-			if (m_controllers[0] != null)
+			if (m_controllers[0] != XboxController.Any)
 			{
-				Kenron.controller = (XboxController)m_controllers?[0];
+				Kenron.controller = m_controllers[0];
 			}
 		}
 		else if (character is Nashorn)
@@ -62,9 +63,9 @@ public class GameManager : MonoBehaviour
 			Nashorn = character as Nashorn;
 			Players.Add(Nashorn);
 
-			if (m_controllers[1] != null)
+			if (m_controllers[1] != XboxController.Any)
 			{
-				Nashorn.controller = (XboxController)m_controllers?[1];
+				Nashorn.controller = m_controllers[1];
 			}
 		}
 		else if (character is Theá)
@@ -72,9 +73,9 @@ public class GameManager : MonoBehaviour
 			Thea = character as Theá;
 			Players.Add(Thea);
 
-			if (m_controllers[2] != null)
+			if (m_controllers[2] != XboxController.Any)
 			{
-				Thea.controller = (XboxController)m_controllers?[2];
+				Thea.controller = m_controllers[2];
 			}
 		}
 	}

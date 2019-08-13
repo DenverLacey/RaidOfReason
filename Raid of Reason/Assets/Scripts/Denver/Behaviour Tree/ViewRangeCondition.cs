@@ -30,7 +30,7 @@ public class ViewRangeCondition : Behaviour
         foreach (BaseCharacter player in GameManager.Instance.Players)
 		{
 			if (!player) { continue; }
-			if (player.playerState == BaseCharacter.PlayerState.REVIVE) { continue; }
+			if (player.playerState != BaseCharacter.PlayerState.ALIVE) { continue; }
 
             float sqrDistance = (player.transform.position - agent.transform.position).sqrMagnitude;
             if (sqrDistance < closestDist)
