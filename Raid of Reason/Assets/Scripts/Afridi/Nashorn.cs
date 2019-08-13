@@ -85,7 +85,12 @@ public class Nashorn : BaseCharacter
     [SerializeField]
     public EnemyData enemies;
 
-    protected override void Awake()
+	private void Start()
+	{
+		GameManager.Instance.GiveCharacterReference(this);
+	}
+
+	protected override void Awake()
     {
         // Initialisation 
         base.Awake();
@@ -104,8 +109,6 @@ public class Nashorn : BaseCharacter
                                     Gauntlets[i].GetComponent<Collider>(), 
                                     true);
         }
-
-		GameManager.Instance.GiveCharacterReference(this);
     }
 
     protected override void FixedUpdate()

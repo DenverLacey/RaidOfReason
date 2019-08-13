@@ -91,10 +91,15 @@ public class Theá : BaseCharacter
 
     ParticleSystem.ShapeModule aoe;
 
-    /// <summary>
-    /// Gets called before Start.
-    /// </summary>
-    protected override void Awake()
+	private void Start()
+	{
+		GameManager.Instance.GiveCharacterReference(this);
+	}
+
+	/// <summary>
+	/// Gets called before Start.
+	/// </summary>
+	protected override void Awake()
     {
         base.Awake();
         m_isActive = false;
@@ -110,8 +115,6 @@ public class Theá : BaseCharacter
         m_AOEParticleCollider.enabled = false;
         aoe = m_AOEParticle.shape;
         m_aimCursor = GameObject.FindGameObjectWithTag("AimCursor");
-
-		GameManager.Instance.GiveCharacterReference(this);
     }
 
     // Update is called once per frame

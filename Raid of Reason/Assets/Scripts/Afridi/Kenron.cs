@@ -106,7 +106,12 @@ public class Kenron : BaseCharacter {
     // Sets the burn 
     public bool isBurning;
 
-    protected override void Awake () {
+	private void Start()
+	{
+		GameManager.Instance.GiveCharacterReference(this);
+	}
+
+	protected override void Awake () {
         // Initalisation
         base.Awake();
         m_Enemy = FindObjectOfType<EnemyData>();
@@ -131,8 +136,6 @@ public class Kenron : BaseCharacter {
 		// set size of dash hit box
 		Vector3 hitBoxSize = new Vector3(m_dashCollider.size.x, m_dashCollider.size.y, m_maxDashDistance);
 		m_dashCollider.size = hitBoxSize;
-
-		GameManager.Instance.GiveCharacterReference(this);
 	}
 
     protected override void FixedUpdate()
