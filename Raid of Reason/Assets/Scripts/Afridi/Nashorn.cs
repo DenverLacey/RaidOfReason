@@ -274,11 +274,4 @@ public class Nashorn : BaseCharacter
         // Skill no longer active
         isTaunting = false;
     }
-
-    /// <summary>
-    /// When an Enemy dies, they must be stopped in thier taunt state
-    /// </summary>
-	protected override void OnDeath()
-    {
-	}
 }
