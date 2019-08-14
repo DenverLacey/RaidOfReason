@@ -67,10 +67,16 @@ public class EnemyData : MonoBehaviour
 
 	private void Start()
 	{
-		Renderer = GetComponentInChildren<MeshRenderer>();
 		Rigidbody = GetComponent<Rigidbody>();
 		NavMeshAgent = GetComponent<NavMeshAgent>();
 		NavMeshAgent.destination = transform.position;
+
+        Renderer = GetComponent<MeshRenderer>();
+
+        if (!Renderer)
+        {
+            Renderer = GetComponentInChildren<MeshRenderer>();
+        }
 	}
 
 	/// <summary>

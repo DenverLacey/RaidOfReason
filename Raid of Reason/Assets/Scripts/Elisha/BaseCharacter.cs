@@ -10,8 +10,7 @@ using TMPro;
  *              with the characters movements and states.
  */
 
-[RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(MeshRenderer))]
+
 public abstract class BaseCharacter : MonoBehaviour {
 
     public enum PlayerState
@@ -98,11 +97,11 @@ public abstract class BaseCharacter : MonoBehaviour {
     /// </summary>
     protected virtual void Awake () {
 
-        m_renderer = GetComponent<MeshRenderer>();
+        m_renderer = GetComponentInChildren<MeshRenderer>();
         // Gets the original colour of the player.
         m_originalColour = m_renderer.sharedMaterial.color;
         m_camera = FindObjectOfType<MultiTargetCamera>();
-        m_animator = GetComponent<Animator>();
+        m_animator = GetComponentInChildren<Animator>();
         m_currentHealth = m_maxHealth;
         m_vulnerability = 1.0f;
         m_reviveTimer = 5f;
