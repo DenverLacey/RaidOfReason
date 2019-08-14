@@ -2,8 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Collider))]
 public class SwordDamage : MonoBehaviour
 {
+	private Collider m_collider;
+
+	private void Start()
+	{
+		m_collider = GetComponent<Collider>();
+	}
+
 	public void OnTriggerEnter(Collider other)
 	{
 		if (other.gameObject.tag == "Enemy")

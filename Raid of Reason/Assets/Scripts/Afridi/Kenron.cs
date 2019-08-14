@@ -136,6 +136,8 @@ public class Kenron : BaseCharacter {
 		// set size of dash hit box
 		Vector3 hitBoxSize = new Vector3(m_dashCollider.size.x, m_dashCollider.size.y, m_maxDashDistance);
 		m_dashCollider.size = hitBoxSize;
+
+		m_dashCollider.enabled = false;
 	}
 
     protected override void FixedUpdate()
@@ -205,6 +207,9 @@ public class Kenron : BaseCharacter {
             isDashing = true;
             m_dashCollider.enabled = true;
 
+			// set animator's trigger
+			m_animator.SetBool("Attack", true);
+
             // calculate desired dash position
             int enemyLayer = LayerMask.NameToLayer("Enemy");
             int playerLayer = LayerMask.NameToLayer("Player");
@@ -249,6 +254,7 @@ public class Kenron : BaseCharacter {
                 m_controllerOn = true;
                 isDashing = false;
                 m_dashCollider.enabled = false;
+				m_animator.SetBool("Attack", false);
             }
         }
     }
