@@ -129,7 +129,8 @@ public abstract class BaseCharacter : MonoBehaviour {
 
 			case PlayerState.REVIVE:
                 ReviveTeamMate();
-				break;
+                m_deathTimer -= Time.deltaTime;
+                break;
 
 			case PlayerState.DEAD:
                 // Player gets removed from camera array.
@@ -280,6 +281,7 @@ public abstract class BaseCharacter : MonoBehaviour {
                 // TODO: Stop revive particle effect.
                 // Reset timer.
                 player.m_reviveTimer = 5f;
+                player.m_deathTimer = 20f;
             }
             
             if(player.m_deathTimer <= 0)
@@ -318,7 +320,7 @@ public abstract class BaseCharacter : MonoBehaviour {
                 if (!IsBeingRevived)
                 {
                     // Starts the timer that the player can be in revive state for.
-                    m_deathTimer -= Time.deltaTime;
+                    player.m_deathTimer -= Time.deltaTime;
                 }
 
                 // If the timer is 0 and the player hasnt been revived.
@@ -396,9 +398,7 @@ public abstract class BaseCharacter : MonoBehaviour {
         }
         
         m_controllerOn = false;
-        transform.Rotate(90, 0, 0, Space.Self);
         reviveParticle.SetActive(true);
-        m_deathTimer -= Time.deltaTime;
         // Enable revive collider.
         m_reviveColliderRadius.enabled = true;
         // Have the colliders radius equal the AOE float radius.

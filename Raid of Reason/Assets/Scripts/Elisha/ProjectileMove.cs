@@ -95,23 +95,31 @@ public class ProjectileMove : MonoBehaviour {
             }
 
         }
-        else // If above statment is false.
+        else // If above statment is false and players are in the alive state.
         {
             // Check if the projectile hit ally game objects.
             switch (other.gameObject.tag)
             {
                 case "Kenron":
                     Kenron m_kenron = other.gameObject.GetComponent<Kenron>();
-                    // Heals Kenrons' current health.
-                    m_kenron.m_currentHealth += m_healAmount;
+                    if(m_kenron.playerState == BaseCharacter.PlayerState.ALIVE)
+                    {
+                        // Heals Kenrons' current health.
+                        m_kenron.m_currentHealth += m_healAmount;
+                    }
                     break;
+
                 case "Nashorn":
                     Nashorn m_nashorn = other.gameObject.GetComponent<Nashorn>();
-                    // Heals Nashorns' current health.
-                    m_nashorn.m_currentHealth += m_healAmount;
+                    if (m_nashorn.playerState == BaseCharacter.PlayerState.ALIVE)
+                    {
+                        // Heals Nashorns' current health.
+                        m_nashorn.m_currentHealth += m_healAmount;
+                    }
                     break;
+
                 default:
-                    Debug.Log("projectile missed player");
+                    Debug.Log("Health not given");
                     break;
             }
         }
