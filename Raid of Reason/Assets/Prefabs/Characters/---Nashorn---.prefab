@@ -4122,6 +4122,8 @@ GameObject:
   - component: {fileID: 8658002114786713400}
   - component: {fileID: 875094265989000934}
   - component: {fileID: 1838851611}
+  - component: {fileID: 1941587238}
+  - component: {fileID: 1941587237}
   m_Layer: 9
   m_Name: FistL
   m_TagString: Untagged
@@ -4157,6 +4159,31 @@ BoxCollider:
   m_Size: {x: 75, y: 75, z: 75}
   m_Center: {x: 1.11, y: 42.5, z: 3.81}
 --- !u!114 &1838851611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8658002114787066648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 692a765545e5a4042906e6cb5054417e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &1941587238
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8658002114787066648}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 75, y: 75, z: 75}
+  m_Center: {x: 0, y: 14.94, z: 0}
+--- !u!114 &1941587237
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4240,6 +4267,8 @@ GameObject:
   - component: {fileID: 8658002114786713406}
   - component: {fileID: 5964252469077324025}
   - component: {fileID: 270687510}
+  - component: {fileID: 398162857}
+  - component: {fileID: 398162856}
   m_Layer: 9
   m_Name: FistR
   m_TagString: Untagged
@@ -4275,6 +4304,31 @@ BoxCollider:
   m_Size: {x: 75, y: 75, z: 75}
   m_Center: {x: 0, y: -35, z: 0}
 --- !u!114 &270687510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8658002114787066654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 692a765545e5a4042906e6cb5054417e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &398162857
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8658002114787066654}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 75, y: 75, z: 75}
+  m_Center: {x: 0, y: -15.8, z: 0}
+--- !u!114 &398162856
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5074,10 +5128,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.9621067
-  m_Height: 3.4643812
+  m_Radius: 1.0743669
+  m_Height: 3.4588766
   m_Direction: 1
-  m_Center: {x: -0.056287766, y: 1.0438366, z: 0.05486083}
+  m_Center: {x: -0.056287766, y: 1.0410843, z: 0}
 --- !u!23 &1640791714681658936
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5095,7 +5149,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d89f190b234977644bd265f14e991aff, type: 3}
+  - {fileID: 2100000, guid: a7805185ddb4c764c882f00ea8c5c538, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5132,8 +5186,8 @@ MonoBehaviour:
   m_currentHealth: 0
   m_deathTimer: 20
   m_damage: 25
-  m_movementSpeed: 5
-  m_controller: 2
+  m_movementSpeed: 10
+  controller: 0
   m_reviveTimer: 5
   m_reviveRadius: 5
   m_healthUponRevive: 40
@@ -5144,12 +5198,12 @@ MonoBehaviour:
   m_skillDisplay: {fileID: 6062317349070734748}
   m_skillMaxed: {fileID: 6062317349253044467}
   m_reviveColliderRadius: {fileID: 6100002640439945486}
-  reviveParticle: {fileID: 100006, guid: 60bc526f4be1e044ab9e46340b82ffb3, type: 3}
+  reviveParticle: {fileID: 0}
   Gauntlets:
   - {fileID: 8658002114787066648}
   - {fileID: 8658002114787066654}
-  LeftGauntlet: {fileID: 875094265989000934}
-  RightGauntlet: {fileID: 5964252469077324025}
+  LeftGauntlet: {fileID: 1941587238}
+  RightGauntlet: {fileID: 398162857}
   skillManager: {fileID: 0}
   isTaunting: 0
   m_tauntRadius: 100
