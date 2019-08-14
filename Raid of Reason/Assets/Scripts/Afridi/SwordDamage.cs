@@ -14,7 +14,6 @@ public class SwordDamage : MonoBehaviour
             // if the player doesnt have shuras upgrade applied
             if (enemy && !GameManager.Instance.Kenron.m_playerSkills.Find(skill => skill.Name == "Shuras Reckoning"))
 			{
-				enemy.TakeDamage(GameManager.Instance.Kenron.GetDamage());
                 enemy.GetComponent<MeshRenderer>().material.color = Color.red;
                 StartCoroutine(ResetMaterialColour(enemy, 0.2f));
 			}
@@ -30,19 +29,6 @@ public class SwordDamage : MonoBehaviour
                 GameManager.Instance.Kenron.SkillChecker();
                 enemy.isDeadbByKenron = false;
             }
-
-            //if (kenron.nashornBuffGiven == true && nashorn.isTaunting == true)
-            //{
-            //    float randomValue = Random.value;
-            //    if (nashorn.stunChance < randomValue)
-            //    {
-            //        other.GetComponent<StatusEffectManager>().ApplyStun(1.5f);
-            //    }
-            //}
-            //else if (nashorn.isTaunting == false) {
-            //    kenron.nashornBuffGiven = false;
-            //}
-
 		}
 	}
 
