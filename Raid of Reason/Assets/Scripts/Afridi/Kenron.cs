@@ -115,7 +115,6 @@ public class Kenron : BaseCharacter {
         // Initalisation
         base.Awake();
         m_Enemy = FindObjectOfType<EnemyData>();
-        Amaterasu = GameObject.FindGameObjectWithTag("Amaterasu");
         m_kenronRigidBody = GetComponent<Rigidbody>();
 
 		childKenron = FindObjectOfType<ChildKenron>();

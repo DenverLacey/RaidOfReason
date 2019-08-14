@@ -3814,7 +3814,7 @@ MonoBehaviour:
   m_deathTimer: 20
   m_damage: 33
   m_movementSpeed: 15
-  controller: 0
+  controller: 1
   m_reviveTimer: 5
   m_reviveRadius: 5
   m_healthUponRevive: 25
@@ -3842,10 +3842,9 @@ MonoBehaviour:
   m_cooldownReduced: 0
   m_damageRadius: 0
   m_damageWithin: 0
-  m_kenronParticle: {fileID: 1727626132299242, guid: b0bc1b6b391734647b9bb142bafc0819,
-    type: 3}
-  m_swordParticle: {fileID: 100004, guid: 1c20c7996d683754db1f0f62a361952c, type: 3}
-  m_CurseEffect: {fileID: 100000, guid: 7b56cd9b663f23f429e131a54ec87db0, type: 3}
+  m_kenronParticle: {fileID: 100004, guid: 794a36a8aa47f8f40a4067810da8163c, type: 3}
+  m_swordParticle: {fileID: 100000, guid: 37bd362d795dc334d8676f4781d66578, type: 3}
+  m_CurseEffect: {fileID: 100004, guid: 794a36a8aa47f8f40a4067810da8163c, type: 3}
   nashornBuffGiven: 0
   isBurning: 0
 --- !u!136 &8703902118018121562
@@ -4011,10 +4010,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Animation_Kenron_Idle
       objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 1c12763dc36229f45b8574a0ef3e8d98, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 1c12763dc36229f45b8574a0ef3e8d98, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4075,8 +4070,7 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: e6b0813b28d3889439f14a511cfdfaed, type: 2}
-    m_RemovedComponents:
-    - {fileID: 2000000, guid: 1c12763dc36229f45b8574a0ef3e8d98, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c12763dc36229f45b8574a0ef3e8d98, type: 3}
 --- !u!4 &9157860088018837540 stripped
 Transform:
