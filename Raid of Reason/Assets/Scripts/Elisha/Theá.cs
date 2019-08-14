@@ -110,8 +110,8 @@ public class Theá : BaseCharacter
         m_playerController = GetComponent<BaseCharacter>();
         m_AOETimer = 0f;
         // m_AOEParticle = GetComponentInChildren<ParticleSystem>();
-        m_AOEParticleCollider.transform.position = this.gameObject.transform.position;
-        m_AOEParticle.transform.position = this.gameObject.transform.position;
+        // m_AOEParticleCollider.transform.position = this.gameObject.transform.position;
+        //m_AOEParticle.transform.position = this.gameObject.transform.position;
         m_AOEParticleCollider.enabled = false;
         aoe = m_AOEParticle.shape;
         m_aimCursor = GameObject.FindGameObjectWithTag("AimCursor");
@@ -299,7 +299,12 @@ public class Theá : BaseCharacter
             m_AOETimer += Time.deltaTime;
             // Disable player movement and rotation.
             m_playerController.m_controllerOn = false;
-            // Grow AOE radius.
+
+			// turn AOE effect on
+			m_AOEParticle.gameObject.SetActive(true);
+			m_AOEParticle.transform.position = transform.position;
+			
+			// Grow AOE radius.
             m_AOERadius = Mathf.Lerp(m_AOERadius, m_AOEMax, m_AOETimer / m_AOEGrowTime);
 
             // AOE collider radius grows in conjuction to the lerp.
@@ -377,7 +382,10 @@ public class Theá : BaseCharacter
         m_AOEParticleCollider.enabled = false;
         m_playerController.m_controllerOn = true;
         aoe.radius = 1;
-    }
+
+		// turn AOE effect on
+		m_AOEParticle.gameObject.SetActive(false);
+	}
 
     private IEnumerator HealthOverTime() {
         m_isHealthRegen = true;

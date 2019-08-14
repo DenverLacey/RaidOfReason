@@ -89,7 +89,7 @@ public class ProjectileMove : MonoBehaviour {
                 }
 
                 // Enemy mesh colour changes to red.
-                enemy.GetComponent<MeshRenderer>().material.color = Color.red;
+                enemy.Renderer.material.color = Color.red;
                 // Change the enemy back to their original mesh colour after .2 seconds of being hit.
                 StartCoroutine(ResetMaterialColour(enemy, .2f));
             }
@@ -134,7 +134,7 @@ public class ProjectileMove : MonoBehaviour {
         if (enemy)
         {
             // Change enemy mesh colour back to the original colour.
-            enemy.GetComponent<MeshRenderer>().material.color = Color.clear;
+            enemy.Renderer.material.color = Color.clear;
         }
     }
 }

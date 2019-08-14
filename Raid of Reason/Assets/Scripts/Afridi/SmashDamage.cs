@@ -14,8 +14,6 @@ public class SmashDamage : MonoBehaviour
             if (enemy && XCI.GetAxis(XboxAxis.RightTrigger, GameManager.Instance.Nashorn.controller) > 0.1)
             {
                 enemy.TakeDamage(GameManager.Instance.Nashorn.GetDamage());
-                enemy.GetComponent<MeshRenderer>().material.color = Color.red;
-                StartCoroutine(ResetMaterialColour(enemy, .2f));
                 if (GameManager.Instance.Nashorn.m_playerSkills.Find(skill => skill.Name == "Shockwave"))
                 { 
                     Vector3 direction = this.transform.position - enemy.transform.position;
@@ -31,16 +29,6 @@ public class SmashDamage : MonoBehaviour
         else
         {
             Debug.Log("attack unsuccessful " + tag);
-        }
-    }
-
-    IEnumerator ResetMaterialColour(EnemyData enemy, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-
-        if (enemy)
-        {
-            enemy.GetComponent<MeshRenderer>().material.color = Color.clear;
         }
     }
 }

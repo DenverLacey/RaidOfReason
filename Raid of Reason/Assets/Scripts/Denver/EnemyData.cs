@@ -28,7 +28,6 @@ public struct EnemyAttackRange
 /// <summary>
 /// Encapsulates all data for all enemy types
 /// </summary>
-[RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyData : MonoBehaviour 
@@ -56,6 +55,8 @@ public class EnemyData : MonoBehaviour
 
 	public Rigidbody Rigidbody { get; private set; }
 
+	public MeshRenderer Renderer { get; private set; }
+
 	[HideInInspector]
     // Afridi added this for the skill tree
     public bool isDeadbByKenron = false;
@@ -64,11 +65,9 @@ public class EnemyData : MonoBehaviour
     // Afridi added this for the skill tree
     public bool isAttackingNashorn = true;
 
-	private MeshRenderer m_renderer;
-
 	private void Start()
 	{
-		m_renderer = GetComponent<MeshRenderer>();
+		Renderer = GetComponentInChildren<MeshRenderer>();
 		Rigidbody = GetComponent<Rigidbody>();
 		NavMeshAgent = GetComponent<NavMeshAgent>();
 		NavMeshAgent.destination = transform.position;
@@ -156,16 +155,16 @@ public class EnemyData : MonoBehaviour
 		}
 	}
 
-	void IndicateHit()
+	public void IndicateHit()
 	{
-		m_renderer.material.color = Color.red;
+		Renderer.material.color = Color.red;
 		StartCoroutine(ResetColour(.2f));
 	}
 
 	IEnumerator ResetColour(float duration)
 	{
 		yield return new WaitForSeconds(duration);
-		m_renderer.material.color = Color.clear;
+		Renderer.material.color = Color.clear;
 	}
 
 	/// <summary>

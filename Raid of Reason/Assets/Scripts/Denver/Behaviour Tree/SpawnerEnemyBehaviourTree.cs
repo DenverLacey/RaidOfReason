@@ -18,7 +18,7 @@ public class SpawnerEnemyBehaviourTree : BehaviourTree
 
 		Selector outsideRangeSelector = new Selector();
 		outsideRangeSelector.AddChild(new MinAttackRangeCondition());
-		outsideRangeSelector.AddChild(new MaxAttackRangeCondition());
+		outsideRangeSelector.AddChild(new Not(new MaxAttackRangeCondition()));
 
 		Sequence getIntoPositionSequence = new Sequence();
 		getIntoPositionSequence.AddChild(outsideRangeSelector);

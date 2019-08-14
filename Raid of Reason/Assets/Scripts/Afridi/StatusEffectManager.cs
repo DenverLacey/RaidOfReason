@@ -44,7 +44,7 @@ public class StatusEffectManager : MonoBehaviour
         for (; remainingTicks != 0; remainingTicks--)
         {
             enemy.TakeDamage(burnAmount);
-            enemy.GetComponent<MeshRenderer>().material.color = Color.red;
+            enemy.Renderer.material.color = Color.red;
             StartCoroutine(ResetMaterialColour(enemy, 0.75f));
             yield return new WaitForSeconds(0.75f);
         }
@@ -78,7 +78,7 @@ public class StatusEffectManager : MonoBehaviour
 
         if (enemy)
         {
-            enemy.GetComponent<MeshRenderer>().material.color = Color.clear;
+            enemy.Renderer.material.color = Color.clear;
         }
     }
 }

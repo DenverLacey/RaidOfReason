@@ -26,7 +26,7 @@ public class Wander : Behaviour
 	public override Result Execute(EnemyData agent) 
 	{
 		// don't find new position if already wandering
-		if ((agent.NavMeshAgent.destination - agent.transform.position).sqrMagnitude >= agent.transform.lossyScale.y * agent.transform.lossyScale.y + 2f) 
+		if ((agent.NavMeshAgent.destination - agent.transform.position).sqrMagnitude >= agent.transform.lossyScale.y * agent.transform.lossyScale.y + 3f) 
 		{
 			return SUCCESS;
 		}
