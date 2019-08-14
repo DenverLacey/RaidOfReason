@@ -55,6 +55,7 @@ public class AudioManager : MonoBehaviour
     public void Start()
     {
         // Put all sounds you want to play in the background.
+        PlaySound("CombatMusic");
     }
 
     /// <summary>

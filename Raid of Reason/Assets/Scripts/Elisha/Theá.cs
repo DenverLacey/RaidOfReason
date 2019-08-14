@@ -204,6 +204,7 @@ public class Theá : BaseCharacter
         // If the player presses the right trigger button.
         if (XCI.GetAxis(XboxAxis.RightTrigger, this.controller) > 0.1)
         {
+            FindObjectOfType<AudioManager>().PlaySound("TheaProjectile");
             // Start the shot counter.
             m_shotCounter += Time.deltaTime;
 
