@@ -165,6 +165,7 @@ public class Theá : BaseCharacter
 
             // Thea is the centre position of the cursor radius.
             Vector3 centerPosition = transform.localPosition;
+			centerPosition.y = m_aimCursor.transform.position.y;
             // Find the distance between Thea and the cursor.
             float distance = Vector3.Distance(m_aimCursor.transform.position, centerPosition);
 
