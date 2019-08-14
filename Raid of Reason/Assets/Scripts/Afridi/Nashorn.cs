@@ -222,7 +222,7 @@ public class Nashorn : BaseCharacter
     public void Punch()
     {
         // Empty Check
-        if (Gauntlets.Count == 2)
+        if (Gauntlets.Count == 2 && m_controllerOn)
         {
             // If the Triggers has been pressed
             if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1)
