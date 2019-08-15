@@ -3786,7 +3786,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5877011709370636315}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 5c58548f42b83b24b9743c121aeab4c1, type: 3}
+  m_Avatar: {fileID: 9000000, guid: 1c12763dc36229f45b8574a0ef3e8d98, type: 3}
   m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -3834,6 +3834,7 @@ MonoBehaviour:
   m_dashTime: 0.1
   m_maxDashDistance: 10
   m_dashSpeed: 15
+  m_dashDelay: 0.35
   m_dashCollider: {fileID: 576475735797821664}
   m_chaosFlameDamage: 70
   m_chaosFlameSpeed: 25
@@ -4020,7 +4021,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 1c12763dc36229f45b8574a0ef3e8d98, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -27.2
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 1c12763dc36229f45b8574a0ef3e8d98, type: 3}
       propertyPath: m_LocalRotation.x
@@ -4070,7 +4071,8 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: e6b0813b28d3889439f14a511cfdfaed, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2000000, guid: 1c12763dc36229f45b8574a0ef3e8d98, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1c12763dc36229f45b8574a0ef3e8d98, type: 3}
 --- !u!4 &9157860088018837540 stripped
 Transform:

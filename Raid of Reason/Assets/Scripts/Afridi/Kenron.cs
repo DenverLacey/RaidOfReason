@@ -41,6 +41,10 @@ public class Kenron : BaseCharacter {
 	[Tooltip("How quickly Kenron dashes")]
 	private float m_dashSpeed;
 
+	[SerializeField]
+	[Tooltip("How much delay between consecutive dashes in seconds")]
+	private float m_dashDelay;
+
     [SerializeField]
     [Tooltip("Hit box for dash attack")]
     private BoxCollider m_dashCollider;
@@ -102,6 +106,8 @@ public class Kenron : BaseCharacter {
 
     // Checks if a specific trigger on the controller is pressed
     private bool m_triggerDown;
+
+	private float m_dashDelayTimer;
 
     // Sets the burn 
     public bool isBurning;
@@ -208,6 +214,7 @@ public class Kenron : BaseCharacter {
             m_controllerOn = false;
             isDashing = true;
             m_dashCollider.enabled = true;
+			m_dashDelayTimer = m_dashDelay;
 
 			// set animator's trigger
 			m_animator.SetBool("Attack", true);
@@ -249,35 +256,20 @@ public class Kenron : BaseCharacter {
             if ((m_dashPosition - transform.position).sqrMagnitude <= 0.1f)
             {
                 // reset boolean flags
-                m_controllerOn = true;
-                isDashing = false;
                 m_dashCollider.enabled = false;
 				m_animator.SetBool("Attack", false);
-            }
+
+				// run delay timer
+				m_dashDelayTimer -= Time.deltaTime;
+			}
+
+			// if ready to dash again 
+			if (m_dashDelayTimer <= 0.0f)
+			{
+				m_controllerOn = true;
+				isDashing = false;
+			}
         }
-    }
-
-    /// <summary>
-    /// Dashes Kenron forward and sets a cooldown until the next dash
-    /// </summary>
-    /// <returns> The Wait time until the next dash </returns>
-    IEnumerator Dash()
-    {
-        // If we arent currently dashing 
-        if (!isDashing)
-        {
-            // Add a Sudden Force to kenron and dashes him based on direction he is facing 
-            m_kenronRigidBody.AddForce(GetSpeed() * m_kenronRigidBody.transform.forward, ForceMode.Impulse);
-
-            // Kenron Dashing is true
-            isDashing = true;
-        }
-
-        // Waits until the dash cooldown has ended
-        yield return new WaitForSeconds(m_dashTime);
-
-        // Kenrons dash check is reset
-        isDashing = false;
     }
 
     /// <summary>
