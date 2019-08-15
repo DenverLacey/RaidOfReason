@@ -106,9 +106,12 @@ public class Kenron : BaseCharacter {
     // Sets the burn 
     public bool isBurning;
 
+	private CapsuleCollider m_collider;
+
 	private void Start()
 	{
 		GameManager.Instance.GiveCharacterReference(this);
+		m_collider = GetComponent<CapsuleCollider>();
 	}
 
 	protected override void Awake () {
@@ -209,17 +212,13 @@ public class Kenron : BaseCharacter {
 			// set animator's trigger
 			m_animator.SetBool("Attack", true);
 
-            // calculate desired dash position
-            int enemyLayer = LayerMask.NameToLayer("Enemy");
-            int playerLayer = LayerMask.NameToLayer("Player");
-            int layerMask = 0;
-            layerMask |= enemyLayer;
-            layerMask |= playerLayer;
+			// calculate desired dash position
+			int layerMask = Utility.GetIgnoreMask("Enemy", "Player");
             RaycastHit hit = new RaycastHit();
             if (Physics.Raycast(transform.position, transform.forward, out hit, m_maxDashDistance, layerMask))
             {
                 m_dashPosition = hit.point;
-                m_dashPosition -= transform.forward * transform.lossyScale.x;
+				m_dashPosition -= transform.forward * (m_collider.radius * transform.lossyScale.x);
             }
             else
             {
