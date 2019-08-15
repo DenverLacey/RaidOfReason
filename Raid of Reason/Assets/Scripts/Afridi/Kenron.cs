@@ -248,12 +248,16 @@ public class Kenron : BaseCharacter {
             m_triggerDown = false;
         }
 
-        if (isDashing)
-        {
-            transform.position = Vector3.Lerp(transform.position, m_dashPosition, m_dashSpeed * Time.deltaTime);
+		if (isDashing)
+		{
+			if (!m_controllerOn)
+			{
+				transform.position = Vector3.Lerp(transform.position, m_dashPosition, m_dashSpeed * Time.deltaTime);
+			}
 
             // if completed dash
-            if ((m_dashPosition - transform.position).sqrMagnitude <= 0.1f)
+            if ((m_dashPosition - transform.position).sqrMagnitude <= 0.1f ||
+				m_controllerOn)
             {
 				// reset boolean flags
 				m_controllerOn = true;
