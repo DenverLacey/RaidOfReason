@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3449384977451328965}
   - component: {fileID: 3449384977451328964}
   m_Layer: 5
-  m_Name: COAmaterasu
+  m_Name: COA_Display
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -174,7 +174,7 @@ GameObject:
   - component: {fileID: 3449384977469642220}
   - component: {fileID: 3449384977469642223}
   m_Layer: 5
-  m_Name: Skill_3
+  m_Name: Shuras_Reckoning
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -323,7 +323,7 @@ GameObject:
   - component: {fileID: 3449384977474652681}
   - component: {fileID: 3449384977474652680}
   m_Layer: 5
-  m_Name: SP
+  m_Name: Skill_Points
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -483,7 +483,7 @@ GameObject:
   - component: {fileID: 3449384977549087013}
   - component: {fileID: 3449384977549087012}
   m_Layer: 5
-  m_Name: Text (3)
+  m_Name: COA_Cost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -549,7 +549,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 2
+  m_Text: 4
 --- !u!1 &3449384977606814600
 GameObject:
   m_ObjectHideFlags: 0
@@ -564,7 +564,7 @@ GameObject:
   - component: {fileID: 3449384977606814607}
   - component: {fileID: 3449384977606814606}
   m_Layer: 5
-  m_Name: Skill_2
+  m_Name: Bloodlust
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -699,7 +699,7 @@ MonoBehaviour:
   skillName: {fileID: 3449384978216498170}
   skillDescription: {fileID: 3449384978854438497}
   skillIcon: {fileID: 3449384978230913754}
-  skillPointsNeeded: {fileID: 3449384977549087012}
+  skillPointsNeeded: {fileID: 3449384977724426635}
   m_PlayerHandler: {fileID: 0}
 --- !u!1 &3449384977724426634
 GameObject:
@@ -713,7 +713,7 @@ GameObject:
   - component: {fileID: 3449384977724426632}
   - component: {fileID: 3449384977724426635}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: BL_Cost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -779,7 +779,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 4
+  m_Text: '2
+
+'
 --- !u!1 &3449384977746223010
 GameObject:
   m_ObjectHideFlags: 0
@@ -792,7 +794,7 @@ GameObject:
   - component: {fileID: 3449384977746223009}
   - component: {fileID: 3449384977746223008}
   m_Layer: 5
-  m_Name: Disabled
+  m_Name: COA_Icon_Disabled
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -845,7 +847,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 7ccfafad9e6334a4ab839bba0dcdc2ae, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 66069e3714949c742ab4b30d30d9d184, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -866,7 +868,7 @@ GameObject:
   - component: {fileID: 3449384977774135185}
   - component: {fileID: 3449384977774135184}
   m_Layer: 5
-  m_Name: Description
+  m_Name: COA_Description
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -985,7 +987,7 @@ GameObject:
   - component: {fileID: 3449384977928920352}
   - component: {fileID: 3449384977928920355}
   m_Layer: 5
-  m_Name: Available
+  m_Name: SR_Available_Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1038,7 +1040,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: a154aba54a84eb743a4bdd33c8e5577a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2f0464ac14bb1f441833c338a1f437c7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1059,7 +1061,7 @@ GameObject:
   - component: {fileID: 3449384977929051570}
   - component: {fileID: 3449384977929051581}
   m_Layer: 5
-  m_Name: Description
+  m_Name: SR_Description
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1139,7 +1141,7 @@ GameObject:
   - component: {fileID: 3449384978025370586}
   - component: {fileID: 3449384978025370565}
   m_Layer: 5
-  m_Name: IconParent
+  m_Name: COA_Icon_Parent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1215,7 +1217,7 @@ GameObject:
   - component: {fileID: 3449384978028333304}
   - component: {fileID: 3449384978028333307}
   m_Layer: 5
-  m_Name: IconParent
+  m_Name: SR_Icon_Parent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1291,7 +1293,7 @@ GameObject:
   - component: {fileID: 3449384978048813083}
   - component: {fileID: 3449384978048813082}
   m_Layer: 5
-  m_Name: Text (2)
+  m_Name: SR_Cost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1370,7 +1372,7 @@ GameObject:
   - component: {fileID: 3449384978104325492}
   - component: {fileID: 3449384978104325495}
   m_Layer: 5
-  m_Name: Disabled
+  m_Name: BL_Disabled_Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1423,7 +1425,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: ef91d0fc2963a364f876d695da9e2ecc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1b3cfe73a86315a42ab56d936cf5e134, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1444,7 +1446,7 @@ GameObject:
   - component: {fileID: 3449384978148690238}
   - component: {fileID: 3449384978148690233}
   m_Layer: 5
-  m_Name: Available
+  m_Name: VI_Available_Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1497,7 +1499,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74c51fef76cc63a4fba1cecc6ae637eb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f8a70d71fce07c449ae6d064c5d49086, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1568,7 +1570,7 @@ GameObject:
   - component: {fileID: 3449384978200390357}
   - component: {fileID: 3449384978200390356}
   m_Layer: 5
-  m_Name: IconParent
+  m_Name: VI_Icon_Parent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1644,7 +1646,7 @@ GameObject:
   - component: {fileID: 3449384978216498171}
   - component: {fileID: 3449384978216498170}
   m_Layer: 5
-  m_Name: BLust
+  m_Name: BL_Display
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1804,7 +1806,7 @@ GameObject:
   - component: {fileID: 3449384978230913755}
   - component: {fileID: 3449384978230913754}
   m_Layer: 5
-  m_Name: IconParent
+  m_Name: BL_Icon_Parent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1880,7 +1882,7 @@ GameObject:
   - component: {fileID: 3449384978313652411}
   - component: {fileID: 3449384978313652410}
   m_Layer: 5
-  m_Name: SReckoning
+  m_Name: SR_Display
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2040,7 +2042,7 @@ GameObject:
   - component: {fileID: 3449384978326973667}
   - component: {fileID: 3449384978326973666}
   m_Layer: 5
-  m_Name: Available
+  m_Name: BL_Available_Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2093,7 +2095,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: ef91d0fc2963a364f876d695da9e2ecc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1b3cfe73a86315a42ab56d936cf5e134, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2114,7 +2116,7 @@ GameObject:
   - component: {fileID: 3449384978350884697}
   - component: {fileID: 3449384978350884696}
   m_Layer: 5
-  m_Name: KenMaxed
+  m_Name: Points_Maxed
   m_TagString: Maxed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2274,7 +2276,7 @@ GameObject:
   - component: {fileID: 3449384978539080597}
   - component: {fileID: 3449384978539080596}
   m_Layer: 5
-  m_Name: VInfusion
+  m_Name: VI_Display
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2436,7 +2438,7 @@ GameObject:
   - component: {fileID: 3449384978560049579}
   - component: {fileID: 3449384978560049578}
   m_Layer: 5
-  m_Name: Description
+  m_Name: VI_Description
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2516,7 +2518,7 @@ GameObject:
   - component: {fileID: 3449384978612719259}
   - component: {fileID: 3449384978612719258}
   m_Layer: 5
-  m_Name: Disabled
+  m_Name: VI_Disabled_Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2569,7 +2571,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 74c51fef76cc63a4fba1cecc6ae637eb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f8a70d71fce07c449ae6d064c5d49086, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2689,7 +2691,7 @@ GameObject:
   - component: {fileID: 3449384978751996586}
   - component: {fileID: 3449384978751996565}
   m_Layer: 5
-  m_Name: KenronTree
+  m_Name: Kenron_Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2747,7 +2749,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 56c3af08b5994c14b8dd4adb881250e8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 095b494664a710d488f5321d4a52a254, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2768,7 +2770,7 @@ GameObject:
   - component: {fileID: 3449384978808947348}
   - component: {fileID: 3449384978808947351}
   m_Layer: 5
-  m_Name: Text
+  m_Name: VI_Cost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2849,7 +2851,7 @@ GameObject:
   - component: {fileID: 3449384978833903511}
   - component: {fileID: 3449384978833903510}
   m_Layer: 5
-  m_Name: Skill_4
+  m_Name: Curse_Of_Amaterasu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2984,7 +2986,7 @@ MonoBehaviour:
   skillName: {fileID: 3449384977451328964}
   skillDescription: {fileID: 3449384977774135184}
   skillIcon: {fileID: 3449384978025370565}
-  skillPointsNeeded: {fileID: 3449384977724426635}
+  skillPointsNeeded: {fileID: 3449384977549087012}
   m_PlayerHandler: {fileID: 0}
 --- !u!1 &3449384978848256412
 GameObject:
@@ -2998,7 +3000,7 @@ GameObject:
   - component: {fileID: 3449384978848256403}
   - component: {fileID: 3449384978848256402}
   m_Layer: 5
-  m_Name: Disabled
+  m_Name: SR_Disabled_Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3051,7 +3053,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: a154aba54a84eb743a4bdd33c8e5577a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2f0464ac14bb1f441833c338a1f437c7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3072,7 +3074,7 @@ GameObject:
   - component: {fileID: 3449384978854438502}
   - component: {fileID: 3449384978854438497}
   m_Layer: 5
-  m_Name: Description
+  m_Name: BL_Description
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3152,7 +3154,7 @@ GameObject:
   - component: {fileID: 3449384978919680322}
   - component: {fileID: 3449384978919680333}
   m_Layer: 5
-  m_Name: KenPoints
+  m_Name: Number_Of_Points
   m_TagString: Points
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3314,7 +3316,7 @@ GameObject:
   - component: {fileID: 3449384979295248175}
   - component: {fileID: 3449384979295248174}
   m_Layer: 5
-  m_Name: KenronTxt
+  m_Name: Name_Display
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3476,7 +3478,7 @@ GameObject:
   - component: {fileID: 3449384979391854839}
   - component: {fileID: 3449384979391854838}
   m_Layer: 5
-  m_Name: Skill_1
+  m_Name: Vile_Infusion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3625,7 +3627,7 @@ GameObject:
   - component: {fileID: 3449384979492250440}
   - component: {fileID: 3449384979492250443}
   m_Layer: 5
-  m_Name: Available
+  m_Name: COA_Icon_Available
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3678,7 +3680,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 7ccfafad9e6334a4ab839bba0dcdc2ae, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 66069e3714949c742ab4b30d30d9d184, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3741,7 +3743,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8cdcf8f83e2e32b41939070bcd61e6f5, type: 3}
+  - {fileID: 2100000, guid: 26b411d8f47449f49812f3cfb8e20733, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3825,7 +3827,6 @@ MonoBehaviour:
   m_skillDisplay: {fileID: 3449384978919680333}
   m_skillMaxed: {fileID: 3449384978350884696}
   m_reviveColliderRadius: {fileID: 7372013259995003284}
-  reviveParticle: {fileID: 100006, guid: 60bc526f4be1e044ab9e46340b82ffb3, type: 3}
   swordCollider: {fileID: 0}
   childKenron: {fileID: 0}
   skillManager: {fileID: 0}
@@ -3874,7 +3875,7 @@ GameObject:
   - component: {fileID: 576475735797821664}
   - component: {fileID: 210608469141656694}
   m_Layer: 9
-  m_Name: Dash Hit Box
+  m_Name: Dash_Hit_Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3930,7 +3931,7 @@ GameObject:
   - component: {fileID: 5556922766442775295}
   - component: {fileID: 7372013259995003284}
   m_Layer: 9
-  m_Name: ReviveCollider
+  m_Name: Revive_Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3980,7 +3981,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 26b411d8f47449f49812f3cfb8e20733, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4071,8 +4072,15 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: e6b0813b28d3889439f14a511cfdfaed, type: 2}
-    m_RemovedComponents:
-    - {fileID: 2000000, guid: 1c12763dc36229f45b8574a0ef3e8d98, type: 3}
+    - target: {fileID: 13700000, guid: 1c12763dc36229f45b8574a0ef3e8d98, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f2286d3e116d2764fa76328f42fee9a2, type: 2}
+    - target: {fileID: 13700002, guid: 1c12763dc36229f45b8574a0ef3e8d98, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 87dc5ea5723ce764793aff013e8ab52a, type: 2}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c12763dc36229f45b8574a0ef3e8d98, type: 3}
 --- !u!4 &9157860088018837540 stripped
 Transform:
