@@ -13,9 +13,6 @@ public class SkillsAbilities : ScriptableObject
 
     private BaseCharacter Base;
 
-
-   // public static SkillsAbilities s_default = new SkillsAbilities();
-
     public void SetValues(GameObject skillDisplayObject, BaseCharacter Player) {
         if (skillDisplayObject) {
             SkillDisplay SD = skillDisplayObject.GetComponent<SkillDisplay>();
