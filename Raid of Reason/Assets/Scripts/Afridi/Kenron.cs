@@ -260,7 +260,6 @@ public class Kenron : BaseCharacter {
 				m_controllerOn)
             {
 				// reset boolean flags
-				m_controllerOn = true;
 				m_dashCollider.enabled = false;
 				m_animator.SetBool("Attack", false);
 
@@ -271,6 +270,7 @@ public class Kenron : BaseCharacter {
 			// if ready to dash again 
 			if (m_dashDelayTimer <= 0.0f)
 			{
+				m_controllerOn = true;
 				isDashing = false;
 			}
         }
