@@ -255,8 +255,9 @@ public class Kenron : BaseCharacter {
             // if completed dash
             if ((m_dashPosition - transform.position).sqrMagnitude <= 0.1f)
             {
-                // reset boolean flags
-                m_dashCollider.enabled = false;
+				// reset boolean flags
+				m_controllerOn = true;
+				m_dashCollider.enabled = false;
 				m_animator.SetBool("Attack", false);
 
 				// run delay timer
@@ -266,7 +267,6 @@ public class Kenron : BaseCharacter {
 			// if ready to dash again 
 			if (m_dashDelayTimer <= 0.0f)
 			{
-				m_controllerOn = true;
 				isDashing = false;
 			}
         }
