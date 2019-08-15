@@ -12,51 +12,87 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class MultiTargetCamera : MonoBehaviour
 {
-    public float m_smoothTime;
-    public float m_FOVMin;
-    public float m_FOVMax;
-    public float m_sizeNormaliser;
-    public Vector3 m_offset;
-    public List<Transform> m_targets;
-    public Camera m_cam;
+	[Header("Movement")]
+	[SerializeField]
+	[Tooltip("Maximum time it will take for camera to reach new position")]
+	private float m_smoothTime = 20f;
 
-    private Vector3 m_moveVelocity;
-    private float m_zoomVelocity;
-    private float m_FOVScalar = 1f;
+	[SerializeField]
+	[Tooltip("Closest the camera will get to players")]
+	private float m_minDistance = 5f;
 
-    void Awake()
+	[SerializeField]
+	[Tooltip("Farthest the camera will get to players")]
+	private float m_maxDistance = 10f;
+
+	[SerializeField]
+	[Tooltip("How sensitive the camera is to the size of the bounds")]
+	private float m_distanceScalar = 0.6f;
+
+	[SerializeField]
+	[Tooltip("Offset of the camera")]
+	private Vector3 m_offset;
+
+	[Tooltip("Every object the camera will attempt to encapsulate")]
+	public List<Transform> targets;
+
+	[Header("Rotation")]
+	[SerializeField]
+	[Tooltip("If camera should rotate to look at centre")]
+	private bool m_rotate = true;
+
+	[SerializeField]
+	[HideInInspector]
+	[Tooltip("t value for Quaternion.Slerp calculation")]
+	private float m_rotateSlerpT = 0.025f;
+
+	private Vector3 m_moveVelocity;
+	private float m_zoomVelocity;
+	private float m_currentDistance;
+
+	/// <summary>
+	/// Physics update.
+	/// </summary>
+	void FixedUpdate()
     {
-        m_cam = GetComponent<Camera>();
-    }
-
-    /// <summary>
-    /// Physics update.
-    /// </summary>
-    void FixedUpdate()
-    {
-        m_targets.RemoveAll(target => !target);
+        targets.RemoveAll(target => !target);
 
         // If all players are dead from the array dont do anything.
-        if (m_targets.Count == 0) { return; }
+        if (targets.Count == 0)
+		{
+			return;
+		}
 
-        var bounds = new Bounds(m_targets[0].position, Vector3.zero);
 
-        Move(ref bounds);
-        Zoom(bounds);
-    }
+        var bounds = new Bounds(targets[0].position, Vector3.zero);
 
-    /// <summary>
-    /// Moves the cameras transform accordingly.
-    /// </summary>
-    /// <param name="bounds"></param>
-    void Move(ref Bounds bounds)
-    {
-        // Gets the centre point of the players.
-        Vector3 centrePoint = GetCentrePoint(ref bounds);
-        // Finds the new position of the players based off the offset.
-        Vector3 newPos = centrePoint + m_offset;
-        // Move camera to that position.
-        transform.position = Vector3.SmoothDamp(transform.position, newPos, ref m_moveVelocity, m_smoothTime);
+		// calculate centre point of bounds
+		Vector3 centre = GetCentrePoint(ref bounds);
+
+		// calculate required distance
+		m_currentDistance = Mathf.SmoothDamp(m_currentDistance, bounds.size.x * m_distanceScalar, ref m_zoomVelocity, m_smoothTime * Time.fixedDeltaTime);
+		m_currentDistance = Mathf.Clamp(m_currentDistance, m_minDistance, m_maxDistance);
+
+		// calculate offset needed to achieve distance
+		Vector3 requiredOffset = m_offset + (-transform.forward * m_currentDistance);
+
+		transform.position = Vector3.SmoothDamp(transform.position, centre + requiredOffset, ref m_moveVelocity, m_smoothTime * Time.fixedDeltaTime);
+
+		// do rotation stuff
+		if (m_rotate)
+		{
+			// calculate direciton and rotation
+			Vector3 direction = (centre - transform.position).normalized;
+			Quaternion rotation = Quaternion.LookRotation(direction);
+			Quaternion slerpRotation = Quaternion.Slerp(transform.rotation, rotation, m_rotateSlerpT);
+
+			// rotate
+			transform.rotation = Quaternion.Euler(
+				slerpRotation.eulerAngles.x,
+				transform.rotation.eulerAngles.y,
+				transform.rotation.eulerAngles.z
+			);
+		}
     }
 
     /// <summary>
@@ -67,42 +103,22 @@ public class MultiTargetCamera : MonoBehaviour
     Vector3 GetCentrePoint(ref Bounds bounds) {
 
         // Checks if theres only 1 player in the array of targets.
-        if (m_targets.Count == 1) {
+        if (targets.Count == 1) {
             // If so then return the position of the target left.
-            return m_targets[0].position;
+            return targets[0].position;
         }
 
         // For every transform in the array of targets.
-        foreach (Transform t in m_targets) {
+        foreach (Transform t in targets) {
             // Grow the bounds of that targets position.
             bounds.Encapsulate(t.position);
         }
 
-        if (m_targets[0] == null)
+        if (targets[0] == null)
         {
-            bounds.Encapsulate(m_targets[1].position);
+            bounds.Encapsulate(targets[1].position);
         }
 
         return bounds.center;
-    }
-
-    /// <summary>
-    /// This function zooms into the action based on whether 
-    /// the players are exiting the screen space or not.
-    /// </summary>
-    /// <param name="bounds"></param>
-    void Zoom(Bounds bounds) {
-
-        // Checks if theres more than 1 player on the screen.
-        if (m_targets.Count != 1) {
-            // Scale according to the players on the screen.
-            m_FOVScalar = Mathf.SmoothDamp(m_FOVScalar, bounds.size.magnitude / m_sizeNormaliser, ref m_zoomVelocity, m_smoothTime);
-        }
-        else {
-            // Scale to only fit the 1 player thats alive of a bounds of 0.5 floats.
-            m_FOVScalar = Mathf.SmoothDamp(m_FOVScalar, .5f, ref m_zoomVelocity, m_smoothTime);
-        }
-        // Lerps the cameras FOV according to the min and max thats been inputted in the inspector.
-        m_cam.fieldOfView = Mathf.Lerp(m_FOVMin, m_FOVMax, m_FOVScalar);
     }
 }

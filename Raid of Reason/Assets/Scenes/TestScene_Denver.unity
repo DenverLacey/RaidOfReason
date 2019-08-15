@@ -212,16 +212,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffd826d6373a5f249b041bd912aaa808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_smoothTime: 0.3
-  m_FOVMin: 30
-  m_FOVMax: 120
-  m_sizeNormaliser: 40
+  m_smoothTime: 20
+  m_minDistance: 5
+  m_maxDistance: 10
+  m_distanceScalar: 0.6
   m_offset: {x: -12, y: 14, z: -14}
-  m_targets:
+  targets:
   - {fileID: 2973835765832967381}
   - {fileID: 8658002116055191821}
   - {fileID: 8045381004985874487}
-  m_cam: {fileID: 215099359}
+  m_rotate: 1
+  m_rotateSlerpT: 0.01
 --- !u!81 &215099358
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2006,7 +2007,7 @@ PrefabInstance:
     - target: {fileID: 678422783500613815, guid: 668ebf12aae6a0e4daf823a390e32e81,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6217296477322532297, guid: 668ebf12aae6a0e4daf823a390e32e81,
         type: 3}
@@ -2310,6 +2311,11 @@ PrefabInstance:
       propertyPath: m_Avatar
       value: 
       objectReference: {fileID: 9000000, guid: f1918d0ff658d984291dae9a0e69fb9b, type: 3}
+    - target: {fileID: 1454374199770746451, guid: db1a93841802ddd4d9bb862ae4b9deaf,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db1a93841802ddd4d9bb862ae4b9deaf, type: 3}
 --- !u!1001 &3387698401005942046
@@ -2327,7 +2333,7 @@ PrefabInstance:
     - target: {fileID: 3774334560616408345, guid: 1a7661fa950b2cc42b35751633494eb9,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5707208689818696768, guid: 1a7661fa950b2cc42b35751633494eb9,
         type: 3}
@@ -2423,7 +2429,7 @@ PrefabInstance:
     - target: {fileID: 8343399046292329858, guid: 0ec7fead950632146b7cda42c7f49dc4,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3821506756914221167, guid: 0ec7fead950632146b7cda42c7f49dc4,
         type: 3}

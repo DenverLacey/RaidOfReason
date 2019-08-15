@@ -95,8 +95,8 @@ public class ChildKenron :  BaseCharacter
             // disable him (Should be replaced with down animation)
             GameManager.Instance.Kenron.SetSpeed(0);
             GameManager.Instance.Kenron.m_controllerOn = false;
-            if (m_camera.m_targets.Count > 0)
-                m_camera.m_targets.Remove(GameManager.Instance.Kenron.gameObject.transform);
+            if (m_camera.targets.Count > 0)
+                m_camera.targets.Remove(GameManager.Instance.Kenron.gameObject.transform);
             this.enabled = true;
             this.SetHealth(50);
             this.SetSpeed(20);

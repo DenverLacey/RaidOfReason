@@ -129,8 +129,8 @@ public abstract class BaseCharacter : MonoBehaviour {
 
 			case PlayerState.DEAD:
                 // Player gets removed from camera array.
-                if (m_camera.m_targets.Count > 0)
-                    m_camera.m_targets.Remove(this.gameObject.transform);
+                if (m_camera.targets.Count > 0)
+                    m_camera.targets.Remove(this.gameObject.transform);
                 break;
 
 			default:
