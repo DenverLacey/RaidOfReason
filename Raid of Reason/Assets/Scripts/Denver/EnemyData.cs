@@ -35,7 +35,10 @@ public class EnemyData : MonoBehaviour
     [SerializeField] 
 	private EnemyType m_type;
 
-	public EnemyType Type { get => m_type; }
+    [SerializeField]
+    private GameObject m_tauntIcon;
+
+    public EnemyType Type { get => m_type; }
     public float ViewRange { get; private set; }
     public float MaxHealth { get; private set; }
     public float Health { get; private set; }
@@ -47,6 +50,7 @@ public class EnemyData : MonoBehaviour
 	public bool Taunted { get; set; }
 	public bool Stunned { get; set; }
 	public GameObject[] AttackPrefabs { get; private set; }
+    public GameObject TauntIcon { get => m_tauntIcon; }
 
     public Vector3 Target { get; set; }
 

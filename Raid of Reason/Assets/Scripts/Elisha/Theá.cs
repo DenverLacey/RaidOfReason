@@ -109,9 +109,9 @@ public class Theá : BaseCharacter
 		m_kenron = FindObjectOfType<Kenron>();
         m_playerController = GetComponent<BaseCharacter>();
         m_AOETimer = 0f;
-        // m_AOEParticle = GetComponentInChildren<ParticleSystem>();
-        // m_AOEParticleCollider.transform.position = this.gameObject.transform.position;
-        //m_AOEParticle.transform.position = this.gameObject.transform.position;
+        m_AOEParticle = GetComponentInChildren<ParticleSystem>();
+        m_AOEParticleCollider.transform.position = this.gameObject.transform.position;
+        m_AOEParticle.transform.position = this.gameObject.transform.position;
         m_AOEParticleCollider.enabled = false;
         aoe = m_AOEParticle.shape;
         m_aimCursor = GameObject.FindGameObjectWithTag("AimCursor");
@@ -303,7 +303,7 @@ public class Theá : BaseCharacter
 
 			// turn AOE effect on
 			m_AOEParticle.gameObject.SetActive(true);
-			m_AOEParticle.transform.position = transform.position;
+			//m_AOEParticle.transform.position = transform.position;
 			
 			// Grow AOE radius.
             m_AOERadius = Mathf.Lerp(m_AOERadius, m_AOEMax, m_AOETimer / m_AOEGrowTime);
@@ -384,7 +384,7 @@ public class Theá : BaseCharacter
         m_playerController.m_controllerOn = true;
         aoe.radius = 1;
 
-		// turn AOE effect on
+		// turn AOE effect off
 		m_AOEParticle.gameObject.SetActive(false);
 	}
 

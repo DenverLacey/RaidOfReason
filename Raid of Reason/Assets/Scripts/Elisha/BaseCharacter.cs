@@ -71,7 +71,6 @@ public abstract class BaseCharacter : MonoBehaviour {
     public TextMeshProUGUI m_skillMaxed;
     protected Animator m_animator;
     public SphereCollider m_reviveColliderRadius;
-    public GameObject reviveParticle;
 
     [HideInInspector]
     public bool IsBeingRevived { get; private set; }
@@ -108,8 +107,6 @@ public abstract class BaseCharacter : MonoBehaviour {
         m_controllerOn = true;
         m_bActive = false;
         m_reviveColliderRadius.enabled = false;
-        reviveParticle.transform.position = this.gameObject.transform.position;
-        reviveParticle.SetActive(false);
         m_skillDisplay.text = m_playerSkillPoints.ToString();
     }
 
@@ -127,7 +124,6 @@ public abstract class BaseCharacter : MonoBehaviour {
 				break;
 
 			case PlayerState.REVIVE:
-                ReviveTeamMate();
                 m_deathTimer -= Time.deltaTime;
                 break;
 
@@ -267,7 +263,6 @@ public abstract class BaseCharacter : MonoBehaviour {
                 // Player revived.
                 player.m_isRevived = true;
                 player.IsBeingRevived = false;
-                reviveParticle.SetActive(false);
                 player.m_controllerOn = true;
                 // Disable the revive collider.
                 player.m_reviveColliderRadius.enabled = false;
@@ -293,99 +288,6 @@ public abstract class BaseCharacter : MonoBehaviour {
     }
 
     /// <summary>
-    /// Checks if the downed player is in REVIVE state which then gives allies a chance to revive them.
-    /// </summary>
-    public void ReviveTeamMate()
-    {
-        // Cycles through every instance of the players in the game.
-        foreach (var player in GameManager.Instance.Players)
-        {
-            // Don't check yourself.
-            if (player == this) { continue; }
-
-            // Calculates the distance between the downed player and the other players.
-            float sqrDistance = (player.transform.position - this.transform.position).sqrMagnitude;
-
-            // If player is reviving me
-            if (player.IsBeingRevived)
-            {
-                // Enable revive collider.
-                m_reviveColliderRadius.enabled = true;
-
-                // Have the colliders radius equal the AOE float radius.
-                m_reviveColliderRadius.radius = m_reviveRadius;
-
-                // Checks to see if player isnt getting revived.
-                if (!IsBeingRevived)
-                {
-                    // Starts the timer that the player can be in revive state for.
-                    player.m_deathTimer -= Time.deltaTime;
-                }
-
-                // If the timer is 0 and the player hasnt been revived.
-                if(m_deathTimer <= 0 && !m_isRevived)
-                {
-                    // Kill the player 
-                    this.playerState = PlayerState.DEAD;
-                    this.gameObject.SetActive(false);
-                }
-
-                // Checks if the 2 players that are alive are within the revive distance.
-                if (sqrDistance <= m_reviveRadius * m_reviveRadius)
-                {
-                    // TODO: Show in UI the player can hold B to revive
-                    Debug.Log("Hold B to revive");
-
-                    // Checks if the player holds the B button
-                    if (XCI.GetButton(XboxButton.B, player.controller))
-                    {
-                        // Means they are reviving the player.
-                        IsBeingRevived = true;
-
-                        // If thats true.
-                        if (IsBeingRevived)
-                        {
-                            // Start the revive timer.
-                            m_reviveTimer -= Time.deltaTime;
-
-                            // TODO: Start revive particle effect.
-                            // If the revive timer hits 0 and the player is reviving.
-                            if (m_reviveTimer <= 0f && IsBeingRevived)
-                            {
-                                // Player revived.
-                                m_isRevived = true;
-                                IsBeingRevived = false;
-                                reviveParticle.SetActive(false);
-                                m_controllerOn = true;
-                                GameManager.Instance.Thea.m_aimCursor.SetActive(true);
-
-                                // Change them to the ALIVE state.
-                                playerState = PlayerState.ALIVE;
-                                // Give the player some health when they get back up.
-                                this.m_currentHealth = m_healthUponRevive;
-                                // TODO: Stop revive particle effect.
-                                // Reset timer.
-                                m_reviveTimer = 5f;
-                                // Disable the revive collider.
-                                m_reviveColliderRadius.enabled = false;
-                            }
-                        }
-                    }
-                    // If the user lets go of the revive button, reset the timer for reviving.
-                    else if(XCI.GetButtonUp(XboxButton.B, player.controller))
-                    {
-                        m_reviveTimer = 5f;
-                    }
-                }
-                else
-                {
-                    IsBeingRevived = false;
-                }
-            }
-        }
-    }
-
-    /// <summary>
     /// This gets called when player has no health. Allows the player to be revived by an ally.
     /// </summary>
     protected virtual void OnDeath()
@@ -397,7 +299,6 @@ public abstract class BaseCharacter : MonoBehaviour {
         }
         
         m_controllerOn = false;
-        reviveParticle.SetActive(true);
         // Enable revive collider.
         m_reviveColliderRadius.enabled = true;
         // Have the colliders radius equal the AOE float radius.
