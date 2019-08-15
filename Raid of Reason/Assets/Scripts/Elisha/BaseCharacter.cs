@@ -5,13 +5,14 @@ using XboxCtrlrInput;
 using TMPro;
 
 /* 
- * Author: Elisha_Anagnostakis, Denver_Lacey, Afridi_Rahim
+ * Author: Elisha, Denver, Afridi
  * Description: Abstract base class that will be derived by character classes Kenron, Nashorn and Theá. Handles everything to do 
  *              with the characters movements and states.
  */
 
 
-public abstract class BaseCharacter : MonoBehaviour {
+public abstract class BaseCharacter : MonoBehaviour 
+{
 
     public enum PlayerState
     {
@@ -84,11 +85,10 @@ public abstract class BaseCharacter : MonoBehaviour {
     private MeshRenderer m_renderer;
     private Color m_originalColour;
 
-    public int SkillPoints {
-        get { return m_playerSkillPoints;  }
-        set {
-            m_playerSkillPoints = value;
-        }
+    public int SkillPoints 
+    { 
+        get => m_playerSkillPoints;
+        set => m_playerSkillPoints = value;
     }
 
     /// <summary>
@@ -160,15 +160,17 @@ public abstract class BaseCharacter : MonoBehaviour {
         }
 
         // Makes sure health doesnt exceed limit.
-        if (m_currentHealth >= m_maxHealth)
+        if (m_currentHealth >= m_maxHealth) 
+        {
             m_currentHealth = m_maxHealth;
+        }
     }
 
     /// <summary>
     /// Handles the main movement of each derived character using Xinput.
     /// </summary>
-    virtual protected void CharacterMovement() {
-
+    virtual protected void CharacterMovement() 
+    {
         // Checks if player is active.
         if (m_controllerOn)
         {
@@ -208,10 +210,12 @@ public abstract class BaseCharacter : MonoBehaviour {
                 // Rotate movement into world space to get animation movement
                 Vector3 animationMovement = Quaternion.AngleAxis(angle, Vector3.up) * movement.normalized;
 
+                // flip x movement if walking backwards
+                animationMovement.x *= animationMovement.z >= 0 ? 1 : -1;
+
                 // Set animator's movement floats
                 m_animator.SetFloat("MovX", animationMovement.x);
                 m_animator.SetFloat("MovZ", animationMovement.z);
-                m_animator.SetFloat("Speed", movement.magnitude);
             }
         }
     }

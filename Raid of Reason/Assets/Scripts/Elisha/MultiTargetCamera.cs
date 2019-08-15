@@ -1,14 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-/* 
- * Author: Elisha_Anagnostakis
+﻿/* 
+ * Author: Elisha, Denver
  * Description: Handles how the camera operates within the game by making sure our main characters are all within the screen 
  *              at once, by adjusting its zoom and position based on how many players there are.
  */
 
-// Requires camera component or else script will throw an error.
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+/// <summary>
+/// Camera that automatically orients itself so all targets can be seen
+/// </summary>
 [RequireComponent(typeof(Camera))]
 public class MultiTargetCamera : MonoBehaviour
 {
@@ -63,18 +65,17 @@ public class MultiTargetCamera : MonoBehaviour
 			return;
 		}
 
-
         var bounds = new Bounds(targets[0].position, Vector3.zero);
 
 		// calculate centre point of bounds
 		Vector3 centre = GetCentrePoint(ref bounds);
 
 		// calculate required distance
-		m_currentDistance = Mathf.SmoothDamp(m_currentDistance, bounds.size.x * m_distanceScalar, ref m_zoomVelocity, m_smoothTime * Time.fixedDeltaTime);
+		m_currentDistance = Mathf.SmoothDamp(m_currentDistance, bounds.size.magnitude * m_distanceScalar, ref m_zoomVelocity, m_smoothTime * Time.fixedDeltaTime);
 		m_currentDistance = Mathf.Clamp(m_currentDistance, m_minDistance, m_maxDistance);
 
 		// calculate offset needed to achieve distance
-		Vector3 requiredOffset = m_offset + (-transform.forward * m_currentDistance);
+		Vector3 requiredOffset = m_offset - transform.forward * m_currentDistance;
 
 		transform.position = Vector3.SmoothDamp(transform.position, centre + requiredOffset, ref m_moveVelocity, m_smoothTime * Time.fixedDeltaTime);
 
@@ -98,25 +99,22 @@ public class MultiTargetCamera : MonoBehaviour
     /// <summary>
     /// This function allows the camera to adjust to the centre point based on where the players are.
     /// </summary>
-    /// <param name="bounds"></param>
+    /// <param name="bounds"> Bounds of all targets </param>
     /// <returns> Vector 3 value. </returns>
     Vector3 GetCentrePoint(ref Bounds bounds) {
 
         // Checks if theres only 1 player in the array of targets.
-        if (targets.Count == 1) {
+        if (targets.Count == 1) 
+		{
             // If so then return the position of the target left.
             return targets[0].position;
         }
 
         // For every transform in the array of targets.
-        foreach (Transform t in targets) {
+        foreach (Transform t in targets) 
+		{
             // Grow the bounds of that targets position.
             bounds.Encapsulate(t.position);
-        }
-
-        if (targets[0] == null)
-        {
-            bounds.Encapsulate(targets[1].position);
         }
 
         return bounds.center;

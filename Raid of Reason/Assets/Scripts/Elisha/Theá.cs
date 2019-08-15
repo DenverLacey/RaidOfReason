@@ -186,10 +186,12 @@ public class Theá : BaseCharacter
                 // Rotate movement into world space to get animation movement
                 Vector3 animationMovement = Quaternion.AngleAxis(angle, Vector3.up) * movement.normalized;
 
+                // flip x movement if walking backwards
+                animationMovement.x *= animationMovement.z >= 0 ? 1 : -1;
+
                 // Set animator's movement floats
                 m_animator.SetFloat("MovX", animationMovement.x);
                 m_animator.SetFloat("MovZ", animationMovement.z);
-                m_animator.SetFloat("Speed", movement.magnitude);
             }
         }
     }
