@@ -29,7 +29,7 @@ public struct EnemyAttackRange
 /// Encapsulates all data for all enemy types
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(Collider))]
 public class EnemyData : MonoBehaviour 
 {
     [SerializeField] 
@@ -54,8 +54,9 @@ public class EnemyData : MonoBehaviour
 
     public Vector3 Target { get; set; }
 
-    public NavMeshAgent NavMeshAgent { get; private set; }
-	public Vector3 PendingDestination { get; set; }
+	public Behaviour PendingBehaviour { get; set; }
+
+	public bool ManualSteering { get; set; }
 
 	public Rigidbody Rigidbody { get; private set; }
 
@@ -69,13 +70,22 @@ public class EnemyData : MonoBehaviour
     // Afridi added this for the skill tree
     public bool isAttackingNashorn = true;
 
+	private NavMeshPath m_path;
+	private bool m_pathing;
+	private int m_currentCorner;
+	private float m_speed = 3f;
+	private float m_steeringSpeed = 10f;
+	private Collider m_collider;
+	private Vector3 m_currentDestination;
+
 	private void Start()
 	{
 		Rigidbody = GetComponent<Rigidbody>();
-		NavMeshAgent = GetComponent<NavMeshAgent>();
-		NavMeshAgent.destination = transform.position;
-
         Renderer = GetComponent<MeshRenderer>();
+		m_collider = GetComponent<Collider>();
+
+		m_path = new NavMeshPath();
+		NavMesh.CalculatePath(transform.position, transform.position, NavMesh.AllAreas, m_path);
 
         if (!Renderer)
         {
@@ -187,6 +197,92 @@ public class EnemyData : MonoBehaviour
 
 	private void Update()
 	{
-		Debug.DrawLine(transform.position, NavMeshAgent.destination, Color.green, Time.deltaTime);
+		if (m_path.corners.Length == 0)
+		{
+			return;
+		}
+
+		// move to destination
+		if (!Stunned && m_pathing && m_currentCorner != m_path.corners.Length)
+		{
+			Vector3 currentTarget = m_path.corners[m_currentCorner];
+			currentTarget.y = transform.position.y;
+
+			// draw debug line that follows path
+			Vector3 currentPosition = transform.position;
+			currentPosition.y = 0.1f;
+			Debug.DrawLine(currentPosition, m_path.corners[m_currentCorner], Color.green);
+
+			for (int i = m_currentCorner + 1; i < m_path.corners.Length; i++)
+			{
+				Debug.DrawLine(m_path.corners[i - 1], m_path.corners[i], Color.green);
+			}
+
+			// calculate movement vector
+			Vector3 movementVector = (currentTarget - transform.position).normalized;
+			Rigidbody.MovePosition(transform.position + movementVector * m_speed * Time.deltaTime);
+
+			// if reached current corner, move to next
+			if (AtCorner(m_path.corners[m_currentCorner])) 
+			{
+				m_currentCorner++;
+			}
+
+			// do steering
+			if (!ManualSteering)
+			{
+				Quaternion desiredRotation = Quaternion.LookRotation(movementVector);
+				transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, m_steeringSpeed * Time.deltaTime);
+			}
+		}
+	}
+
+	public void SetDestination(Vector3 destination)
+	{
+		destination.y = 0f;
+
+		if (!AtCorner(destination))
+		{
+			m_pathing = true;
+			NavMesh.CalculatePath(transform.position, destination, NavMesh.AllAreas, m_path);
+			m_currentCorner = 1;
+		}
+		else
+		{
+			m_pathing = false;
+		}
+	}
+
+	public void StopPathing()
+	{
+		NavMesh.CalculatePath(transform.position, transform.position, NavMesh.AllAreas, m_path);
+		m_currentCorner = 1;
+		m_pathing = false;
+	}
+
+	public Vector3 GetDestination()
+	{
+		if (m_path.corners.Length == 0)
+		{
+			return transform.position;
+		}
+		else
+		{
+			Vector3 destination = m_path.corners[m_path.corners.Length - 1];
+			destination.y = transform.position.y;
+			return destination;
+		}
+	}
+
+	private bool AtCorner(Vector3 corner)
+	{
+		Vector3 difference = corner - transform.position;
+		float sqrDistancX = difference.sqrMagnitude - difference.y * difference.y;
+		return sqrDistancX <= 0.2f;
+	}
+
+	public Behaviour.Result ExecutePendingBehaviour()
+	{
+		return PendingBehaviour.Execute(this);
 	}
 }

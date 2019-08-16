@@ -22,7 +22,7 @@ public class GetIntoPosition : Behaviour
 		Vector3 destination = agent.Target + direction * avgAttackRange;
 
 		// set destination
-		agent.NavMeshAgent.destination = destination;
+		agent.SetDestination(destination);
 
 		return SUCCESS;
 	}

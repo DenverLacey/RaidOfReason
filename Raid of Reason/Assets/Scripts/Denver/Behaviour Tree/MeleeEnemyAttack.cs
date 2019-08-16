@@ -25,14 +25,15 @@ public class MeleeEnemyAttack : Behaviour
     public override Result Execute(EnemyData agent)
 	{
 		// rotate to face player
-		Vector3 direciton = (agent.Target - agent.transform.position).normalized;
-		Quaternion desiredRotation = Quaternion.LookRotation(direciton, Vector3.up);
+		Vector3 direction = (agent.Target - agent.transform.position).normalized;
+		direction.y = 0f;
+		Quaternion desiredRotation = Quaternion.LookRotation(direction, Vector3.up);
 		agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, desiredRotation, .25f);
 
 		agent.Attacking = true;
 		agent.AttackTimer += Time.deltaTime;
 
-		agent.NavMeshAgent.destination = agent.transform.position;
+		agent.StopPathing();
 
 		if (agent.AttackTimer >= agent.AttackCooldown)
 		{
@@ -60,6 +61,6 @@ public class MeleeEnemyAttack : Behaviour
 			}
 		}
 
-		return SUCCESS;
+		return PENDING_COMPOSITE;
 	}
 }

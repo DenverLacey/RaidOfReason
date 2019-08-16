@@ -31,7 +31,8 @@ public class SightlineCondition : Behaviour
 		Vector3 origin = agent.transform.position;
 		origin.y = 1f;
 
-		if (Physics.Raycast(origin, dir, out RaycastHit info, agent.ViewRange)) 
+		int ignoreEnemies = Utility.GetIgnoreMask("Enemy");
+		if (Physics.Raycast(origin, dir, out RaycastHit info, agent.ViewRange/*, ignoreEnemies*/)) 
 		{
 			if (info.collider.tag == "Kenron" || info.collider.tag == "Nashorn" || info.collider.tag == "Thea")
 			{

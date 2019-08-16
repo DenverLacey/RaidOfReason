@@ -27,11 +27,24 @@ public class Sequence : Composite
         // run children's execute functions
         foreach (Behaviour child in m_children) 
         {
-            // propogate failure if child fails
-            if (child.Execute(agent) == FAILURE) 
-            {
-                return FAILURE;
-            }
+			Result result = child.Execute(agent);
+
+			switch (result)
+			{
+				case FAILURE:
+					return FAILURE;
+
+				case PENDING_COMPOSITE:
+					agent.PendingBehaviour = this;
+					return PENDING_ABORT;
+
+				case PENDING_MONO:
+					agent.PendingBehaviour = child;
+					return PENDING_ABORT;
+
+				case PENDING_ABORT:
+					return PENDING_ABORT;
+			}
         }
         // propagate success if all children suceed
         return SUCCESS;

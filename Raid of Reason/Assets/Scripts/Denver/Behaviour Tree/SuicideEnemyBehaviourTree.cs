@@ -20,32 +20,29 @@ public class SuicideEnemyBehaviourTree : BehaviourTree
 	/// </summary>
     SuicideEnemyBehaviourTree()
 	{
-		// create behaviour tree components
-		SuicideEnemyAttack attack = new SuicideEnemyAttack();
-
+		// create components for behaviour tree
 		StunnedCondition stunned = new StunnedCondition();
 
-		Sequence isAttackingSequence = new Sequence();
-		isAttackingSequence.AddChild(new AttackingCondition());
-		isAttackingSequence.AddChild(attack);
-
-		Selector tauntSelector = new Selector();
-		tauntSelector.AddChild(new TauntEvent());
-		tauntSelector.AddChild(new ViewRangeCondition());
+		Selector tryToAttack = new Selector();
+		tryToAttack.AddChild(new TauntEvent());
+		tryToAttack.AddChild(new ViewRangeCondition());
 
 		Sequence attackSequence = new Sequence();
-		attackSequence.AddChild(tauntSelector);
 		attackSequence.AddChild(new MinAttackRangeCondition());
-		attackSequence.AddChild(attack);
+		attackSequence.AddChild(new SuicideEnemyAttack());
+
+		Sequence canSeePlayerSoTryToAttack = new Sequence();
+		canSeePlayerSoTryToAttack.AddChild(tryToAttack);
+		canSeePlayerSoTryToAttack.AddChild(new SetDestination());
+		canSeePlayerSoTryToAttack.AddChild(attackSequence);
 
 		Wander wander = new Wander();
 
 		// add components to behaviour tree
 		m_behaviourTree.AddChild(stunned);
-		m_behaviourTree.AddChild(isAttackingSequence);
-		m_behaviourTree.AddChild(attackSequence);
+		m_behaviourTree.AddChild(canSeePlayerSoTryToAttack);
 		m_behaviourTree.AddChild(wander);
-    }
+	}
 
 	/// <summary>
 	/// Executes behaviour tree on an agent

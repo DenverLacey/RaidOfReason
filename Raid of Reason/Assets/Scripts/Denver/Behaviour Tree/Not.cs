@@ -40,7 +40,7 @@ public class Not : Behaviour
                 return FAILURE;
 
             default:
-                return PENDING;
+                return PENDING_COMPOSITE;
         }
     }
 }

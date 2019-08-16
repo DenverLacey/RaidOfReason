@@ -17,7 +17,9 @@ public abstract class Behaviour
     {
         FAILURE,
         SUCCESS,
-        PENDING
+        PENDING_COMPOSITE,
+		PENDING_MONO,
+		PENDING_ABORT
     }
 
 	/// <summary>
@@ -30,4 +32,9 @@ public abstract class Behaviour
 	/// If behaviour was successful; if it failed or is pending
 	/// </returns>
     public abstract Result Execute(EnemyData agent);
+
+	public static implicit operator bool(Behaviour b)
+	{
+		return b != null;
+	}
 }

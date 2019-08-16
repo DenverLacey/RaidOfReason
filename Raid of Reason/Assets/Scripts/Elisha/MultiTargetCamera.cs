@@ -90,7 +90,7 @@ public class MultiTargetCamera : MonoBehaviour
 			// rotate
 			transform.rotation = Quaternion.Euler(
 				slerpRotation.eulerAngles.x,
-				transform.rotation.eulerAngles.y,
+				slerpRotation.eulerAngles.y,
 				transform.rotation.eulerAngles.z
 			);
 		}

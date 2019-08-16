@@ -32,6 +32,7 @@ public class Nashorn : BaseCharacter
     [SerializeField]
     [Tooltip("Size of the area of effect for taunt ability")]
     private float m_tauntRadius;
+	public float TauntRadius { get => m_tauntRadius; }
 
     [SerializeField]
     [Tooltip("How vulnerable Nashorn is while taunting (1.0 is default)")]

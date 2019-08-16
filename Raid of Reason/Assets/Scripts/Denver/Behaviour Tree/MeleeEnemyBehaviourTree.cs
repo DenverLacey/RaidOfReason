@@ -32,16 +32,19 @@ public class MeleeEnemyBehaviourTree : BehaviourTree
 		tauntSelector.AddChild(sightlineSequence);
 
 		Sequence attackSequence = new Sequence();
-		attackSequence.AddChild(tauntSelector);
-		attackSequence.AddChild(new SetDestination());
 		attackSequence.AddChild(new MaxAttackRangeCondition());
 		attackSequence.AddChild(new MeleeEnemyAttack());
+
+		Sequence tryToAttackSequence = new Sequence();
+		tryToAttackSequence.AddChild(tauntSelector);
+		tryToAttackSequence.AddChild(new SetDestination());
+		tryToAttackSequence.AddChild(attackSequence);
 
 		Wander wander = new Wander();
 
 		// add components to behaviour tree
 		m_behaviourTree.AddChild(stunned);
-		m_behaviourTree.AddChild(attackSequence);
+		m_behaviourTree.AddChild(tryToAttackSequence);
 		m_behaviourTree.AddChild(wander);
     }
 

@@ -6,6 +6,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Behaviour.Result;
 
 /// <summary>
 /// Suicide Enemy's attack behaviour
@@ -25,8 +26,7 @@ public class SuicideEnemyAttack : Behaviour
 	{
 		agent.Attacking = true;
 
-		agent.Target = agent.transform.position;
-		agent.NavMeshAgent.destination = agent.Target;
+		agent.StopPathing();
 
 		agent.AttackTimer += Time.deltaTime;
 
@@ -48,6 +48,6 @@ public class SuicideEnemyAttack : Behaviour
 			agent.OnDeath();
 		}
 
-		return Result.SUCCESS;
+		return PENDING_MONO;
 	}
 }

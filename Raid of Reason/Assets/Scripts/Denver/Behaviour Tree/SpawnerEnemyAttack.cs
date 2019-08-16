@@ -8,8 +8,9 @@ public class SpawnerEnemyAttack : Behaviour
 	public override Result Execute(EnemyData agent)
 	{
 		// rotate to face player
-		Vector3 direciton = (agent.Target - agent.transform.position).normalized;
-		Quaternion desiredRotation = Quaternion.LookRotation(direciton, Vector3.up);
+		Vector3 direction = (agent.Target - agent.transform.position).normalized;
+		direction.y = agent.transform.position.y;
+		Quaternion desiredRotation = Quaternion.LookRotation(direction, Vector3.up);
 		agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, desiredRotation, .25f);
 
 		// attack player
@@ -22,7 +23,7 @@ public class SpawnerEnemyAttack : Behaviour
 			agent.Attacking = false;
 			agent.AttackTimer = 0f;
 
-			agent.NavMeshAgent.destination = agent.transform.position;
+			agent.SetDestination(agent.transform.position);
 
 			float angle = 360f / agent.AttackDamage;
 
@@ -38,7 +39,6 @@ public class SpawnerEnemyAttack : Behaviour
 				GameObject.Instantiate(agent.AttackPrefabs[randIdx], spawnVector + agent.transform.position, agent.transform.rotation);
 			}
 		}
-
 		return SUCCESS;
 	}
 }

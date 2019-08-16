@@ -96,7 +96,7 @@ public class EnemyManager : MonoBehaviour
 	/// Executes Behaviour Trees on each enemy the manager handles and
 	/// removes destroyed enemies from m_enemies
 	/// </summary>
-    void Update() 
+    void FixedUpdate() 
 	{
 		// remove all destroyed enemies from list
 		m_enemies.RemoveAll(enemy => !enemy);
@@ -104,7 +104,21 @@ public class EnemyManager : MonoBehaviour
 		// execute associated behaviour tree on each enemy
 		foreach (EnemyData enemy in m_enemies) 
 		{
-			m_behaviourTreeDict[enemy.Type].Execute(enemy);
+			if (enemy.PendingBehaviour)
+			{
+				Behaviour.Result result = enemy.ExecutePendingBehaviour();
+
+				if (result != Behaviour.Result.PENDING_ABORT ||
+					result != Behaviour.Result.PENDING_COMPOSITE ||
+					result != Behaviour.Result.PENDING_MONO)
+				{
+					enemy.PendingBehaviour = null;
+				}
+			}
+			else
+			{
+				m_behaviourTreeDict[enemy.Type].Execute(enemy);
+			}
         }
     }
 

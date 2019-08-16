@@ -27,11 +27,24 @@ public class Selector : Composite
         // run children's execute functions
         foreach (Behaviour child in m_children) 
         {
-            // propogate success if child succeeds
-            if (child.Execute(agent) == SUCCESS) 
-            {
-                return SUCCESS;
-            }
+			Result result = child.Execute(agent);
+
+			switch (result)
+			{
+				case SUCCESS:
+					return SUCCESS;
+
+				case PENDING_COMPOSITE:
+					agent.PendingBehaviour = this;
+					return PENDING_ABORT;
+
+				case PENDING_MONO:
+					agent.PendingBehaviour = child;
+					return PENDING_ABORT;
+
+				case PENDING_ABORT:
+					return PENDING_ABORT;
+			}
         }
         // propagate failure if all children fails
         return FAILURE;

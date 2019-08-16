@@ -24,7 +24,7 @@ public class SetDestination : Behaviour
 	/// </returns>
 	public override Result Execute(EnemyData agent)
 	{
-		agent.NavMeshAgent.destination = agent.Target;
+		agent.SetDestination(agent.Target);
 		return SUCCESS;
 	}
 }
