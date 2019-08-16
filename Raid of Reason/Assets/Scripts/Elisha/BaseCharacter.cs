@@ -41,6 +41,9 @@ public abstract class BaseCharacter : MonoBehaviour
     [Tooltip("Pick what controller this player is.")]
     public XboxController controller;
 
+    // Player Colliders
+    private CapsuleCollider m_playerCollider;
+
     [SerializeField]
     [Tooltip("How long will it take the player to revive his teammate?")]
     private float m_reviveTimer;
@@ -98,6 +101,7 @@ public abstract class BaseCharacter : MonoBehaviour
         // Gets the original colour of the player.
         m_originalColour = m_renderer.sharedMaterial.color;
         m_camera = FindObjectOfType<MultiTargetCamera>();
+        m_playerCollider = GetComponent<CapsuleCollider>();
         m_animator = GetComponentInChildren<Animator>();
         m_currentHealth = m_maxHealth;
         m_vulnerability = 1.0f;
@@ -119,7 +123,8 @@ public abstract class BaseCharacter : MonoBehaviour
 			case PlayerState.ALIVE:
                 // Call this.
                 CharacterMovement();
-				break;
+                m_playerCollider.enabled = true;
+                break;
 
 			case PlayerState.REVIVE:
                 m_deathTimer -= Time.deltaTime;
@@ -128,7 +133,10 @@ public abstract class BaseCharacter : MonoBehaviour
 			case PlayerState.DEAD:
                 // Player gets removed from camera array.
                 if (m_camera.targets.Count > 0)
+                {
                     m_camera.targets.Remove(this.gameObject.transform);
+                }
+                m_playerCollider.enabled = false;
                 break;
 
 			default:
@@ -273,6 +281,7 @@ public abstract class BaseCharacter : MonoBehaviour
                 // Reset timer.
                 player.m_reviveTimer = 5f;
                 player.m_deathTimer = 20f;
+                m_playerCollider.enabled = true;
             }
             
             if(player.m_deathTimer <= 0)

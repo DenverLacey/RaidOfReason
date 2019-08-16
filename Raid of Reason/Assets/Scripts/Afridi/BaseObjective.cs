@@ -2,31 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseObjective : MonoBehaviour
+public abstract class BaseObjective : ScriptableObject
 {
-    [HideInInspector]
-    public bool isCompleted = false;
-
-    [Tooltip("KOTM Objective")]
-    public KOTHObjective KOTMObjective;
-
-    protected void Update()
-    {
-        isDone();
-    }
-
-    protected void isDone() {
-        if (isCompleted) {
-            // Move to Next Scene
-        }
-    }
-
-    protected void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Player")
-        {
-           
-           
-        }       
-    }
+    public abstract void Update();
+    public abstract bool IsDone();
 }

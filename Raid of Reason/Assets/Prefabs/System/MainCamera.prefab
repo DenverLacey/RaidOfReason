@@ -96,12 +96,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_smoothTime: 0.5
-  m_FOVMin: 40
-  m_FOVMax: 60
-  m_sizeNormaliser: 1
+  m_minDistance: 5
+  m_maxDistance: 10
+  m_distanceScalar: 0.6
   m_offset: {x: -15, y: 14, z: -14}
-  m_targets:
+  targets:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  m_cam: {fileID: 2385325072712335930}
+  m_rotate: 1
+  m_rotateSlerpT: 0.025
