@@ -23,14 +23,6 @@ public static class Utility
 	/// </returns>
 	public static int GetIgnoreMask(params string[] layers)
 	{
-		int layerMask = 0;
-
-		foreach (string layerName in layers)
-		{
-			int layer = LayerMask.NameToLayer(layerName);
-			layerMask |= layer;
-		}
-
-		return layerMask;
+		return ~LayerMask.GetMask(layers);
 	}
 }
