@@ -16,23 +16,43 @@ using XboxCtrlrInput;
 public class Skills
 {
 	public UnityEvent m_reset;
-	public float m_coolDown;
-    public float m_currentCoolDown;
-    public Image m_skillIcon;
-    public bool active = false;
-    public bool reset = false;
 
-	public void RunTimer()
+    [Tooltip("Time until Skill can be used again")]
+	public float m_coolDown;
+
+    [Tooltip("Duration of the skills usetime")]
+    public float m_duration;
+
+    [HideInInspector]
+
+    public float m_currentCoolDown;
+    [HideInInspector]
+    public float m_currentDuration;
+
+    [Tooltip("Player Ability Image")]
+    public Image m_skillIcon;
+
+    [HideInInspector]
+    public bool active = false;
+
+    [HideInInspector]
+    public bool onCooldown = false;
+
+    public void RunTimer()
 	{
 		m_currentCoolDown += Time.deltaTime;
+        m_currentDuration += Time.deltaTime;
 		m_skillIcon.fillAmount = m_currentCoolDown / m_coolDown;
 
-		if (m_currentCoolDown >= m_coolDown)
-		{
-			if (m_reset != null) m_reset.Invoke();
+        if (m_currentCoolDown >= m_coolDown)
+        {
+            onCooldown = false;
+        }
+        if (m_currentDuration >= m_duration && active)
+        {
+            if (m_reset != null) m_reset.Invoke();
             active = false;
-            reset = false;
-		}
+        }
 	}
 }
 
@@ -48,6 +68,7 @@ public class SkillManager : MonoBehaviour {
         {
             // Sets the Cooldown
             skill.m_currentCoolDown = skill.m_coolDown;
+            skill.m_currentDuration = skill.m_duration;
         }
     }
 
@@ -67,12 +88,13 @@ public class SkillManager : MonoBehaviour {
                 if (m_Skills[0].m_currentCoolDown >= m_Skills[0].m_coolDown)
                 {
                     // Activate Ability
-                    GameManager.Instance.Kenron.ChaosFlame();
+                    GameManager.Instance.Kenron.ChaosFlame(m_Skills[0].m_currentDuration);
 
                     // Skill is Reset and has been Activated
                     m_Skills[0].m_currentCoolDown = 0;
+                    m_Skills[0].m_currentDuration = 0;
                     m_Skills[0].active = true;
-                    m_Skills[0].reset = true;
+                    m_Skills[0].onCooldown = true;
                 }
             }
         }
@@ -88,12 +110,13 @@ public class SkillManager : MonoBehaviour {
                 if (m_Skills[1].m_currentCoolDown >= m_Skills[1].m_coolDown)
                 {
                     // Activate Ability
-                    GameManager.Instance.Nashorn.Spott();
+                    GameManager.Instance.Nashorn.Spott(m_Skills[1].m_currentDuration);
 
                     // Skill is Reset and has been Activated
                     m_Skills[1].m_currentCoolDown = 0;
+                    m_Skills[1].m_currentDuration = 0;
                     m_Skills[1].active = true;
-                    m_Skills[1].reset = true;
+                    m_Skills[1].onCooldown = true;
                 }
             }
         }
@@ -120,8 +143,9 @@ public class SkillManager : MonoBehaviour {
                 {
                     // Skill is Reset and has been Deactivated
                     m_Skills[2].m_currentCoolDown = 0;
+                    m_Skills[2].m_currentDuration = 0;
                     m_Skills[2].active = false;
-                    m_Skills[2].reset = true;
+                    m_Skills[2].onCooldown = true;
                     // Grants health and resets
                     if (GameManager.Instance.Thea.playerState == BaseCharacter.PlayerState.ALIVE)
                     {
@@ -135,7 +159,7 @@ public class SkillManager : MonoBehaviour {
         foreach (var skill in m_Skills)
         {
             // If a skill has been reset
-            if (skill.reset)
+            if (skill.onCooldown)
             {
                 // Run the cooldown for that skill
                 skill.RunTimer();

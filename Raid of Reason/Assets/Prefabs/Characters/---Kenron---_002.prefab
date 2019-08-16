@@ -308,7 +308,7 @@ MonoBehaviour:
   skill: {fileID: 11400000, guid: c8b7e4b239fc27541b9be50dd5fb1ce8, type: 2}
   skillName: {fileID: 3449384978313652410}
   skillDescription: {fileID: 3449384977929051581}
-  skillIcon: {fileID: 3449384978028333307}
+  skillIcon: {fileID: 3449384978025370565}
   skillPointsNeeded: {fileID: 3449384978048813082}
   m_PlayerHandler: {fileID: 0}
 --- !u!1 &3449384977474652682
@@ -992,7 +992,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3449384977928920354
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1141,7 +1141,7 @@ GameObject:
   - component: {fileID: 3449384978025370586}
   - component: {fileID: 3449384978025370565}
   m_Layer: 5
-  m_Name: COA_Icon_Parent
+  m_Name: IconParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1217,7 +1217,7 @@ GameObject:
   - component: {fileID: 3449384978028333304}
   - component: {fileID: 3449384978028333307}
   m_Layer: 5
-  m_Name: SR_Icon_Parent
+  m_Name: IconParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1570,7 +1570,7 @@ GameObject:
   - component: {fileID: 3449384978200390357}
   - component: {fileID: 3449384978200390356}
   m_Layer: 5
-  m_Name: VI_Icon_Parent
+  m_Name: IconParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1806,7 +1806,7 @@ GameObject:
   - component: {fileID: 3449384978230913755}
   - component: {fileID: 3449384978230913754}
   m_Layer: 5
-  m_Name: BL_Icon_Parent
+  m_Name: IconParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2047,7 +2047,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3449384978326973677
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3632,7 +3632,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3449384979492250442
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3777,7 +3777,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 84
+  m_Constraints: 116
   m_CollisionDetection: 3
 --- !u!95 &4768506624516414482
 Animator:
@@ -3789,7 +3789,7 @@ Animator:
   m_GameObject: {fileID: 5877011709370636315}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 1c12763dc36229f45b8574a0ef3e8d98, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e6b0813b28d3889439f14a511cfdfaed, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3822,6 +3822,12 @@ MonoBehaviour:
   m_healthUponRevive: 25
   m_playerSkillPoints: 10
   m_playerSkills: []
+  m_skillPopups:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   m_controllerOn: 0
   m_camera: {fileID: 0}
   m_skillDisplay: {fileID: 3449384978919680333}
@@ -3839,13 +3845,13 @@ MonoBehaviour:
   m_dashCollider: {fileID: 576475735797821664}
   m_chaosFlameDamage: 70
   m_chaosFlameSpeed: 25
-  m_particleTime: 10
   m_healthGained: 0
-  m_cooldownReduced: 0
+  m_durationIncreased: 0
   m_damageRadius: 0
   m_damageWithin: 0
   m_kenronParticle: {fileID: 100004, guid: 794a36a8aa47f8f40a4067810da8163c, type: 3}
-  m_swordParticle: {fileID: 100000, guid: 37bd362d795dc334d8676f4781d66578, type: 3}
+  m_swordParticle: {fileID: 1727626132299242, guid: 21227e3a3b07b6948a9d5f8d3e3e40b4,
+    type: 3}
   m_CurseEffect: {fileID: 100004, guid: 794a36a8aa47f8f40a4067810da8163c, type: 3}
   nashornBuffGiven: 0
   isBurning: 0
@@ -4068,14 +4074,14 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 100
       objectReference: {fileID: 0}
-    - target: {fileID: 13700000, guid: 1c12763dc36229f45b8574a0ef3e8d98, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 26b411d8f47449f49812f3cfb8e20733, type: 2}
     - target: {fileID: 9500000, guid: 1c12763dc36229f45b8574a0ef3e8d98, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: e6b0813b28d3889439f14a511cfdfaed, type: 2}
+    - target: {fileID: 13700000, guid: 1c12763dc36229f45b8574a0ef3e8d98, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 26b411d8f47449f49812f3cfb8e20733, type: 2}
     - target: {fileID: 13700002, guid: 1c12763dc36229f45b8574a0ef3e8d98, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

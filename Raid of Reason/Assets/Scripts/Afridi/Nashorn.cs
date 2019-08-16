@@ -99,16 +99,13 @@ public class Nashorn : BaseCharacter
         RightGauntlet.enabled = false;
         isTaunting = false;
         isActive = false;
+        foreach (Image display in m_skillPopups)
+        {
+            display.enabled = false;
+        }
+
         m_Thea = FindObjectOfType<Theá>();
         m_Kenron = FindObjectOfType<Kenron>();
-
-        for (int i = 0; i < 2; i++)
-        {
-            // Ignores the collider on the player
-            Physics.IgnoreCollision(GetComponent<Collider>(), 
-                                    Gauntlets[i].GetComponent<Collider>(), 
-                                    true);
-        }
     }
 
     protected override void FixedUpdate()
@@ -134,6 +131,30 @@ public class Nashorn : BaseCharacter
         }
     }
 
+    public void UnlockSkill()
+    {
+        if (m_playerSkills.Find(skill => skill.Name == "Roaring Thunder"))
+        {
+            // Icon pops up
+            m_skillPopups[1].enabled = true;
+        }
+        if (m_playerSkills.Find(skill => skill.Name == "Kinetic Discharge"))
+        {
+            // Icon pops up
+            m_skillPopups[2].enabled = true;
+        }
+        if (m_playerSkills.Find(skill => skill.Name == "Static Sheild"))
+        {
+            // Icon pops up
+            m_skillPopups[3].enabled = true;
+        }
+        if (m_playerSkills.Find(skill => skill.Name == "Macht Des Sturms"))
+        {
+            // Icon pops up
+            m_skillPopups[4].enabled = true;
+        }
+    }
+
     /// <summary>
     /// Checks how many skills Nashorn has obtained from his skill tree
     /// - Roaring Thunder: More Range for his Taunt and Cooldown is Halved
@@ -146,6 +167,8 @@ public class Nashorn : BaseCharacter
         // Empty Check
         if (this.gameObject != null)
         {
+            // Sets the image to true if the skills are found
+            UnlockSkill();
             // If the skill is active and the player has the named skill
             if (isTaunting == true && m_playerSkills.Find(skill => skill.Name == "Roaring Thunder"))
             {
@@ -174,18 +197,18 @@ public class Nashorn : BaseCharacter
 
                 if (isActive == true)
                 {
-                    Ray ray = new Ray(transform.position, transform.forward);
-                    RaycastHit hit;
+                    //Ray ray = new Ray(transform.position, transform.forward);
+                    //RaycastHit hit;
 
-                    lineRenderer.SetPosition(0, ray.origin);
-                    lineRenderer.SetPosition(1, ray.GetPoint(100));
+                    //lineRenderer.SetPosition(0, ray.origin);
+                    //lineRenderer.SetPosition(1, ray.GetPoint(100));
 
-                    if (Physics.Raycast(transform.position, transform.forward, out hit, 100))
-                    {
-                        lineRenderer.SetPosition(1, hit.point);
-                        ChainLightning();
-                    }
-                    isActive = false;
+                    //if (Physics.Raycast(transform.position, transform.forward, out hit, 100))
+                    //{
+                    //    lineRenderer.SetPosition(1, hit.point);
+                    //    ChainLightning();
+                    //}
+                    //isActive = false;
                 }
             }
         }
@@ -232,8 +255,15 @@ public class Nashorn : BaseCharacter
                 RightGauntlet.enabled = true;
                 SetSpeed(0.0f);
 
+                GameObject LFist = Instantiate(m_gauntletParticle, Gauntlets[0].transform.position + Vector3.up, Quaternion.Euler(19, 0, 0), Gauntlets[0].transform);
+                GameObject RFist = Instantiate(m_gauntletParticle, Gauntlets[1].transform.position + Vector3.down, Gauntlets[1].transform.rotation, Gauntlets[1].transform);
+
 				// alternate arm
 				m_animator.SetBool("Attack", true);
+                m_skillPopups[0].enabled = true;
+
+                Destroy(LFist, skillManager.m_Skills[1].m_currentDuration);
+                Destroy(RFist, skillManager.m_Skills[1].m_currentDuration);
             }
             // or if the trigger isnt pressed
             else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) < 0.1)
@@ -244,6 +274,7 @@ public class Nashorn : BaseCharacter
                 SetSpeed(10.0f);
 
 				m_animator.SetBool("Attack", false);
+                m_skillPopups[0].enabled = false;
             }
         }
     }
@@ -251,16 +282,25 @@ public class Nashorn : BaseCharacter
     /// <summary>
 	/// Nashorn's Ability. Boosting His Health up and reducing incoming damage he taunts all enemies to himself
 	/// </summary>
-    public void Spott()
+    public void Spott(float skillDuration)
     {
-		// Ability is active
-		isTaunting = true;
+        if (skillDuration >= skillManager.m_Skills[1].m_duration)
+        {
+            // Ability is active
+            isTaunting = true;
 
-        // Set active
-        isActive = true;
+            // Set active
+            isActive = true;
 
-		// set vulnerability
-		m_vulnerability = m_tauntVulnerability;
+            //Instantiate Taunt
+            GameObject temp = Instantiate(m_tauntParticle, transform.position, transform.rotation, transform);
+
+            // set vulnerability
+            m_vulnerability = m_tauntVulnerability;
+
+            // Destroy after time has passed
+            Destroy(temp, skillManager.m_Skills[1].m_currentDuration);
+        }
     }
 
     /// <summary>
@@ -268,10 +308,13 @@ public class Nashorn : BaseCharacter
     /// </summary>
     public void ResetSkill()
     {
-        // Vulnerable once more
-        ResetVulernability();
+        if (skillManager.m_Skills[1].m_currentDuration >= skillManager.m_Skills[1].m_duration)
+        {
+            // Vulnerable once more
+            ResetVulernability();
 
-        // Skill no longer active
-        isTaunting = false;
+            // Skill no longer active
+            isTaunting = false;
+        }
     }
 }

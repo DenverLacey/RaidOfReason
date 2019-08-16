@@ -156,13 +156,13 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4479021550610059430}
   serializedVersion: 6
-  lengthInSec: 5
+  lengthInSec: 0.05
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -338,7 +338,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 0.10849059, g: 0.979365, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -4827,6 +4827,7 @@ GameObject:
   - component: {fileID: 4106053625272342730}
   - component: {fileID: 988320159138187896}
   - component: {fileID: 4604071969392488354}
+  - component: {fileID: 3777708967802242873}
   m_Layer: 9
   m_Name: Tea_Idl
   m_TagString: Thea
@@ -4858,13 +4859,13 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4820443638325454957}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.5
   m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 84
+  m_Constraints: 116
   m_CollisionDetection: 3
 --- !u!135 &4106053625272342730
 SphereCollider:
@@ -4890,9 +4891,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 2.54
+  m_Height: 2.4086878
   m_Direction: 1
-  m_Center: {x: 0, y: 1.26, z: 0}
+  m_Center: {x: 0, y: 1.325656, z: 0}
 --- !u!114 &4604071969392488354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4917,6 +4918,12 @@ MonoBehaviour:
   m_healthUponRevive: 65
   m_playerSkillPoints: 0
   m_playerSkills: []
+  m_skillPopups:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   m_controllerOn: 0
   m_camera: {fileID: 0}
   m_skillDisplay: {fileID: 7506323965262626014}
@@ -4943,6 +4950,43 @@ MonoBehaviour:
   m_aimCursor: {fileID: 3083560307109867121}
   m_skillActive: 0
   nashornBuffGiven: 0
+--- !u!23 &3777708967802242873
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4820443638325454957}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 620e3744b67887c43a040757e55c8396, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &5230809659724148813
 GameObject:
   m_ObjectHideFlags: 0
@@ -8782,15 +8826,15 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 26b411d8f47449f49812f3cfb8e20733, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 06bab74286672774a9a469e7958dd44d, type: 3}
---- !u!1 &1454374199770714739 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100000, guid: 06bab74286672774a9a469e7958dd44d,
-    type: 3}
-  m_PrefabInstance: {fileID: 1454374199770617043}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1454374199770746451 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 06bab74286672774a9a469e7958dd44d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1454374199770617043}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1454374199770714739 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 06bab74286672774a9a469e7958dd44d,
     type: 3}
   m_PrefabInstance: {fileID: 1454374199770617043}
   m_PrefabAsset: {fileID: 0}

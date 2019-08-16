@@ -92,6 +92,8 @@ public class ChildKenron :  BaseCharacter
         // If main kenrons health is 0
         if (GameManager.Instance.Kenron.m_currentHealth <= 0.0f)
         {
+            // Icon pops up
+            GameManager.Instance.Kenron.m_skillPopups[4].enabled = true;
             // disable him (Should be replaced with down animation)
             GameManager.Instance.Kenron.SetSpeed(0);
             GameManager.Instance.Kenron.m_controllerOn = false;

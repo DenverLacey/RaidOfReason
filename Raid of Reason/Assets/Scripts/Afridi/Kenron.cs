@@ -58,16 +58,12 @@ public class Kenron : BaseCharacter {
     private float m_chaosFlameSpeed;
 
     [SerializeField]
-    [Tooltip("Kenrons Particle Effect whilst in Chaos Flame")]
-    private float m_particleTime;
-
-    [SerializeField]
     [Tooltip("Health Gained Back from Kenrons Life Steal Skill")]
     private float m_healthGained;
 
     [SerializeField]
-    [Tooltip("Cooldown Reduction from Kenrons Blood Lust Skill")]
-    private float m_cooldownReduced;
+    [Tooltip("Ability Duration Increase from Kenrons Blood Lust Skill")]
+    private float m_durationIncreased;
 
     [SerializeField]
     [Tooltip("The Radius that effects the enemies with Kenrons Shuras Awakening Skill")]
@@ -107,11 +103,13 @@ public class Kenron : BaseCharacter {
     // Checks if a specific trigger on the controller is pressed
     private bool m_triggerDown;
 
-	private float m_dashDelayTimer;
+    // Delay until next dash
+    private float m_dashDelayTimer;
 
     // Sets the burn 
     public bool isBurning;
 
+    // Kenrons Collider
 	private CapsuleCollider m_collider;
 
 	private void Start()
@@ -125,7 +123,6 @@ public class Kenron : BaseCharacter {
         base.Awake();
         m_Enemy = FindObjectOfType<EnemyData>();
         m_kenronRigidBody = GetComponent<Rigidbody>();
-
 		childKenron = FindObjectOfType<ChildKenron>();
 
 		if (childKenron)
@@ -141,10 +138,13 @@ public class Kenron : BaseCharacter {
         isDashing = false;
         isBurning = false;
 
+        foreach (Image display in m_skillPopups) {
+            display.enabled = false;
+        }
+
 		// set size of dash hit box
 		Vector3 hitBoxSize = new Vector3(m_dashCollider.size.x, m_dashCollider.size.y, m_maxDashDistance);
 		m_dashCollider.size = hitBoxSize;
-
 		m_dashCollider.enabled = false;
 	}
 
@@ -177,27 +177,30 @@ public class Kenron : BaseCharacter {
     /// <summary>
     /// Kenrons Skill. By Halving his health, he gains a boost of Speed and Damage 
     /// </summary>
-    public void ChaosFlame()
+    public void ChaosFlame(float skillDuration)
     {
         // Empty Check
         if (this.gameObject != null && Amaterasu != null)
         {
-            // Sets the Skill to be Active
-            isActive = true;
-            isBurning = true;
+            if (skillDuration >= skillManager.m_Skills[0].m_duration)
+            {
+                // Sets the Skill to be Active
+                isActive = true;
+                isBurning = true;
 
-            // Instantiates a Particle at the Sword
-            GameObject temp = Instantiate(m_swordParticle, Amaterasu.transform.position + Vector3.zero * 0.5f, Quaternion.Euler(-90, 0, 0), Amaterasu.transform);
-            GameObject part = Instantiate(m_kenronParticle, transform.position + Vector3.down * 0.5f, Quaternion.Euler(270, 0, 0), transform);
+                // Instantiates a Particle at the Sword
+                GameObject temp = Instantiate(m_swordParticle, Amaterasu.transform.position + Vector3.zero * 0.5f, Quaternion.Euler(-90, 0, 0), Amaterasu.transform);
+                GameObject part = Instantiate(m_kenronParticle, transform.position + Vector3.down * 0.5f, Quaternion.Euler(270, 0, 0), transform);
 
-            // Halves his Health and sets a higher Damage/Speed
-            SetHealth(m_currentHealth / 2);
-            SetDamage(m_chaosFlameDamage);
-            SetSpeed(m_chaosFlameSpeed);
+                // Halves his Health and sets a higher Damage/Speed
+                SetHealth(m_currentHealth / 2);
+                SetDamage(m_chaosFlameDamage);
+                SetSpeed(m_chaosFlameSpeed);
 
-            // Destroys the Particle after 10 Seconds
-            Destroy(temp, m_particleTime);
-            Destroy(part, m_particleTime);
+                // Destroys the Particle after certain amount of Seconds
+                Destroy(temp, skillManager.m_Skills[0].m_currentDuration);
+                Destroy(part, skillManager.m_Skills[0].m_currentDuration);
+            }
         }
     }
 
@@ -218,6 +221,9 @@ public class Kenron : BaseCharacter {
 
 			// set animator's trigger
 			m_animator.SetBool("Attack", true);
+
+            // Icon pops up
+            m_skillPopups[0].enabled = true;
 
 			// calculate desired dash position
 			int layerMask = Utility.GetIgnoreMask("Enemy", "Player");
@@ -263,8 +269,11 @@ public class Kenron : BaseCharacter {
 				m_dashCollider.enabled = false;
 				m_animator.SetBool("Attack", false);
 
-				// run delay timer
-				m_dashDelayTimer -= Time.deltaTime;
+                // Icon pops up
+                m_skillPopups[0].enabled = false;
+
+                // run delay timer
+                m_dashDelayTimer -= Time.deltaTime;
 			}
 
 			// if ready to dash again 
@@ -300,23 +309,31 @@ public class Kenron : BaseCharacter {
         // Empty Check
         if (this.gameObject != null)
         {
+            // Sets the image to true if the skills are found
+            UnlockSkill();
             // If Kenron has the skill specified and is killed by Kenron
             if (m_playerSkills.Find(skill => skill.Name == "Vile Infusion") && m_Enemy.isDeadbByKenron)
             {
+                // Icon pops up
+                m_skillPopups[1].enabled = true;
                 // Return a bit of health to Kenrons current health
                 this.m_currentHealth = m_currentHealth + m_healthGained;
             }
             // If Kenron has the skill specified and is killed by Kenron
             if (isActive == true && m_playerSkills.Find(skill => skill.Name == "Bloodlust") && m_Enemy.isDeadbByKenron)
             {
+                // Icon pops up
+                m_skillPopups[2].enabled = true;
                 // Reduces the cooldown from Kenrons Cooldown 
-                skillManager.m_Skills[0].m_currentCoolDown = skillManager.m_Skills[0].m_currentCoolDown - m_cooldownReduced;
+                skillManager.m_Skills[0].m_currentDuration = skillManager.m_Skills[0].m_currentDuration - m_durationIncreased;
             }
             // if the player does have shuras upgrade applied
             if (m_playerSkills.Find(skill => skill.Name == "Shuras Reckoning") && isActive == true)
             {
                 if (isBurning)
                 {
+                    // Icon pops up
+                    m_skillPopups[3].enabled = true;
                     StartCoroutine(ShurasReckoningEffect());
                     isBurning = false;
                 }
@@ -331,8 +348,31 @@ public class Kenron : BaseCharacter {
 					childKenron.gameObject.SetActive(true);                  
 					childKenron.CheckStatus();
 				}
-                //Destroy(part, 15);
             }
+        }
+    }
+
+    public void UnlockSkill()
+    {
+        if (m_playerSkills.Find(skill => skill.Name == "Vile Infusion"))
+        {
+            // Icon pops up
+            m_skillPopups[1].enabled = true;
+        }
+        if (m_playerSkills.Find(skill => skill.Name == "Bloodlust"))
+        {
+            // Icon pops up
+            m_skillPopups[2].enabled = true;
+        }
+        if (m_playerSkills.Find(skill => skill.Name == "Shuras Reckoning"))
+        {
+            // Icon pops up
+            m_skillPopups[3].enabled = true;
+        }
+        if (m_playerSkills.Find(skill => skill.Name == "Curse of Amaterasu"))
+        {
+            // Icon pops up
+            m_skillPopups[4].enabled = true;
         }
     }
 
@@ -344,11 +384,14 @@ public class Kenron : BaseCharacter {
         // Empty Check
         if (this.gameObject != null)
         {
-            // Resets Stats and Skill
-            SetDamage(40);
-            SetSpeed(15.0f);
-            isActive = false;
-            isBurning = true;
+            if (skillManager.m_Skills[0].m_currentDuration >= skillManager.m_Skills[0].m_duration)
+            {
+                // Resets Stats and Skill
+                SetDamage(40);
+                SetSpeed(15.0f);
+                isActive = false;
+                isBurning = true;
+            }
         }
     }
 }

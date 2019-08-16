@@ -60,11 +60,13 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-    m_coolDown: 13
+    m_coolDown: 30
+    m_duration: 10
     m_currentCoolDown: 0
+    m_currentDuration: 0
     m_skillIcon: {fileID: 0}
     active: 0
-    reset: 0
+    onCooldown: 0
   - m_reset:
       m_PersistentCalls:
         m_Calls:
@@ -81,11 +83,13 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-    m_coolDown: 15
+    m_coolDown: 20
+    m_duration: 7
     m_currentCoolDown: 0
+    m_currentDuration: 0
     m_skillIcon: {fileID: 0}
     active: 0
-    reset: 0
+    onCooldown: 0
   - m_reset:
       m_PersistentCalls:
         m_Calls:
@@ -102,11 +106,10 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-    m_coolDown: 10
+    m_coolDown: 45
+    m_duration: 0
     m_currentCoolDown: 0
+    m_currentDuration: 0
     m_skillIcon: {fileID: 0}
     active: 0
-    reset: 0
-  m_Kenron: {fileID: 0}
-  "m_the\xE1": {fileID: 0}
-  m_Nashorn: {fileID: 0}
+    onCooldown: 0

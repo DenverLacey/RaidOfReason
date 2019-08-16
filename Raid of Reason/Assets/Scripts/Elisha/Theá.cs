@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using XboxCtrlrInput;
 
 /* 
@@ -75,7 +76,6 @@ public class Theá : BaseCharacter
 
     private Kenron m_kenron;
     private Nashorn m_nashorn;
-    private BaseCharacter m_playerController;
     private Vector3 m_hitLocation;
     private LayerMask m_layerMask;
     private GameObject m_temp;
@@ -107,13 +107,17 @@ public class Theá : BaseCharacter
         m_isHealthRegen = false;
         m_nashorn = FindObjectOfType<Nashorn>();
 		m_kenron = FindObjectOfType<Kenron>();
-        m_playerController = GetComponent<BaseCharacter>();
         m_AOETimer = 0f;
         m_AOEParticle = FindObjectOfType<ParticleSystem>();
         m_AOEParticleCollider.transform.position = this.gameObject.transform.position;
         m_AOEParticle.transform.position = this.gameObject.transform.position;
         m_AOEParticleCollider.enabled = false;
         aoe = m_AOEParticle.shape;
+        foreach (Image display in m_skillPopups)
+        {
+            display.enabled = false;
+        }
+
         m_aimCursor = GameObject.FindGameObjectWithTag("AimCursor");
     }
 
@@ -206,6 +210,7 @@ public class Theá : BaseCharacter
         // If the player presses the right trigger button.
         if (XCI.GetAxis(XboxAxis.RightTrigger, this.controller) > 0.1)
         {
+            m_skillPopups[0].enabled = true;
             // FindObjectOfType<AudioManager>().PlaySound("TheaProjectile");
             // Start the shot counter.
             m_shotCounter += Time.deltaTime;
@@ -225,57 +230,65 @@ public class Theá : BaseCharacter
         {
             // Reset the counter.
             m_shotCounter = 0f;
+            m_skillPopups[0].enabled = false;
         }
     }
 
     void SkillChecker()
     {
-        if (m_playerSkills.Find(skill => skill.name == "Settling Tide"))
+        if (this.gameObject != null)
         {
-            if (neverDone == true)
+            // Sets the image to true if the skills are found
+            UnlockSkill();
+            if (m_playerSkills.Find(skill => skill.name == "Settling Tide"))
             {
-                m_skillManager.m_Skills[2].m_coolDown = m_skillManager.m_Skills[2].m_coolDown / 2;
-                neverDone = false;
+                if (neverDone == true)
+                {
+                    m_skillManager.m_Skills[2].m_coolDown = m_skillManager.m_Skills[2].m_coolDown / 2;
+                    neverDone = false;
+                }
+                if (m_currentHealth != m_maxHealth && !m_isHealthRegen)
+                {
+                    StartCoroutine(HealthOverTime());
+                }
             }
-            if (m_currentHealth != m_maxHealth && !m_isHealthRegen)
+            if (m_playerSkills.Find(skill => skill.name == "Oceans Ally"))
             {
-                StartCoroutine(HealthOverTime());
-            }
-        }
-        if (m_playerSkills.Find(skill => skill.name == "Oceans Ally"))
-        {
-            float healthcomparison = m_kenron.m_currentHealth + m_nashorn.m_currentHealth;
+                float healthcomparison = m_kenron.m_currentHealth + m_nashorn.m_currentHealth;
 
-            if (healthcomparison <= 150)
-            {
-                m_projectileDelay = 0.7f;
-                m_damage = 13.0f;
+                if (healthcomparison <= 150)
+                {
+                    m_projectileDelay = 0.7f;
+                    m_damage = 13.0f;
+                }
+                if (healthcomparison <= 130)
+                {
+                    m_projectileDelay = 0.5f;
+                    m_damage = 18.0f;
+                }
+                if (healthcomparison <= 60)
+                {
+                    m_projectileDelay = 0.3f;
+                    m_damage = 24.0f;
+                }
+                if (healthcomparison <= 25)
+                {
+                    m_projectileDelay = 0.1f;
+                    m_damage = 35.0f;
+                }
             }
-            if (healthcomparison <= 130)
+            if (m_isActive == true && m_playerSkills.Find(skill => skill.name == "Hydro Pressure"))
             {
-                m_projectileDelay = 0.5f;
-                m_damage = 18.0f;
-            }
-            if (healthcomparison <= 60)
-            {
-                m_projectileDelay = 0.3f;
-                m_damage = 24.0f;
-            }
-            if (healthcomparison <= 25)
-            {
-                m_projectileDelay = 0.1f;
-                m_damage = 35.0f;
-            }
-        }
-        if (m_isActive == true && m_playerSkills.Find(skill => skill.name == "Hydro Pressure"))
-        {
-            m_nearbyEnemies = new List<EnemyData>(FindObjectsOfType<EnemyData>());
-            foreach (EnemyData enemy in m_nearbyEnemies) {
-                float sqrDistance = (this.transform.position - enemy.transform.position).sqrMagnitude;
-                if (sqrDistance <= m_AOERadius * m_AOERadius) {
-                    enemy.Stun(0.5f);
-                    enemy.Rigidbody.AddExplosionForce(knockbackForce, transform.position, m_AOERadius, 0, ForceMode.Impulse);
-                    enemy.TakeDamage(-5);
+                m_nearbyEnemies = new List<EnemyData>(FindObjectsOfType<EnemyData>());
+                foreach (EnemyData enemy in m_nearbyEnemies)
+                {
+                    float sqrDistance = (this.transform.position - enemy.transform.position).sqrMagnitude;
+                    if (sqrDistance <= m_AOERadius * m_AOERadius)
+                    {
+                        enemy.Stun(0.5f);
+                        enemy.Rigidbody.AddExplosionForce(knockbackForce, transform.position, m_AOERadius, 0, ForceMode.Impulse);
+                        enemy.TakeDamage(-5);
+                    }
                 }
             }
         }
@@ -288,20 +301,19 @@ public class Theá : BaseCharacter
     /// the charge up is released the players will be healed the right amount.
     /// </summary>
     public void GiftOfPoseidon()
-    {
-        int coolDown = 20;
+    { 
         m_isActive = true;
         // Enables collider for the ability.
         m_AOEParticleCollider.enabled = true;
 
         // Checks if player can use the ability.
-        if (m_isActive == true && coolDown == 20)
+        if (m_isActive == true)
         {
             
             // Start AOE timer.
             m_AOETimer += Time.deltaTime;
             // Disable player movement and rotation.
-            m_playerController.m_controllerOn = false;
+            m_controllerOn = false;
 
 			// turn AOE effect on
 			m_AOEParticle.gameObject.SetActive(true);
@@ -320,9 +332,32 @@ public class Theá : BaseCharacter
         }
 
         // Checks if ability has been used.
-        if (m_isActive == false && coolDown <= 0)
+        if (m_isActive == false)
         {
             return;
+        }
+    }
+    public void UnlockSkill()
+    {
+        if (m_playerSkills.Find(skill => skill.Name == "Settling Tide"))
+        {
+            // Icon pops up
+            m_skillPopups[1].enabled = true;
+        }
+        if (m_playerSkills.Find(skill => skill.Name == "Oceans Ally"))
+        {
+            // Icon pops up
+            m_skillPopups[2].enabled = true;
+        }
+        if (m_playerSkills.Find(skill => skill.Name == "Hydro Pressure"))
+        {
+            // Icon pops up
+            m_skillPopups[3].enabled = true;
+        }
+        if (m_playerSkills.Find(skill => skill.Name == "Serenade of Water"))
+        {
+            // Icon pops up
+            m_skillPopups[4].enabled = true;
         }
     }
 
@@ -383,7 +418,7 @@ public class Theá : BaseCharacter
         m_isActive = false;
         m_AOERadius = m_AOEMin;
         m_AOEParticleCollider.enabled = false;
-        m_playerController.m_controllerOn = true;
+        m_controllerOn = true;
         aoe.radius = 1;
 
 		// turn AOE effect off

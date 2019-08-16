@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using XboxCtrlrInput;
 using TMPro;
 
@@ -13,7 +14,6 @@ using TMPro;
 
 public abstract class BaseCharacter : MonoBehaviour 
 {
-
     public enum PlayerState
     {
         ALIVE,
@@ -53,14 +53,12 @@ public abstract class BaseCharacter : MonoBehaviour
     [Tooltip("How much health will the player get back when revived?")]
     private float m_healthUponRevive;
 
-    [Space]
-
     [SerializeField]
     public int m_playerSkillPoints;
 
     public List<SkillsAbilities> m_playerSkills = new List<SkillsAbilities>();
-    [Space]
-    public Dictionary<string, SkillsAbilities> m_dictSkills = new Dictionary<string, SkillsAbilities>();
+    public List<Image> m_skillPopups = new List<Image>();
+    //public Dictionary<string, SkillsAbilities> m_dictSkills = new Dictionary<string, SkillsAbilities>();
 
     [HideInInspector]
     public bool m_controllerOn;
@@ -143,11 +141,6 @@ public abstract class BaseCharacter : MonoBehaviour
     /// Updates every frame.
     /// </summary>
     protected virtual void Update() {
-        if (m_playerSkills.Count == 4)
-        {
-            m_skillDisplay.gameObject.SetActive(false);
-            m_skillMaxed.gameObject.SetActive(true);
-        }
 
         if (XCI.GetButton(XboxButton.B))
         {
