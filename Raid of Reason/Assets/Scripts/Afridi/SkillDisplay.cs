@@ -33,7 +33,6 @@ public class SkillDisplay : MonoBehaviour
         }
         else if (m_PlayerHandler && skill && skill.CheckSkills(m_PlayerHandler))
         {
-            this.GetComponent<Button>().interactable = true;
             this.transform.Find("IconParent").Find("Disabled").gameObject.SetActive(false);
         }
         else {
