@@ -20,13 +20,13 @@ public class SwordDamage : MonoBehaviour
             enemy.TakeDamage(GameManager.Instance.Kenron.GetDamage());
 
             // if the player doesnt have shuras upgrade applied
-            if (enemy && !GameManager.Instance.Kenron.m_playerSkills.Find(skill => skill.Name == "Shuras Reckoning"))
+            if (enemy && !GameManager.Instance.Kenron.m_skillUpgrades.Find(skill => skill.Name == "Shuras Reckoning"))
 			{
 				enemy.IndicateHit();
 			}
 
             // if the player does have shuras upgrade applied
-            if(enemy && GameManager.Instance.Kenron.m_playerSkills.Find(skill => skill.Name == "Shuras Reckoning") && GameManager.Instance.Kenron.isActive == true)
+            if(enemy && GameManager.Instance.Kenron.m_skillUpgrades.Find(skill => skill.Name == "Shuras Reckoning") && GameManager.Instance.Kenron.isActive == true)
             {
                 other.GetComponent<StatusEffectManager>().ApplyBurn(4);
             }

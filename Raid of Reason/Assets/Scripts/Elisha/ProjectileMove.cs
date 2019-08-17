@@ -83,7 +83,7 @@ public class ProjectileMove : MonoBehaviour {
                     GameManager.Instance.Thea.nashornBuffGiven = false;
                 }
 
-                if (GameManager.Instance.Kenron.m_playerSkills.Find(skill => skill.Name == "Shuras Reckoning") && GameManager.Instance.Kenron.isActive == true)
+                if (GameManager.Instance.Kenron.m_skillUpgrades.Find(skill => skill.Name == "Shuras Reckoning") && GameManager.Instance.Kenron.isActive == true)
                 {
                     other.gameObject.GetComponent<StatusEffectManager>().ApplyBurn(4);
                 }

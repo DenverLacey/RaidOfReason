@@ -14,12 +14,12 @@ public class SmashDamage : MonoBehaviour
             if (enemy && XCI.GetAxis(XboxAxis.RightTrigger, GameManager.Instance.Nashorn.controller) > 0.1)
             {
                 enemy.TakeDamage(GameManager.Instance.Nashorn.GetDamage());
-                if (GameManager.Instance.Nashorn.m_playerSkills.Find(skill => skill.Name == "Shockwave"))
+                if (GameManager.Instance.Nashorn.m_skillUpgrades.Find(skill => skill.Name == "Shockwave"))
                 { 
                     Vector3 direction = this.transform.position - enemy.transform.position;
                     other.GetComponent<StatusEffectManager>().ApplyKnockBack(enemy.gameObject, direction, 1, 0.3f);
                 }
-                if (GameManager.Instance.Kenron.m_playerSkills.Find(skill => skill.Name == "Shuras Reckoning") && GameManager.Instance.Kenron.isActive == true) {
+                if (GameManager.Instance.Kenron.m_skillUpgrades.Find(skill => skill.Name == "Shuras Reckoning") && GameManager.Instance.Kenron.isActive == true) {
                     other.GetComponent<StatusEffectManager>().ApplyBurn(4);
                 }
             }

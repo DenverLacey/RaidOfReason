@@ -9,7 +9,7 @@ using XboxCtrlrInput;
  * Description: Thea's main class, which handles her basic attacks and abilities.
  */
 
-public class Theá : BaseCharacter
+public class Thea : BaseCharacter
 {
     [SerializeField]
     private GameObject m_waterPrefab;
@@ -21,9 +21,6 @@ public class Theá : BaseCharacter
     [SerializeField]
     [Tooltip("How long of a delay will it take for her next projectile to instiantiate?")]
     private float m_projectileDelay;
-
-    [SerializeField]
-    private SkillManager m_skillManager;
 
     [SerializeField]
     [Tooltip("AOE collider that grows over time.")]
@@ -240,11 +237,11 @@ public class Theá : BaseCharacter
         {
             // Sets the image to true if the skills are found
             UnlockSkill();
-            if (m_playerSkills.Find(skill => skill.name == "Settling Tide"))
+            if (m_skillUpgrades.Find(skill => skill.name == "Settling Tide"))
             {
                 if (neverDone == true)
                 {
-                    m_skillManager.m_Skills[2].m_coolDown = m_skillManager.m_Skills[2].m_coolDown / 2;
+                    skillManager.m_mainSkills[2].m_coolDown = skillManager.m_mainSkills[2].m_coolDown / 2;
                     neverDone = false;
                 }
                 if (m_currentHealth != m_maxHealth && !m_isHealthRegen)
@@ -252,7 +249,7 @@ public class Theá : BaseCharacter
                     StartCoroutine(HealthOverTime());
                 }
             }
-            if (m_playerSkills.Find(skill => skill.name == "Oceans Ally"))
+            if (m_skillUpgrades.Find(skill => skill.name == "Oceans Ally"))
             {
                 float healthcomparison = m_kenron.m_currentHealth + m_nashorn.m_currentHealth;
 
@@ -277,7 +274,7 @@ public class Theá : BaseCharacter
                     m_damage = 35.0f;
                 }
             }
-            if (m_isActive == true && m_playerSkills.Find(skill => skill.name == "Hydro Pressure"))
+            if (m_isActive == true && m_skillUpgrades.Find(skill => skill.name == "Hydro Pressure"))
             {
                 m_nearbyEnemies = new List<EnemyData>(FindObjectsOfType<EnemyData>());
                 foreach (EnemyData enemy in m_nearbyEnemies)
@@ -339,22 +336,22 @@ public class Theá : BaseCharacter
     }
     public void UnlockSkill()
     {
-        if (m_playerSkills.Find(skill => skill.Name == "Settling Tide"))
+        if (m_skillUpgrades.Find(skill => skill.Name == "Settling Tide"))
         {
             // Icon pops up
             m_skillPopups[1].enabled = true;
         }
-        if (m_playerSkills.Find(skill => skill.Name == "Oceans Ally"))
+        if (m_skillUpgrades.Find(skill => skill.Name == "Oceans Ally"))
         {
             // Icon pops up
             m_skillPopups[2].enabled = true;
         }
-        if (m_playerSkills.Find(skill => skill.Name == "Hydro Pressure"))
+        if (m_skillUpgrades.Find(skill => skill.Name == "Hydro Pressure"))
         {
             // Icon pops up
             m_skillPopups[3].enabled = true;
         }
-        if (m_playerSkills.Find(skill => skill.Name == "Serenade of Water"))
+        if (m_skillUpgrades.Find(skill => skill.Name == "Serenade of Water"))
         {
             // Icon pops up
             m_skillPopups[4].enabled = true;
@@ -400,7 +397,7 @@ public class Theá : BaseCharacter
         SetHealth(m_currentHealth + m_AOETimer * m_GOPEffect);
         
 
-        if (m_skillActive = true & m_playerSkills.Find(skill => skill.name == "Serenade Of Water"))
+        if (m_skillActive = true & m_skillUpgrades.Find(skill => skill.name == "Serenade Of Water"))
         {
             m_kenron.SetHealth(m_kenron.m_currentHealth * 1.5f);
             m_nashorn.SetHealth(m_nashorn.m_currentHealth * 1.5f);

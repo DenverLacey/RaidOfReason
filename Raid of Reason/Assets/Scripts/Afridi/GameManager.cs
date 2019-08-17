@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     // All Three Players Within the Game
 	public Kenron Kenron { get; private set; }
 	public Nashorn Nashorn { get; private set; }
-	public Theá Thea { get; private set; }
+	public Thea Thea { get; private set; }
 
 	public List<BaseCharacter> Players { get; private set; }
 
@@ -68,9 +68,9 @@ public class GameManager : MonoBehaviour
 				Nashorn.controller = m_controllers[1];
 			}
 		}
-		else if (character is Theá)
+		else if (character is Thea)
 		{
-			Thea = character as Theá;
+			Thea = character as Thea;
 			Players.Add(Thea);
 
 			if (m_controllers[2] != XboxController.Any)

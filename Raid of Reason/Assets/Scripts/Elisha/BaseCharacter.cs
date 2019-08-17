@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using XboxCtrlrInput;
-using TMPro;
 
 /* 
  * Author: Elisha, Denver, Afridi
- * Description: Abstract base class that will be derived by character classes Kenron, Nashorn and Theá. Handles everything to do 
+ * Description: Abstract base class that will be derived by character classes Kenron, Nashorn and Thea. Handles everything to do 
  *              with the characters movements and states.
  */
 
@@ -56,12 +55,13 @@ public abstract class BaseCharacter : MonoBehaviour
     [Tooltip("How much health will the player get back when revived?")]
     private float m_healthUponRevive;
 
-    [SerializeField]
-    public int m_playerSkillPoints;
-
-    public List<SkillsAbilities> m_playerSkills = new List<SkillsAbilities>();
     public List<Image> m_skillPopups = new List<Image>();
-    //public Dictionary<string, SkillsAbilities> m_dictSkills = new Dictionary<string, SkillsAbilities>();
+
+    [Tooltip("The Skill Manager that manages the skills of the players")]
+    public SkillManager skillManager;
+
+    [Tooltip("A List of How Many Skill Upgrades the Players Have")]
+    public List<SkillsAbilities> m_skillUpgrades = new List<SkillsAbilities>();
 
     [HideInInspector]
     public bool m_controllerOn;
@@ -69,8 +69,6 @@ public abstract class BaseCharacter : MonoBehaviour
 	[HideInInspector]
     public MultiTargetCamera m_camera;
 
-    public TextMeshProUGUI m_skillDisplay;
-    public TextMeshProUGUI m_skillMaxed;
     protected Animator m_animator;
     public SphereCollider m_reviveColliderRadius;
 
@@ -86,11 +84,6 @@ public abstract class BaseCharacter : MonoBehaviour
     private MeshRenderer m_renderer;
     private Color m_originalColour;
 
-    public int SkillPoints 
-    { 
-        get => m_playerSkillPoints;
-        set => m_playerSkillPoints = value;
-    }
 
     /// <summary>
     /// This will be called first.
@@ -109,7 +102,6 @@ public abstract class BaseCharacter : MonoBehaviour
         m_controllerOn = true;
         m_bActive = false;
         m_reviveColliderRadius.enabled = false;
-        m_skillDisplay.text = m_playerSkillPoints.ToString();
     }
 
     /// <summary>
@@ -328,7 +320,10 @@ public abstract class BaseCharacter : MonoBehaviour
     {
         m_currentHealth = health;
     }
-    
+
+    public delegate void OnGameChange();
+    public event OnGameChange onGameChange;
+
     /// <summary>
     /// Returns the players movement speed.
     /// </summary>
@@ -403,17 +398,6 @@ public abstract class BaseCharacter : MonoBehaviour
     /// </summary>
     public void ResetVulernability() {
         m_vulnerability = 1.0f;
-    }
-
-    public delegate void OnPointChange();
-    public event OnPointChange onPointChange;
-
-    /// <summary>
-    /// Updates players skill points amounts.
-    /// </summary>
-    /// <param name="amount"></param>
-    public void UpdateSkillPont(int amount) {
-        m_playerSkillPoints += amount;
     }
 
     /// <summary>

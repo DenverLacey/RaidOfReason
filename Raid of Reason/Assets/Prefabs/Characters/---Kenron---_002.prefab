@@ -171,7 +171,6 @@ GameObject:
   - component: {fileID: 3449384977469642222}
   - component: {fileID: 3449384977469642210}
   - component: {fileID: 3449384977469642221}
-  - component: {fileID: 3449384977469642223}
   m_Layer: 5
   m_Name: Shuras_Reckoning
   m_TagString: Untagged
@@ -238,24 +237,6 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
---- !u!114 &3449384977469642223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3449384977469642217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a1d8495152555a448347d7c1e081e83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skill: {fileID: 11400000, guid: c8b7e4b239fc27541b9be50dd5fb1ce8, type: 2}
-  skillName: {fileID: 3449384978313652410}
-  skillDescription: {fileID: 3449384977929051581}
-  skillIcon: {fileID: 3449384978025370565}
-  skillPointsNeeded: {fileID: 0}
-  m_PlayerHandler: {fileID: 0}
 --- !u!1 &3449384977606814600
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,7 +248,7 @@ GameObject:
   - component: {fileID: 3449384977606814601}
   - component: {fileID: 3449384977606814605}
   - component: {fileID: 3449384977606814604}
-  - component: {fileID: 3449384977606814606}
+  - component: {fileID: 354083128}
   m_Layer: 5
   m_Name: Bloodlust
   m_TagString: Untagged
@@ -334,7 +315,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
---- !u!114 &3449384977606814606
+--- !u!114 &354083128
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -343,15 +324,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3449384977606814600}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a1d8495152555a448347d7c1e081e83, type: 3}
+  m_Script: {fileID: 11500000, guid: 091f9f990122b9a47bf023f6699379b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skill: {fileID: 11400000, guid: 518764eb291910b4e943450b090a71c4, type: 2}
-  skillName: {fileID: 3449384978216498170}
-  skillDescription: {fileID: 3449384978854438497}
-  skillIcon: {fileID: 3449384978230913754}
-  skillPointsNeeded: {fileID: 0}
-  m_PlayerHandler: {fileID: 0}
+  objective: {fileID: 0}
+  m_Player: {fileID: 5343003624369889655}
 --- !u!1 &3449384977746223010
 GameObject:
   m_ObjectHideFlags: 0
@@ -1008,7 +986,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3449384978197968183}
-  - component: {fileID: 3449384978197968180}
   m_Layer: 0
   m_Name: '---Kenron---_002'
   m_TagString: Untagged
@@ -1033,22 +1010,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3449384978197968180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3449384978197968182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eaf5e952e0688c04790cdb7831af7681, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Player: {fileID: 5343003624369889655}
-  m_KCanvas: {fileID: 3449384978712624767}
-  m_NCanvas: {fileID: 0}
-  m_TCanvas: {fileID: 0}
 --- !u!1 &3449384978200390359
 GameObject:
   m_ObjectHideFlags: 0
@@ -1116,7 +1077,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: f8a70d71fce07c449ae6d064c5d49086, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2097,7 +2058,6 @@ GameObject:
   - component: {fileID: 3449384978833903505}
   - component: {fileID: 3449384978833903509}
   - component: {fileID: 3449384978833903508}
-  - component: {fileID: 3449384978833903510}
   m_Layer: 5
   m_Name: Curse_Of_Amaterasu
   m_TagString: Untagged
@@ -2164,24 +2124,6 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
---- !u!114 &3449384978833903510
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3449384978833903504}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a1d8495152555a448347d7c1e081e83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skill: {fileID: 11400000, guid: a950858c0b81cf34e93af668a7bc3b67, type: 2}
-  skillName: {fileID: 3449384977451328964}
-  skillDescription: {fileID: 3449384977774135184}
-  skillIcon: {fileID: 3449384978025370565}
-  skillPointsNeeded: {fileID: 0}
-  m_PlayerHandler: {fileID: 0}
 --- !u!1 &3449384978848256412
 GameObject:
   m_ObjectHideFlags: 0
@@ -2507,7 +2449,7 @@ GameObject:
   - component: {fileID: 3449384979391854837}
   - component: {fileID: 3449384979391854836}
   - component: {fileID: 3449384979391854833}
-  - component: {fileID: 3449384979391854838}
+  - component: {fileID: 163814914}
   m_Layer: 5
   m_Name: Vile_Infusion
   m_TagString: Untagged
@@ -2574,7 +2516,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
---- !u!114 &3449384979391854838
+--- !u!114 &163814914
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2583,15 +2525,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3449384979391854832}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a1d8495152555a448347d7c1e081e83, type: 3}
+  m_Script: {fileID: 11500000, guid: 091f9f990122b9a47bf023f6699379b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skill: {fileID: 11400000, guid: fa301f8e6fbd2af42a68c33bf12f4e45, type: 2}
-  skillName: {fileID: 3449384978539080596}
-  skillDescription: {fileID: 3449384978560049578}
-  skillIcon: {fileID: 3449384978200390356}
-  skillPointsNeeded: {fileID: 0}
-  m_PlayerHandler: {fileID: 0}
+  objective: {fileID: 0}
+  m_Player: {fileID: 5343003624369889655}
 --- !u!1 &3449384979492250421
 GameObject:
   m_ObjectHideFlags: 0
@@ -2797,22 +2736,19 @@ MonoBehaviour:
   m_reviveTimer: 5
   m_reviveRadius: 5
   m_healthUponRevive: 25
-  m_playerSkillPoints: 10
-  m_playerSkills: []
   m_skillPopups:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  skillManager: {fileID: 0}
+  m_skillUpgrades: []
   m_controllerOn: 0
   m_camera: {fileID: 0}
-  m_skillDisplay: {fileID: 0}
-  m_skillMaxed: {fileID: 0}
   m_reviveColliderRadius: {fileID: 7372013259995003284}
   swordCollider: {fileID: 0}
   childKenron: {fileID: 0}
-  skillManager: {fileID: 0}
   Amaterasu: {fileID: 9157860088018418702}
   isActive: 0
   m_dashTime: 0.1
@@ -3065,12 +3001,6 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: c468bbd7197236048a575b7442356c0a, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c12763dc36229f45b8574a0ef3e8d98, type: 3}
---- !u!1 &9157860088018418692 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100000, guid: 1c12763dc36229f45b8574a0ef3e8d98,
-    type: 3}
-  m_PrefabInstance: {fileID: 9157860088018451108}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &9157860088018418702 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100010, guid: 1c12763dc36229f45b8574a0ef3e8d98,
@@ -3080,6 +3010,12 @@ GameObject:
 --- !u!4 &9157860088018837540 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 1c12763dc36229f45b8574a0ef3e8d98,
+    type: 3}
+  m_PrefabInstance: {fileID: 9157860088018451108}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9157860088018418692 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 1c12763dc36229f45b8574a0ef3e8d98,
     type: 3}
   m_PrefabInstance: {fileID: 9157860088018451108}
   m_PrefabAsset: {fileID: 0}

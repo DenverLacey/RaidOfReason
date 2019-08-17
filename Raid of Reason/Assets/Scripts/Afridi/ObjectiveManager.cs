@@ -8,9 +8,13 @@ public class ObjectiveManager : MonoBehaviour
     [Tooltip("King of the Hill objective")]
     private KOTHObjective m_KingObjective;
 
+    public bool tempCleared;
+
     private void Update()
     {
         if (m_KingObjective != null)
+        {
             m_KingObjective.Update();
+        }
     }
 }

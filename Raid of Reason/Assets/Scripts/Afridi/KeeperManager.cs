@@ -21,7 +21,7 @@ public class KeeperManager : MonoBehaviour
     [SerializeField]
     private Nashorn m_Nashorn;
     [SerializeField]
-    private Theá m_Thea;
+    private Thea m_Thea;
 
     void Awake()
     {

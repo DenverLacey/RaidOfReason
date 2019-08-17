@@ -23,9 +23,6 @@ public class Nashorn : BaseCharacter
     [Tooltip("The Collider of Nashorns Right Gauntlet")]
     public Collider RightGauntlet;
 
-    [Tooltip("The Skill Manager that manages the skills of the players")]
-    public SkillManager skillManager;
-
     [Tooltip("Checks if Nashorns Skill is Active")]
     public bool isTaunting;
 
@@ -68,7 +65,7 @@ public class Nashorn : BaseCharacter
     private Kenron m_Kenron;
 
     // Thea Instance
-    private Theá m_Thea;
+    private Thea m_Thea;
 
     // Skill is active check
     public bool isActive;
@@ -105,7 +102,7 @@ public class Nashorn : BaseCharacter
             display.enabled = false;
         }
 
-        m_Thea = FindObjectOfType<Theá>();
+        m_Thea = FindObjectOfType<Thea>();
         m_Kenron = FindObjectOfType<Kenron>();
     }
 
@@ -134,22 +131,22 @@ public class Nashorn : BaseCharacter
 
     public void UnlockSkill()
     {
-        if (m_playerSkills.Find(skill => skill.Name == "Roaring Thunder"))
+        if (m_skillUpgrades.Find(skill => skill.Name == "Roaring Thunder"))
         {
             // Icon pops up
             m_skillPopups[1].enabled = true;
         }
-        if (m_playerSkills.Find(skill => skill.Name == "Kinetic Discharge"))
+        if (m_skillUpgrades.Find(skill => skill.Name == "Kinetic Discharge"))
         {
             // Icon pops up
             m_skillPopups[2].enabled = true;
         }
-        if (m_playerSkills.Find(skill => skill.Name == "Static Sheild"))
+        if (m_skillUpgrades.Find(skill => skill.Name == "Static Sheild"))
         {
             // Icon pops up
             m_skillPopups[3].enabled = true;
         }
-        if (m_playerSkills.Find(skill => skill.Name == "Macht Des Sturms"))
+        if (m_skillUpgrades.Find(skill => skill.Name == "Macht Des Sturms"))
         {
             // Icon pops up
             m_skillPopups[4].enabled = true;
@@ -171,18 +168,18 @@ public class Nashorn : BaseCharacter
             // Sets the image to true if the skills are found
             UnlockSkill();
             // If the skill is active and the player has the named skill
-            if (isTaunting == true && m_playerSkills.Find(skill => skill.Name == "Roaring Thunder"))
+            if (isTaunting == true && m_skillUpgrades.Find(skill => skill.Name == "Roaring Thunder"))
             {
 
                 // Returns increased Radius
                 this.m_tauntRadius = m_tauntRadius + m_radiusIncreased;
 
                 // Cooldown is halved
-                skillManager.m_Skills[1].m_coolDown = skillManager.m_Skills[1].m_coolDown / 2;
+                skillManager.m_mainSkills[1].m_coolDown = skillManager.m_mainSkills[1].m_coolDown / 2;
             }
 
             // If the skill is active and the player has the named skill
-            if (isTaunting == true && m_playerSkills.Find(skill => skill.Name == "Kinetic Discharge"))
+            if (isTaunting == true && m_skillUpgrades.Find(skill => skill.Name == "Kinetic Discharge"))
             {
                 if (enemies.isAttackingNashorn == true) {
                     enemies.TakeDamage(enemies.AttackDamage);
@@ -190,7 +187,7 @@ public class Nashorn : BaseCharacter
             } 
 
             // If the skill is active and the player has the named skill
-            if (isTaunting == true && m_playerSkills.Find(skill => skill.Name == "Macht Des Sturms"))
+            if (isTaunting == true && m_skillUpgrades.Find(skill => skill.Name == "Macht Des Sturms"))
             {
                 // Gives his allies his stun buff
                 m_Kenron.nashornBuffGiven = true;
@@ -263,8 +260,8 @@ public class Nashorn : BaseCharacter
 				m_animator.SetBool("Attack", true);
                 m_skillPopups[0].enabled = true;
 
-                Destroy(LFist, skillManager.m_Skills[1].m_currentDuration);
-                Destroy(RFist, skillManager.m_Skills[1].m_currentDuration);
+                Destroy(LFist, skillManager.m_mainSkills[1].m_currentDuration);
+                Destroy(RFist, skillManager.m_mainSkills[1].m_currentDuration);
             }
             // or if the trigger isnt pressed
             else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) < 0.1)
@@ -285,7 +282,7 @@ public class Nashorn : BaseCharacter
 	/// </summary>
     public void Spott(float skillDuration)
     {
-        if (skillDuration >= skillManager.m_Skills[1].m_duration)
+        if (skillDuration >= skillManager.m_mainSkills[1].m_duration)
         {
             // Ability is active
             isTaunting = true;
@@ -300,7 +297,7 @@ public class Nashorn : BaseCharacter
             m_vulnerability = m_tauntVulnerability;
 
             // Destroy after time has passed
-            Destroy(temp, skillManager.m_Skills[1].m_currentDuration);
+            Destroy(temp, skillManager.m_mainSkills[1].m_currentDuration);
         }
     }
 
@@ -309,7 +306,7 @@ public class Nashorn : BaseCharacter
     /// </summary>
     public void ResetSkill()
     {
-        if (skillManager.m_Skills[1].m_currentDuration >= skillManager.m_Skills[1].m_duration)
+        if (skillManager.m_mainSkills[1].m_currentDuration >= skillManager.m_mainSkills[1].m_duration)
         {
             // Vulnerable once more
             ResetVulernability();

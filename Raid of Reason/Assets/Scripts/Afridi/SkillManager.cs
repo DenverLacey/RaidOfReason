@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using XboxCtrlrInput;
 
 /*
-  * Author: Afridi Rahim
+  * Author: Afridi Rahim, Denver Lacey
   *
   * Summary: Controls the Skills of All Players
   *          Includes thier cooldowns and skill icons
@@ -59,12 +59,12 @@ public class Skills
 public class SkillManager : MonoBehaviour {
 
     [Tooltip("A List of How Many Main Skills the Players Have")]
-    public List<Skills> m_Skills;
+    public List<Skills> m_mainSkills;
 
     protected void Awake()
     {
         // Intialisation 
-        foreach (var skill in m_Skills)
+        foreach (var skill in m_mainSkills)
         {
             // Sets the Cooldown
             skill.m_currentCoolDown = skill.m_coolDown;
@@ -85,16 +85,16 @@ public class SkillManager : MonoBehaviour {
             if (XCI.GetAxis(XboxAxis.LeftTrigger, GameManager.Instance.Kenron.controller) > 0.1f)
             {
                 // if the current cooldown is greater than the main
-                if (m_Skills[0].m_currentCoolDown >= m_Skills[0].m_coolDown)
+                if (m_mainSkills[0].m_currentCoolDown >= m_mainSkills[0].m_coolDown)
                 {
                     // Activate Ability
-                    GameManager.Instance.Kenron.ChaosFlame(m_Skills[0].m_currentDuration);
+                    GameManager.Instance.Kenron.ChaosFlame(m_mainSkills[0].m_currentDuration);
 
                     // Skill is Reset and has been Activated
-                    m_Skills[0].m_currentCoolDown = 0;
-                    m_Skills[0].m_currentDuration = 0;
-                    m_Skills[0].active = true;
-                    m_Skills[0].onCooldown = true;
+                    m_mainSkills[0].m_currentCoolDown = 0;
+                    m_mainSkills[0].m_currentDuration = 0;
+                    m_mainSkills[0].active = true;
+                    m_mainSkills[0].onCooldown = true;
                 }
             }
         }
@@ -107,16 +107,16 @@ public class SkillManager : MonoBehaviour {
             if (XCI.GetAxis(XboxAxis.LeftTrigger, GameManager.Instance.Nashorn.controller) > 0.1f)
             {
                 // if the current cooldown is greater than the main
-                if (m_Skills[1].m_currentCoolDown >= m_Skills[1].m_coolDown)
+                if (m_mainSkills[1].m_currentCoolDown >= m_mainSkills[1].m_coolDown)
                 {
                     // Activate Ability
-                    GameManager.Instance.Nashorn.Spott(m_Skills[1].m_currentDuration);
+                    GameManager.Instance.Nashorn.Spott(m_mainSkills[1].m_currentDuration);
 
                     // Skill is Reset and has been Activated
-                    m_Skills[1].m_currentCoolDown = 0;
-                    m_Skills[1].m_currentDuration = 0;
-                    m_Skills[1].active = true;
-                    m_Skills[1].onCooldown = true;
+                    m_mainSkills[1].m_currentCoolDown = 0;
+                    m_mainSkills[1].m_currentDuration = 0;
+                    m_mainSkills[1].active = true;
+                    m_mainSkills[1].onCooldown = true;
                 }
             }
         }
@@ -128,24 +128,24 @@ public class SkillManager : MonoBehaviour {
             if (XCI.GetAxis(XboxAxis.LeftTrigger, GameManager.Instance.Thea.controller) > 0.1f && GameManager.Instance.Thea.playerState == BaseCharacter.PlayerState.ALIVE)
             {
                 // if the current cooldown is greater than the main
-                if (m_Skills[2].m_currentCoolDown >= m_Skills[2].m_coolDown)
+                if (m_mainSkills[2].m_currentCoolDown >= m_mainSkills[2].m_coolDown)
                 {
                     // Activate Ability
                     GameManager.Instance.Thea.GiftOfPoseidon();
                     // Skill is Active
-                    m_Skills[2].active = true;
+                    m_mainSkills[2].active = true;
                 }
             }
             // or else if the third players trigger is not pressed
             else if (XCI.GetAxis(XboxAxis.LeftTrigger, GameManager.Instance.Thea.controller) < 0.1f)
             {
-                if (m_Skills[2].active)
+                if (m_mainSkills[2].active)
                 {
                     // Skill is Reset and has been Deactivated
-                    m_Skills[2].m_currentCoolDown = 0;
-                    m_Skills[2].m_currentDuration = 0;
-                    m_Skills[2].active = false;
-                    m_Skills[2].onCooldown = true;
+                    m_mainSkills[2].m_currentCoolDown = 0;
+                    m_mainSkills[2].m_currentDuration = 0;
+                    m_mainSkills[2].active = false;
+                    m_mainSkills[2].onCooldown = true;
                     // Grants health and resets
                     if (GameManager.Instance.Thea.playerState == BaseCharacter.PlayerState.ALIVE)
                     {
@@ -156,7 +156,7 @@ public class SkillManager : MonoBehaviour {
             }
         }
 
-        foreach (var skill in m_Skills)
+        foreach (var skill in m_mainSkills)
         {
             // If a skill has been reset
             if (skill.onCooldown)
@@ -166,5 +166,6 @@ public class SkillManager : MonoBehaviour {
             }
         }
     }
+
 
 }

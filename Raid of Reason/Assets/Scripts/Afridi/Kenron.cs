@@ -20,9 +20,6 @@ public class Kenron : BaseCharacter {
     [Tooltip("The Aethereal Kenron that Spawns on Death")]
     public ChildKenron childKenron;
 
-    [Tooltip("The Skill Manager that manages the skills of the players")]
-    public SkillManager skillManager;
-
     [Tooltip("The Sword Kenron Is Using")]
     public GameObject Amaterasu;
 
@@ -182,7 +179,7 @@ public class Kenron : BaseCharacter {
         // Empty Check
         if (this.gameObject != null && Amaterasu != null)
         {
-            if (skillDuration >= skillManager.m_Skills[0].m_duration)
+            if (skillDuration >= skillManager.m_mainSkills[0].m_duration)
             {
                 // Sets the Skill to be Active
                 isActive = true;
@@ -198,8 +195,8 @@ public class Kenron : BaseCharacter {
                 SetSpeed(m_chaosFlameSpeed);
 
                 // Destroys the Particle after certain amount of Seconds
-                Destroy(temp, skillManager.m_Skills[0].m_currentDuration);
-                Destroy(part, skillManager.m_Skills[0].m_currentDuration);
+                Destroy(temp, skillManager.m_mainSkills[0].m_currentDuration);
+                Destroy(part, skillManager.m_mainSkills[0].m_currentDuration);
             }
         }
     }
@@ -307,12 +304,12 @@ public class Kenron : BaseCharacter {
     public void SkillChecker() 
     {
         // Empty Check
-        if (this.gameObject != null)
+        if (this.gameObject != null && m_Enemy != null)
         {
             // Sets the image to true if the skills are found
             UnlockSkill();
             // If Kenron has the skill specified and is killed by Kenron
-            if (m_playerSkills.Find(skill => skill.Name == "Vile Infusion") && m_Enemy.isDeadbByKenron)
+            if (m_skillUpgrades.Find(skill => skill.Name == "Vile Infusion") && m_Enemy.isDeadbByKenron)
             {
                 // Icon pops up
                 m_skillPopups[1].enabled = true;
@@ -320,15 +317,15 @@ public class Kenron : BaseCharacter {
                 this.m_currentHealth = m_currentHealth + m_healthGained;
             }
             // If Kenron has the skill specified and is killed by Kenron
-            if (isActive == true && m_playerSkills.Find(skill => skill.Name == "Bloodlust") && m_Enemy.isDeadbByKenron)
+            if (isActive == true && m_skillUpgrades.Find(skill => skill.Name == "Bloodlust") && m_Enemy.isDeadbByKenron)
             {
                 // Icon pops up
                 m_skillPopups[2].enabled = true;
                 // Reduces the cooldown from Kenrons Cooldown 
-                skillManager.m_Skills[0].m_currentDuration = skillManager.m_Skills[0].m_currentDuration - m_durationIncreased;
+                skillManager.m_mainSkills[0].m_currentDuration = skillManager.m_mainSkills[0].m_currentDuration - m_durationIncreased;
             }
             // if the player does have shuras upgrade applied
-            if (m_playerSkills.Find(skill => skill.Name == "Shuras Reckoning") && isActive == true)
+            if (m_skillUpgrades.Find(skill => skill.Name == "Shuras Reckoning") && isActive == true)
             {
                 if (isBurning)
                 {
@@ -339,7 +336,7 @@ public class Kenron : BaseCharacter {
                 }
             }
             // If Kenron has the skill specificed and his health is less than or equal to 0
-            if (m_playerSkills.Find(skill => skill.Name == "Curse of Amaterasu") && m_currentHealth <= 0.0f)
+            if (m_skillUpgrades.Find(skill => skill.Name == "Curse of Amaterasu") && m_currentHealth <= 0.0f)
             {
                 //GameObject part = Instantiate(m_CurseEffect, childKenron.transform.position + Vector3.down * 0.5f, Quaternion.Euler(270, 0, 0), transform);
 				if (childKenron != null)
@@ -354,22 +351,22 @@ public class Kenron : BaseCharacter {
 
     public void UnlockSkill()
     {
-        if (m_playerSkills.Find(skill => skill.Name == "Vile Infusion"))
+        if (m_skillUpgrades.Find(skill => skill.Name == "Vile Infusion"))
         {
             // Icon pops up
             m_skillPopups[1].enabled = true;
         }
-        if (m_playerSkills.Find(skill => skill.Name == "Bloodlust"))
+        if (m_skillUpgrades.Find(skill => skill.Name == "Bloodlust"))
         {
             // Icon pops up
             m_skillPopups[2].enabled = true;
         }
-        if (m_playerSkills.Find(skill => skill.Name == "Shuras Reckoning"))
+        if (m_skillUpgrades.Find(skill => skill.Name == "Shuras Reckoning"))
         {
             // Icon pops up
             m_skillPopups[3].enabled = true;
         }
-        if (m_playerSkills.Find(skill => skill.Name == "Curse of Amaterasu"))
+        if (m_skillUpgrades.Find(skill => skill.Name == "Curse of Amaterasu"))
         {
             // Icon pops up
             m_skillPopups[4].enabled = true;
@@ -384,7 +381,7 @@ public class Kenron : BaseCharacter {
         // Empty Check
         if (this.gameObject != null)
         {
-            if (skillManager.m_Skills[0].m_currentDuration >= skillManager.m_Skills[0].m_duration)
+            if (skillManager.m_mainSkills[0].m_currentDuration >= skillManager.m_mainSkills[0].m_duration)
             {
                 // Resets Stats and Skill
                 SetDamage(40);
