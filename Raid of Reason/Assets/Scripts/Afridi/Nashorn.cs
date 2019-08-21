@@ -131,25 +131,28 @@ public class Nashorn : BaseCharacter
 
     public void UnlockSkill()
     {
-        if (m_skillUpgrades.Find(skill => skill.Name == "Roaring Thunder"))
+        if (m_skillPopups.Count > 1)
         {
-            // Icon pops up
-            m_skillPopups[1].enabled = true;
-        }
-        if (m_skillUpgrades.Find(skill => skill.Name == "Kinetic Discharge"))
-        {
-            // Icon pops up
-            m_skillPopups[2].enabled = true;
-        }
-        if (m_skillUpgrades.Find(skill => skill.Name == "Static Sheild"))
-        {
-            // Icon pops up
-            m_skillPopups[3].enabled = true;
-        }
-        if (m_skillUpgrades.Find(skill => skill.Name == "Macht Des Sturms"))
-        {
-            // Icon pops up
-            m_skillPopups[4].enabled = true;
+            if (m_skillUpgrades.Find(skill => skill.Name == "Roaring Thunder"))
+            {
+                // Icon pops up
+                m_skillPopups[1].enabled = true;
+            }
+            if (m_skillUpgrades.Find(skill => skill.Name == "Kinetic Discharge"))
+            {
+                // Icon pops up
+                m_skillPopups[2].enabled = true;
+            }
+            if (m_skillUpgrades.Find(skill => skill.Name == "Static Sheild"))
+            {
+                // Icon pops up
+                m_skillPopups[3].enabled = true;
+            }
+            if (m_skillUpgrades.Find(skill => skill.Name == "Macht Des Sturms"))
+            {
+                // Icon pops up
+                m_skillPopups[4].enabled = true;
+            }
         }
     }
 

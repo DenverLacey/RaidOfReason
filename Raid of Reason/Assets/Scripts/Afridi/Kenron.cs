@@ -351,25 +351,28 @@ public class Kenron : BaseCharacter {
 
     public void UnlockSkill()
     {
-        if (m_skillUpgrades.Find(skill => skill.Name == "Vile Infusion"))
+        if (m_skillPopups.Count > 1)
         {
-            // Icon pops up
-            m_skillPopups[1].enabled = true;
-        }
-        if (m_skillUpgrades.Find(skill => skill.Name == "Bloodlust"))
-        {
-            // Icon pops up
-            m_skillPopups[2].enabled = true;
-        }
-        if (m_skillUpgrades.Find(skill => skill.Name == "Shuras Reckoning"))
-        {
-            // Icon pops up
-            m_skillPopups[3].enabled = true;
-        }
-        if (m_skillUpgrades.Find(skill => skill.Name == "Curse of Amaterasu"))
-        {
-            // Icon pops up
-            m_skillPopups[4].enabled = true;
+            if (m_skillUpgrades.Find(skill => skill.Name == "Vile Infusion"))
+            {
+                // Icon pops up
+                m_skillPopups[1].enabled = true;
+            }
+            if (m_skillUpgrades.Find(skill => skill.Name == "Bloodlust"))
+            {
+                // Icon pops up
+                m_skillPopups[2].enabled = true;
+            }
+            if (m_skillUpgrades.Find(skill => skill.Name == "Shuras Reckoning"))
+            {
+                // Icon pops up
+                m_skillPopups[3].enabled = true;
+            }
+            if (m_skillUpgrades.Find(skill => skill.Name == "Curse of Amaterasu"))
+            {
+                // Icon pops up
+                m_skillPopups[4].enabled = true;
+            }
         }
     }
 
