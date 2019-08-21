@@ -6,14 +6,15 @@ public class SkillUpgrade : MonoBehaviour
 {
     public SkillsAbilities skill;
     public ObjectiveManager objective;
+    private bool toReset;
 
     [SerializeField]
     private BaseCharacter m_Player;
 
     private void Awake()
     {
-        m_Player.onGameChange += BoolChange;
         TurnOffSkillIcon();
+        toReset = false;
     }
 
     private void Update()
@@ -23,8 +24,9 @@ public class SkillUpgrade : MonoBehaviour
 
     public void GetSkill()
     {
-        if (skill.CheckSkill(m_Player, objective))
+        if (skill.CheckSkill(m_Player, objective, toReset))
         {
+            toReset = true;
             TurnOnSkillIcon();
         }
     }
@@ -35,7 +37,7 @@ public class SkillUpgrade : MonoBehaviour
         {
             TurnOnSkillIcon();
         }
-        else if (m_Player && skill && skill.CheckSkill(m_Player, objective))
+        else if (m_Player && skill && skill.CheckSkill(m_Player, objective, toReset))
         {
             this.transform.Find("IconParent").Find("Disabled").gameObject.SetActive(false);
         }

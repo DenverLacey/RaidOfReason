@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Author: Afridi Rahim, Denver Lacey
+
+*/
 public class ObjectiveManager : MonoBehaviour
 {
     [SerializeField]

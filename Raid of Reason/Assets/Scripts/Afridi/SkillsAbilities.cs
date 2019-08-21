@@ -10,12 +10,16 @@ public class SkillsAbilities : ScriptableObject
     public string Description;
     public Sprite Icon;
 
-    public bool CheckSkill(BaseCharacter character, ObjectiveManager objective)
+
+    public bool CheckSkill(BaseCharacter character, ObjectiveManager objective, bool gameCleared)
     {
         if (objective.tempCleared == true)
         {
-            character.m_skillUpgrades.Add(this);
-            return true;
+            if (!gameCleared)
+            {
+                character.m_skillUpgrades.Add(this);
+                return true;
+            }
         }
         return false;
     }

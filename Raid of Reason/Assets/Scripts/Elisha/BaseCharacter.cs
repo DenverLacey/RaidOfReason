@@ -321,9 +321,6 @@ public abstract class BaseCharacter : MonoBehaviour
         m_currentHealth = health;
     }
 
-    public delegate void OnGameChange();
-    public event OnGameChange onGameChange;
-
     /// <summary>
     /// Returns the players movement speed.
     /// </summary>
