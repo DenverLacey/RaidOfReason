@@ -16,15 +16,15 @@ public class RangeEnemyAttack : Behaviour
 	/// </returns>
     public override Result Execute(EnemyData agent)
     {
-        // rotate to face player
-        Vector3 direction = (agent.Target - agent.transform.position).normalized;
-		direction.y = agent.transform.position.y;
+		// rotate to face player
+        Vector3 direction = (agent.TargetPlayer.transform.position - agent.transform.position).normalized;
+		direction.y = 0f;
         Quaternion desiredRotation = Quaternion.LookRotation(direction, Vector3.up);
         agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, desiredRotation, .25f);
 
 		// attack player
 		agent.Attacking = true;
-        agent.AttackTimer += Time.deltaTime;
+        agent.AttackTimer += Time.fixedDeltaTime;
 
         if (agent.AttackTimer >= agent.AttackCooldown)
         {
@@ -40,6 +40,6 @@ public class RangeEnemyAttack : Behaviour
             }
         }
 
-        return SUCCESS;
+        return PENDING_COMPOSITE;
     }
 }

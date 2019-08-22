@@ -108,8 +108,8 @@ public class EnemyManager : MonoBehaviour
 			{
 				Behaviour.Result result = enemy.ExecutePendingBehaviour();
 
-				if (result != Behaviour.Result.PENDING_ABORT ||
-					result != Behaviour.Result.PENDING_COMPOSITE ||
+				if (result != Behaviour.Result.PENDING_ABORT &&
+					result != Behaviour.Result.PENDING_COMPOSITE &&
 					result != Behaviour.Result.PENDING_MONO)
 				{
 					enemy.PendingBehaviour = null;

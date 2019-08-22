@@ -21,37 +21,47 @@ public class RangeEnemyBehaviourTree : BehaviourTree
 	/// </summary>
     RangeEnemyBehaviourTree() 
     {
-		// create compoenents for behaviour tree
+		// create components for behaviour tree
 		StunnedCondition stunned = new StunnedCondition();
 
-		Selector tauntSelector = new Selector();
-		tauntSelector.AddChild(new TauntEvent());
-		tauntSelector.AddChild(new ViewRangeCondition());
+		Sequence withinRangeSequence = new Sequence();
+		withinRangeSequence.AddChild(new Not(new MinAttackRangeCondition()));
+		withinRangeSequence.AddChild(new MaxAttackRangeCondition());
 
-		Selector outsideRangeSelector = new Selector();
-		outsideRangeSelector.AddChild(new MinAttackRangeCondition());
-		outsideRangeSelector.AddChild(new Not(new MaxAttackRangeCondition()));
+		Sequence tauntSequence = new Sequence();
+		tauntSequence.AddChild(new TauntEvent());
+		tauntSequence.AddChild(new SetDestination());
+		tauntSequence.AddChild(new SightlineCondition());
+		tauntSequence.AddChild(withinRangeSequence);
+		tauntSequence.AddChild(new StopPathing());
 
-		Sequence getIntoPositionSequence = new Sequence();
-		getIntoPositionSequence.AddChild(outsideRangeSelector);
-		getIntoPositionSequence.AddChild(new GetIntoPosition());
+		Sequence canSeePlayerSequence = new Sequence();
+		canSeePlayerSequence.AddChild(new ViewRangeCondition());
+		canSeePlayerSequence.AddChild(new SightlineCondition());
 
-		Selector shootSelector = new Selector();
-		shootSelector.AddChild(getIntoPositionSequence);
-		shootSelector.AddChild(new RangeEnemyAttack());
+		Selector calculateTargetSelector = new Selector();
+		calculateTargetSelector.AddChild(tauntSequence);
+		calculateTargetSelector.AddChild(canSeePlayerSequence);
 
 		Sequence attackSequence = new Sequence();
-		attackSequence.AddChild(tauntSelector);
 		attackSequence.AddChild(new SightlineCondition());
-		attackSequence.AddChild(shootSelector);
+		attackSequence.AddChild(new TurnManualSteeringOn());
+		attackSequence.AddChild(new GetIntoPosition());
+		attackSequence.AddChild(new RangeEnemyAttack());
 
-		Wander wander = new Wander();
+		Sequence middleSequence = new Sequence();
+		middleSequence.AddChild(calculateTargetSelector);
+		middleSequence.AddChild(attackSequence);
+
+		Sequence wanderSequence = new Sequence();
+		wanderSequence.AddChild(new TurnManualSteeringOff());
+		wanderSequence.AddChild(new Wander());
 
 		// add components to behaviour tree
 		m_behaviourTree.AddChild(stunned);
-		m_behaviourTree.AddChild(attackSequence);
-		m_behaviourTree.AddChild(wander);
-    }
+		m_behaviourTree.AddChild(middleSequence);
+		m_behaviourTree.AddChild(wanderSequence);
+	}
 
     /// <summary>
 	/// Executes behaviour tree on an agent

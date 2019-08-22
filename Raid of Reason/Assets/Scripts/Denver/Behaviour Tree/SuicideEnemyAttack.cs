@@ -28,7 +28,7 @@ public class SuicideEnemyAttack : Behaviour
 
 		agent.StopPathing();
 
-		agent.AttackTimer += Time.deltaTime;
+		agent.AttackTimer += Time.fixedDeltaTime;
 
 		if (agent.AttackTimer >= agent.AttackCooldown)
 		{

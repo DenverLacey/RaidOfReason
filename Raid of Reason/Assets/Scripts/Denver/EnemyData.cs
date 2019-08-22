@@ -53,6 +53,7 @@ public class EnemyData : MonoBehaviour
     public GameObject TauntIcon { get => m_tauntIcon; }
 
     public Vector3 Target { get; set; }
+	public BaseCharacter TargetPlayer { get; set; }
 
 	public Behaviour PendingBehaviour { get; set; }
 
@@ -249,7 +250,7 @@ public class EnemyData : MonoBehaviour
 		}
 		else
 		{
-			m_pathing = false;
+			StopPathing();
 		}
 	}
 

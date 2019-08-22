@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8581522977032284691}
   - component: {fileID: 868281683763093769}
   - component: {fileID: 4473210608469072418}
-  - component: {fileID: 587054564288503925}
   - component: {fileID: 8343399046292329857}
   - component: {fileID: 2887244627302726414}
   - component: {fileID: 759607516821861293}
@@ -97,28 +96,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.7, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!195 &587054564288503925
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8343399046292329858}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.50000006
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 0.99999994
-  m_BaseOffset: 0.49999997
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!114 &8343399046292329857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,7 +139,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!1 &8704785382253290894
 GameObject:

@@ -26,6 +26,7 @@ public class ViewRangeCondition : Behaviour
 	{
         float closestDist = float.MaxValue;
         Vector3 closestTar = Vector3.zero;
+		BaseCharacter closestCharacter = null;
 
         foreach (BaseCharacter player in GameManager.Instance.Players)
 		{
@@ -37,12 +38,14 @@ public class ViewRangeCondition : Behaviour
 			{
                 closestDist = sqrDistance;
                 closestTar = player.transform.position;
+				closestCharacter = player;
             }
         }
 
         if (closestDist <= agent.ViewRange * agent.ViewRange)
 		{
             agent.Target = closestTar;
+			agent.TargetPlayer = closestCharacter;
             return SUCCESS;
         }
         else

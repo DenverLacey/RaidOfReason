@@ -24,11 +24,7 @@ public class TauntEvent : Behaviour
     /// </returns>
     public override Result Execute(EnemyData agent) 
 	{
-		if (!GameManager.Instance.Nashorn)
-		{
-			return FAILURE;
-		}
-		else if (GameManager.Instance.Nashorn.isTaunting)
+		if (GameManager.Instance.Nashorn && GameManager.Instance.Nashorn.isTaunting)
 		{
 			// determine square distance from agent and nashorn
 			float sqrDistance = (agent.transform.position - GameManager.Instance.Nashorn.transform.position).sqrMagnitude;
@@ -38,6 +34,7 @@ public class TauntEvent : Behaviour
 			{
 				agent.Taunted = true;
 				agent.Target = GameManager.Instance.Nashorn.transform.position;
+				agent.TargetPlayer = GameManager.Instance.Nashorn;
 				agent.TauntIcon.SetActive(true);
 				return SUCCESS;
 			}

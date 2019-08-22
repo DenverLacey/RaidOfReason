@@ -9,13 +9,13 @@ public class SpawnerEnemyAttack : Behaviour
 	{
 		// rotate to face player
 		Vector3 direction = (agent.Target - agent.transform.position).normalized;
-		direction.y = agent.transform.position.y;
+		direction.y = 0f;
 		Quaternion desiredRotation = Quaternion.LookRotation(direction, Vector3.up);
 		agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, desiredRotation, .25f);
 
 		// attack player
 		agent.Attacking = true;
-		agent.AttackTimer += Time.deltaTime;
+		agent.AttackTimer += Time.fixedDeltaTime;
 
 		if (agent.AttackTimer >= agent.AttackCooldown)
 		{
@@ -29,16 +29,19 @@ public class SpawnerEnemyAttack : Behaviour
 
 			for (int i = 0; i < agent.AttackDamage; i++)
 			{
-				int randIdx = Random.Range(0, agent.AttackPrefabs.Length);
-
 				// calculate enemy's spawn position
 				Vector3 spawnVector = agent.transform.right;
 				spawnVector = Quaternion.AngleAxis(angle * i, Vector3.up) * spawnVector;
-				spawnVector *= 2f;
 
-				GameObject.Instantiate(agent.AttackPrefabs[randIdx], spawnVector + agent.transform.position, agent.transform.rotation);
+				// check that no obstacle where we want to spawn enemy
+				if (!Physics.SphereCast(agent.transform.position, 1f, spawnVector, out RaycastHit info, 2f))
+				{
+					int randIdx = Random.Range(0, agent.AttackPrefabs.Length);
+					spawnVector *= 2.5f;
+					GameObject.Instantiate(agent.AttackPrefabs[randIdx], spawnVector + agent.transform.position, agent.transform.rotation);
+				}
 			}
 		}
-		return SUCCESS;
+		return PENDING_COMPOSITE;
 	}
 }

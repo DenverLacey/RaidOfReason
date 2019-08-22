@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5600712715307690209}
   - component: {fileID: 4923410652601565241}
   - component: {fileID: 8077368317540306074}
-  - component: {fileID: 4669905499530983457}
   - component: {fileID: 3774334560616408342}
   - component: {fileID: 8514988622669061710}
   - component: {fileID: 820624621134379181}
@@ -97,28 +96,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!195 &4669905499530983457
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3774334560616408345}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.50000006
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 0.99999994
-  m_BaseOffset: 0.49999997
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!114 &3774334560616408342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,8 +109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_type: 2
-  m_tauntIcon: {fileID: 7045711017231392191, guid: 97136926d5db8af4484c32058ebb08c3,
-    type: 3}
+  m_tauntIcon: {fileID: 654363534091644250}
   isDeadbByKenron: 0
   isAttackingNashorn: 1
 --- !u!114 &8514988622669061710
@@ -163,7 +139,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!1 &9082196884222987370
 GameObject:
@@ -321,6 +297,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97136926d5db8af4484c32058ebb08c3, type: 3}
+--- !u!1 &654363534091644250 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7045711017231392191, guid: 97136926d5db8af4484c32058ebb08c3,
+    type: 3}
+  m_PrefabInstance: {fileID: 7553558012672241893}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5762396518081535129 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2822496821825301628, guid: 97136926d5db8af4484c32058ebb08c3,
