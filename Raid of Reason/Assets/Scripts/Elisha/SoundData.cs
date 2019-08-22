@@ -10,11 +10,8 @@ using UnityEngine;
 [System.Serializable]
 public class SoundData
 {
-    // Name of the sound.
-    public string name;
     // Audio clip you want to insert.
     public AudioClip clip;
-
     // Volume of the clip with a range 0-1.
     [Range(0f, 1f)]
     public float volume;
@@ -25,7 +22,7 @@ public class SoundData
     public bool loop;
     // Sets how much the clip is affected by 3d.
     [Range(0f, 1f)]
-    public float spatial_Blend;
+    public float spatialBlend;
 
     [HideInInspector]
     public AudioSource source;

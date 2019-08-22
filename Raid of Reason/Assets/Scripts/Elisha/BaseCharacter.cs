@@ -26,6 +26,11 @@ public abstract class BaseCharacter : MonoBehaviour
     public float m_currentHealth;
 
     [SerializeField]
+    private ParticleSystem m_downedRing;
+    [SerializeField]
+    private ParticleSystem m_reviveRing;
+
+    [SerializeField]
     [Tooltip("How long can a player be in revive state before they die?")]
     private float m_deathTimer;
 
@@ -84,6 +89,8 @@ public abstract class BaseCharacter : MonoBehaviour
     private MeshRenderer m_renderer;
     private Color m_originalColour;
 
+    ParticleSystem.ColorOverLifetimeModule colour;
+
 
     /// <summary>
     /// This will be called first.
@@ -102,6 +109,7 @@ public abstract class BaseCharacter : MonoBehaviour
         m_controllerOn = true;
         m_bActive = false;
         m_reviveColliderRadius.enabled = false;
+        colour = m_downedRing.colorOverLifetime;
     }
 
     /// <summary>
@@ -245,6 +253,7 @@ public abstract class BaseCharacter : MonoBehaviour
             if (sqrDistance > m_reviveRadius * m_reviveRadius) { continue; }
             
             player.IsBeingRevived = true;
+            //m_downedRing.GetComponent<ParticleSystem>().main.startColor = new Color(0, 1, 0, 1);
             
             // check if player doesn't need to be revived
             if (player.playerState != PlayerState.REVIVE) { continue; }
@@ -273,6 +282,7 @@ public abstract class BaseCharacter : MonoBehaviour
                 player.m_reviveTimer = 5f;
                 player.m_deathTimer = 20f;
                 m_playerCollider.enabled = true;
+                player.m_reviveRing.GetComponent<ParticleSystem>().Stop();
             }
             
             if(player.m_deathTimer <= 0)
@@ -290,6 +300,7 @@ public abstract class BaseCharacter : MonoBehaviour
     protected virtual void OnDeath()
     {
         playerState = PlayerState.REVIVE;
+        m_downedRing.GetComponent<ParticleSystem>().Play();
         if (GameManager.Instance.Thea.playerState == PlayerState.REVIVE)
         {
             GameManager.Instance.Thea.m_aimCursor.SetActive(false);

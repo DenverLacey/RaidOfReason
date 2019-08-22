@@ -1,6 +1,6 @@
 ﻿using UnityEngine.Audio;
-using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 /*
 * Author: Elisha_Anagnostakis
@@ -8,10 +8,40 @@ using UnityEngine;
 *               This script will not interrupt any audio played from scene to scene.
 */
 
+public enum SoundType
+{
+    //Ambient Sounds
+    COMBAT_MUSIC,
+
+    // Kenron sounds
+    KENRON_WALK,
+    KENRON_ATTACK,
+    KENRON_HURT,
+
+    // Nashorn sounds
+    NASHORN_WALK,
+    NASHORN_ATTACK,
+    NASHORN_HURT,
+
+    // Thea sounds
+    THEA_WALK,
+    THEA_ATTACK,
+    THEA_HURT,
+}
+
+[System.Serializable]
+struct StringSoundPair
+{
+    public SoundType key;
+    public SoundData value;
+}
+
 public class AudioManager : MonoBehaviour
 {
     [SerializeField]
-    private SoundData[] m_sound;
+    private List<StringSoundPair> m_soundList = new List<StringSoundPair>();
+    private Dictionary<SoundType, SoundData> m_sounds = new Dictionary<SoundType, SoundData>();
+
     [SerializeField]
     private static AudioManager ms_instance;
 
@@ -38,14 +68,18 @@ public class AudioManager : MonoBehaviour
 
         // Gets an audio source component automatically when the user wants to add a new clip 
         // and allows the user to edit specific parts of the component of the clip.
-        foreach(SoundData s in m_sound)
+        foreach (var pair in m_soundList)
         {
-            s.source = gameObject.AddComponent<AudioSource>();
-            s.source.clip = s.clip;
-            s.source.volume = s.volume;
-            s.source.pitch = s.pitch;
-            s.source.loop = s.loop;
-            s.source.spatialBlend = s.spatial_Blend;
+            SoundData newSoundData = new SoundData();
+            newSoundData.source = gameObject.AddComponent<AudioSource>();
+            newSoundData.source.clip = pair.value.clip;
+            newSoundData.source.volume = pair.value.volume;
+            newSoundData.source.pitch = pair.value.pitch;
+            newSoundData.source.loop = pair.value.loop;
+            newSoundData.source.spatialBlend = pair.value.spatialBlend;
+
+            // add to dictionary of souds
+            m_sounds.Add(pair.key, newSoundData);
         }
     }
 
@@ -54,8 +88,7 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     public void Start()
     {
-        // Put all sounds you want to play in the background.
-        PlaySound("CombatMusic");
+        PlaySound(SoundType.COMBAT_MUSIC);
     }
 
     /// <summary>
@@ -63,15 +96,15 @@ public class AudioManager : MonoBehaviour
     /// If user creates a typo in the name of the sound when trying 
     /// to reference it this script will throw you and error.
     /// </summary>
-    /// <param name="name"></param>
-    public void PlaySound(string name)
+    /// <param name="type"></param>
+    public void PlaySound(SoundType type)
     {
-       SoundData s = Array.Find(m_sound, sound => sound.name == name);
+        SoundData s = PickSoundOfType(type);
         // If it cant find the name in the array
         if(s == null)
         {
             // Throw error 
-            Debug.LogWarning("Sound with this " + name + " wasn't found!");
+            Debug.LogWarning("Sound with this " + type + " wasn't found!");
             return;
         }
         // If name can be found then play audio clip
@@ -81,15 +114,15 @@ public class AudioManager : MonoBehaviour
     /// <summary>
     /// Stops playing individual sound.
     /// </summary>
-    /// <param name="name"></param>
-    public void StopSound(string name)
+    /// <param name="type"></param>
+    public void StopSound(SoundType type)
     {
-        SoundData s = Array.Find(m_sound, sound => sound.name == name);
+        SoundData s = PickSoundOfType(type);
         // If it cant find the name in the array
         if (s == null)
         {
             // Throw error 
-            Debug.LogWarning("Sound with this " + name + " wasn't found!");
+            Debug.LogWarning("Sound with this " + type + " wasn't found!");
             return;
         }
         // If name can be found then stop audio clip
@@ -102,10 +135,28 @@ public class AudioManager : MonoBehaviour
     public void StopAllSound()
     {
         // Checks all arrays that use SoundData
-        foreach(SoundData s in m_sound)
+        foreach(var pair in m_sounds)
         {
             // And stops audio clips.
-            s.source.Stop();
+            pair.Value.source.Stop();
         }  
+    }
+
+    SoundData PickSoundOfType(SoundType type)
+    {
+        // create list of all sounds with matching type
+        List<SoundData> matchingSounds = new List<SoundData>();
+
+        foreach (var pair in m_sounds)
+        {
+            if (pair.Key == type)
+            {
+                matchingSounds.Add(pair.Value);
+            }
+        }
+
+        // pick random sound from list
+        int randIdx = Random.Range(0, matchingSounds.Count);
+        return matchingSounds[randIdx];
     }
 }
