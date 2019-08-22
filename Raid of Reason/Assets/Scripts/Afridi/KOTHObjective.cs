@@ -20,6 +20,8 @@ public class KOTHObjective : BaseObjective
     [Tooltip("Radius of area")]
     public float radius;
 
+    public override void Awake() { }
+
     public override void Update()
     {
         Collider[] hitPlayers = Physics.OverlapSphere(centre, radius, LayerMask.GetMask("Player"));
@@ -29,6 +31,8 @@ public class KOTHObjective : BaseObjective
         }
         IsDone();
     }
+
+    public override bool HasFailed() { return false; }
 
     public override bool IsDone()
     {

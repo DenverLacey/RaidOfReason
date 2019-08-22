@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class BaseObjective : ScriptableObject
 {
+    public abstract void Awake();
     public abstract void Update();
     public abstract bool IsDone();
+    public abstract bool HasFailed();
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -944,7 +944,7 @@ PrefabInstance:
     - target: {fileID: 6842663190349706492, guid: 6746feb82e9817e478244a2fdb9c3293,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6842663190349706492, guid: 6746feb82e9817e478244a2fdb9c3293,
         type: 3}
@@ -1132,7 +1132,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0d24f97d2c858547aba0ef6db46088c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_KingObjective: {fileID: 11400000, guid: 63ebab16f7d065b4cb15a61a11393d1f, type: 2}
+  m_KingObjective: {fileID: 0}
+  m_CountDownObjective: {fileID: 11400000, guid: a03f1861d58a6d044a225b6b5957be87,
+    type: 2}
   tempCleared: 0
 --- !u!4 &1071121993
 Transform:
@@ -1146,7 +1148,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1210195092
 PrefabInstance:
@@ -1264,7 +1266,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1329096963
 MonoBehaviour:
@@ -1417,7 +1419,7 @@ PrefabInstance:
     - target: {fileID: 7506323965490325401, guid: db1a93841802ddd4d9bb862ae4b9deaf,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.099
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7506323965490325401, guid: db1a93841802ddd4d9bb862ae4b9deaf,
         type: 3}
@@ -1656,7 +1658,7 @@ PrefabInstance:
     - target: {fileID: 2385325072712335877, guid: 98818c2896b11704d86c247152021b8a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2385325072712335877, guid: 98818c2896b11704d86c247152021b8a,
         type: 3}
@@ -2342,12 +2344,12 @@ PrefabInstance:
     - target: {fileID: 3463626699666436899, guid: 3fadb2055a9f3b94188f447a00c9f98b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.02
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3463626699666436899, guid: 3fadb2055a9f3b94188f447a00c9f98b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.34
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3463626699666436899, guid: 3fadb2055a9f3b94188f447a00c9f98b,
         type: 3}
@@ -2441,7 +2443,7 @@ PrefabInstance:
     - target: {fileID: 2401059402486077737, guid: e645cb267fcc2db478863b9dc482236b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2401059402486077737, guid: e645cb267fcc2db478863b9dc482236b,
         type: 3}
@@ -2539,57 +2541,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8215263388967511767, guid: 4f325cbf6716f3d45b0e44cba5222d30,
         type: 3}
-      propertyPath: m_mainSkills.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8215263388967511767, guid: 4f325cbf6716f3d45b0e44cba5222d30,
-        type: 3}
-      propertyPath: m_Skills.Array.data[0].m_reset.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      propertyPath: m_mainSkills.Array.data[0].m_reset.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1889813532}
     - target: {fileID: 8215263388967511767, guid: 4f325cbf6716f3d45b0e44cba5222d30,
         type: 3}
-      propertyPath: m_Skills.Array.data[0].m_skillIcon
+      propertyPath: m_mainSkills.Array.data[0].m_skillIcon
       value: 
       objectReference: {fileID: 939701316}
     - target: {fileID: 8215263388967511767, guid: 4f325cbf6716f3d45b0e44cba5222d30,
         type: 3}
-      propertyPath: m_Skills.Array.data[1].m_reset.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      propertyPath: m_mainSkills.Array.data[1].m_reset.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1593687515}
     - target: {fileID: 8215263388967511767, guid: 4f325cbf6716f3d45b0e44cba5222d30,
         type: 3}
-      propertyPath: m_Skills.Array.data[1].m_skillIcon
+      propertyPath: m_mainSkills.Array.data[1].m_skillIcon
       value: 
       objectReference: {fileID: 2014233090}
     - target: {fileID: 8215263388967511767, guid: 4f325cbf6716f3d45b0e44cba5222d30,
         type: 3}
-      propertyPath: m_Skills.Array.data[2].m_reset.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      propertyPath: m_mainSkills.Array.data[2].m_reset.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 277058747}
     - target: {fileID: 8215263388967511767, guid: 4f325cbf6716f3d45b0e44cba5222d30,
         type: 3}
-      propertyPath: m_Skills.Array.data[2].m_skillIcon
+      propertyPath: m_mainSkills.Array.data[2].m_skillIcon
       value: 
       objectReference: {fileID: 462824627}
-    - target: {fileID: 8215263388967511767, guid: 4f325cbf6716f3d45b0e44cba5222d30,
-        type: 3}
-      propertyPath: m_mainSkills.Array.data[0].m_reset.m_TypeName
-      value: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      objectReference: {fileID: 0}
-    - target: {fileID: 8215263388967511767, guid: 4f325cbf6716f3d45b0e44cba5222d30,
-        type: 3}
-      propertyPath: m_mainSkills.Array.data[1].m_reset.m_TypeName
-      value: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      objectReference: {fileID: 0}
-    - target: {fileID: 8215263388967511767, guid: 4f325cbf6716f3d45b0e44cba5222d30,
-        type: 3}
-      propertyPath: m_mainSkills.Array.data[2].m_reset.m_TypeName
-      value: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      objectReference: {fileID: 0}
     - target: {fileID: 8215263388967511760, guid: 4f325cbf6716f3d45b0e44cba5222d30,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2628,7 +2607,7 @@ PrefabInstance:
     - target: {fileID: 8215263388967511760, guid: 4f325cbf6716f3d45b0e44cba5222d30,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8215263388967511760, guid: 4f325cbf6716f3d45b0e44cba5222d30,
         type: 3}
@@ -2644,16 +2623,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8215263388967511760, guid: 4f325cbf6716f3d45b0e44cba5222d30,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.0000001
-      objectReference: {fileID: 0}
-    - target: {fileID: 8215263388967511760, guid: 4f325cbf6716f3d45b0e44cba5222d30,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.99999994
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f325cbf6716f3d45b0e44cba5222d30, type: 3}
