@@ -9,43 +9,37 @@ using UnityEngine;
 public class ObjectiveManager : MonoBehaviour
 {
     [SerializeField]
-    [Tooltip("King of the Hill objective")]
-    private KOTHObjective m_KingObjective;
-
-    [SerializeField]
-    [Tooltip("King of the Hill objective")]
-    private CountdownObjective m_CountDownObjective;
+    [Tooltip("Room's Objective")]
+    private BaseObjective m_objective;
 
     [Tooltip("Temporary Bool, will be removed")]
     public bool tempCleared;
 
     private void Awake()
     {
-        m_CountDownObjective.Awake();
+        if (m_objective)
+        {
+            m_objective.Awake();
+        }
         tempCleared = false;
     }
 
     private void Update()
     {
-        if (m_KingObjective != null)
+        if (m_objective)
         {
-            m_KingObjective.Update();
+            m_objective.Update();
 
-            if (m_KingObjective.IsDone() == true)
+            if (m_objective.IsDone())
             {
                 tempCleared = true;
-                // Move to next
+                Debug.LogFormat("{0} is complete", m_objective);
+                // move to next
             }
-        }
-        if (m_CountDownObjective != null)
-        {
-            m_CountDownObjective.Update();
-
-            if (m_CountDownObjective.IsDone() == true)
+            else if (m_objective.HasFailed())
             {
-                tempCleared = true;
-                Debug.Log("Well Done");
-                // Move to next
+                Debug.LogFormat("{0} has been failed", m_objective);
+                // to fail stuff
             }
         }
     }

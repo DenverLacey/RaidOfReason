@@ -23,20 +23,4 @@ public class SkillsAbilities : ScriptableObject
         }
         return false;
     }
-
-
-    public bool EnableSkill(BaseCharacter character)
-    {
-        List<SkillsAbilities>.Enumerator Skills = character.m_skillUpgrades.GetEnumerator();
-        while (Skills.MoveNext())
-        {
-            var CurrSkill = Skills.Current;
-            if (CurrSkill.name == this.name)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
 }

@@ -244,11 +244,10 @@ public abstract class BaseCharacter : MonoBehaviour
             float sqrDistance = (player.transform.position - transform.position).sqrMagnitude;
             if (sqrDistance > m_reviveRadius * m_reviveRadius) { continue; }
             
+            player.IsBeingRevived = true;
+            
             // check if player doesn't need to be revived
             if (player.playerState != PlayerState.REVIVE) { continue; }
-
-
-            player.IsBeingRevived = true;
 
             // Start the revive timer.
             player.m_reviveTimer -= Time.deltaTime;
@@ -291,7 +290,7 @@ public abstract class BaseCharacter : MonoBehaviour
     protected virtual void OnDeath()
     {
         playerState = PlayerState.REVIVE;
-        if(GameManager.Instance.Thea.playerState == PlayerState.REVIVE)
+        if (GameManager.Instance.Thea.playerState == PlayerState.REVIVE)
         {
             GameManager.Instance.Thea.m_aimCursor.SetActive(false);
         }

@@ -126,6 +126,7 @@ public class Nashorn : BaseCharacter
         {
             // Allows Nashorn to perform Melee Punches 
             Punch();
+            base.Update();
         }
     }
 

@@ -125,9 +125,19 @@ public class Thea : BaseCharacter
         if(this.gameObject != null)
         {
 			base.FixedUpdate();
-			Projectile();
-            SkillChecker();
             CharacterMovement();
+            Projectile();
+        }
+    }
+
+    protected override void Update()
+    {
+        // Empty Check
+        if (this.gameObject != null)
+        {
+        
+            base.Update();
+            SkillChecker();
         }
     }
 

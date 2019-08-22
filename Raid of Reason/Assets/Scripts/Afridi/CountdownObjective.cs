@@ -21,15 +21,21 @@ public class CountdownObjective : BaseObjective
     private float timer;
 
     // Array to hold the number of enemies in game
-    private EnemyData[] m_enemies;
+    private List<EnemyData> m_enemies = new List<EnemyData>();
 
     public override void Awake()
     {
         // Finds all gameobjects within the scene
-        EnemyData[] m_enemies = GameObject.FindObjectsOfType<EnemyData>();
+        Reset();
+        m_enemies.AddRange(FindObjectsOfType<EnemyData>());
         timer = maxtimer;
-        amount = m_enemies.Length;
-        
+        amount = m_enemies.Count;
+    }
+
+    public void Reset()
+    {
+        m_enemies.Clear();
+        amount = 0;
     }
 
     public override void Update()
@@ -48,16 +54,8 @@ public class CountdownObjective : BaseObjective
                 {
                     // Amount is decremented 
                     amount--;
-                    data.OnDeath();
                 }
             }
-            // Check if the objective is done
-            IsDone();
-        }
-        else
-        {
-            // Or else you failed the objective
-            HasFailed();
         }
     }
 
