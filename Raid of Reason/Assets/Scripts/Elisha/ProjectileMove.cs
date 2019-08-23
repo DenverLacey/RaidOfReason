@@ -89,9 +89,8 @@ public class ProjectileMove : MonoBehaviour {
                 // Change the enemy back to their original mesh colour after .2 seconds of being hit.
                 StartCoroutine(ResetMaterialColour(enemy, .2f));
             }
-
-        }
-        else if (Utility.TagIsPlayerTag(other.gameObject.tag))
+		}
+        else if (other.gameObject.tag == "Kenron" || other.gameObject.tag == "Nashorn")
         {
 			BaseCharacter hitPlayer = other.gameObject.GetComponent<BaseCharacter>();
 
@@ -99,9 +98,12 @@ public class ProjectileMove : MonoBehaviour {
 			{
 				hitPlayer.m_currentHealth += m_healAmount;
 			}
-        }
-        // Destroy projectile.
-		Destroy(gameObject);
+		}
+
+		if (other.gameObject.tag != "Thea")
+		{
+			Destroy(gameObject);
+		}
     }
 
     /// <summary>

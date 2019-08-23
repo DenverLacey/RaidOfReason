@@ -223,7 +223,7 @@ public class Thea : BaseCharacter
             if (m_counter > m_projectileDelay)
             {
                 // Instantiate projectile object.
-                GameObject temp = Instantiate(m_projectile, transform.position + transform.forward * 2 + Vector3.up * transform.lossyScale.y * 2, transform.rotation);
+                GameObject temp = Instantiate(m_projectile, transform.position, transform.rotation);
                 // Set projectile damage and move projectile.
 				temp.GetComponent<ProjectileMove>().SetDamage(m_damage);
                 // Reset counter.

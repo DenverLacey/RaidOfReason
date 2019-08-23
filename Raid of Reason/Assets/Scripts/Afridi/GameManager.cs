@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
 			}
 			//else
 			//{
-			//	Destroy(character);
+			//	Destroy(character.gameObject);
 			//}
 		}
 		else if (character is Nashorn)
@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
 			}
 			//else
 			//{
-			//	Destroy(character);
+			//	Destroy(character.gameObject);
 			//}
 		}
 		else if (character is Thea)
@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour
 			}
 			//else
 			//{
-			//	Destroy(character);
+			//	Destroy(character.gameObject);
 			//}
 		}
 	}

@@ -42,6 +42,10 @@ public class Kenron : BaseCharacter {
 	[Tooltip("How much delay between consecutive dashes in seconds")]
 	private float m_dashDelay;
 
+	[SerializeField]
+	[Tooltip("Buffer distance to avoid Kenron getting stuck in walls")]
+	private float m_dashBufferDistance = 3f;
+
     [SerializeField]
     [Tooltip("Hit box for dash attack")]
     private BoxCollider m_dashCollider;
@@ -224,7 +228,7 @@ public class Kenron : BaseCharacter {
             if (Physics.Raycast(transform.position, transform.forward, out hit, m_maxDashDistance, layerMask))
             {
                 m_dashPosition = hit.point;
-				m_dashPosition -= transform.forward * (m_collider.radius * transform.lossyScale.x);
+				m_dashPosition -= transform.forward * (m_collider.radius * transform.lossyScale.x + m_dashBufferDistance);
             }
             else
             {
