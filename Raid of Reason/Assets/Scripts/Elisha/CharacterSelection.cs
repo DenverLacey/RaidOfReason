@@ -72,16 +72,46 @@ public class CharacterSelection : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Shows Information Panel for a given player cursor
+	/// </summary>
+	/// <param name="character">
+	/// Character that player wants info about
+	/// </param>
+	/// <param name="cursor">
+	/// Cursor that player is controlling
+	/// </param>
 	public void ShowInfo(Character character, PlayerCursor cursor)
 	{
 		m_playerPanels[(int)cursor.controller - 1].infoPanels[(int)character].SetActive(true);
 	}
 
+	/// <summary>
+	/// Hides Information Panel for a given player cursor
+	/// </summary>
+	/// <param name="character">
+	/// Character that player was reading info about
+	/// </param>
+	/// <param name="cursor">
+	/// Cursor that player is controlling
+	/// </param>
 	public void HideInfo(Character character, PlayerCursor cursor)
 	{
 		m_playerPanels[(int)cursor.controller - 1].infoPanels[(int)character].SetActive(false);
 	}
 
+	/// <summary>
+	/// Selects an available character for a given player
+	/// </summary>
+	/// <param name="character">
+	/// Character that player wants to select
+	/// </param>
+	/// <param name="cursor">
+	/// Cursor that the player is controlling
+	/// </param>
+	/// <returns>
+	/// If character could be selected for given player
+	/// </returns>
 	public bool SelectCharacter(Character character, PlayerCursor cursor)
 	{
 		// check if character is available or if controller already controlling a character
@@ -112,6 +142,15 @@ public class CharacterSelection : MonoBehaviour
 		return true;
 	}
 
+	/// <summary>
+	/// Deselects a character from a given player
+	/// </summary>
+	/// <param name="cursor">
+	/// Cursor of the player that wants to deselect a character
+	/// </param>
+	/// <returns>
+	/// If character could be deselected
+	/// </returns>
 	public bool DeselectCharacter(PlayerCursor cursor)
 	{
 		// check if cursor exists in dictionary
@@ -135,6 +174,9 @@ public class CharacterSelection : MonoBehaviour
 		return false;
 	}
 
+	/// <summary>
+	/// Finalises character selections and moves to scene 1
+	/// </summary>
 	public void AcceptSelection()
 	{
 		foreach (var pair in m_characterToControllerMap)
@@ -149,6 +191,15 @@ public class CharacterSelection : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Unlocks a button for a character that was selected by a player
+	/// </summary>
+	/// <param name="character">
+	/// Character whose button needs to unlocked
+	/// </param>
+	/// <returns>
+	/// If button was unlocked
+	/// </returns>
 	private bool UnlockButtonByCharacter(Character character)
 	{
 		foreach (var button in m_characterButtons)
