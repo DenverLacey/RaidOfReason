@@ -4,32 +4,36 @@ using UnityEngine;
 
 public class SkillUpgrade : MonoBehaviour
 {
-    public SkillsAbilities skill;
+    protected List<SkillsAbilities> m_characterSkills = new List<SkillsAbilities>();
     public ObjectiveManager objective;
-    private bool toReset;
+    protected BaseCharacter m_Player;
 
-    [SerializeField]
-    private BaseCharacter m_Player;
-
-    private void Awake()
+    void EnableSkill()
     {
-        TurnOffSkillIcon();
-        toReset = true;
-    }
-
-    private void Update()
-    {
-        GetSkill();
-    }
-
-    public void GetSkill()
-    {
-        if (skill.CheckSkill(m_Player, objective, toReset))
+        if (m_Player)
         {
-            TurnOnSkillIcon();
+            if (objective.tempCleared == true)
+            {
+                if (m_Player.m_skillUpgrades.Count < 0)
+                {
+                    m_Player.m_skillUpgrades.Add(m_characterSkills[0]);
+                }
+                else if (m_Player.m_skillUpgrades.Count == 1)
+                {
+                    m_Player.m_skillUpgrades.Add(m_characterSkills[1]);
+                }
+                else if (m_Player.m_skillUpgrades.Count == 2)
+                {
+                    m_Player.m_skillUpgrades.Add(m_characterSkills[2]);
+                }
+                else if (m_Player.m_skillUpgrades.Count == 3)
+                {
+                    m_Player.m_skillUpgrades.Add(m_characterSkills[3]);
+                }
+                objective.tempCleared = false;
+            }
         }
     }
-
 
     private void TurnOnSkillIcon()
     {

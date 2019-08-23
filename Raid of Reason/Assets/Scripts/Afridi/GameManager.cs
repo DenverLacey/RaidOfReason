@@ -65,10 +65,10 @@ public class GameManager : MonoBehaviour
 			{
 				Kenron.controller = m_controllers[0];
 			}
-			else
-			{
-				Destroy(character);
-			}
+			//else
+			//{
+			//	Destroy(character);
+			//}
 		}
 		else if (character is Nashorn)
 		{
@@ -79,10 +79,10 @@ public class GameManager : MonoBehaviour
 			{
 				Nashorn.controller = m_controllers[1];
 			}
-			else
-			{
-				Destroy(character);
-			}
+			//else
+			//{
+			//	Destroy(character);
+			//}
 		}
 		else if (character is Thea)
 		{
@@ -93,10 +93,10 @@ public class GameManager : MonoBehaviour
 			{
 				Thea.controller = m_controllers[2];
 			}
-			else
-			{
-				Destroy(character);
-			}
+			//else
+			//{
+			//	Destroy(character);
+			//}
 		}
 	}
 
