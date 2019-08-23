@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 /*
@@ -11,6 +12,8 @@ public class ObjectiveManager : MonoBehaviour
     [SerializeField]
     [Tooltip("Room's Objective")]
     private BaseObjective m_objective;
+    [Tooltip("Scene Index To Switch to")]
+    public int sceneIndex;
 
     [Tooltip("Temporary Bool, will be removed")]
     public bool tempCleared;
@@ -34,11 +37,13 @@ public class ObjectiveManager : MonoBehaviour
             {
                 tempCleared = true;
                 Debug.LogFormat("{0} is complete", m_objective);
+                SceneManager.LoadScene(sceneIndex);
                 // move to next
             }
             else if (m_objective.HasFailed())
             {
                 Debug.LogFormat("{0} has been failed", m_objective);
+                SceneManager.LoadScene(0);
                 // to fail stuff
             }
         }
