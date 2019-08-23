@@ -10,7 +10,7 @@ using XboxCtrlrInput;
  *              with the characters movements and states.
  */
 
-
+[RequireComponent(typeof(Rigidbody))]
 public abstract class BaseCharacter : MonoBehaviour 
 {
     public enum PlayerState
@@ -29,6 +29,8 @@ public abstract class BaseCharacter : MonoBehaviour
     private ParticleSystem m_downedRing;
     [SerializeField]
     private ParticleSystem m_reviveRing;
+
+    protected Rigidbody m_rigidbody;
 
     [SerializeField]
     [Tooltip("How long can a player be in revive state before they die?")]
@@ -102,6 +104,7 @@ public abstract class BaseCharacter : MonoBehaviour
         m_originalColour = m_renderer.sharedMaterial.color;
         m_camera = FindObjectOfType<MultiTargetCamera>();
         m_playerCollider = GetComponent<CapsuleCollider>();
+        m_rigidbody = GetComponent<Rigidbody>();
         m_animator = GetComponentInChildren<Animator>();
         m_currentHealth = m_maxHealth;
         m_vulnerability = 1.0f;
@@ -181,7 +184,7 @@ public abstract class BaseCharacter : MonoBehaviour
             float axisZ = XCI.GetAxis(XboxAxis.LeftStickY, controller) * m_movementSpeed;
             // Makes sure Player movement is relative to the direction of the cameras forward.
             Vector3 movement = m_camera.transform.TransformDirection(axisX, 0, axisZ);
-            transform.position += new Vector3(movement.x, 0, movement.z) * Time.deltaTime;
+            m_rigidbody.MovePosition(transform.position + new Vector3(movement.x, 0, movement.z) * Time.deltaTime);
 
             // Calculates the rotation on the x axis of the right stick.
             float rotAxisX = XCI.GetAxis(XboxAxis.RightStickX, controller) * m_rotationSpeed;

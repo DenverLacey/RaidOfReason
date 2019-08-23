@@ -58,9 +58,6 @@ public class Nashorn : BaseCharacter
     [Tooltip("Range Chain Lightning spreads dealt by Macht Des Sturms ability")]
     private float m_lightningRadius;
 
-    // Nashorns Rigidbody
-    private Rigidbody m_nashornRigidBody;
-
     // Kenron Instance
     private Kenron m_Kenron;
 
@@ -92,7 +89,6 @@ public class Nashorn : BaseCharacter
     {
         // Initialisation 
         base.Awake();
-        m_nashornRigidBody = GetComponent<Rigidbody>();
         LeftGauntlet.enabled = false;
         RightGauntlet.enabled = false;
         isTaunting = false;
@@ -199,18 +195,18 @@ public class Nashorn : BaseCharacter
 
                 if (isActive == true)
                 {
-                    //Ray ray = new Ray(transform.position, transform.forward);
-                    //RaycastHit hit;
+                    Ray ray = new Ray(transform.position, transform.forward);
+                    RaycastHit hit;
 
-                    //lineRenderer.SetPosition(0, ray.origin);
-                    //lineRenderer.SetPosition(1, ray.GetPoint(100));
+                    lineRenderer.SetPosition(0, ray.origin);
+                    lineRenderer.SetPosition(1, ray.GetPoint(100));
 
-                    //if (Physics.Raycast(transform.position, transform.forward, out hit, 100))
-                    //{
-                    //    lineRenderer.SetPosition(1, hit.point);
-                    //    ChainLightning();
-                    //}
-                    //isActive = false;
+                    if (Physics.Raycast(transform.position, transform.forward, out hit, 100))
+                    {
+                        lineRenderer.SetPosition(1, hit.point);
+                        ChainLightning();
+                    }
+                    isActive = false;
                 }
             }
         }

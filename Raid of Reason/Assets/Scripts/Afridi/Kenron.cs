@@ -82,9 +82,6 @@ public class Kenron : BaseCharacter {
     [Tooltip("Effect when Cursed Kenron Spawns")]
     private GameObject m_CurseEffect;
 
-    // Kenrons Rigid Body
-    private Rigidbody m_kenronRigidBody;
-    
     // Enemy reference used for skill checking
     private EnemyData m_Enemy;
 
@@ -119,7 +116,6 @@ public class Kenron : BaseCharacter {
         // Initalisation
         base.Awake();
         m_Enemy = FindObjectOfType<EnemyData>();
-        m_kenronRigidBody = GetComponent<Rigidbody>();
 		childKenron = FindObjectOfType<ChildKenron>();
 
 		if (childKenron)
@@ -255,7 +251,8 @@ public class Kenron : BaseCharacter {
 		{
 			if (!m_controllerOn)
 			{
-				transform.position = Vector3.Lerp(transform.position, m_dashPosition, m_dashSpeed * Time.deltaTime);
+				Vector3 lerpPosition = Vector3.Lerp(transform.position, m_dashPosition, m_dashSpeed * Time.deltaTime);
+                m_rigidbody.MovePosition(lerpPosition);
 			}
 
             // if completed dash

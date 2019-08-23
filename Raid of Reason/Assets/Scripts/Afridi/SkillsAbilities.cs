@@ -15,10 +15,9 @@ public class SkillsAbilities : ScriptableObject
     {
         if (objective.tempCleared == true)
         {
-            if (!gameCleared)
+            if (gameCleared)
             {
                 character.m_skillUpgrades.Add(this);
-                return true;
             }
         }
         return false;
