@@ -51,6 +51,8 @@ public abstract class BaseCharacter : MonoBehaviour
     [Tooltip("How long will it take the player to revive his teammate?")]
     private float m_reviveTimer;
 
+    private float m_currentReviveTimer; 
+
     [SerializeField]
     [Tooltip("How big is the radius of the revive?")]
     private float m_reviveRadius;
@@ -94,8 +96,8 @@ public abstract class BaseCharacter : MonoBehaviour
     /// <summary>
     /// This will be called first.
     /// </summary>
-    protected virtual void Awake () {
-
+    protected virtual void Awake ()
+    {
         m_renderer = GetComponentInChildren<MeshRenderer>();
         // Gets the original colour of the player.
         m_originalColour = m_renderer.sharedMaterial.color;
@@ -105,7 +107,7 @@ public abstract class BaseCharacter : MonoBehaviour
         m_animator = GetComponentInChildren<Animator>();
         m_currentHealth = m_maxHealth;
         m_vulnerability = 1.0f;
-        m_reviveTimer = 5f;
+        m_currentReviveTimer = m_reviveTimer;
         m_controllerOn = true;
         m_bActive = false;
         m_reviveColliderRadius.enabled = false;
@@ -150,14 +152,14 @@ public abstract class BaseCharacter : MonoBehaviour
     /// </summary>
     protected virtual void Update() {
 
-        if (XCI.GetButton(XboxButton.B))
+        if (XCI.GetButton(XboxButton.B, controller))
         {
             ReviveTeammates();
         }
         else
         {
+            m_currentReviveTimer = m_reviveTimer;
             IsBeingRevived = false;
-            m_reviveTimer = 5f;
         }
 
         // Makes sure health doesnt exceed limit.
@@ -252,18 +254,17 @@ public abstract class BaseCharacter : MonoBehaviour
             float sqrDistance = (player.transform.position - transform.position).sqrMagnitude;
             if (sqrDistance > m_reviveRadius * m_reviveRadius) { continue; }
             
-            player.IsBeingRevived = true;
-            //m_downedRing.GetComponent<ParticleSystem>().main.startColor = new Color(0, 1, 0, 1);
-            
             // check if player doesn't need to be revived
             if (player.playerState != PlayerState.REVIVE) { continue; }
+            
+            player.IsBeingRevived = true;
 
             // Start the revive timer.
-            player.m_reviveTimer -= Time.deltaTime;
+            player.m_currentReviveTimer -= Time.deltaTime;
 
             // TODO: Start revive particle effect.
             // If the revive timer hits 0.
-            if (player.m_reviveTimer <= 0)
+            if (player.m_currentReviveTimer <= 0)
             {
                 // Player revived.
                 player.m_isRevived = true;
@@ -279,7 +280,7 @@ public abstract class BaseCharacter : MonoBehaviour
                 player.m_currentHealth = m_healthUponRevive;
                 // TODO: Stop revive particle effect.
                 // Reset timer.
-                player.m_reviveTimer = 5f;
+                player.m_currentReviveTimer = m_reviveTimer;
                 player.m_deathTimer = 20f;
                 m_playerCollider.enabled = true;
             }

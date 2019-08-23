@@ -117,13 +117,9 @@ public class Nashorn : BaseCharacter
 
     protected override void Update()
     {
-        // Empty Check
-        if (this.gameObject != null)
-        {
-            // Allows Nashorn to perform Melee Punches 
-            Punch();
-            base.Update();
-        }
+        // Allows Nashorn to perform Melee Punches 
+        base.Update();
+        Punch();
     }
 
     public void UnlockSkill()

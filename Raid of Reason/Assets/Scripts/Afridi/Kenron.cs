@@ -160,15 +160,11 @@ public class Kenron : BaseCharacter {
 
     protected override void Update()
     {
-        // Empty Check
-        if (this.gameObject != null)
-        {
-            // Updates Player Movement
-            base.Update();
+        // Updates Player Movement
+        base.Update();
 
-            // Uses his Dash
-            DashAttack();
-        }
+        // Uses his Dash
+        DashAttack();
     }
 
     /// <summary>

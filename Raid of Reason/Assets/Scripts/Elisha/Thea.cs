@@ -130,13 +130,8 @@ public class Thea : BaseCharacter
 
     protected override void Update()
     {
-        // Empty Check
-        if (this.gameObject != null)
-        {
-        
-            base.Update();
-            SkillChecker();
-        }
+        base.Update();
+        SkillChecker();
     }
 
     protected override void CharacterMovement()

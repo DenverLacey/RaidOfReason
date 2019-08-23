@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class SkillUpgrade : MonoBehaviour
 {
-    protected List<SkillsAbilities> m_characterSkills = new List<SkillsAbilities>();
+    public List<SkillsAbilities> m_characterSkills = new List<SkillsAbilities>();
     public ObjectiveManager objective;
-    protected BaseCharacter m_Player;
+    public BaseCharacter m_Player;
+
+    private void Update()
+    {
+        EnableSkill();
+    }
 
     void EnableSkill()
     {
@@ -14,7 +19,7 @@ public class SkillUpgrade : MonoBehaviour
         {
             if (objective.tempCleared == true)
             {
-                if (m_Player.m_skillUpgrades.Count < 0)
+                if (m_Player.m_skillUpgrades.Count == 0)
                 {
                     m_Player.m_skillUpgrades.Add(m_characterSkills[0]);
                 }
@@ -30,7 +35,6 @@ public class SkillUpgrade : MonoBehaviour
                 {
                     m_Player.m_skillUpgrades.Add(m_characterSkills[3]);
                 }
-                objective.tempCleared = false;
             }
         }
     }
