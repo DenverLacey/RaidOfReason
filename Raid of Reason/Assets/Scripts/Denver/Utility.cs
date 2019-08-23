@@ -25,4 +25,9 @@ public static class Utility
 	{
 		return ~LayerMask.GetMask(layers);
 	}
+
+	public static bool TagIsPlayerTag(string tag)
+	{
+		return tag == "Kenron" || tag == "Thea" || tag == "Nashorn";
+	}
 }
