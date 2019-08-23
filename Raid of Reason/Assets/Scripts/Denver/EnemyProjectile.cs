@@ -67,15 +67,20 @@ public class EnemyProjectile : MonoBehaviour
     /// </param>
     void OnTriggerEnter(Collider other) 
     {
-        if (other.tag == "Kenron" || other.tag == "Thea" || other.tag == "Nashorn") 
+		// if hit player
+        if (Utility.TagIsPlayerTag(other.tag)) 
         {
             BaseCharacter player = other.GetComponent<BaseCharacter>();
             player.TakeDamage(m_damage);
-            if (other.tag == "Nashorn")
-                m_parent.isAttackingNashorn = true;          
+
+			if (other.tag == "Nashorn")
+			{
+				m_parent.isAttackingNashorn = true;
+			}
         }
         
-		if (other.tag != "EnemyManager")
+		// if hit some object
+		if (other.tag == "Untagged")
 		{
 			Destroy(gameObject);
 		}
