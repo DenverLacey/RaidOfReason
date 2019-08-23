@@ -14,20 +14,25 @@ public class KOTHObjective : BaseObjective
     [Tooltip("Duration of The Objective")]
     public float timer;
 
+    private float currentTimer;
+
     [Tooltip("Centre of area")]
     public Vector3 centre;
 
     [Tooltip("Radius of area")]
     public float radius;
 
-    public override void Awake() { }
+    public override void Awake()
+    {
+        currentTimer = timer;
+    }
 
     public override void Update()
     {
         Collider[] hitPlayers = Physics.OverlapSphere(centre, radius, LayerMask.GetMask("Player"));
         if (hitPlayers.Length >= 3)
         {
-            timer -= Time.deltaTime;
+            currentTimer -= Time.deltaTime;
         }
         IsDone();
     }
@@ -36,6 +41,6 @@ public class KOTHObjective : BaseObjective
 
     public override bool IsDone()
     {
-        return timer <= 0f;
+        return currentTimer <= 0f;
     }
 }

@@ -11,22 +11,21 @@ public class SkillUpgrade : MonoBehaviour
     [SerializeField]
     private BaseCharacter m_Player;
 
-    private void Start()
-    {
-        GetSkill();
-    }
-
     private void Awake()
     {
         TurnOffSkillIcon();
         toReset = true;
     }
 
+    private void Update()
+    {
+        GetSkill();
+    }
+
     public void GetSkill()
     {
         if (skill.CheckSkill(m_Player, objective, toReset))
         {
-            toReset = false;
             TurnOnSkillIcon();
         }
     }
@@ -42,15 +41,5 @@ public class SkillUpgrade : MonoBehaviour
     {
         this.transform.Find("IconParent").Find("Available").gameObject.SetActive(true);
         this.transform.Find("IconParent").Find("Disabled").gameObject.SetActive(true);
-    }
-
-    public void UnlockSkills(SkillsAbilities Skills)
-    {
-        if (Skills)
-        {
-
-
-
-        }
     }
 }

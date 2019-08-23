@@ -9,6 +9,8 @@ public class SkillsAbilities : ScriptableObject
     public string Name;
     public string Description;
     public Sprite Icon;
+    
+    public int upgradeIndex = 0;
 
 
     public bool CheckSkill(BaseCharacter character, ObjectiveManager objective, bool gameCleared)
@@ -17,7 +19,25 @@ public class SkillsAbilities : ScriptableObject
         {
             if (gameCleared)
             {
-                character.m_skillUpgrades.Add(this);
+                switch (upgradeIndex)
+                {
+                    case 0:
+                        character.m_skillUpgrades.Add(this);
+                        upgradeIndex++;
+                        break;
+                    case 1:
+                        character.m_skillUpgrades.Add(this);
+                        upgradeIndex++;
+                        break;
+                    case 2:
+                        character.m_skillUpgrades.Add(this);
+                        upgradeIndex++;
+                        break;
+                    case 3:
+                        character.m_skillUpgrades.Add(this);
+                        upgradeIndex++;
+                        break;
+                }
             }
         }
         return false;
