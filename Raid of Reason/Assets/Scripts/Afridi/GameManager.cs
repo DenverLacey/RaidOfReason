@@ -48,7 +48,13 @@ public class GameManager : MonoBehaviour
 		Players = new List<BaseCharacter>();
 	}
 
-	public void GiveCharacterReference<T>(T character) where T : BaseCharacter
+	/// <summary>
+	/// Lets characters give a reference to themselves to the GameManager
+	/// </summary>
+	/// <param name="character">
+	/// The character that is giving the GameManager a reference to itself
+	/// </param>
+	public void GiveCharacterReference(BaseCharacter character)
 	{
 		if (character is Kenron)
 		{
@@ -58,6 +64,10 @@ public class GameManager : MonoBehaviour
 			if (m_controllers[0] != XboxController.Any)
 			{
 				Kenron.controller = m_controllers[0];
+			}
+			else
+			{
+				Destroy(character);
 			}
 		}
 		else if (character is Nashorn)
@@ -69,6 +79,10 @@ public class GameManager : MonoBehaviour
 			{
 				Nashorn.controller = m_controllers[1];
 			}
+			else
+			{
+				Destroy(character);
+			}
 		}
 		else if (character is Thea)
 		{
@@ -79,10 +93,23 @@ public class GameManager : MonoBehaviour
 			{
 				Thea.controller = m_controllers[2];
 			}
+			else
+			{
+				Destroy(character);
+			}
 		}
 	}
 
-	public void AddController(Character character, XboxController controller)
+	/// <summary>
+	/// Assigns a controller to a character
+	/// </summary>
+	/// <param name="character">
+	/// Character that controller will control
+	/// </param>
+	/// <param name="controller">
+	/// Controller that will control character
+	/// </param>
+	public void SetCharacterController(Character character, XboxController controller)
 	{
 		m_controllers[(int)character] = controller;
 	}

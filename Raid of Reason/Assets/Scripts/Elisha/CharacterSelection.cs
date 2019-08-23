@@ -181,7 +181,7 @@ public class CharacterSelection : MonoBehaviour
 	{
 		foreach (var pair in m_characterToControllerMap)
 		{
-			GameManager.Instance.AddController(pair.Key, pair.Value);
+			GameManager.Instance.SetCharacterController(pair.Key, pair.Value);
 		}
 
 		// load next scene
