@@ -86,7 +86,7 @@ public class Thea : BaseCharacter
     private float m_particleRadius;
     public bool nashornBuffGiven = false;
 
-    ParticleSystem.ShapeModule aoe;
+    private ParticleSystem.ShapeModule m_AOEShapeModule;
 
 	private void Start()
 	{
@@ -105,10 +105,9 @@ public class Thea : BaseCharacter
         m_nashorn = FindObjectOfType<Nashorn>();
 		m_kenron = FindObjectOfType<Kenron>();
         m_AOETimer = 0f;
-        m_AOEParticleCollider.transform.position = this.gameObject.transform.position;
-        m_AOEParticle.transform.position = this.gameObject.transform.position;
+        m_AOEParticle.gameObject.SetActive(false);
         m_AOEParticleCollider.enabled = false;
-        aoe = m_AOEParticle.shape;
+        m_AOEShapeModule = m_AOEParticle.shape;
         foreach (Image display in m_skillPopups)
         {
             display.enabled = false;
@@ -321,9 +320,8 @@ public class Thea : BaseCharacter
             // Disable player movement and rotation.
             m_controllerOn = false;
 
-			// turn AOE effect on
-			m_AOEParticle.gameObject.SetActive(true);
-			//m_AOEParticle.transform.position = transform.position;
+            // turn AOE effect on
+            m_AOEParticle.gameObject.SetActive(true);
 			
 			// Grow AOE radius.
             m_AOERadius = Mathf.Lerp(m_AOERadius, m_AOEMax, m_AOETimer / m_AOEGrowTime);
@@ -333,7 +331,7 @@ public class Thea : BaseCharacter
             Debug.Log("Collider radius: " + m_AOEParticleCollider.radius + "Float radius: " + m_AOERadius);
 
             // Temporary way of doing the particles.
-            aoe.radius = m_AOEParticleCollider.radius;
+            m_AOEShapeModule.radius = m_AOEParticleCollider.radius;
             m_skillActive = true;
         }
 
@@ -377,32 +375,49 @@ public class Thea : BaseCharacter
     /// </summary>
     public void GiveHealth()
     {
-        // Calculates the magnitude.
-        float sqrDistanceNash = (m_nashorn.transform.position - this.transform.position).sqrMagnitude;
-        // Calculates the magnitude.
-        float sqrDistanceKen = (m_kenron.transform.position - this.transform.position).sqrMagnitude;
+        //// Calculates the magnitude.
+        //float sqrDistanceNash = (m_nashorn.transform.position - this.transform.position).sqrMagnitude;
+        //// Calculates the magnitude.
+        //float sqrDistanceKen = (m_kenron.transform.position - this.transform.position).sqrMagnitude;
 
-        // Checks if Nashorn is in correct distance of the AOE to heal.
-        if (sqrDistanceNash <= m_AOERadius * m_AOERadius && GameManager.Instance.Nashorn.m_controllerOn)
-        {
-            m_nashorn.SetHealth(m_nashorn.m_currentHealth + m_AOETimer * m_GOPEffect);
+        //// Checks if Nashorn is in correct distance of the AOE to heal.
+        //if (sqrDistanceNash <= m_AOERadius * m_AOERadius && GameManager.Instance.Nashorn.m_controllerOn)
+        //{
+        //    m_nashorn.SetHealth(m_nashorn.m_currentHealth + m_AOETimer * m_GOPEffect);
   
-            if (m_nashorn != null)
-            {
-                m_temp = Instantiate(m_waterPrefab, m_nashorn.transform.position + Vector3.down * (m_nashorn.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), m_nashorn.transform);
-            }
-            Destroy(m_temp, 2f);
-        }
+        //    if (m_nashorn != null)
+        //    {
+        //        m_temp = Instantiate(m_waterPrefab, m_nashorn.transform.position + Vector3.down * (m_nashorn.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), m_nashorn.transform);
+        //    }
+        //    Destroy(m_temp, 2f);
+        //}
 
-        // Checks if Kenron is in correct distance of the AOE to heal.
-        if (sqrDistanceKen <= m_AOERadius * m_AOERadius && GameManager.Instance.Kenron.m_controllerOn)
+        //// Checks if Kenron is in correct distance of the AOE to heal.
+        //if (sqrDistanceKen <= m_AOERadius * m_AOERadius && GameManager.Instance.Kenron.m_controllerOn)
+        //{
+        //    m_kenron.SetHealth(m_kenron.m_currentHealth +  m_AOETimer * m_GOPEffect);
+        //    if (m_kenron != null)
+        //    {
+        //        m_temp = Instantiate(m_waterPrefab, m_kenron.transform.position + Vector3.down * (m_kenron.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), m_kenron.transform);
+        //    }
+        //    Destroy(m_temp, 2f);
+        //}
+
+        foreach (BaseCharacter player in GameManager.Instance.Players)
         {
-            m_kenron.SetHealth(m_kenron.m_currentHealth +  m_AOETimer * m_GOPEffect);
-            if (m_kenron != null)
+            if (!player || player == this)
             {
-                m_temp = Instantiate(m_waterPrefab, m_kenron.transform.position + Vector3.down * (m_kenron.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), m_kenron.transform);
+                continue;
             }
-            Destroy(m_temp, 2f);
+
+            float sqrDistance = (player.transform.position - transform.position).sqrMagnitude;
+
+            // check if inside radius
+            if (sqrDistance <= m_AOERadius * m_AOERadius && player.m_controllerOn)
+            {
+                player.m_currentHealth += m_AOETimer * m_GOPEffect;
+
+            }
         }
 
         // Heal Thea.
@@ -428,10 +443,10 @@ public class Thea : BaseCharacter
         m_AOERadius = m_AOEMin;
         m_AOEParticleCollider.enabled = false;
         m_controllerOn = true;
-        aoe.radius = 1;
+        m_AOEShapeModule.radius = 1;
 
-		// turn AOE effect off
-		m_AOEParticle.gameObject.SetActive(false);
+        // turn AOE effect off
+        m_AOEParticle.gameObject.SetActive(false);
 	}
 
     private IEnumerator HealthOverTime() {
