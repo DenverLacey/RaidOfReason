@@ -1,16 +1,18 @@
-﻿using System;
+﻿/*
+ * Author: Denver
+ * Description: This Script manages the game loop. Controlling the Enemy Spawn rates at thier 
+ * specified spawn points. By clearing rooms the players gain points
+ */
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using XboxCtrlrInput;
 
-/*
-  * Author: Afridi Rahim
-  *  
-  * Summary:
-  * This Script manages the game loop. Controlling the Enemy Spawn rates at thier 
-  * specified spawn points. By clearing rooms the players gain points
-*/
+/// <summary>
+/// Manages everythings that needs to be carried across scenes
+/// </summary>
 public class GameManager : MonoBehaviour
 {
 	private GameManager()
