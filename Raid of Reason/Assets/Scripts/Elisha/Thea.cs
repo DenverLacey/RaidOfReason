@@ -105,7 +105,6 @@ public class Thea : BaseCharacter
         m_nashorn = FindObjectOfType<Nashorn>();
 		m_kenron = FindObjectOfType<Kenron>();
         m_AOETimer = 0f;
-        m_AOEParticle = FindObjectOfType<ParticleSystem>();
         m_AOEParticleCollider.transform.position = this.gameObject.transform.position;
         m_AOEParticle.transform.position = this.gameObject.transform.position;
         m_AOEParticleCollider.enabled = false;
