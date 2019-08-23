@@ -27,9 +27,6 @@ public abstract class BaseCharacter : MonoBehaviour
 
     [SerializeField]
     private ParticleSystem m_downedRing;
-    [SerializeField]
-    private ParticleSystem m_reviveRing;
-
     protected Rigidbody m_rigidbody;
 
     [SerializeField]
@@ -285,7 +282,6 @@ public abstract class BaseCharacter : MonoBehaviour
                 player.m_reviveTimer = 5f;
                 player.m_deathTimer = 20f;
                 m_playerCollider.enabled = true;
-                player.m_reviveRing.GetComponent<ParticleSystem>().Stop();
             }
             
             if(player.m_deathTimer <= 0)
