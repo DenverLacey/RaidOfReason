@@ -80,7 +80,7 @@ public class EnemyProjectile : MonoBehaviour
         }
         
 		// if hit some object
-		if (other.tag == "Untagged")
+		if (other.tag != "EnemyManager" || other.tag != "Enemy")
 		{
 			Destroy(gameObject);
 		}
