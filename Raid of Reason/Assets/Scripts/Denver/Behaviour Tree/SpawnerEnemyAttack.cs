@@ -1,10 +1,25 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Denver
+ * Description: Behaviour Tree Scriptable Object for Spawner Enemy Type
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Behaviour.Result;
 
+
 public class SpawnerEnemyAttack : Behaviour
 {
+	/// <summary>
+	/// Performs attack behaviour on spawner enemy agent
+	/// </summary>
+	/// <param name="agent">
+	/// Agent to perform behaviour on
+	/// </param>
+	/// <returns>
+	/// If attack was successfully exectuted
+	/// </returns>
 	public override Result Execute(EnemyData agent)
 	{
 		// rotate to face player

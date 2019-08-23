@@ -1,8 +1,16 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Denver
+ * Description:	GetIntoPosition Behaviour class
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Behaviour.Result;
 
+/// <summary>
+/// Sets Enemy's destination to mid point of their attack range
+/// </summary>
 public class GetIntoPosition : Behaviour
 {
 	/// <summary>

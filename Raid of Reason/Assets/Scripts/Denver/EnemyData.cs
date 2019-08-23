@@ -172,10 +172,13 @@ public class EnemyData : MonoBehaviour
 
 		if (Health <= 0)
 		{
-			OnDeath();
+			Die();
 		}
 	}
 
+	/// <summary>
+	/// Changes enemy's renderer's material colour to red for .2 seconds
+	/// </summary>
 	public void IndicateHit()
 	{
 		Renderer.material.color = Color.red;
@@ -189,13 +192,16 @@ public class EnemyData : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Destroys the enemy's GameObject
+	/// Performs all functionality involved with an enemy death
 	/// </summary>
-	public void OnDeath()
+	public void Die()
 	{
 		Destroy(gameObject);
 	}
 
+	/// <summary>
+	/// Performs pathfinding for enemy
+	/// </summary>
 	private void Update()
 	{
 		if (m_path.corners.Length == 0)
@@ -224,7 +230,7 @@ public class EnemyData : MonoBehaviour
 			Rigidbody.MovePosition(transform.position + movementVector * m_speed * Time.deltaTime);
 
 			// if reached current corner, move to next
-			if (AtCorner(m_path.corners[m_currentCorner])) 
+			if (AtPosition(m_path.corners[m_currentCorner])) 
 			{
 				m_currentCorner++;
 			}
@@ -238,11 +244,18 @@ public class EnemyData : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Sets a new destination for enemy to path to.  If new destination
+	/// is close to where enemy already is no pathfinding will occur
+	/// </summary>
+	/// <param name="destination">
+	/// New destination
+	/// </param>
 	public void SetDestination(Vector3 destination)
 	{
 		destination.y = 0f;
 
-		if (!AtCorner(destination))
+		if (!AtPosition(destination))
 		{
 			m_pathing = true;
 			NavMesh.CalculatePath(transform.position, destination, NavMesh.AllAreas, m_path);
@@ -254,6 +267,9 @@ public class EnemyData : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Stops Enemy from following path. Also deletes current path
+	/// </summary>
 	public void StopPathing()
 	{
 		NavMesh.CalculatePath(transform.position, transform.position, NavMesh.AllAreas, m_path);
@@ -261,6 +277,12 @@ public class EnemyData : MonoBehaviour
 		m_pathing = false;
 	}
 
+	/// <summary>
+	/// Gets Destination of the enemy
+	/// </summary>
+	/// <returns>
+	/// The last position of the enemy's current path
+	/// </returns>
 	public Vector3 GetDestination()
 	{
 		if (m_path.corners.Length == 0)
@@ -275,13 +297,28 @@ public class EnemyData : MonoBehaviour
 		}
 	}
 
-	private bool AtCorner(Vector3 corner)
+	/// <summary>
+	/// Determines if enemy is close to a position
+	/// </summary>
+	/// <param name="position">
+	/// Position the enemy might be close to
+	/// </param>
+	/// <returns>
+	/// If enemy is close to given position
+	/// </returns>
+	private bool AtPosition(Vector3 position)
 	{
-		Vector3 difference = corner - transform.position;
+		Vector3 difference = position - transform.position;
 		float sqrDistancX = difference.sqrMagnitude - difference.y * difference.y;
 		return sqrDistancX <= 0.2f;
 	}
 
+	/// <summary>
+	/// Executes enemy's pending behaviour
+	/// </summary>
+	/// <returns>
+	/// The result of the behaviour
+	/// </returns>
 	public Behaviour.Result ExecutePendingBehaviour()
 	{
 		return PendingBehaviour.Execute(this);

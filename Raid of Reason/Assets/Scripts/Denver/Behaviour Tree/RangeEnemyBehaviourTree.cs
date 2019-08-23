@@ -17,7 +17,7 @@ public class RangeEnemyBehaviourTree : BehaviourTree
     private Selector m_behaviourTree = new Selector();
 
     /// <summary>
-	/// Builds Behaviour Tree
+	/// Builds Range Type Enemy Behaviour Tree
 	/// </summary>
     RangeEnemyBehaviourTree() 
     {

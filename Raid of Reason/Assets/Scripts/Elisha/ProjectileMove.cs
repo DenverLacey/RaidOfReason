@@ -57,16 +57,12 @@ public class ProjectileMove : MonoBehaviour {
     /// <param name="other"></param>
     public void OnCollisionEnter(Collision other)
 	{
-        string tag = other.gameObject.tag;
-        // If the projectile hits an object with the tag 'Enemy'.
-        if (tag == "Enemy")
+        if (other.gameObject.tag == "Enemy")
         {
-            // Create non member variable that holds all data to do with the enemy.
             EnemyData enemy = other.gameObject.GetComponent<EnemyData>();
-            // If True
+           
             if (enemy)
             {
-                // Enemy takes damage.
                 enemy.TakeDamage(m_damage);
                 
                 //NASHORN ABILITY
@@ -95,33 +91,14 @@ public class ProjectileMove : MonoBehaviour {
             }
 
         }
-        else // If above statment is false and players are in the alive state.
+        else if (Utility.TagIsPlayerTag(other.gameObject.tag))
         {
-            // Check if the projectile hit ally game objects.
-            switch (other.gameObject.tag)
-            {
-                case "Kenron":
-                    Kenron m_kenron = other.gameObject.GetComponent<Kenron>();
-                    if(m_kenron.playerState == BaseCharacter.PlayerState.ALIVE)
-                    {
-                        // Heals Kenrons' current health.
-                        m_kenron.m_currentHealth += m_healAmount;
-                    }
-                    break;
+			BaseCharacter hitPlayer = other.gameObject.GetComponent<BaseCharacter>();
 
-                case "Nashorn":
-                    Nashorn m_nashorn = other.gameObject.GetComponent<Nashorn>();
-                    if (m_nashorn.playerState == BaseCharacter.PlayerState.ALIVE)
-                    {
-                        // Heals Nashorns' current health.
-                        m_nashorn.m_currentHealth += m_healAmount;
-                    }
-                    break;
-
-                default:
-                    Debug.Log("Health not given");
-                    break;
-            }
+			if (hitPlayer.playerState == BaseCharacter.PlayerState.ALIVE)
+			{
+				hitPlayer.m_currentHealth += m_healAmount;
+			}
         }
         // Destroy projectile.
 		Destroy(gameObject);

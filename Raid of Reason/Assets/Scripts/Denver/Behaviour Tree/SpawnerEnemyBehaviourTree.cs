@@ -1,13 +1,24 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Denver
+ * Description:	Spawner enemy's scriptable behaviour tree object
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 
+/// </summary>
 [CreateAssetMenu(fileName = "Spawner Enemy Behaviour Tree", menuName = "Behaviour Trees/Behaviour Tree - Spawner")]
 public class SpawnerEnemyBehaviourTree : BehaviourTree
 {
 	private Selector m_behaviourTree = new Selector();
 
-    SpawnerEnemyBehaviourTree() 
+	/// <summary>
+	/// Builds Spawner Type Enemy Behaviour Tree
+	/// </summary>
+	SpawnerEnemyBehaviourTree() 
     {
 		// create components for behaviour tree
 		StunnedCondition stunned = new StunnedCondition();

@@ -39,13 +39,15 @@ public class SuicideEnemyAttack : Behaviour
 				if (sqrDistance <= agent.AttackRange.max * agent.AttackRange.max)
 				{
 					p.TakeDamage(agent.AttackDamage);
-                    if (p.tag == "Nashorn")
-                        agent.isAttackingNashorn = true;                     
+					if (p.tag == "Nashorn")
+					{
+						agent.isAttackingNashorn = true;
+					}
 				}
 			}
 
 			GameObject.Instantiate(agent.AttackPrefabs[0], agent.transform.position, Quaternion.identity);
-			agent.OnDeath();
+			agent.Die();
 		}
 
 		return PENDING_MONO;

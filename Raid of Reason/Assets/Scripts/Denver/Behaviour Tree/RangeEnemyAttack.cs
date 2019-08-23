@@ -1,4 +1,9 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Denver
+ * Description:	Attack behaviour for the range type enemy
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Behaviour.Result;

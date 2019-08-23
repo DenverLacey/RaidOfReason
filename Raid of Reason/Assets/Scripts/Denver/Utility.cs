@@ -26,6 +26,15 @@ public static class Utility
 		return ~LayerMask.GetMask(layers);
 	}
 
+	/// <summary>
+	/// Determines if a given tag is one of the player tags
+	/// </summary>
+	/// <param name="tag">
+	/// possible player tag
+	/// </param>
+	/// <returns>
+	/// if the given tag is a player tag
+	/// </returns>
 	public static bool TagIsPlayerTag(string tag)
 	{
 		return tag == "Kenron" || tag == "Thea" || tag == "Nashorn";

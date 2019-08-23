@@ -1,6 +1,6 @@
 ﻿/*
  * Author: Denver
- * Description:	SetDestination class that changes an enemy's NavMeshAgent destination
+ * Description:	SetDestination behaviour class
  */
 
 using System.Collections;
@@ -9,7 +9,7 @@ using UnityEngine;
 using static Behaviour.Result;
 
 /// <summary>
-/// Sets enemy's NavMeshAgent destination to its target
+/// Sets enemy's path destination to the enemy's target
 /// </summary>
 public class SetDestination : Behaviour
 {
