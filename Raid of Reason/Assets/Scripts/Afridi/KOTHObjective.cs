@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /*
  * Author: Afridi Rahim
@@ -22,9 +23,17 @@ public class KOTHObjective : BaseObjective
     [Tooltip("Radius of area")]
     public float radius;
 
+    [HideInInspector]
+    public Text timerDisplay;
+
     public override void Awake()
     {
         currentTimer = timer;
+    }
+
+    public override float Timer()
+    {
+        return currentTimer;
     }
 
     public override void Update()

@@ -18,7 +18,7 @@ public class CountdownObjective : BaseObjective
     private int amount;
 
     // Current Timer
-    private float timer;
+    private float currentTimer;
 
     // Array to hold the number of enemies in game
     private List<EnemyData> m_enemies = new List<EnemyData>();
@@ -28,7 +28,7 @@ public class CountdownObjective : BaseObjective
         // Finds all gameobjects within the scene
         Reset();
         m_enemies.AddRange(FindObjectsOfType<EnemyData>());
-        timer = maxtimer;
+        currentTimer = maxtimer;
         amount = m_enemies.Count;
     }
 
@@ -38,13 +38,18 @@ public class CountdownObjective : BaseObjective
         amount = 0;
     }
 
+    public override float Timer()
+    {
+        return currentTimer;
+    }
+
     public override void Update()
     {
         // Timer starts going down
-        timer -= Time.deltaTime;
+        currentTimer -= Time.deltaTime;
 
         // If the timer is greater than 0
-        if (timer > 0)
+        if (currentTimer > 0)
         {
             // For each enemy in the array
             foreach (EnemyData data in m_enemies)
@@ -66,6 +71,6 @@ public class CountdownObjective : BaseObjective
 
     public override bool HasFailed()
     {
-        return timer <= 0;
+        return currentTimer <= 0;
     }
 }

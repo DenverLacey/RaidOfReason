@@ -8,4 +8,5 @@ public abstract class BaseObjective : ScriptableObject
     public abstract void Update();
     public abstract bool IsDone();
     public abstract bool HasFailed();
+    public abstract float Timer();
 }
