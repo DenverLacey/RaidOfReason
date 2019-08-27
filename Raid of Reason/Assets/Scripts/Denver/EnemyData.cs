@@ -232,7 +232,11 @@ public class EnemyData : MonoBehaviour
 
 			// calculate movement vector
 			Vector3 movementVector = (currentTarget - transform.position).normalized;
-			Rigidbody.MovePosition(transform.position + movementVector * m_speed * Time.deltaTime);
+
+			// calculate desiredPosition
+			Vector3 desiredPosition = transform.position + movementVector * m_speed * Time.deltaTime;
+			desiredPosition.y = m_yLevel;
+			Rigidbody.MovePosition(desiredPosition);
 
 			// if reached current corner, move to next
 			if (AtPosition(m_path.corners[m_currentCorner])) 
@@ -247,13 +251,6 @@ public class EnemyData : MonoBehaviour
 				transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, m_steeringSpeed * Time.deltaTime);
 			}
 		}
-
-		// lock enemy's y level
-		transform.position = new Vector3(
-			transform.position.x,
-			m_yLevel,
-			transform.position.z
-		);
 	}
 
 	/// <summary>
