@@ -99,6 +99,7 @@ public class Thea : BaseCharacter
 	protected override void Awake()
     {
         base.Awake();
+        m_waterPrefab.GetComponentInChildren<ParticleSystem>();
         m_isActive = false;
         neverDone = true;
         m_isHealthRegen = false;
@@ -108,6 +109,7 @@ public class Thea : BaseCharacter
         m_AOEParticle.gameObject.SetActive(false);
         m_AOEParticleCollider.enabled = false;
         m_AOEShapeModule = m_AOEParticle.shape;
+        m_waterPrefab.SetActive(false);
         foreach (Image display in m_skillPopups)
         {
             display.enabled = false;
@@ -208,7 +210,7 @@ public class Thea : BaseCharacter
         m_counter += Time.deltaTime;
 
         // If the player presses the right trigger button.
-        if (XCI.GetAxis(XboxAxis.RightTrigger, this.controller) > 0.1)
+        if (m_controllerOn && XCI.GetAxis(XboxAxis.RightTrigger, this.controller) > 0.1)
         {
             m_skillPopups[0].enabled = true;
             // FindObjectOfType<AudioManager>().PlaySound("TheaProjectile");
@@ -226,7 +228,7 @@ public class Thea : BaseCharacter
             }
         }
         // If player releases the right trigger button.
-        else if (XCI.GetAxis(XboxAxis.RightTrigger, this.controller) < 0.1)
+        else if ( m_controllerOn && XCI.GetAxis(XboxAxis.RightTrigger, this.controller) < 0.1)
         {
             // Reset the counter.
             m_shotCounter = 0f;
@@ -411,13 +413,14 @@ public class Thea : BaseCharacter
             if (sqrDistance <= m_AOERadius * m_AOERadius && player.m_controllerOn)
             {
                 player.m_currentHealth += m_AOETimer * m_GOPEffect;
-
+                //m_waterPrefab.transform.position = player.transform.position;
             }
         }
 
         // Heal Thea.
         SetHealth(m_currentHealth + m_AOETimer * m_GOPEffect);
-        
+        m_waterPrefab.SetActive(true);
+
 
         if (m_skillActive = true & m_skillUpgrades.Find(skill => skill.name == "Serenade Of Water"))
         {

@@ -114,6 +114,8 @@ public class Kenron : BaseCharacter {
 	{
 		GameManager.Instance.GiveCharacterReference(this);
 		m_collider = GetComponent<CapsuleCollider>();
+        m_swordParticle.GetComponentInChildren<ParticleSystem>();
+        m_swordParticle.SetActive(false);
 	}
 
 	protected override void Awake () {
@@ -180,6 +182,7 @@ public class Kenron : BaseCharacter {
                 // Sets the Skill to be Active
                 isActive = true;
                 isBurning = true;
+                m_swordParticle.SetActive(true);
 
                 // Instantiates a Particle at the Sword
                 GameObject temp = Instantiate(m_swordParticle, Amaterasu.transform.position + Vector3.zero * 0.5f, Quaternion.Euler(-90, 0, 0), Amaterasu.transform);
@@ -195,6 +198,7 @@ public class Kenron : BaseCharacter {
                 Destroy(part, skillManager.m_mainSkills[0].m_currentDuration);
             }
         }
+        m_swordParticle.SetActive(false);
     }
 
     /// <summary>
@@ -388,6 +392,7 @@ public class Kenron : BaseCharacter {
                 SetSpeed(15.0f);
                 isActive = false;
                 isBurning = true;
+                //m_swordParticle.SetActive(false);
             }
         }
     }

@@ -76,6 +76,8 @@ public class Nashorn : BaseCharacter
     // Empty Object for particle instantiating
     private GameObject particleInstantiate;
 
+    private GameObject temp;
+
     // Nearby enemies
     [SerializeField]
     public EnemyData enemies;
@@ -89,8 +91,10 @@ public class Nashorn : BaseCharacter
     {
         // Initialisation 
         base.Awake();
+        m_tauntParticle.GetComponentInChildren<ParticleSystem>();
         LeftGauntlet.enabled = false;
         RightGauntlet.enabled = false;
+        m_tauntParticle.SetActive(false);
         isTaunting = false;
         isActive = false;
         foreach (Image display in m_skillPopups)
@@ -286,15 +290,17 @@ public class Nashorn : BaseCharacter
             // Set active
             isActive = true;
 
-            //Instantiate Taunt
-            GameObject temp = Instantiate(m_tauntParticle, transform.position, transform.rotation, transform);
+            m_tauntParticle.SetActive(true);
+
+            temp = Instantiate(m_tauntParticle, transform.position, Quaternion.identity) as GameObject;
 
             // set vulnerability
             m_vulnerability = m_tauntVulnerability;
 
             // Destroy after time has passed
-            Destroy(temp, skillManager.m_mainSkills[1].m_currentDuration);
+            Destroy(temp,skillManager.m_mainSkills[1].m_currentDuration);
         }
+        m_tauntParticle.SetActive(false);
     }
 
     /// <summary>
