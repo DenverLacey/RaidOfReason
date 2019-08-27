@@ -79,8 +79,13 @@ public class EnemyData : MonoBehaviour
 	private Collider m_collider;
 	private Vector3 m_currentDestination;
 
+	// lock enemy's Y level
+	private float m_yLevel;
+
 	private void Start()
 	{
+		m_yLevel = transform.position.y;
+
 		Rigidbody = GetComponent<Rigidbody>();
         Renderer = GetComponent<MeshRenderer>();
 		m_collider = GetComponent<Collider>();
@@ -242,6 +247,13 @@ public class EnemyData : MonoBehaviour
 				transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, m_steeringSpeed * Time.deltaTime);
 			}
 		}
+
+		// lock enemy's y level
+		transform.position = new Vector3(
+			transform.position.x,
+			m_yLevel,
+			transform.position.z
+		);
 	}
 
 	/// <summary>
