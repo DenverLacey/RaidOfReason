@@ -26,7 +26,7 @@ public class SuicideEnemyAttack : Behaviour
 	{
 		agent.Attacking = true;
 
-		agent.StopPathing();
+		agent.Pathfinder.StopPathing();
 
 		agent.AttackTimer += Time.fixedDeltaTime;
 

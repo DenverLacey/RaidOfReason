@@ -14,13 +14,6 @@ public class PlayerCursor : MonoBehaviour
 
 	private Vector2 m_input;
 
-	private CharacterSelection m_characterSelection;
-
-	private void Start()
-	{
-		m_characterSelection = FindObjectOfType<CharacterSelection>();
-	}
-
 	private void Update()
 	{
 		// movement
@@ -42,9 +35,6 @@ public class PlayerCursor : MonoBehaviour
 		// deselecting character
 		if (XCI.GetButtonDown(XboxButton.B, controller))
 		{
-			m_characterSelection.DeselectCharacter(this);
 		}
 	}
-
-
 }

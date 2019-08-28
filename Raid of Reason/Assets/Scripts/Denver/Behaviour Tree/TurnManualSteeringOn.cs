@@ -24,7 +24,7 @@ public class TurnManualSteeringOn : Behaviour
 	/// </returns>
     public override Result Execute(EnemyData agent)
 	{
-		agent.ManualSteering = true;
+		agent.Pathfinder.manualSteering = true;
 		return SUCCESS;
 	}
 }

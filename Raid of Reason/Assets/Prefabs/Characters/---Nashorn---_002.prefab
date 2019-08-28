@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4931876406528177465}
   - component: {fileID: 3501403260001975918}
-  m_Layer: 9
+  m_Layer: 2
   m_Name: ReviveCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +127,6 @@ MonoBehaviour:
   playerState: 0
   m_maxHealth: 100
   m_currentHealth: 0
-  m_deathTimer: 20
   m_damage: 25
   m_movementSpeed: 10
   controller: 1
@@ -3169,6 +3168,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2024241238691055716}
     m_Modifications:
+    - target: {fileID: 19824048, guid: 810eb771809ba56409dd29eab937ddb2, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 455376, guid: 810eb771809ba56409dd29eab937ddb2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3219,10 +3222,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 173814, guid: 810eb771809ba56409dd29eab937ddb2, type: 3}
       propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 19824048, guid: 810eb771809ba56409dd29eab937ddb2, type: 3}
-      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 19874440, guid: 810eb771809ba56409dd29eab937ddb2, type: 3}
@@ -3335,14 +3334,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2024241238691055716}
     m_Modifications:
-    - target: {fileID: 1628744458893394, guid: e243632bb3aff9549abdcfcc2ef0c4f0, type: 3}
-      propertyPath: m_Name
-      value: TauntParticle
-      objectReference: {fileID: 0}
-    - target: {fileID: 1628744458893394, guid: e243632bb3aff9549abdcfcc2ef0c4f0, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4400389479008290, guid: e243632bb3aff9549abdcfcc2ef0c4f0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3386,6 +3377,14 @@ PrefabInstance:
     - target: {fileID: 4400389479008290, guid: e243632bb3aff9549abdcfcc2ef0c4f0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628744458893394, guid: e243632bb3aff9549abdcfcc2ef0c4f0, type: 3}
+      propertyPath: m_Name
+      value: TauntParticle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628744458893394, guid: e243632bb3aff9549abdcfcc2ef0c4f0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e243632bb3aff9549abdcfcc2ef0c4f0, type: 3}

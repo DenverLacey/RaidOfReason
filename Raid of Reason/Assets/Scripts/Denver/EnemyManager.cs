@@ -137,7 +137,7 @@ public class EnemyManager : MonoBehaviour
 			m_attackCooldownDict[enemy.Type],
 			m_attackDamageDict[enemy.Type],
 			m_attackPrefabDict[enemy.Type]
-           );
+		);
 
 		m_enemies.Add(enemy);
     }

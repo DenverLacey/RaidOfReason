@@ -30,6 +30,7 @@ public struct EnemyAttackRange
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(EnemyPathfinding))]
 public class EnemyData : MonoBehaviour 
 {
     [SerializeField] 
@@ -57,8 +58,6 @@ public class EnemyData : MonoBehaviour
 
 	public Behaviour PendingBehaviour { get; set; }
 
-	public bool ManualSteering { get; set; }
-
 	public Rigidbody Rigidbody { get; private set; }
 
 	public MeshRenderer Renderer { get; private set; }
@@ -71,81 +70,27 @@ public class EnemyData : MonoBehaviour
     // Afridi added this for the skill tree
     public bool isAttackingNashorn = true;
 
-	private NavMeshPath m_path;
-	private bool m_pathing;
-	private int m_currentCorner;
-	private float m_speed = 3f;
-	private float m_steeringSpeed = 10f;
 	private Collider m_collider;
-	private Vector3 m_currentDestination;
 
-	// lock enemy's Y level
-	private float m_yLevel;
+	// Pathfinding Stuff
+	public EnemyPathfinding Pathfinder { get; private set; }
 
 	private void Start()
 	{
-		m_yLevel = transform.position.y;
-
 		Rigidbody = GetComponent<Rigidbody>();
-        Renderer = GetComponent<MeshRenderer>();
 		m_collider = GetComponent<Collider>();
 
-		m_path = new NavMeshPath();
-		NavMesh.CalculatePath(transform.position, transform.position, NavMesh.AllAreas, m_path);
-
+		Pathfinder = GetComponent<EnemyPathfinding>();
+		if (!Pathfinder.Link(this))
+		{
+			Debug.LogErrorFormat("{0} could not link with {1}", Pathfinder, this);
+		}
+		
+        Renderer = GetComponent<MeshRenderer>();
         if (!Renderer)
         {
             Renderer = GetComponentInChildren<MeshRenderer>();
         }
-	}
-
-	/// <summary>
-	/// Performs pathfinding for enemy
-	/// </summary>
-	private void Update()
-	{
-		if (m_path.corners.Length == 0)
-		{
-			return;
-		}
-
-		// move to destination
-		if (!Stunned && m_pathing && m_currentCorner != m_path.corners.Length)
-		{
-			Vector3 currentTarget = m_path.corners[m_currentCorner];
-			currentTarget.y = transform.position.y;
-
-			// draw debug line that follows path
-			Vector3 currentPosition = transform.position;
-			currentPosition.y = 0.1f;
-			Debug.DrawLine(currentPosition, m_path.corners[m_currentCorner], Color.green);
-
-			for (int i = m_currentCorner + 1; i < m_path.corners.Length; i++)
-			{
-				Debug.DrawLine(m_path.corners[i - 1], m_path.corners[i], Color.green);
-			}
-
-			// calculate movement vector
-			Vector3 movementVector = (currentTarget - transform.position).normalized;
-
-			// calculate desiredPosition
-			Vector3 desiredPosition = transform.position + movementVector * m_speed * Time.deltaTime;
-			desiredPosition.y = m_yLevel;
-			Rigidbody.MovePosition(desiredPosition);
-
-			// if reached current corner, move to next
-			if (AtPosition(m_path.corners[m_currentCorner]))
-			{
-				m_currentCorner++;
-			}
-
-			// do steering
-			if (!ManualSteering)
-			{
-				Quaternion desiredRotation = Quaternion.LookRotation(movementVector);
-				transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, m_steeringSpeed * Time.deltaTime);
-			}
-		}
 	}
 
 	/// <summary>
@@ -251,81 +196,6 @@ public class EnemyData : MonoBehaviour
 	public void Die()
 	{
 		Destroy(gameObject);
-	}
-
-	/// <summary>
-	/// Sets a new destination for enemy to path to.  If new destination
-	/// is close to where enemy already is no pathfinding will occur
-	/// </summary>
-	/// <param name="destination">
-	/// New destination
-	/// </param>
-	public void SetDestination(Vector3 destination)
-	{
-		destination.y = 0f;
-
-		if (!AtPosition(destination))
-		{
-			m_pathing = true;
-			NavMesh.CalculatePath(transform.position, destination, NavMesh.AllAreas, m_path);
-			m_currentCorner = 1;
-		}
-		else
-		{
-			StopPathing();
-		}
-	}
-
-	/// <summary>
-	/// Stops Enemy from following path. Also deletes current path
-	/// </summary>
-	public void StopPathing()
-	{
-		NavMesh.CalculatePath(transform.position, transform.position, NavMesh.AllAreas, m_path);
-		m_currentCorner = 1;
-		m_pathing = false;
-	}
-
-	/// <summary>
-	/// Gets Destination of the enemy
-	/// </summary>
-	/// <returns>
-	/// The last position of the enemy's current path
-	/// </returns>
-	public Vector3 GetDestination()
-	{
-		if (m_path.corners.Length == 0)
-		{
-			return transform.position;
-		}
-		else
-		{
-			Vector3 destination = m_path.corners[m_path.corners.Length - 1];
-			destination.y = transform.position.y;
-			return destination;
-		}
-	}
-
-	/// <summary>
-	/// Determines if enemy is close to a position
-	/// </summary>
-	/// <param name="position">
-	/// Position the enemy might be close to
-	/// </param>
-	/// <returns>
-	/// If enemy is close to given position
-	/// </returns>
-	private bool AtPosition(Vector3 position)
-	{
-		Vector2 difference = new Vector2(
-			position.x - transform.position.x,
-			position.z - transform.position.z
-		);
-
-		difference.x = Mathf.Abs(difference.x);
-		difference.y = Mathf.Abs(difference.y);
-
-		return difference.magnitude < 0.01f;
 	}
 
 	/// <summary>

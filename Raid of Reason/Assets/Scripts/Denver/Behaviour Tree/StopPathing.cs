@@ -24,7 +24,7 @@ public class StopPathing : Behaviour
 	/// </returns>
 	public override Result Execute(EnemyData agent)
 	{
-		agent.StopPathing();
+		agent.Pathfinder.StopPathing();
 		return SUCCESS;
 	}
 }

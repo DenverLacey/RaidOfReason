@@ -38,7 +38,7 @@ public class SpawnerEnemyAttack : Behaviour
 			agent.Attacking = false;
 			agent.AttackTimer = 0f;
 
-			agent.SetDestination(agent.transform.position);
+			agent.Pathfinder.SetDestination(agent.transform.position);
 
 			float angle = 360f / agent.AttackDamage;
 

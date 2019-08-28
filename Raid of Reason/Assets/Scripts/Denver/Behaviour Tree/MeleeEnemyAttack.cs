@@ -33,7 +33,7 @@ public class MeleeEnemyAttack : Behaviour
 		agent.Attacking = true;
 		agent.AttackTimer += Time.deltaTime;
 
-		agent.StopPathing();
+		agent.Pathfinder.StopPathing();
 
 		if (agent.AttackTimer >= agent.AttackCooldown)
 		{

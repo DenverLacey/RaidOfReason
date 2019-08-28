@@ -199,7 +199,7 @@ public class CharacterSelection : MonoBehaviour
 		{
 			if (button.Character == character)
 			{
-				button.Unlock();
+				// button.Unlock();
 				return true;
 			}
 		}

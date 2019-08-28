@@ -30,7 +30,7 @@ public class GetIntoPosition : Behaviour
 		Vector3 destination = agent.Target + direction * avgAttackRange;
 
 		// set destination
-		agent.SetDestination(destination);
+		agent.Pathfinder.SetDestination(destination);
 
 		return SUCCESS;
 	}

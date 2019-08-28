@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerPanel : MonoBehaviour
 {
+	public PlayerCursor cursor;
 	public GameObject[] infoPanels;
 
 	private void Start()
