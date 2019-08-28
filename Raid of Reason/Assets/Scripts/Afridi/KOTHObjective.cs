@@ -47,12 +47,15 @@ public class KOTHObjective : BaseObjective
 
     public override void Update()
     {
-        Collider[] hitPlayers = Physics.OverlapSphere(centre, radius, LayerMask.GetMask("Player"));
-        if (hitPlayers.Length >= 3)
+        if (GameManager.Instance.AlivePlayers.Count != 0)
         {
-            currentTimer -= Time.deltaTime;
+            Collider[] hitPlayers = Physics.OverlapSphere(centre, radius, LayerMask.GetMask("Player"));
+            if (hitPlayers.Length >= 3)
+            {
+                currentTimer -= Time.deltaTime;
+            }
+            IsDone();
         }
-        IsDone();
     }
 
     public override bool HasFailed() { return false; }
