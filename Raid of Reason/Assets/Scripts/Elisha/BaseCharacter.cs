@@ -233,7 +233,9 @@ public abstract class BaseCharacter : MonoBehaviour
         // If player has no health.
         if (m_currentHealth <= 0.0f)
         {
-            OnDeath();
+            //OnDeath();
+            playerState = PlayerState.DEAD;
+            gameObject.SetActive(false);
         }
     } 
 
@@ -294,11 +296,11 @@ public abstract class BaseCharacter : MonoBehaviour
     /// </summary>
     protected virtual void OnDeath()
     {
-        foreach(BaseCharacter player in GameManager.Instance.Players)
-        {
-            this.gameObject.SetActive(false);
-            player.playerState = PlayerState.DEAD;
-        }
+        //foreach(BaseCharacter player in GameManager.Instance.Players)
+        //{
+        //    this.gameObject.SetActive(false);
+        //    player.playerState = PlayerState.DEAD;
+        //}
         
         //playerState = PlayerState.REVIVE;
         //m_downedRing.GetComponent<ParticleSystem>().Play();
