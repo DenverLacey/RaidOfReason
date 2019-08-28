@@ -100,6 +100,55 @@ public class EnemyData : MonoBehaviour
 	}
 
 	/// <summary>
+	/// Performs pathfinding for enemy
+	/// </summary>
+	private void Update()
+	{
+		if (m_path.corners.Length == 0)
+		{
+			return;
+		}
+
+		// move to destination
+		if (!Stunned && m_pathing && m_currentCorner != m_path.corners.Length)
+		{
+			Vector3 currentTarget = m_path.corners[m_currentCorner];
+			currentTarget.y = transform.position.y;
+
+			// draw debug line that follows path
+			Vector3 currentPosition = transform.position;
+			currentPosition.y = 0.1f;
+			Debug.DrawLine(currentPosition, m_path.corners[m_currentCorner], Color.green);
+
+			for (int i = m_currentCorner + 1; i < m_path.corners.Length; i++)
+			{
+				Debug.DrawLine(m_path.corners[i - 1], m_path.corners[i], Color.green);
+			}
+
+			// calculate movement vector
+			Vector3 movementVector = (currentTarget - transform.position).normalized;
+
+			// calculate desiredPosition
+			Vector3 desiredPosition = transform.position + movementVector * m_speed * Time.deltaTime;
+			desiredPosition.y = m_yLevel;
+			Rigidbody.MovePosition(desiredPosition);
+
+			// if reached current corner, move to next
+			if (AtPosition(m_path.corners[m_currentCorner]))
+			{
+				m_currentCorner++;
+			}
+
+			// do steering
+			if (!ManualSteering)
+			{
+				Quaternion desiredRotation = Quaternion.LookRotation(movementVector);
+				transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, m_steeringSpeed * Time.deltaTime);
+			}
+		}
+	}
+
+	/// <summary>
 	/// Initialises the enemy's values
 	/// </summary>
 	/// <param name="viewRange">
@@ -205,55 +254,6 @@ public class EnemyData : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Performs pathfinding for enemy
-	/// </summary>
-	private void Update()
-	{
-		if (m_path.corners.Length == 0)
-		{
-			return;
-		}
-
-		// move to destination
-		if (!Stunned && m_pathing && m_currentCorner != m_path.corners.Length)
-		{
-			Vector3 currentTarget = m_path.corners[m_currentCorner];
-			currentTarget.y = transform.position.y;
-
-			// draw debug line that follows path
-			Vector3 currentPosition = transform.position;
-			currentPosition.y = 0.1f;
-			Debug.DrawLine(currentPosition, m_path.corners[m_currentCorner], Color.green);
-
-			for (int i = m_currentCorner + 1; i < m_path.corners.Length; i++)
-			{
-				Debug.DrawLine(m_path.corners[i - 1], m_path.corners[i], Color.green);
-			}
-
-			// calculate movement vector
-			Vector3 movementVector = (currentTarget - transform.position).normalized;
-
-			// calculate desiredPosition
-			Vector3 desiredPosition = transform.position + movementVector * m_speed * Time.deltaTime;
-			desiredPosition.y = m_yLevel;
-			Rigidbody.MovePosition(desiredPosition);
-
-			// if reached current corner, move to next
-			if (AtPosition(m_path.corners[m_currentCorner])) 
-			{
-				m_currentCorner++;
-			}
-
-			// do steering
-			if (!ManualSteering)
-			{
-				Quaternion desiredRotation = Quaternion.LookRotation(movementVector);
-				transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, m_steeringSpeed * Time.deltaTime);
-			}
-		}
-	}
-
-	/// <summary>
 	/// Sets a new destination for enemy to path to.  If new destination
 	/// is close to where enemy already is no pathfinding will occur
 	/// </summary>
@@ -317,9 +317,15 @@ public class EnemyData : MonoBehaviour
 	/// </returns>
 	private bool AtPosition(Vector3 position)
 	{
-		Vector3 difference = position - transform.position;
-		float sqrDistancX = difference.sqrMagnitude - difference.y * difference.y;
-		return sqrDistancX <= 0.2f;
+		Vector2 difference = new Vector2(
+			position.x - transform.position.x,
+			position.z - transform.position.z
+		);
+
+		difference.x = Mathf.Abs(difference.x);
+		difference.y = Mathf.Abs(difference.y);
+
+		return difference.magnitude < 0.01f;
 	}
 
 	/// <summary>
