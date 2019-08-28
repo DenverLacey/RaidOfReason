@@ -2451,6 +2451,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: '---Trashorn---'
       objectReference: {fileID: 0}
+    - target: {fileID: 9177747288968116300, guid: d1688a9842b208a42b0186bf1175fd68,
+        type: 3}
+      propertyPath: m_skillPopups.Array.data[0]
+      value: 
+      objectReference: {fileID: 230480946}
+    - target: {fileID: 9177747288968116300, guid: d1688a9842b208a42b0186bf1175fd68,
+        type: 3}
+      propertyPath: m_skillPopups.Array.data[1]
+      value: 
+      objectReference: {fileID: 230480945}
+    - target: {fileID: 9177747288968116300, guid: d1688a9842b208a42b0186bf1175fd68,
+        type: 3}
+      propertyPath: m_skillPopups.Array.data[2]
+      value: 
+      objectReference: {fileID: 230480944}
+    - target: {fileID: 9177747288968116300, guid: d1688a9842b208a42b0186bf1175fd68,
+        type: 3}
+      propertyPath: m_skillPopups.Array.data[3]
+      value: 
+      objectReference: {fileID: 230480943}
+    - target: {fileID: 9177747288968116300, guid: d1688a9842b208a42b0186bf1175fd68,
+        type: 3}
+      propertyPath: m_skillPopups.Array.data[4]
+      value: 
+      objectReference: {fileID: 230480942}
+    - target: {fileID: 9177747288968116300, guid: d1688a9842b208a42b0186bf1175fd68,
+        type: 3}
+      propertyPath: skillManager
+      value: 
+      objectReference: {fileID: 941937224}
     - target: {fileID: 4086268057125856014, guid: d1688a9842b208a42b0186bf1175fd68,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2506,36 +2536,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9177747288968116300, guid: d1688a9842b208a42b0186bf1175fd68,
-        type: 3}
-      propertyPath: m_skillPopups.Array.data[0]
-      value: 
-      objectReference: {fileID: 230480946}
-    - target: {fileID: 9177747288968116300, guid: d1688a9842b208a42b0186bf1175fd68,
-        type: 3}
-      propertyPath: m_skillPopups.Array.data[1]
-      value: 
-      objectReference: {fileID: 230480945}
-    - target: {fileID: 9177747288968116300, guid: d1688a9842b208a42b0186bf1175fd68,
-        type: 3}
-      propertyPath: m_skillPopups.Array.data[2]
-      value: 
-      objectReference: {fileID: 230480944}
-    - target: {fileID: 9177747288968116300, guid: d1688a9842b208a42b0186bf1175fd68,
-        type: 3}
-      propertyPath: m_skillPopups.Array.data[3]
-      value: 
-      objectReference: {fileID: 230480943}
-    - target: {fileID: 9177747288968116300, guid: d1688a9842b208a42b0186bf1175fd68,
-        type: 3}
-      propertyPath: m_skillPopups.Array.data[4]
-      value: 
-      objectReference: {fileID: 230480942}
-    - target: {fileID: 9177747288968116300, guid: d1688a9842b208a42b0186bf1175fd68,
-        type: 3}
-      propertyPath: skillManager
-      value: 
-      objectReference: {fileID: 941937224}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1688a9842b208a42b0186bf1175fd68, type: 3}
 --- !u!4 &213264939 stripped
@@ -2816,6 +2816,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MainCanvas (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2401059402486077733, guid: e645cb267fcc2db478863b9dc482236b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2401059402486077737, guid: e645cb267fcc2db478863b9dc482236b,
         type: 3}
@@ -3892,7 +3897,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_objective: {fileID: 11400000, guid: 63ebab16f7d065b4cb15a61a11393d1f, type: 2}
   sceneIndex: 2
+  timeUntilSceneChange: 0
   tempCleared: 0
+  objectiveTimer: {fileID: 0}
+  objectiveDescription: {fileID: 0}
+  showTitle: {fileID: 0}
+  objectiveComplete: {fileID: 0}
+  objectiveFailed: {fileID: 0}
 --- !u!1001 &341441715
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6496,7 +6507,7 @@ PrefabInstance:
     - target: {fileID: 4146036579459445530, guid: eb668824856318b43b05cd4cfa71e33a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.07
+      value: 7.4
       objectReference: {fileID: 0}
     - target: {fileID: 4146036579459445530, guid: eb668824856318b43b05cd4cfa71e33a,
         type: 3}
@@ -6506,7 +6517,7 @@ PrefabInstance:
     - target: {fileID: 4146036579459445530, guid: eb668824856318b43b05cd4cfa71e33a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.11
+      value: -7.71
       objectReference: {fileID: 0}
     - target: {fileID: 4146036579459445530, guid: eb668824856318b43b05cd4cfa71e33a,
         type: 3}

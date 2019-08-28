@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8343399046292329857}
   - component: {fileID: 2887244627302726414}
   - component: {fileID: 759607516821861293}
-  - component: {fileID: 6225277125872562162}
+  - component: {fileID: 392530979183439257}
   m_Layer: 10
   m_Name: Melee_02
   m_TagString: Enemy
@@ -44,7 +44,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8343399046292329858}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 0a14a89fea311e341afdcdd2da0fdeb9, type: 3}
 --- !u!23 &868281683763093769
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -127,8 +127,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
---- !u!135 &6225277125872562162
-SphereCollider:
+--- !u!65 &392530979183439257
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -138,8 +138,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.66
-  m_Center: {x: -0.06, y: 0.17, z: -0.52}
+  m_Size: {x: 1.0800078, y: 1.3924301, z: 0.77602303}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &5112825073395095793
 PrefabInstance:
   m_ObjectHideFlags: 0
