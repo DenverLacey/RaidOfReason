@@ -16883,14 +16883,10 @@ MonoBehaviour:
   playerState: 0
   m_maxHealth: 100
   m_currentHealth: 0
-  m_downedRing: {fileID: 7435522757959246254}
   m_deathTimer: 20
   m_damage: 33
   m_movementSpeed: 15
   controller: 1
-  m_reviveTimer: 5
-  m_reviveRadius: 5
-  m_healthUponRevive: 25
   m_skillPopups:
   - {fileID: 0}
   - {fileID: 0}
@@ -16901,7 +16897,6 @@ MonoBehaviour:
   m_skillUpgrades: []
   m_controllerOn: 0
   m_camera: {fileID: 0}
-  m_reviveColliderRadius: {fileID: 7372013259995003284}
   swordCollider: {fileID: 0}
   childKenron: {fileID: 0}
   Amaterasu: {fileID: 9157860088018418702}
@@ -31130,11 +31125,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5877011709370991675}
     m_Modifications:
-    - target: {fileID: 4153159892060089487, guid: 8d2906bfe6894dc40bebb3b9e1fcc21d,
-        type: 3}
-      propertyPath: m_Name
-      value: CFX2_Big_Splash (No Collision)
-      objectReference: {fileID: 0}
     - target: {fileID: 4155115819597000241, guid: 8d2906bfe6894dc40bebb3b9e1fcc21d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -31205,6 +31195,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 4153159892060089487, guid: 8d2906bfe6894dc40bebb3b9e1fcc21d,
+        type: 3}
+      propertyPath: m_Name
+      value: CFX2_Big_Splash (No Collision)
+      objectReference: {fileID: 0}
     - target: {fileID: 4258319205150877521, guid: 8d2906bfe6894dc40bebb3b9e1fcc21d,
         type: 3}
       propertyPath: playOnAwake
@@ -31240,14 +31235,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5877011709370991675}
     m_Modifications:
-    - target: {fileID: 1727626132299242, guid: 21227e3a3b07b6948a9d5f8d3e3e40b4, type: 3}
-      propertyPath: m_Name
-      value: ChaosFlame
-      objectReference: {fileID: 0}
-    - target: {fileID: 1727626132299242, guid: 21227e3a3b07b6948a9d5f8d3e3e40b4, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4159976647224570, guid: 21227e3a3b07b6948a9d5f8d3e3e40b4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -31291,6 +31278,10 @@ PrefabInstance:
     - target: {fileID: 4159976647224570, guid: 21227e3a3b07b6948a9d5f8d3e3e40b4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1727626132299242, guid: 21227e3a3b07b6948a9d5f8d3e3e40b4, type: 3}
+      propertyPath: m_Name
+      value: ChaosFlame
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21227e3a3b07b6948a9d5f8d3e3e40b4, type: 3}

@@ -210,17 +210,16 @@ public class Thea : BaseCharacter
         m_counter += Time.deltaTime;
 
         // If the player presses the right trigger button.
-        if (m_controllerOn && XCI.GetAxis(XboxAxis.RightTrigger, this.controller) > 0.1)
+        if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1)
         {
             m_skillPopups[0].enabled = true;
-            // FindObjectOfType<AudioManager>().PlaySound("TheaProjectile");
             // Start the shot counter.
             m_shotCounter += Time.deltaTime;
 
             if (m_counter > m_projectileDelay)
             {
                 // Instantiate projectile object.
-                GameObject temp = Instantiate(m_projectile, transform.position, transform.rotation);
+                GameObject temp = Instantiate(m_projectile, transform.position + new Vector3(0, 2, 0), transform.rotation);
                 // Set projectile damage and move projectile.
 				temp.GetComponent<ProjectileMove>().SetDamage(m_damage);
                 // Reset counter.
@@ -228,7 +227,7 @@ public class Thea : BaseCharacter
             }
         }
         // If player releases the right trigger button.
-        else if ( m_controllerOn && XCI.GetAxis(XboxAxis.RightTrigger, this.controller) < 0.1)
+        else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) < 0.1)
         {
             // Reset the counter.
             m_shotCounter = 0f;
@@ -374,14 +373,14 @@ public class Thea : BaseCharacter
     {
         //// Calculates the magnitude.
         //float sqrDistanceNash = (m_nashorn.transform.position - this.transform.position).sqrMagnitude;
-        //// Calculates the magnitude.
+        //Calculates the magnitude.
         //float sqrDistanceKen = (m_kenron.transform.position - this.transform.position).sqrMagnitude;
 
-        //// Checks if Nashorn is in correct distance of the AOE to heal.
+        //Checks if Nashorn is in correct distance of the AOE to heal.
         //if (sqrDistanceNash <= m_AOERadius * m_AOERadius && GameManager.Instance.Nashorn.m_controllerOn)
         //{
         //    m_nashorn.SetHealth(m_nashorn.m_currentHealth + m_AOETimer * m_GOPEffect);
-  
+
         //    if (m_nashorn != null)
         //    {
         //        m_temp = Instantiate(m_waterPrefab, m_nashorn.transform.position + Vector3.down * (m_nashorn.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), m_nashorn.transform);
@@ -389,10 +388,10 @@ public class Thea : BaseCharacter
         //    Destroy(m_temp, 2f);
         //}
 
-        //// Checks if Kenron is in correct distance of the AOE to heal.
+        //Checks if Kenron is in correct distance of the AOE to heal.
         //if (sqrDistanceKen <= m_AOERadius * m_AOERadius && GameManager.Instance.Kenron.m_controllerOn)
         //{
-        //    m_kenron.SetHealth(m_kenron.m_currentHealth +  m_AOETimer * m_GOPEffect);
+        //    m_kenron.SetHealth(m_kenron.m_currentHealth + m_AOETimer * m_GOPEffect);
         //    if (m_kenron != null)
         //    {
         //        m_temp = Instantiate(m_waterPrefab, m_kenron.transform.position + Vector3.down * (m_kenron.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), m_kenron.transform);
@@ -413,14 +412,14 @@ public class Thea : BaseCharacter
             if (sqrDistance <= m_AOERadius * m_AOERadius && player.m_controllerOn)
             {
                 player.m_currentHealth += m_AOETimer * m_GOPEffect;
-                //m_waterPrefab.transform.position = player.transform.position;
+                m_waterPrefab.transform.position = player.transform.position;
+                GameObject temp = Instantiate(m_waterPrefab, player.transform.position + Vector3.down * (player.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), player.transform);
             }
+            Destroy(m_temp, 2f);
         }
 
         // Heal Thea.
         SetHealth(m_currentHealth + m_AOETimer * m_GOPEffect);
-        m_waterPrefab.SetActive(true);
-
 
         if (m_skillActive = true & m_skillUpgrades.Find(skill => skill.name == "Serenade Of Water"))
         {
