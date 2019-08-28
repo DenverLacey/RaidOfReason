@@ -9,4 +9,6 @@ public abstract class BaseObjective : ScriptableObject
     public abstract bool IsDone();
     public abstract bool HasFailed();
     public abstract float Timer();
+    public abstract string GrabDescription();
+    public abstract string GrabTitle();
 }

@@ -14,6 +14,12 @@ public class CountdownObjective : BaseObjective
     [Tooltip("Amount of time players have till Cave in")]
     public float maxtimer;
 
+    [Tooltip("The Objective Description")]
+    public string description;
+
+    [Tooltip("Name of the Objective")]
+    public string name;
+
     // Amount of enemies in the game
     private int amount;
 
@@ -41,6 +47,16 @@ public class CountdownObjective : BaseObjective
     public override float Timer()
     {
         return currentTimer;
+    }
+
+    public override string GrabDescription()
+    {
+        return description;
+    }
+
+    public override string GrabTitle()
+    {
+        return name;
     }
 
     public override void Update()

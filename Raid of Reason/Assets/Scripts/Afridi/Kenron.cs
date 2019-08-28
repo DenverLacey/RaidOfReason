@@ -392,7 +392,7 @@ public class Kenron : BaseCharacter {
                 SetSpeed(15.0f);
                 isActive = false;
                 isBurning = true;
-                //m_swordParticle.SetActive(false);
+                // m_swordParticle.SetActive(false);
             }
         }
     }

@@ -14,11 +14,15 @@ public class ObjectiveManager : MonoBehaviour
     private BaseObjective m_objective;
     [Tooltip("Scene Index To Switch to")]
     public int sceneIndex;
+    [Tooltip("How long the current scene will wait until it loads the next scene")]
+    public float timeUntilSceneChange;
 
     [Tooltip("Temporary Bool, will be removed")]
     public bool tempCleared;
 
     public Text objectiveTimer;
+    public Text objectiveDescription;
+    public Text showTitle;
     public GameObject objectiveComplete;
     public GameObject objectiveFailed;
 
@@ -30,6 +34,8 @@ public class ObjectiveManager : MonoBehaviour
             objectiveComplete.SetActive(false);
             objectiveFailed.SetActive(false);
             objectiveTimer.text = m_objective.Timer().ToString("f0");
+            objectiveDescription.text = m_objective.GrabDescription();
+            showTitle.text = m_objective.GrabTitle();
         }
         tempCleared = false;
     }
@@ -42,17 +48,11 @@ public class ObjectiveManager : MonoBehaviour
 
             if (m_objective.IsDone())
             {
-                tempCleared = true;
-                Debug.LogFormat("{0} is complete", m_objective);
                 StartCoroutine(TimeTillChange());
-                SceneManager.LoadScene(sceneIndex);
             }
             else if (m_objective.HasFailed())
             {
-                Debug.LogFormat("{0} has been failed", m_objective);
                 StartCoroutine(TimeTillChange());
-                SceneManager.LoadScene(0);
-                // to fail stuff
             }
 
             if (m_objective.Timer() > 0)
@@ -68,14 +68,21 @@ public class ObjectiveManager : MonoBehaviour
 
     IEnumerator TimeTillChange()
     {
-        yield return new WaitForSeconds(50.0f);
         if (m_objective.IsDone())
         {
+            tempCleared = true;
+            Debug.LogFormat("{0} is complete", m_objective);
             objectiveComplete.SetActive(true);
+            yield return new WaitForSeconds(5);
+            SceneManager.LoadScene(sceneIndex);
         }
-        else if (m_objective.HasFailed())
+
+        if (m_objective.HasFailed())
         {
+            Debug.LogFormat("{0} has been failed", m_objective);
             objectiveFailed.SetActive(true);
+            yield return new WaitForSeconds(5);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }

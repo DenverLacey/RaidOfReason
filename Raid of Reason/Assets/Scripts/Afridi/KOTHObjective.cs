@@ -15,6 +15,13 @@ public class KOTHObjective : BaseObjective
     [Tooltip("Duration of The Objective")]
     public float timer;
 
+    [Tooltip("Name of the Objective")]
+    public string name;
+
+    [Tooltip("The Objective Description")]
+    public string description;
+
+    // Timer of the objective
     private float currentTimer;
 
     [Tooltip("Centre of area")]
@@ -22,9 +29,6 @@ public class KOTHObjective : BaseObjective
 
     [Tooltip("Radius of area")]
     public float radius;
-
-    [HideInInspector]
-    public Text timerDisplay;
 
     public override void Awake()
     {
@@ -34,6 +38,11 @@ public class KOTHObjective : BaseObjective
     public override float Timer()
     {
         return currentTimer;
+    }
+
+    public override string GrabTitle()
+    {
+        return name;
     }
 
     public override void Update()
@@ -51,5 +60,10 @@ public class KOTHObjective : BaseObjective
     public override bool IsDone()
     {
         return currentTimer <= 0f;
+    }
+
+    public override string GrabDescription()
+    {
+        return description;
     }
 }

@@ -25,15 +25,18 @@ public enum Character
 /// </summary>
 public class GameManager : MonoBehaviour
 {
+    readonly bool m_isInstance;
+
 	private GameManager()
 	{
 		if (ms_instance == null)
 		{
 			ms_instance = this;
+            m_isInstance = true;
 		}
 		else
 		{
-			Destroy(gameObject);
+            m_isInstance = false;
 		}
 	}
 
@@ -70,8 +73,15 @@ public class GameManager : MonoBehaviour
 
 	private void Awake()
 	{
-		DontDestroyOnLoad(gameObject);
-		Players = new List<BaseCharacter>();
+        if (m_isInstance)
+        {
+            DontDestroyOnLoad(gameObject);
+            Players = new List<BaseCharacter>();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
 	}
 
 	/// <summary>
