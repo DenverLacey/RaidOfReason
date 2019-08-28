@@ -88,9 +88,12 @@ public class Thea : BaseCharacter
 
     private ParticleSystem.ShapeModule m_AOEShapeModule;
 
+    private CapsuleCollider m_collider;
+
 	private void Start()
 	{
 		GameManager.Instance.GiveCharacterReference(this);
+        m_collider = GetComponent<CapsuleCollider>();
 	}
 
 	/// <summary>
@@ -219,7 +222,9 @@ public class Thea : BaseCharacter
             if (m_counter > m_projectileDelay)
             {
                 // Instantiate projectile object.
-                GameObject temp = Instantiate(m_projectile, transform.position + new Vector3(0, 2, 0), transform.rotation);
+                Vector3 desiredPosition = transform.position + transform.forward;
+                desiredPosition.y = m_collider.bounds.size.y * transform.lossyScale.y;
+                GameObject temp = Instantiate(m_projectile, desiredPosition, transform.rotation);
                 // Set projectile damage and move projectile.
 				temp.GetComponent<ProjectileMove>().SetDamage(m_damage);
                 // Reset counter.
