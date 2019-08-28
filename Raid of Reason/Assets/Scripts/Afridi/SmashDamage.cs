@@ -5,6 +5,19 @@ using XboxCtrlrInput;
 
 public class SmashDamage : MonoBehaviour
 {
+    [SerializeField]
+    [Tooltip("Normalised Direction Vector for force")]
+    private Vector3 m_forceVector;
+
+    [SerializeField]
+    [Tooltip("How much force will be applied")]
+    private float m_knockBackForce;
+
+    private void Start()
+    {
+        m_forceVector.Normalize();
+    }
+
     public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Enemy")
@@ -17,7 +30,7 @@ public class SmashDamage : MonoBehaviour
                 if (GameManager.Instance.Nashorn.m_skillUpgrades.Find(skill => skill.Name == "Shockwave"))
                 { 
                     Vector3 direction = this.transform.position - enemy.transform.position;
-                    other.GetComponent<StatusEffectManager>().ApplyKnockBack(enemy.gameObject, direction, 1, 0.3f);
+                    other.GetComponent<StatusEffectManager>().ApplyKnockBack(m_forceVector, m_knockBackForce);
                 }
                 if (GameManager.Instance.Kenron.m_skillUpgrades.Find(skill => skill.Name == "Shuras Reckoning") && GameManager.Instance.Kenron.isActive == true) {
                     other.GetComponent<StatusEffectManager>().ApplyBurn(4);

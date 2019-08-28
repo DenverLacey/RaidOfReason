@@ -139,71 +139,71 @@ public class Thea : BaseCharacter
         SkillChecker();
     }
 
-    protected override void CharacterMovement()
-    {
-        // Checks if player is active.
-        if (m_controllerOn)
-        {
-            // Calculates the x axis of the left stick (left and right movement).
-            float axisX = XCI.GetAxis(XboxAxis.LeftStickX, controller) * m_movementSpeed;
-            // Calculates the z axis of the left stick (forward and backward movement).
-            float axisZ = XCI.GetAxis(XboxAxis.LeftStickY, controller) * m_movementSpeed;
-            // Makes sure Player movement is relative to the direction of the cameras forward.
-            Vector3 movement = m_camera.transform.TransformDirection(axisX, 0, axisZ);
-            transform.position += new Vector3(movement.x, 0, movement.z) * Time.deltaTime;
+   // protected override void CharacterMovement()
+   // {
+   //     // Checks if player is active.
+   //     if (m_controllerOn)
+   //     {
+   //         // Calculates the x axis of the left stick (left and right movement).
+   //         float axisX = XCI.GetAxis(XboxAxis.LeftStickX, controller) * m_movementSpeed;
+   //         // Calculates the z axis of the left stick (forward and backward movement).
+   //         float axisZ = XCI.GetAxis(XboxAxis.LeftStickY, controller) * m_movementSpeed;
+   //         // Makes sure Player movement is relative to the direction of the cameras forward.
+   //         Vector3 movement = m_camera.transform.TransformDirection(axisX, 0, axisZ);
+   //         transform.position += new Vector3(movement.x, 0, movement.z) * Time.deltaTime;
 
-            // Calculates the x axis of the right stick (left and right movement).
-            float cursorAxisX = XCI.GetAxis(XboxAxis.RightStickX, controller) * aimCursorSpeed;
-            // Calculates the z axis of the right stick (forward and backward movement).
-            float cursorAxisZ = XCI.GetAxis(XboxAxis.RightStickY, controller) * aimCursorSpeed;
+   //         // Calculates the x axis of the right stick (left and right movement).
+   //         float cursorAxisX = XCI.GetAxis(XboxAxis.RightStickX, controller) * aimCursorSpeed;
+   //         // Calculates the z axis of the right stick (forward and backward movement).
+   //         float cursorAxisZ = XCI.GetAxis(XboxAxis.RightStickY, controller) * aimCursorSpeed;
 
-            Vector3 cursorMovement = m_camera.transform.TransformDirection(cursorAxisX, 0, cursorAxisZ);
-            cursorMovement.y = 0f;
+   //         //Vector3 cursorMovement = m_camera.transform.TransformDirection(cursorAxisX, 0, cursorAxisZ);
+   //         //cursorMovement.y = 0f;
 
-            m_aimCursor.transform.position += cursorMovement * Time.deltaTime;
+   //         ////m_aimCursor.transform.position += cursorMovement * Time.deltaTime;
 
-            Vector3 direction = (m_aimCursor.transform.position - transform.position).normalized;
-            direction.y = 0f;
+   //         //Vector3 direction = (m_aimCursor.transform.position - transform.position).normalized;
+   //         //direction.y = 0f;
 
-            transform.rotation = Quaternion.LookRotation(direction);
+   //         //transform.rotation = Quaternion.LookRotation(direction);
 
-            //Vector3 clampedPosition = m_aimCursor.transform.position;
-            //clampedPosition.x = Mathf.Clamp(clampedPosition.x, minCursorPosition.position.x, maxCursorPosition.position.x);
-            //clampedPosition.z = Mathf.Clamp(clampedPosition.z, minCursorPosition.position.z, maxCursorPosition.position.z);
-            //m_aimCursor.transform.position = clampedPosition;
+   //         //Vector3 clampedPosition = m_aimCursor.transform.position;
+   //         //clampedPosition.x = Mathf.Clamp(clampedPosition.x, minCursorPosition.position.x, maxCursorPosition.position.x);
+   //         //clampedPosition.z = Mathf.Clamp(clampedPosition.z, minCursorPosition.position.z, maxCursorPosition.position.z);
+   //         //m_aimCursor.transform.position = clampedPosition;
 
-            // Thea is the centre position of the cursor radius.
-            Vector3 centerPosition = transform.position;
-			centerPosition.y = m_aimCursor.transform.position.y;
-            // Find the distance between Thea and the cursor.
-            float distance = Vector3.Distance(m_aimCursor.transform.position, centerPosition);
+   //         // Thea is the centre position of the cursor radius.
+   ////         Vector3 centerPosition = transform.position;
+			////centerPosition.y = m_aimCursor.transform.position.y;
+   //         //// Find the distance between Thea and the cursor.
+   //         //float distance = Vector3.Distance(m_aimCursor.transform.position, centerPosition);
 
-            // Radius 
-            if(distance > m_aimCursorRadius)
-            {
-                Vector3 fromOriginToObject = m_aimCursor.transform.position - centerPosition; 
-                fromOriginToObject *= m_aimCursorRadius / distance;
-                m_aimCursor.transform.position = centerPosition + fromOriginToObject;
-            } 
+   //         //// Radius 
+   //         //if(distance > m_aimCursorRadius)
+   //         //{
+   //         //    Vector3 fromOriginToObject = m_aimCursor.transform.position - centerPosition; 
+   //         //    fromOriginToObject *= m_aimCursorRadius / distance;
+   //         //    m_aimCursor.transform.position = centerPosition + fromOriginToObject;
+   //         //} 
 
 
-            if (m_animator)
-            {
-                // Calculate angle between character's direction and forward
-                float angle = Vector3.SignedAngle(Vector3.forward, Vector3.forward, Vector3.up);
+   //         if (m_animator)
+   //         {
+   //             // Calculate angle between character's direction and forward
+   //             float angle = Vector3.SignedAngle(Vector3.forward, Vector3.forward, Vector3.up);
 
-                // Rotate movement into world space to get animation movement
-                Vector3 animationMovement = Quaternion.AngleAxis(angle, Vector3.up) * movement.normalized;
+   //             // Rotate movement into world space to get animation movement
+   //             Vector3 animationMovement = Quaternion.AngleAxis(angle, Vector3.up) * movement.normalized;
 
-                // flip x movement if walking backwards
-                animationMovement.x *= animationMovement.z >= 0 ? 1 : -1;
+   //             // flip x movement if walking backwards
+   //             animationMovement.x *= animationMovement.z >= 0 ? 1 : -1;
 
-                // Set animator's movement floats
-                m_animator.SetFloat("MovX", animationMovement.x);
-                m_animator.SetFloat("MovZ", animationMovement.z);
-            }
-        }
-    }
+   //             // Set animator's movement floats
+   //             m_animator.SetFloat("MovX", animationMovement.x);
+   //             m_animator.SetFloat("MovZ", animationMovement.z);
+   //         }
+   //     }
+   // }
 
     /// <summary>
     /// Theas projectile instantiation and damage when pressing the trigger button.

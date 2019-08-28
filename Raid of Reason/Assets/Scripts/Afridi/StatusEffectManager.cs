@@ -30,9 +30,8 @@ public class StatusEffectManager : MonoBehaviour
         }
     }
 
-    public void ApplyKnockBack(GameObject target, Vector3 direction, float length, float overtime) {
-        direction = direction.normalized;
-        StartCoroutine(KnockBack(target, direction, length, overtime));
+    public void ApplyKnockBack(Vector3 force, float speed) {
+        StartCoroutine(KnockBack(force, speed));
     }
 
     public void ApplyStun(float duration) {
@@ -56,19 +55,13 @@ public class StatusEffectManager : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
     }
 
-    IEnumerator KnockBack(GameObject target, Vector3 direction, float length, float overtime) {
-        float timeleft = overtime;
-        while (timeleft > 0) {
+    IEnumerator KnockBack(Vector3 force, float speed) {
+        enemy.Stun(0.5f);
 
-            if (timeleft > Time.deltaTime)
-            {
-                target.transform.Translate(direction * Time.deltaTime / overtime * length);
-            }
-            else {
-                target.transform.Translate(direction * timeleft / overtime * length);
-            }
-            timeleft -= Time.deltaTime;
-        }
+        float angle = Vector3.SignedAngle(enemy.transform.forward, force, Vector3.up);
+        Vector3 relativeForce = Quaternion.AngleAxis(angle, Vector3.up) * force;
+
+        enemy.Rigidbody.AddForce(relativeForce * speed);
         yield return null;
     }
 

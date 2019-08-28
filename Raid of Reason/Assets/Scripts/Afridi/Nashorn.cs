@@ -260,6 +260,8 @@ public class Nashorn : BaseCharacter
 				m_animator.SetBool("Attack", true);
                 m_skillPopups[0].enabled = true;
 
+
+
                 Destroy(LFist, skillManager.m_mainSkills[1].m_currentDuration);
                 Destroy(RFist, skillManager.m_mainSkills[1].m_currentDuration);
             }
