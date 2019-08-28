@@ -9,13 +9,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using XboxCtrlrInput;
 
-public enum Character
-{
-	KENRON,
-	NASHORN,
-	THEA
-}
-
 /// <summary>
 /// Handles all objects and interactions for character selection screen
 /// </summary>

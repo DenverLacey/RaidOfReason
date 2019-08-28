@@ -11,6 +11,16 @@ using UnityEngine;
 using XboxCtrlrInput;
 
 /// <summary>
+/// Enum used to differentiate between characters
+/// </summary>
+public enum Character
+{
+	KENRON,
+	NASHORN,
+	THEA
+}
+
+/// <summary>
 /// Manages everythings that needs to be carried across scenes
 /// </summary>
 public class GameManager : MonoBehaviour
