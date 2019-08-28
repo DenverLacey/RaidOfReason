@@ -420,7 +420,7 @@ public class Thea : BaseCharacter
                 m_waterPrefab.transform.position = player.transform.position;
                 GameObject temp = Instantiate(m_waterPrefab, player.transform.position + Vector3.down * (player.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), player.transform);
             }
-            Destroy(m_temp, 2f);
+            Destroy(m_temp, 50f);
         }
 
         // Heal Thea.
