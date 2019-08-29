@@ -8,7 +8,17 @@ public class CharacterInfo : ScriptableObject
 {
     public string characterName;
     public Sprite characterSprite;
-    public Sprite characterIcon;
+
+	public string firstAbilityName;
+	public string firstAbilityDescription;
+	public Sprite firstAbilitySprite;
+
+	public string secondAbilityName;
+	public string secondAbilityDescription;
+	public Sprite secondAbilitySprite;
+
+
+	public Sprite characterIcon;
     public float zoom = 1;
 
 }
