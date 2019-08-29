@@ -34,6 +34,11 @@ public class Thea : BaseCharacter
     [Tooltip("The Second AOE particle used for visual effect.")]
     private ParticleSystem m_HealRadius_2;
 
+
+    [SerializeField]
+    [Tooltip("The Final particle used for visual effect.")]
+    private ParticleSystem m_HealRadius_3;
+
     [SerializeField]
     [Tooltip("How big can Thea's AOE get?")]
     private float m_AOEMax;
@@ -445,9 +450,10 @@ public class Thea : BaseCharacter
 
     private IEnumerator GOPVisual()
     {
+        m_HealRadius_3.Play();
         yield return new WaitForSeconds(0.5f);
         m_waterPrefab.SetActive(false);
-    
+        
     }
 
     public void Regenerate() {
