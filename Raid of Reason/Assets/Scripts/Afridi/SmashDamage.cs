@@ -9,11 +9,6 @@ public class SmashDamage : MonoBehaviour
     [Tooltip("How much force will be applied")]
     private float m_knockBackForce;
 
-    private void Start()
-    {
-        //m_forceVector.Normalize();
-    }
-
     public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Enemy")

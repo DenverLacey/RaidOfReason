@@ -246,7 +246,7 @@ public class Nashorn : BaseCharacter
     public void Punch()
     {
         // Empty Check
-        if (Gauntlets.Count == 2 && m_controllerOn)
+        if (m_controllerOn)
         {
             // If the Triggers has been pressed
             if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1)
@@ -254,7 +254,6 @@ public class Nashorn : BaseCharacter
                 // Gauntlet Colliders are Enabled and Nashorn Becomes Stationary 
                 LeftGauntlet.enabled = true;
                 RightGauntlet.enabled = true;
-                SetSpeed(0.0f);
 
 				// alternate arm
 				m_animator.SetBool("Attack", true);
@@ -263,9 +262,8 @@ public class Nashorn : BaseCharacter
             else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) < 0.1)
             {
                 // Disable colliders and reset speed
-                LeftGauntlet.enabled = false;
                 RightGauntlet.enabled = false;
-                SetSpeed(10.0f);
+                LeftGauntlet.enabled = false;
 
 				m_animator.SetBool("Attack", false);
             }
