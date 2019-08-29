@@ -31,19 +31,6 @@ public class StatusEffectManager : MonoBehaviour
         }
     }
 
-    //public void ApplyKnockBack(Collider collision, float knockback)
-    //{
-    //    Rigidbody rb = collision.GetComponent<Rigidbody>();
-    //    enemy.Stun(0.5f);
-    //    if (rb != null)
-    //    {
-    //        Vector3 direction = collision.transform.position - transform.position;
-    //        direction.y = 0;
-
-    //        rb.AddForce(direction.normalized * knockback, ForceMode.Impulse);
-    //    }
-    //}
-
     public void ApplyStun(float duration) {
         // enemy.Stun();
         StartCoroutine(Stun());

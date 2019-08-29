@@ -17,6 +17,7 @@ public class SmashDamage : MonoBehaviour
 
             if (enemy && XCI.GetAxis(XboxAxis.RightTrigger, GameManager.Instance.Nashorn.controller) > 0.1)
             {
+                // Knock back enemies with every punch Nashorn lands.
                 Rigidbody rb = other.GetComponent<Rigidbody>();
                 if (rb != null)
                 {
@@ -35,10 +36,6 @@ public class SmashDamage : MonoBehaviour
                     other.GetComponent<StatusEffectManager>().ApplyBurn(4);
                 }
             }
-        }
-        else
-        {
-            Debug.Log("attack unsuccessful " + tag);
         }
     }
 }

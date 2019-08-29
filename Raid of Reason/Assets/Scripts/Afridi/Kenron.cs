@@ -26,10 +26,6 @@ public class Kenron : BaseCharacter {
     [Tooltip("Checks if Kenrons Skill is Active")]
     public bool isActive = false;
 
-    [SerializeField]
-    [Tooltip("The Delay until the next Dash")]
-    private float m_dashTime;
-
 	[SerializeField]
 	[Tooltip("Distance of Dash Attack")]
 	private float m_maxDashDistance;

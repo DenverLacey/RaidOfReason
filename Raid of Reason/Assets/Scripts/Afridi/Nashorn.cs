@@ -14,9 +14,6 @@ using XboxCtrlrInput;
 
 public class Nashorn : BaseCharacter
 {
-    [Tooltip("The Two Gauntlets That Nashorn Attacks With")]
-    public List<GameObject> Gauntlets;
-
     [Tooltip("The Collider of Nashorns Left Gauntlet")]
     public Collider LeftGauntlet;
 
@@ -58,26 +55,46 @@ public class Nashorn : BaseCharacter
     [Tooltip("Range Chain Lightning spreads dealt by Macht Des Sturms ability")]
     private float m_lightningRadius;
 
+
+    [SerializeField]
+    [Tooltip("Buffer distance to avoid Nashorn getting stuck in walls")]
+    private float m_lungeBufferDistance;
+
+    [SerializeField]
+    [Tooltip("The max distance Nashorn can lunge")]
+    private float m_maxLungeDistance;
+
+    [SerializeField]
+    [Tooltip("How fast can Nashorn lunge when attacking?")]
+    private float m_lungeSpeed;
+
+    [SerializeField]
+    [Tooltip("How much delay between consecutive lunges in seconds")]
+    private float m_lungeDelay;
+
+    private float m_lungeDelayTimer;
+    // Desired position to lunge.
+    private Vector3 m_lungePosition;
+    // Nashorn's Collider
+    private CapsuleCollider m_collider;
+    // Sets the lunge 
+    private bool islunging;
+    // checks if trigger has been pressed
+    private bool triggerIsDown;
     // Kenron Instance
     private Kenron m_Kenron;
-
     // Thea Instance
     private Thea m_Thea;
+    // Empty Object for particle instantiating
+    private GameObject particleInstantiate;
+    private GameObject temp;
 
     // Skill is active check
     public bool isActive;
-
     // Container for Enemy position
     public List<Vector3> listOfPosition;
-
     // Chain lightning visual
     public LineRenderer lineRenderer;
-
-    // Empty Object for particle instantiating
-    private GameObject particleInstantiate;
-
-    private GameObject temp;
-
     // Nearby enemies
     [SerializeField]
     public EnemyData enemies;
@@ -85,7 +102,8 @@ public class Nashorn : BaseCharacter
 	private void Start()
 	{
 		GameManager.Instance.GiveCharacterReference(this);
-	}
+        m_collider = GetComponent<CapsuleCollider>();
+    }
 
 	protected override void Awake()
     {
@@ -96,6 +114,8 @@ public class Nashorn : BaseCharacter
         RightGauntlet.enabled = false;
         isTaunting = false;
         isActive = false;
+        triggerIsDown = false;
+        islunging = false; 
 
         if (m_skillPopups.Count > 0)
         {
@@ -245,27 +265,68 @@ public class Nashorn : BaseCharacter
     /// </summary>
     public void Punch()
     {
-        // Empty Check
-        if (m_controllerOn)
+        // If the Triggers has been pressed
+        if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1 && !triggerIsDown)
         {
-            // If the Triggers has been pressed
-            if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1)
-            {
-                // Gauntlet Colliders are Enabled and Nashorn Becomes Stationary 
-                LeftGauntlet.enabled = true;
-                RightGauntlet.enabled = true;
+            // Sets the booleon flags.
+            triggerIsDown = true;
+            LeftGauntlet.enabled = true;
+            RightGauntlet.enabled = true;
+            m_controllerOn = false;
+            islunging = true;
 
-				// alternate arm
-				m_animator.SetBool("Attack", true);
+            m_lungeDelayTimer = m_lungeDelay;
+
+            // play attack animation
+            m_animator.SetBool("LeftGauntlet", !m_animator.GetBool("LeftGauntlet"));
+            m_animator.SetBool("Attack", true);
+
+            // calculate desired dash position
+            int layerMask = Utility.GetIgnoreMask("Enemy", "Player");
+            RaycastHit hit = new RaycastHit();
+            if (Physics.Raycast(transform.position, transform.forward, out hit, m_maxLungeDistance + m_lungeBufferDistance, layerMask))
+            {
+                m_lungePosition = hit.point;
+                m_lungePosition -= transform.forward * (m_collider.radius * transform.lossyScale.x + m_lungeBufferDistance);
             }
-            // or if the trigger isnt pressed
-            else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) < 0.1)
+            else
             {
-                // Disable colliders and reset speed
-                RightGauntlet.enabled = false;
-                LeftGauntlet.enabled = false;
+                m_lungePosition = transform.position + transform.forward * m_maxLungeDistance;
+            }
+        }
+        // or if the trigger isnt pressed
+        else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) < 0.1 && !islunging)
+        {
+            // Disable colliders and reset speed
+            RightGauntlet.enabled = false;
+            LeftGauntlet.enabled = false;
+            triggerIsDown = false;
+        }
 
-				m_animator.SetBool("Attack", false);
+        if (islunging)
+        {
+            if (!m_controllerOn)
+            {
+                Vector3 lerpPosition = Vector3.Lerp(transform.position, m_lungePosition, m_lungeSpeed * Time.deltaTime);
+                m_rigidbody.MovePosition(lerpPosition);
+            }
+
+            // if completed lunge
+            if ((m_lungePosition - transform.position).sqrMagnitude <= 0.1f ||
+                m_controllerOn)
+            {
+                // reset boolean flags
+                m_animator.SetBool("Attack", false);
+
+                // run delay timer
+                m_lungeDelayTimer -= Time.deltaTime;
+            }
+
+            // if ready to lunge again 
+            if (m_lungeDelayTimer <= 0.0f)
+            {
+                m_controllerOn = true;
+                islunging = false;
             }
         }
     }
