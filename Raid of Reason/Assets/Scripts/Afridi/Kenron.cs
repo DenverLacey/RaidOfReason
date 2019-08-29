@@ -76,11 +76,11 @@ public class Kenron : BaseCharacter {
 
     [SerializeField]
     [Tooltip("Particle Effect That Appears on the Kenrons Body When Chaos Flame is Active")]
-    private GameObject m_kenronParticle;
+    private ParticleSystem m_kenronParticle;
 
     [SerializeField]
-    [Tooltip("Particle Effect That Appears on the Sword When Chaos Flame is Active")]
-    private GameObject m_swordParticle;
+    [Tooltip("Particle Effect That Indicates Chaos Flame is Active")]
+    private ParticleSystem m_startParticle;
 
     [SerializeField]
     [Tooltip("Effect when Cursed Kenron Spawns")]
@@ -114,8 +114,6 @@ public class Kenron : BaseCharacter {
 	{
 		GameManager.Instance.GiveCharacterReference(this);
 		m_collider = GetComponent<CapsuleCollider>();
-        m_swordParticle.GetComponentInChildren<ParticleSystem>();
-        m_swordParticle.SetActive(false);
 	}
 
 	protected override void Awake () {
@@ -137,10 +135,13 @@ public class Kenron : BaseCharacter {
         isDashing = false;
         isBurning = false;
 
-        foreach (Image display in m_skillPopups) {
-            display.enabled = false;
+        if (m_skillPopups.Count > 0)
+        {
+            foreach (Image display in m_skillPopups)
+            {
+                display.enabled = false;
+            }
         }
-
 		// set size of dash hit box
 		Vector3 hitBoxSize = new Vector3(m_dashCollider.size.x, m_dashCollider.size.y, m_maxDashDistance);
 		m_dashCollider.size = hitBoxSize;
@@ -154,9 +155,6 @@ public class Kenron : BaseCharacter {
         {
             // Updates Player Movement
 			base.FixedUpdate();
-
-            // Checks Kenrons Skill Tree
-            SkillChecker();
         }
 	}
 
@@ -165,6 +163,9 @@ public class Kenron : BaseCharacter {
         // Updates Player Movement
         base.Update();
 
+        // Checks Kenrons Skill Tree
+        SkillChecker();
+    
         // Uses his Dash
         DashAttack();
     }
@@ -182,23 +183,14 @@ public class Kenron : BaseCharacter {
                 // Sets the Skill to be Active
                 isActive = true;
                 isBurning = true;
-                m_swordParticle.SetActive(true);
-
-                // Instantiates a Particle at the Sword
-                GameObject temp = Instantiate(m_swordParticle, Amaterasu.transform.position + Vector3.zero * 0.5f, Quaternion.Euler(-90, 0, 0), Amaterasu.transform);
-                GameObject part = Instantiate(m_kenronParticle, transform.position + Vector3.down * 0.5f, Quaternion.Euler(270, 0, 0), transform);
-
+                StartCoroutine(ChaosFlameVisual());
+                m_kenronParticle.Play();
                 // Halves his Health and sets a higher Damage/Speed
                 SetHealth(m_currentHealth / 2);
                 SetDamage(m_chaosFlameDamage);
                 SetSpeed(m_chaosFlameSpeed);
-
-                // Destroys the Particle after certain amount of Seconds
-                Destroy(temp, skillManager.m_mainSkills[0].m_currentDuration);
-                Destroy(part, skillManager.m_mainSkills[0].m_currentDuration);
             }
         }
-        m_swordParticle.SetActive(false);
     }
 
     /// <summary>
@@ -377,6 +369,13 @@ public class Kenron : BaseCharacter {
         }
     }
 
+    IEnumerator ChaosFlameVisual()
+    {
+        m_startParticle.Play();
+        yield return new WaitForSeconds(0.1f);
+        m_startParticle.Stop();
+    }
+
     /// <summary>
     /// Resets Kenrons Stats back to his base after Chaos Flame is Used
     /// </summary>
@@ -392,7 +391,7 @@ public class Kenron : BaseCharacter {
                 SetSpeed(15.0f);
                 isActive = false;
                 isBurning = true;
-                // m_swordParticle.SetActive(false);
+                m_kenronParticle.Stop();
             }
         }
     }

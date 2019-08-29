@@ -36,12 +36,12 @@ public class Nashorn : BaseCharacter
     private float m_tauntVulnerability;
 
     [SerializeField]
-    [Tooltip("Particle Effect That Appears When Nashorn Taunts")]
-    private GameObject m_tauntParticle;
+    [Tooltip("Electric Effect That Appears When Nashorn Taunts")]
+    private ParticleSystem m_tauntParticle;
 
     [SerializeField]
-    [Tooltip("Particle Effect That Appears When Nashorn Taunts")]
-    private GameObject m_gauntletParticle;
+    [Tooltip("Shock Effect That Appears When Nashorn Taunts")]
+    private ParticleSystem m_debrisParticle;
 
     [SerializeField]
     [Tooltip("Increased Radius from Nashorns Roaring Thunder ability")]
@@ -94,12 +94,15 @@ public class Nashorn : BaseCharacter
         m_tauntParticle.GetComponentInChildren<ParticleSystem>();
         LeftGauntlet.enabled = false;
         RightGauntlet.enabled = false;
-        m_tauntParticle.SetActive(false);
         isTaunting = false;
         isActive = false;
-        foreach (Image display in m_skillPopups)
+
+        if (m_skillPopups.Count > 0)
         {
-            display.enabled = false;
+            foreach (Image display in m_skillPopups)
+            {
+                display.enabled = false;
+            }
         }
 
         m_Thea = FindObjectOfType<Thea>();
@@ -253,17 +256,8 @@ public class Nashorn : BaseCharacter
                 RightGauntlet.enabled = true;
                 SetSpeed(0.0f);
 
-                GameObject LFist = Instantiate(m_gauntletParticle, Gauntlets[0].transform.position + Vector3.up, Quaternion.Euler(19, 0, 0), Gauntlets[0].transform);
-                GameObject RFist = Instantiate(m_gauntletParticle, Gauntlets[1].transform.position + Vector3.down, Gauntlets[1].transform.rotation, Gauntlets[1].transform);
-
 				// alternate arm
 				m_animator.SetBool("Attack", true);
-                m_skillPopups[0].enabled = true;
-
-
-
-                Destroy(LFist, skillManager.m_mainSkills[1].m_currentDuration);
-                Destroy(RFist, skillManager.m_mainSkills[1].m_currentDuration);
             }
             // or if the trigger isnt pressed
             else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) < 0.1)
@@ -274,9 +268,15 @@ public class Nashorn : BaseCharacter
                 SetSpeed(10.0f);
 
 				m_animator.SetBool("Attack", false);
-                m_skillPopups[0].enabled = false;
             }
         }
+    }
+
+    IEnumerator MachinasDareVisual()
+    {
+        yield return new WaitForSeconds(0.5f);
+        m_debrisParticle.Play();
+
     }
 
     /// <summary>
@@ -292,17 +292,12 @@ public class Nashorn : BaseCharacter
             // Set active
             isActive = true;
 
-            m_tauntParticle.SetActive(true);
-
-            temp = Instantiate(m_tauntParticle, transform.position, Quaternion.identity) as GameObject;
+            m_tauntParticle.Play();
+            StartCoroutine(MachinasDareVisual());
 
             // set vulnerability
             m_vulnerability = m_tauntVulnerability;
-
-            // Destroy after time has passed
-            Destroy(temp,skillManager.m_mainSkills[1].m_currentDuration);
         }
-        m_tauntParticle.SetActive(false);
     }
 
     /// <summary>

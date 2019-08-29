@@ -28,7 +28,11 @@ public class Thea : BaseCharacter
 
     [SerializeField]
     [Tooltip("The AOE particle used for visual effect.")]
-    private ParticleSystem m_AOEParticle;
+    private ParticleSystem m_HealRadius;
+
+    [SerializeField]
+    [Tooltip("The Second AOE particle used for visual effect.")]
+    private ParticleSystem m_HealRadius_2;
 
     [SerializeField]
     [Tooltip("How big can Thea's AOE get?")]
@@ -75,7 +79,6 @@ public class Thea : BaseCharacter
     private Nashorn m_nashorn;
     private Vector3 m_hitLocation;
     private LayerMask m_layerMask;
-    private GameObject m_temp;
     public GameObject m_aimCursor;
     private float m_shotCounter;
     private float m_counter;
@@ -87,6 +90,7 @@ public class Thea : BaseCharacter
     public bool nashornBuffGiven = false;
 
     private ParticleSystem.ShapeModule m_AOEShapeModule;
+    private ParticleSystem.ShapeModule m_AOEShapeModule_2;
 
     private CapsuleCollider m_collider;
 
@@ -102,17 +106,18 @@ public class Thea : BaseCharacter
 	protected override void Awake()
     {
         base.Awake();
-        m_waterPrefab.GetComponentInChildren<ParticleSystem>();
         m_isActive = false;
         neverDone = true;
         m_isHealthRegen = false;
+        m_waterPrefab.SetActive(false);
         m_nashorn = FindObjectOfType<Nashorn>();
 		m_kenron = FindObjectOfType<Kenron>();
         m_AOETimer = 0f;
-        m_AOEParticle.gameObject.SetActive(false);
+        m_HealRadius.gameObject.SetActive(false);
+        m_HealRadius_2.gameObject.SetActive(false);
+        m_AOEShapeModule = m_HealRadius.shape;
+        m_AOEShapeModule_2 = m_HealRadius_2.shape;
         m_AOEParticleCollider.enabled = false;
-        m_AOEShapeModule = m_AOEParticle.shape;
-        m_waterPrefab.SetActive(false);
         foreach (Image display in m_skillPopups)
         {
             display.enabled = false;
@@ -321,10 +326,10 @@ public class Thea : BaseCharacter
             // Disable player movement and rotation.
             m_controllerOn = false;
 
-            // turn AOE effect on
-            m_AOEParticle.gameObject.SetActive(true);
-			
-			// Grow AOE radius.
+            m_HealRadius.gameObject.SetActive(true);
+            m_HealRadius_2.gameObject.SetActive(true);
+
+            // Grow AOE radius.
             m_AOERadius = Mathf.Lerp(m_AOERadius, m_AOEMax, m_AOETimer / m_AOEGrowTime);
 
             // AOE collider radius grows in conjuction to the lerp.
@@ -333,6 +338,7 @@ public class Thea : BaseCharacter
 
             // Temporary way of doing the particles.
             m_AOEShapeModule.radius = m_AOEParticleCollider.radius;
+            m_AOEShapeModule_2.radius = m_AOEParticleCollider.radius;
             m_skillActive = true;
         }
 
@@ -376,34 +382,6 @@ public class Thea : BaseCharacter
     /// </summary>
     public void GiveHealth()
     {
-        //// Calculates the magnitude.
-        //float sqrDistanceNash = (m_nashorn.transform.position - this.transform.position).sqrMagnitude;
-        //Calculates the magnitude.
-        //float sqrDistanceKen = (m_kenron.transform.position - this.transform.position).sqrMagnitude;
-
-        //Checks if Nashorn is in correct distance of the AOE to heal.
-        //if (sqrDistanceNash <= m_AOERadius * m_AOERadius && GameManager.Instance.Nashorn.m_controllerOn)
-        //{
-        //    m_nashorn.SetHealth(m_nashorn.m_currentHealth + m_AOETimer * m_GOPEffect);
-
-        //    if (m_nashorn != null)
-        //    {
-        //        m_temp = Instantiate(m_waterPrefab, m_nashorn.transform.position + Vector3.down * (m_nashorn.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), m_nashorn.transform);
-        //    }
-        //    Destroy(m_temp, 2f);
-        //}
-
-        //Checks if Kenron is in correct distance of the AOE to heal.
-        //if (sqrDistanceKen <= m_AOERadius * m_AOERadius && GameManager.Instance.Kenron.m_controllerOn)
-        //{
-        //    m_kenron.SetHealth(m_kenron.m_currentHealth + m_AOETimer * m_GOPEffect);
-        //    if (m_kenron != null)
-        //    {
-        //        m_temp = Instantiate(m_waterPrefab, m_kenron.transform.position + Vector3.down * (m_kenron.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), m_kenron.transform);
-        //    }
-        //    Destroy(m_temp, 2f);
-        //}
-
         foreach (BaseCharacter player in GameManager.Instance.Players)
         {
             if (!player || player == this)
@@ -416,11 +394,13 @@ public class Thea : BaseCharacter
             // check if inside radius
             if (sqrDistance <= m_AOERadius * m_AOERadius && player.m_controllerOn)
             {
+                m_waterPrefab.SetActive(true);
                 player.m_currentHealth += m_AOETimer * m_GOPEffect;
                 m_waterPrefab.transform.position = player.transform.position;
-                GameObject temp = Instantiate(m_waterPrefab, player.transform.position + Vector3.down * (player.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), player.transform);
+                GameObject m_temp = Instantiate(m_waterPrefab, player.transform.position + Vector3.down * (player.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), player.transform);
+                Destroy(m_temp, 0.5f);
+                StartCoroutine(GOPVisual());
             }
-            Destroy(m_temp, 50f);
         }
 
         // Heal Thea.
@@ -447,9 +427,12 @@ public class Thea : BaseCharacter
         m_controllerOn = true;
         m_AOEShapeModule.radius = 1;
 
-        // turn AOE effect off
-        m_AOEParticle.gameObject.SetActive(false);
-	}
+        m_HealRadius.gameObject.SetActive(false);
+        m_HealRadius.Stop();
+
+        m_HealRadius_2.gameObject.SetActive(false);
+        m_HealRadius_2.Stop();
+    }
 
     private IEnumerator HealthOverTime() {
         m_isHealthRegen = true;
@@ -458,6 +441,13 @@ public class Thea : BaseCharacter
             yield return new WaitForSeconds(regenEachFrame);
         }
         m_isHealthRegen = false;
+    }
+
+    private IEnumerator GOPVisual()
+    {
+        yield return new WaitForSeconds(0.5f);
+        m_waterPrefab.SetActive(false);
+    
     }
 
     public void Regenerate() {
