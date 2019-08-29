@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2887244627302726414}
   - component: {fileID: 759607516821861293}
   - component: {fileID: 392530979183439257}
+  - component: {fileID: 6782548112562281045}
   m_Layer: 10
   m_Name: Melee_02
   m_TagString: Enemy
@@ -29,9 +30,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8343399046292329858}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000029504295}
+  m_LocalRotation: {x: 0, y: 1, z: -0, w: -0.0000001872535}
   m_LocalPosition: {x: -4.087, y: 0.931, z: 6.227849}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.4699999, y: 1.4699999, z: 1.4699999}
   m_Children:
   - {fileID: 7052604817209570445}
   m_Father: {fileID: 0}
@@ -140,6 +141,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0800078, y: 1.3924301, z: 0.77602303}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6782548112562281045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8343399046292329858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57e978f948cd8ab4e85be8837061a16d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_speed: 3
+  m_steeringSpeed: 10
+  manualSteering: 0
 --- !u!1001 &5112825073395095793
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -211,11 +227,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2822496821825301628, guid: 97136926d5db8af4484c32058ebb08c3,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2822496821825301628, guid: 97136926d5db8af4484c32058ebb08c3,
         type: 3}

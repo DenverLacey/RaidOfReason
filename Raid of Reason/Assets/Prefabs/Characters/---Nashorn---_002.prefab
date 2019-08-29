@@ -125,10 +125,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerState: 0
-  m_maxHealth: 100
+  m_maxHealth: 200
   m_currentHealth: 0
   m_damage: 25
-  m_movementSpeed: 10
+  m_movementSpeed: 8
   controller: 1
   m_skillPopups:
   - {fileID: 0}
@@ -3168,8 +3168,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2024241238691055716}
     m_Modifications:
-    - target: {fileID: 19824048, guid: 810eb771809ba56409dd29eab937ddb2, type: 3}
-      propertyPath: playOnAwake
+    - target: {fileID: 173814, guid: 810eb771809ba56409dd29eab937ddb2, type: 3}
+      propertyPath: m_Name
+      value: Downed_Ring
+      objectReference: {fileID: 0}
+    - target: {fileID: 173814, guid: 810eb771809ba56409dd29eab937ddb2, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 455376, guid: 810eb771809ba56409dd29eab937ddb2, type: 3}
@@ -3216,12 +3220,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 173814, guid: 810eb771809ba56409dd29eab937ddb2, type: 3}
-      propertyPath: m_Name
-      value: Downed_Ring
-      objectReference: {fileID: 0}
-    - target: {fileID: 173814, guid: 810eb771809ba56409dd29eab937ddb2, type: 3}
-      propertyPath: m_IsActive
+    - target: {fileID: 19824048, guid: 810eb771809ba56409dd29eab937ddb2, type: 3}
+      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 19874440, guid: 810eb771809ba56409dd29eab937ddb2, type: 3}
@@ -3232,11 +3232,11 @@ PrefabInstance:
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 19850616, guid: 810eb771809ba56409dd29eab937ddb2, type: 3}
+    - target: {fileID: 19801488, guid: 810eb771809ba56409dd29eab937ddb2, type: 3}
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 19801488, guid: 810eb771809ba56409dd29eab937ddb2, type: 3}
+    - target: {fileID: 19850616, guid: 810eb771809ba56409dd29eab937ddb2, type: 3}
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
@@ -3259,6 +3259,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2024241238691055716}
     m_Modifications:
+    - target: {fileID: 4153159892060089487, guid: 8d2906bfe6894dc40bebb3b9e1fcc21d,
+        type: 3}
+      propertyPath: m_Name
+      value: CFX2_Big_Splash (No Collision)
+      objectReference: {fileID: 0}
     - target: {fileID: 4155115819597000241, guid: 8d2906bfe6894dc40bebb3b9e1fcc21d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3314,11 +3319,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4153159892060089487, guid: 8d2906bfe6894dc40bebb3b9e1fcc21d,
-        type: 3}
-      propertyPath: m_Name
-      value: CFX2_Big_Splash (No Collision)
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d2906bfe6894dc40bebb3b9e1fcc21d, type: 3}
 --- !u!4 &635077899435714149 stripped
@@ -3334,6 +3334,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2024241238691055716}
     m_Modifications:
+    - target: {fileID: 1628744458893394, guid: e243632bb3aff9549abdcfcc2ef0c4f0, type: 3}
+      propertyPath: m_Name
+      value: TauntParticle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628744458893394, guid: e243632bb3aff9549abdcfcc2ef0c4f0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4400389479008290, guid: e243632bb3aff9549abdcfcc2ef0c4f0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3378,14 +3386,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1628744458893394, guid: e243632bb3aff9549abdcfcc2ef0c4f0, type: 3}
-      propertyPath: m_Name
-      value: TauntParticle
-      objectReference: {fileID: 0}
-    - target: {fileID: 1628744458893394, guid: e243632bb3aff9549abdcfcc2ef0c4f0, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e243632bb3aff9549abdcfcc2ef0c4f0, type: 3}
 --- !u!1 &5385390467865562802 stripped
@@ -3407,6 +3407,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2024241238691055716}
     m_Modifications:
+    - target: {fileID: 100000, guid: b11d21360b9f69449bc35a2847b7083d, type: 3}
+      propertyPath: m_Name
+      value: Character_Nashorn_Base_001
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b11d21360b9f69449bc35a2847b7083d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.864
@@ -3450,10 +3454,6 @@ PrefabInstance:
     - target: {fileID: 400000, guid: b11d21360b9f69449bc35a2847b7083d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: b11d21360b9f69449bc35a2847b7083d, type: 3}
-      propertyPath: m_Name
-      value: Character_Nashorn_Base_001
       objectReference: {fileID: 0}
     - target: {fileID: 2300008, guid: b11d21360b9f69449bc35a2847b7083d, type: 3}
       propertyPath: m_Materials.Array.data[0]

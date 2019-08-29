@@ -4881,10 +4881,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerState: 0
-  m_maxHealth: 100
+  m_maxHealth: 200
   m_currentHealth: 0
   m_damage: 25
-  m_movementSpeed: 10
+  m_movementSpeed: 8
   controller: 1
   m_skillPopups:
   - {fileID: 0}
@@ -4903,11 +4903,11 @@ MonoBehaviour:
   LeftGauntlet: {fileID: 7938739362195833597}
   RightGauntlet: {fileID: 8015904279851330453}
   isTaunting: 0
-  m_tauntRadius: 12
-  m_tauntVulnerability: 0.5
+  m_tauntRadius: 18
+  m_tauntVulnerability: 0.75
   m_tauntParticle: {fileID: 7590043368633341890}
   m_gauntletParticle: {fileID: 100008, guid: 1ca16f2a31fb6a548ad8954bed1d321f, type: 3}
-  m_radiusIncreased: 10
+  m_radiusIncreased: 7
   stunChance: 100
   m_lightningDamage: 10
   m_lightningRadius: 10
@@ -31301,6 +31301,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 692a765545e5a4042906e6cb5054417e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_forceVector: {x: 0, y: 0, z: 0}
+  m_knockBackForce: 0
 --- !u!65 &8015904279851330453
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31326,6 +31328,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 692a765545e5a4042906e6cb5054417e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_forceVector: {x: 0, y: 0, z: 0}
+  m_knockBackForce: 0
 --- !u!1001 &7588716484098387856
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31333,6 +31337,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1491709258244200521}
     m_Modifications:
+    - target: {fileID: 1628744458893394, guid: e243632bb3aff9549abdcfcc2ef0c4f0, type: 3}
+      propertyPath: m_Name
+      value: TauntParticle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628744458893394, guid: e243632bb3aff9549abdcfcc2ef0c4f0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4400389479008290, guid: e243632bb3aff9549abdcfcc2ef0c4f0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -31377,14 +31389,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1628744458893394, guid: e243632bb3aff9549abdcfcc2ef0c4f0, type: 3}
-      propertyPath: m_Name
-      value: TauntParticle
-      objectReference: {fileID: 0}
-    - target: {fileID: 1628744458893394, guid: e243632bb3aff9549abdcfcc2ef0c4f0, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e243632bb3aff9549abdcfcc2ef0c4f0, type: 3}
 --- !u!1 &7590043368633341890 stripped
@@ -31406,6 +31410,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1491709258244200521}
     m_Modifications:
+    - target: {fileID: 100046, guid: 6867aa7beb48f88429d17d56cd2f6c31, type: 3}
+      propertyPath: m_Name
+      value: Nsh_Idl
+      objectReference: {fileID: 0}
     - target: {fileID: 400046, guid: 6867aa7beb48f88429d17d56cd2f6c31, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -31449,10 +31457,6 @@ PrefabInstance:
     - target: {fileID: 400046, guid: 6867aa7beb48f88429d17d56cd2f6c31, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 100046, guid: 6867aa7beb48f88429d17d56cd2f6c31, type: 3}
-      propertyPath: m_Name
-      value: Nsh_Idl
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: 6867aa7beb48f88429d17d56cd2f6c31, type: 3}
       propertyPath: m_Controller
