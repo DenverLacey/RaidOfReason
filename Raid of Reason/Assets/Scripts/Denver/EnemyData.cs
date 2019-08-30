@@ -81,10 +81,6 @@ public class EnemyData : MonoBehaviour
 		m_collider = GetComponent<Collider>();
 
 		Pathfinder = GetComponent<EnemyPathfinding>();
-		if (!Pathfinder.Link(this))
-		{
-			Debug.LogErrorFormat("{0} could not link with {1}", Pathfinder, this);
-		}
 		
         Renderer = GetComponent<MeshRenderer>();
         if (!Renderer)

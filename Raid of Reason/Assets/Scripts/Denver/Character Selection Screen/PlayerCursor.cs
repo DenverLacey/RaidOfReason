@@ -19,18 +19,21 @@ public class PlayerCursor : MonoBehaviour
 	[Tooltip("Token Object")]
 	public Transform token;
 
+	[SerializeField]
+	[Tooltip("Colour selected border will go when this clicks it")]
+	Color m_tweenColour;
+
 	[HideInInspector]
 	public bool hasToken;
 
-	// [HideInInspector]
+	[HideInInspector]
 	public XboxController controller = XboxController.Any;
 
-	[HideInInspector]
-	public Transform currentCharacter;
-
-	public Character selectedCharacter;
+	private Character m_selectedCharacter;
+	private bool m_characterSelected;
 
 	private Transform m_collidedTransform = null;
+	private Transform m_currentCharInfoTransform = null;
 
 	// Start is called before the first frame update
 	void Start()
@@ -76,74 +79,83 @@ public class PlayerCursor : MonoBehaviour
 		if (XCI.GetButtonDown(XboxButton.A, controller) &&
 			m_collidedTransform != null)
 		{
-			if (currentCharacter.GetComponent<CharacterInformation>().SelectCharacter(ref selectedCharacter))
+			InteractableUIElement temp = m_collidedTransform.GetComponent<InteractableUIElement>();
+
+			if (temp is CharacterInformation && hasToken)
 			{
-				hasToken = false;
+				if (((CharacterInformation)temp).SelectCharacter(ref m_selectedCharacter, m_tweenColour))
+				{
+					m_currentCharInfoTransform = m_collidedTransform;
+					m_characterSelected = true;
+					hasToken = false;
+				}
+			}
+			else if (temp is CharacterSelection && !hasToken)
+			{
+				((CharacterSelection)temp).OnPressed();
 			}
 		}
 
 		// deselect character
-		if (XCI.GetButtonDown(XboxButton.B, controller))
+		if (XCI.GetButtonDown(XboxButton.B, controller) &&
+			m_currentCharInfoTransform != null)
 		{
-			if (currentCharacter.GetComponent<CharacterInformation>().DeselectCharacter())
+			if (m_currentCharInfoTransform.GetComponent<CharacterInformation>().DeselectCharacter())
 			{
+				m_characterSelected = false;
 				hasToken = true;
+				m_currentCharInfoTransform = null;
 			}
 		}
 
 		if (hasToken)
 		{
-			// move token
 			token.position = Vector3.Lerp(token.position, transform.position, m_tokenSpeed);
-
-			// do selected border stuff
-			if (m_collidedTransform)
-			{
-				// if not current character
-				if (m_collidedTransform != currentCharacter)
-				{
-					// TODO: Set character to raycastCharacter
-				}
-			}
-			else
-			{
-				// TODO: Set character to null
-			}
-
-			if (currentCharacter != null)
-			{
-				Image characterImage = currentCharacter.Find("selectedBorder").GetComponent<Image>();
-
-				characterImage.DOKill();
-				characterImage.color = Color.clear;
-			}
-		}
-	}
-
-	void SetCurrentCharacter(Transform t)
-	{
-		currentCharacter = t;
-
-		if (t != null)
-		{
-			// border stuff
-			Image characterImage = t.Find("selectedBorder").GetComponent<Image>();
-
-			characterImage.color = Color.white;
-			characterImage.DOColor(Color.red, .7f).SetLoops(-1);
-
-			// TODO: Ready character
 		}
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		m_collidedTransform = collision.transform;
-		Debug.LogFormat("{0} hit {1}", gameObject.name, collision.gameObject.name);
 	}
 
 	private void OnTriggerExit2D(Collider2D collision)
 	{
 		m_collidedTransform = null;
+	}
+
+	public (XboxController controller, Character selectedCharacter, bool characterSelected) GetSelectedCharacter()
+	{
+		return (controller, selectedCharacter: m_selectedCharacter, characterSelected: m_characterSelected);
+	}
+
+	public void Activate()
+	{
+		gameObject.SetActive(true);
+		token.gameObject.SetActive(true);
+	}
+
+	public void Deactivate(Vector3 inactivePosition)
+	{
+		// move to inactive position
+		transform.position = inactivePosition;
+		token.position = inactivePosition;
+
+		// deselect character
+		if (m_characterSelected)
+		{
+			m_currentCharInfoTransform.GetComponent<CharacterInformation>().DeselectCharacter();
+			m_characterSelected = false;
+			hasToken = true;
+			m_currentCharInfoTransform = null;
+		}
+
+		gameObject.SetActive(false);
+		token.gameObject.SetActive(false);
+	}
+
+	public bool HasSelectedCharacter()
+	{
+		return m_characterSelected;
 	}
 }

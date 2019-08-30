@@ -23,8 +23,13 @@ public class EnemyPathfinding : MonoBehaviour
 
 	EnemyData m_enemy;
 
-    // Start is called before the first frame update
-    void Start()
+	private void Awake()
+	{
+		m_enemy = GetComponent<EnemyData>();
+	}
+
+	// Start is called before the first frame update
+	void Start()
     {
 		m_path = new NavMeshPath();
 		m_yLevel = transform.position.y;
@@ -150,11 +155,5 @@ public class EnemyPathfinding : MonoBehaviour
 		difference.y = Mathf.Abs(difference.y);
 
 		return difference.magnitude < 0.01f;
-	}
-
-	public bool Link(EnemyData data)
-	{
-		m_enemy = data;
-        return m_enemy != null;
 	}
 }
