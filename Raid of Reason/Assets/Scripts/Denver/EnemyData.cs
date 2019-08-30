@@ -36,6 +36,8 @@ public class EnemyData : MonoBehaviour
     [SerializeField] 
 	private EnemyType m_type;
 
+    public Material mat;
+
     [SerializeField]
     private GameObject m_tauntIcon;
 
@@ -87,7 +89,9 @@ public class EnemyData : MonoBehaviour
         {
             Renderer = GetComponentInChildren<MeshRenderer>();
         }
-	}
+
+        mat = GetComponent<Renderer>().material;
+    }
 
 	/// <summary>
 	/// Initialises the enemy's values
@@ -186,12 +190,23 @@ public class EnemyData : MonoBehaviour
 		Renderer.material.color = Color.clear;
 	}
 
+    IEnumerator DissolveLerp(float time)
+    {
+        yield return new WaitForEndOfFrame();
+        float lerp = Mathf.Lerp(mat.GetFloat("_DissolveAmount"), 1f, time * Time.deltaTime);
+        mat.SetFloat("_DissolveAmount", lerp);
+        if(lerp > 0.98f)
+        {
+            Destroy(gameObject);
+        }
+    }
+
 	/// <summary>
 	/// Performs all functionality involved with an enemy death
 	/// </summary>
 	public void Die()
 	{
-		Destroy(gameObject);
+        StartCoroutine(DissolveLerp(1));
 	}
 
 	/// <summary>
