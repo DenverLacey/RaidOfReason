@@ -25,8 +25,8 @@ public class HealthBarUI : MonoBehaviour
     void Awake()
     {
         m_healthBar.gameObject.SetActive(true);
-        m_overhealBar.gameObject.SetActive(false);
-        m_shieldBar.gameObject.SetActive(false);
+        //m_overhealBar.gameObject.SetActive(false);
+        //m_shieldBar.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -38,15 +38,15 @@ public class HealthBarUI : MonoBehaviour
             // This will output visually how much health the players have.
             m_healthBar.fillAmount = m_character.m_currentHealth / m_character.m_maxHealth;
 
-            if (m_character.m_currentHealth > m_character.m_maxHealth)
-            {
-                m_overhealBar.fillAmount = m_character.m_currentHealth / m_character.m_maxHealth;
-                m_overhealBar.gameObject.SetActive(true);
-            }
-            else
-            {
-                m_overhealBar.gameObject.SetActive(false);
-            }
+            //if (m_character.m_currentHealth > m_character.m_maxHealth)
+            //{
+            //    m_overhealBar.fillAmount = m_character.m_currentHealth / m_character.m_maxHealth;
+            //    m_overhealBar.gameObject.SetActive(true);
+            //}
+            //else
+            //{
+            //    m_overhealBar.gameObject.SetActive(false);
+            //}
         }
         else {
             // Players health is 0.

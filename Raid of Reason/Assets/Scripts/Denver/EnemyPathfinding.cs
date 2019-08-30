@@ -155,7 +155,6 @@ public class EnemyPathfinding : MonoBehaviour
 	public bool Link(EnemyData data)
 	{
 		m_enemy = data;
-		NavMesh.CalculatePath(transform.position, transform.position, NavMesh.AllAreas, m_path);
-		return m_enemy != null && m_path != null;
+        return m_enemy != null;
 	}
 }

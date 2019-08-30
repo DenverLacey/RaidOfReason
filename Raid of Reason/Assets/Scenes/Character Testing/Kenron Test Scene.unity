@@ -241,6 +241,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3777708967802242873, guid: db1a93841802ddd4d9bb862ae4b9deaf,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2160272169709824563, guid: db1a93841802ddd4d9bb862ae4b9deaf,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -285,11 +290,6 @@ PrefabInstance:
         type: 3}
       propertyPath: lengthInSec
       value: 100000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3777708967802242873, guid: db1a93841802ddd4d9bb862ae4b9deaf,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3083560307109867121, guid: db1a93841802ddd4d9bb862ae4b9deaf,
         type: 3}
@@ -665,22 +665,22 @@ PrefabInstance:
     - target: {fileID: 3449384978197968183, guid: 028f443e64577e14d88d5b1ea697cf88,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3449384978197968183, guid: 028f443e64577e14d88d5b1ea697cf88,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7071058
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3449384978197968183, guid: 028f443e64577e14d88d5b1ea697cf88,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3449384978197968183, guid: 028f443e64577e14d88d5b1ea697cf88,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.70710784
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3449384978197968183, guid: 028f443e64577e14d88d5b1ea697cf88,
         type: 3}
@@ -695,16 +695,11 @@ PrefabInstance:
     - target: {fileID: 3449384978197968183, guid: 028f443e64577e14d88d5b1ea697cf88,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 90.00001
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3449384978197968183, guid: 028f443e64577e14d88d5b1ea697cf88,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9157860088018418694, guid: 028f443e64577e14d88d5b1ea697cf88,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5343003624369889655, guid: 028f443e64577e14d88d5b1ea697cf88,
@@ -770,12 +765,22 @@ PrefabInstance:
       propertyPath: controller
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5343003624369889655, guid: 028f443e64577e14d88d5b1ea697cf88,
+        type: 3}
+      propertyPath: m_dashDelay
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 3449384978712624760, guid: 028f443e64577e14d88d5b1ea697cf88,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3449384978712624763, guid: 028f443e64577e14d88d5b1ea697cf88,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9157860088018418694, guid: 028f443e64577e14d88d5b1ea697cf88,
         type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -790,7 +795,17 @@ PrefabInstance:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3563573828330330414, guid: 028f443e64577e14d88d5b1ea697cf88,
+        type: 3}
+      propertyPath: objective
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 354083128, guid: 028f443e64577e14d88d5b1ea697cf88, type: 3}
+      propertyPath: objective
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1899014402380804903, guid: 028f443e64577e14d88d5b1ea697cf88,
+        type: 3}
       propertyPath: objective
       value: 
       objectReference: {fileID: 0}
@@ -837,16 +852,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_isInputParsingRequired
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3563573828330330414, guid: 028f443e64577e14d88d5b1ea697cf88,
-        type: 3}
-      propertyPath: objective
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1899014402380804903, guid: 028f443e64577e14d88d5b1ea697cf88,
-        type: 3}
-      propertyPath: objective
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 028f443e64577e14d88d5b1ea697cf88, type: 3}
@@ -1299,6 +1304,11 @@ PrefabInstance:
     - target: {fileID: 4086268057125856014, guid: d1688a9842b208a42b0186bf1175fd68,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8818810493264150323, guid: d1688a9842b208a42b0186bf1175fd68,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8818810493267325531, guid: d1688a9842b208a42b0186bf1175fd68,
@@ -2378,6 +2388,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1245624430811924409, guid: e645cb267fcc2db478863b9dc482236b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2401059402007962713, guid: e645cb267fcc2db478863b9dc482236b,
         type: 3}
       propertyPath: m_character
@@ -2393,11 +2408,6 @@ PrefabInstance:
       propertyPath: m_character
       value: 
       objectReference: {fileID: 799160082}
-    - target: {fileID: 1245624430811924409, guid: e645cb267fcc2db478863b9dc482236b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e645cb267fcc2db478863b9dc482236b, type: 3}
 --- !u!4 &2124977303 stripped

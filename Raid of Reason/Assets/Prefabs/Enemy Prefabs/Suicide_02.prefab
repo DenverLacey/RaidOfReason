@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 678422783500613814}
   - component: {fileID: 7840535472944033961}
   - component: {fileID: 8208870122069599090}
+  - component: {fileID: 8241554335188899528}
   m_Layer: 10
   m_Name: Suicide_02
   m_TagString: Enemy
@@ -29,7 +30,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 678422783500613815}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.284, y: 6.7799, z: 6.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -141,6 +142,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
+--- !u!114 &8241554335188899528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678422783500613815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57e978f948cd8ab4e85be8837061a16d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_speed: 3
+  m_steeringSpeed: 10
+  manualSteering: 0
 --- !u!1001 &718459900371337982
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -148,6 +164,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6217296477322532297}
     m_Modifications:
+    - target: {fileID: 7045711017231392191, guid: 97136926d5db8af4484c32058ebb08c3,
+        type: 3}
+      propertyPath: m_Name
+      value: Hollows_taunt_icon_001
+      objectReference: {fileID: 0}
+    - target: {fileID: 7045711017231392191, guid: 97136926d5db8af4484c32058ebb08c3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2822496821825301628, guid: 97136926d5db8af4484c32058ebb08c3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -205,23 +231,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2822496821825301628, guid: 97136926d5db8af4484c32058ebb08c3,
         type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2822496821825301628, guid: 97136926d5db8af4484c32058ebb08c3,
-        type: 3}
       propertyPath: m_LocalScale.y
       value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7045711017231392191, guid: 97136926d5db8af4484c32058ebb08c3,
-        type: 3}
-      propertyPath: m_Name
-      value: Hollows_taunt_icon_001
-      objectReference: {fileID: 0}
-    - target: {fileID: 7045711017231392191, guid: 97136926d5db8af4484c32058ebb08c3,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97136926d5db8af4484c32058ebb08c3, type: 3}
@@ -244,6 +255,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6217296477322532297}
     m_Modifications:
+    - target: {fileID: 100000, guid: 54087bd0d1575784c86a3421cb5835de, type: 3}
+      propertyPath: m_Name
+      value: Hollows_Screecher_Base_001 (2)
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 54087bd0d1575784c86a3421cb5835de, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.04
@@ -287,14 +302,6 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 54087bd0d1575784c86a3421cb5835de, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 54087bd0d1575784c86a3421cb5835de, type: 3}
-      propertyPath: m_Name
-      value: Hollows_Screecher_Base_001 (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 54087bd0d1575784c86a3421cb5835de, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 54087bd0d1575784c86a3421cb5835de, type: 3}

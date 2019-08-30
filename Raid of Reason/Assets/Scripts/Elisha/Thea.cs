@@ -225,7 +225,7 @@ public class Thea : BaseCharacter
         // If the player presses the right trigger button.
         if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1)
         {
-            m_skillPopups[0].enabled = true;
+            //m_skillPopups[0].enabled = true;
             // Start the shot counter.
             m_shotCounter += Time.deltaTime;
 
@@ -246,7 +246,7 @@ public class Thea : BaseCharacter
         {
             // Reset the counter.
             m_shotCounter = 0f;
-            m_skillPopups[0].enabled = false;
+            //m_skillPopups[0].enabled = false;
         }
     }
 
