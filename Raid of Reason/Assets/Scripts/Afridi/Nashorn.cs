@@ -265,21 +265,18 @@ public class Nashorn : BaseCharacter
     /// </summary>
     public void Punch()
     {
-        // If the Triggers has been pressed
-        if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1 && !triggerIsDown)
+        // if right trigger down and attack animation is not playing
+        if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1f && !m_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack Left") && !m_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack Right") && !islunging)
         {
-            // Sets the booleon flags.
-            triggerIsDown = true;
-            LeftGauntlet.enabled = true;
-            RightGauntlet.enabled = true;
-            m_controllerOn = false;
             islunging = true;
-
-            m_lungeDelayTimer = m_lungeDelay;
-
-            // play attack animation
             m_animator.SetBool("LeftGauntlet", !m_animator.GetBool("LeftGauntlet"));
             m_animator.SetBool("Attack", true);
+
+            RightGauntlet.enabled = true;
+            LeftGauntlet.enabled = true;
+            m_controllerOn = false;
+
+            m_lungeDelayTimer = m_lungeDelay;
 
             // calculate desired dash position
             int layerMask = Utility.GetIgnoreMask("Enemy", "Player");
@@ -294,13 +291,9 @@ public class Nashorn : BaseCharacter
                 m_lungePosition = transform.position + transform.forward * m_maxLungeDistance;
             }
         }
-        // or if the trigger isnt pressed
-        else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) < 0.1 && !islunging)
+        else
         {
-            // Disable colliders and reset speed
-            RightGauntlet.enabled = false;
-            LeftGauntlet.enabled = false;
-            triggerIsDown = false;
+            m_animator.SetBool("Attack", false);
         }
 
         if (islunging)
@@ -312,12 +305,8 @@ public class Nashorn : BaseCharacter
             }
 
             // if completed lunge
-            if ((m_lungePosition - transform.position).sqrMagnitude <= 0.1f ||
-                m_controllerOn)
+            if ((m_lungePosition - transform.position).sqrMagnitude <= 0.1f || m_controllerOn)
             {
-                // reset boolean flags
-                m_animator.SetBool("Attack", false);
-
                 // run delay timer
                 m_lungeDelayTimer -= Time.deltaTime;
             }
@@ -328,6 +317,12 @@ public class Nashorn : BaseCharacter
                 m_controllerOn = true;
                 islunging = false;
             }
+        }
+        else
+        {
+            // Disable colliders and reset speed
+            RightGauntlet.enabled = false;
+            LeftGauntlet.enabled = false;
         }
     }
 

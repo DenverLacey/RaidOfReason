@@ -58,14 +58,6 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	public List<BaseCharacter> DownedPlayers
-	{
-		get
-		{
-			return Players.FindAll(player => player.playerState == BaseCharacter.PlayerState.REVIVE);
-		}
-	}
-
 	private XboxController[] m_controllers = new XboxController[]
 	{
 		XboxController.Any, XboxController.Any, XboxController.Any
