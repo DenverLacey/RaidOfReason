@@ -75,7 +75,7 @@ public class EnemyData : MonoBehaviour
 	// Pathfinding Stuff
 	public EnemyPathfinding Pathfinder { get; private set; }
 
-	private void Start()
+	private void Awake()
 	{
 		Rigidbody = GetComponent<Rigidbody>();
 		m_collider = GetComponent<Collider>();
