@@ -48,7 +48,18 @@ public class GameManager : MonoBehaviour
 	public Nashorn Nashorn { get; private set; }
 	public Thea Thea { get; private set; }
 
-	public List<BaseCharacter> Players { get; private set; }
+	public List<BaseCharacter> Players
+    {
+        get
+        {
+            return new List<BaseCharacter>()
+            {
+                Kenron, Nashorn, Thea
+            };
+        }
+    }
+
+    public Dictionary<Character, List<SkillsAbilities>> CharacterSkillUpgrades { get; private set; }
 
 	public List<BaseCharacter> AlivePlayers
 	{
@@ -67,8 +78,12 @@ public class GameManager : MonoBehaviour
 	{
         if (m_isInstance)
         {
+            CharacterSkillUpgrades = new Dictionary<Character, List<SkillsAbilities>>();
+            CharacterSkillUpgrades.Add(Character.KENRON, new List<SkillsAbilities>());
+            CharacterSkillUpgrades.Add(Character.NASHORN, new List<SkillsAbilities>());
+            CharacterSkillUpgrades.Add(Character.THEA, new List<SkillsAbilities>());
+
             DontDestroyOnLoad(gameObject);
-            Players = new List<BaseCharacter>();
         }
         else
         {
@@ -87,44 +102,32 @@ public class GameManager : MonoBehaviour
 		if (character is Kenron)
 		{
 			Kenron = character as Kenron;
-			Players.Add(Kenron);
+            Kenron.m_skillUpgrades.AddRange(Kenron.GetSkillUpgrades());
 
 			if (m_controllers[0] != XboxController.Any)
 			{
 				Kenron.controller = m_controllers[0];
 			}
-			//else
-			//{
-			//	Destroy(character.gameObject);
-			//}
 		}
 		else if (character is Nashorn)
 		{
 			Nashorn = character as Nashorn;
-			Players.Add(Nashorn);
+            Nashorn.m_skillUpgrades.AddRange(Nashorn.GetSkillUpgrades());
 
 			if (m_controllers[1] != XboxController.Any)
 			{
 				Nashorn.controller = m_controllers[1];
 			}
-			//else
-			//{
-			//	Destroy(character.gameObject);
-			//}
 		}
 		else if (character is Thea)
 		{
 			Thea = character as Thea;
-			Players.Add(Thea);
+            Thea.m_skillUpgrades.AddRange(Thea.GetSkillUpgrades());
 
 			if (m_controllers[2] != XboxController.Any)
 			{
 				Thea.controller = m_controllers[2];
 			}
-			//else
-			//{
-			//	Destroy(character.gameObject);
-			//}
 		}
 	}
 
@@ -141,4 +144,39 @@ public class GameManager : MonoBehaviour
 	{
 		m_controllers[(int)character] = controller;
 	}
+}
+
+public static class BaseCharacterExtension
+{
+    public static List<SkillsAbilities> GetSkillUpgrades(this BaseCharacter character)
+    {
+        if (character is Kenron)
+        {
+            return GameManager.Instance.CharacterSkillUpgrades[Character.KENRON];
+        }
+        else if (character is Nashorn)
+        {
+            return GameManager.Instance.CharacterSkillUpgrades[Character.NASHORN];
+        }
+        else
+        {
+            return GameManager.Instance.CharacterSkillUpgrades[Character.THEA];
+        }
+    }
+
+    public static void AddSkillUpgrade(this BaseCharacter character, SkillsAbilities ability)
+    {
+        if (character is Kenron)
+        {
+            GameManager.Instance.CharacterSkillUpgrades[Character.KENRON].Add(ability);
+        }
+        else if (character is Nashorn)
+        {
+            GameManager.Instance.CharacterSkillUpgrades[Character.NASHORN].Add(ability);
+        }
+        else
+        {
+            GameManager.Instance.CharacterSkillUpgrades[Character.THEA].Add(ability);
+        }
+    }
 }

@@ -7,7 +7,7 @@ public class SkillUpgrade : MonoBehaviour
     public List<SkillsAbilities> m_characterSkills = new List<SkillsAbilities>();
     public List<GameObject> m_UIObjects = new List<GameObject>();
     public ObjectiveManager objective;
-    public BaseCharacter m_Player;
+    public BaseCharacter player;
     private bool WaitTillNextScene;
 
     private void Awake()
@@ -22,34 +22,34 @@ public class SkillUpgrade : MonoBehaviour
 
     void EnableSkill()
     {
-        if (m_Player)
+        if (player)
         {
             if (objective.tempCleared == true)
             {
-                if (m_Player.m_skillUpgrades.Count == 0)
+                if (player.m_skillUpgrades.Count == 0 && WaitTillNextScene)
                 {
-                    m_Player.m_skillUpgrades.Add(m_characterSkills[0]);
+                    player.AddSkillUpgrade(m_characterSkills[0]);
                     m_UIObjects[0].gameObject.SetActive(true);
                     objective.tempCleared = false;
                     WaitTillNextScene = false;
                 }
-                else if (m_Player.m_skillUpgrades.Count == 1 && WaitTillNextScene)
+                else if (player.m_skillUpgrades.Count == 1 && WaitTillNextScene)
                 {
-                    m_Player.m_skillUpgrades.Add(m_characterSkills[1]);
+                    player.AddSkillUpgrade(m_characterSkills[1]);
                     m_UIObjects[1].gameObject.SetActive(true);
                     objective.tempCleared = false;
                     WaitTillNextScene = false;
                 }
-                else if (m_Player.m_skillUpgrades.Count == 2 && WaitTillNextScene)
+                else if (player.m_skillUpgrades.Count == 2 && WaitTillNextScene)
                 {
-                    m_Player.m_skillUpgrades.Add(m_characterSkills[2]);
+                    player.AddSkillUpgrade(m_characterSkills[2]);
                     m_UIObjects[2].gameObject.SetActive(true);
                     objective.tempCleared = false;
                     WaitTillNextScene = false;
                 }
-                else if (m_Player.m_skillUpgrades.Count == 3 && WaitTillNextScene)
+                else if (player.m_skillUpgrades.Count == 3 && WaitTillNextScene)
                 {
-                    m_Player.m_skillUpgrades.Add(m_characterSkills[3]);
+                    player.AddSkillUpgrade(m_characterSkills[3]);
                     m_UIObjects[3].gameObject.SetActive(true);
                     objective.tempCleared = false;
                     WaitTillNextScene = false;
