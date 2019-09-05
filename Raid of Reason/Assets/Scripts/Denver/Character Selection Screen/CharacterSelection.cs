@@ -33,7 +33,7 @@ public class CharacterSelection : InteractableUIElement
 	private int m_firstLevelIndex;
 
 	// Start is called before the first frame update
-	void Awake()
+	void Start()
     {
 		m_p1Cursor.SetController(1);
 		m_p2Cursor.SetController(2);
