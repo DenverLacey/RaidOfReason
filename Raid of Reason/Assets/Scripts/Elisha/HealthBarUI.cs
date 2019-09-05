@@ -38,15 +38,15 @@ public class HealthBarUI : MonoBehaviour
             // This will output visually how much health the players have.
             m_healthBar.fillAmount = m_character.m_currentHealth / m_character.m_maxHealth;
 
-            //if (m_character.m_currentHealth > m_character.m_maxHealth)
-            //{
-            //    m_overhealBar.fillAmount = m_character.m_currentHealth / m_character.m_maxHealth;
-            //    m_overhealBar.gameObject.SetActive(true);
-            //}
-            //else
-            //{
-            //    m_overhealBar.gameObject.SetActive(false);
-            //}
+            if (m_character.m_currentHealth > m_character.m_maxHealth)
+            {
+                m_overhealBar.fillAmount = m_character.m_currentHealth / m_character.m_maxHealth;
+                m_overhealBar.gameObject.SetActive(true);
+            }
+            else
+            {
+                m_overhealBar.gameObject.SetActive(false);
+            }
         }
         else {
             // Players health is 0.

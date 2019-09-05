@@ -14,9 +14,6 @@ using XboxCtrlrInput;
 
 public class Kenron : BaseCharacter {
 
-    [Tooltip("The Collider of Kenrons Sword")]
-    public Collider swordCollider;
-
     [Tooltip("The Aethereal Kenron that Spawns on Death")]
     public ChildKenron childKenron;
 
@@ -111,7 +108,7 @@ public class Kenron : BaseCharacter {
 	private void Start()
 	{
 		GameManager.Instance.GiveCharacterReference(this);
-		m_collider = GetComponent<CapsuleCollider>();
+        m_collider = GetComponent<CapsuleCollider>();
 	}
 
 	protected override void Awake () {
@@ -123,11 +120,6 @@ public class Kenron : BaseCharacter {
 		if (childKenron)
 		{
 			childKenron.gameObject.SetActive(false);
-		}
-
-		if (swordCollider)
-		{
-			swordCollider.enabled = false;
 		}
 
         isDashing = false;

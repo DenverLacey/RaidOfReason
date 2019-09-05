@@ -25,6 +25,7 @@ public class ObjectiveManager : MonoBehaviour
     public Text showTitle;
     public GameObject objectiveComplete;
     public GameObject objectiveFailed;
+    public GameObject skillTreeUnlock;
 
     private void Awake()
     {
@@ -70,9 +71,13 @@ public class ObjectiveManager : MonoBehaviour
     {
         if (m_objective.IsDone())
         {
+        
             tempCleared = true;
             Debug.LogFormat("{0} is complete", m_objective);
             objectiveComplete.SetActive(true);
+            yield return new WaitForSeconds(3);
+            objectiveComplete.SetActive(false);
+            skillTreeUnlock.SetActive(true);
             yield return new WaitForSeconds(5);
             SceneManager.LoadScene(sceneIndex);
         }

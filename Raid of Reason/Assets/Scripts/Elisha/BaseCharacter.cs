@@ -22,7 +22,6 @@ public abstract class BaseCharacter : MonoBehaviour
     }
 
     public PlayerState playerState;
-
     public float m_maxHealth;
     public float m_currentHealth;
 
@@ -75,7 +74,7 @@ public abstract class BaseCharacter : MonoBehaviour
     /// <summary>
     /// This will be called first.
     /// </summary>
-    protected virtual void Awake ()
+    protected virtual void Awake()
     {
         m_renderer = GetComponentInChildren<MeshRenderer>();
         // Gets the original colour of the player.
@@ -122,14 +121,7 @@ public abstract class BaseCharacter : MonoBehaviour
     /// <summary>
     /// Updates every frame.
     /// </summary>
-    protected virtual void Update() {
-
-        // Makes sure health doesnt exceed limit.
-        if (m_currentHealth >= m_maxHealth) 
-        {
-            m_currentHealth = m_maxHealth;
-        }
-    }
+    protected virtual void Update() {  }
 
     /// <summary>
     /// Handles the main movement of each derived character using Xinput.
