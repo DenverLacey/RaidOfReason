@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Threading;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -44,14 +45,50 @@ public class CharacterInformation : InteractableUIElement
 	private Image m_selectedBorder;
 	private Transform m_selectedTick;
 
+	private Image[] m_childImages;
+	private List<Color> m_childImageOriginalColours = new List<Color>();
+	int m_hoverers;
+
 	private void Start()
 	{
-		m_artwork = transform.Find("CharacterCell").Find("artwork").GetComponent<Image>();
+		m_artwork = transform.Find("CharacterCell").Find("Artwork Mask").Find("artwork").GetComponent<Image>();
 		m_border = transform.Find("CharacterCell").Find("border").GetComponent<Image>();
 		m_selectedBorder = transform.Find("CharacterCell").Find("selectedBorder").GetComponent<Image>();
 		m_selectedTick = transform.Find("CharacterCell").Find("selectedTick");
 
+		m_childImages = GetComponentsInChildren<Image>();
+
+		foreach (Image child in m_childImages)
+		{
+			m_childImageOriginalColours.Add(child.color);
+			child.color *= Color.gray;
+		}
+
 		m_originalPosition = transform.position;
+	}
+
+	public void Hover()
+	{
+		Interlocked.Increment(ref m_hoverers);
+
+		for (int i = 0; i < m_childImages.Length; i++)
+		{
+			m_childImages[i].color = m_childImageOriginalColours[i];
+		}
+	}
+
+	public void Unhover()
+	{
+		Interlocked.Decrement(ref m_hoverers);
+
+		if (m_hoverers <= 0 && !m_selected)
+		{
+			m_hoverers = 0;
+			foreach (Image child in m_childImages)
+			{
+				child.color *= Color.gray;
+			}
+		}
 	}
 
 	public bool SelectCharacter(ref Character character, Color tweenColour)
@@ -104,6 +141,14 @@ public class CharacterInformation : InteractableUIElement
 
 			// tween selectedTick position out
 			m_selectedTick.DOLocalMoveX(-400, .1f);
+
+			if (m_hoverers == 0)
+			{
+				foreach (Image child in m_childImages)
+				{
+					child.color *= Color.gray;
+				}
+			}
 
 			return true;
 		}

@@ -47,10 +47,14 @@ public class PlayerCursor : MonoBehaviour
 
 	private Vector3 m_inactivePosition;
 
+	private CanvasScaler m_canvas;
+
 	// Start is called before the first frame update
 	void Start()
     {
 		hasToken = true;
+
+		m_canvas = FindObjectOfType<CanvasScaler>();
 
 		m_inactivePosition = transform.position;
 
@@ -97,6 +101,16 @@ public class PlayerCursor : MonoBehaviour
 		y *= m_speed * Time.deltaTime;
 
 		transform.Translate(x, y, 0);
+
+		// clamp to screen
+		Vector3 desiredPosition = transform.localPosition;
+		float widthExtents = m_canvas.referenceResolution.x * m_canvas.scaleFactor / 2f;
+		float heightExtents = m_canvas.referenceResolution.y * m_canvas.scaleFactor / 2f;
+
+		desiredPosition.x = Mathf.Clamp(desiredPosition.x, -widthExtents, widthExtents);
+		desiredPosition.y = Mathf.Clamp(desiredPosition.y, -heightExtents, heightExtents);
+
+		transform.localPosition = desiredPosition; 
 	}
 
 	/// <summary>
@@ -149,10 +163,24 @@ public class PlayerCursor : MonoBehaviour
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		m_collidedTransform = collision.transform;
+
+		var info = m_collidedTransform.GetComponent<CharacterInformation>();
+
+		if (info)
+		{
+			info.Hover();
+		}
 	}
 
 	private void OnTriggerExit2D(Collider2D collision)
 	{
+		var info = m_collidedTransform.GetComponent<CharacterInformation>();
+
+		if (info)
+		{
+			info.Unhover();
+		}
+
 		m_collidedTransform = null;
 	}
 
