@@ -67,6 +67,9 @@ public class EnemyPathfinding : MonoBehaviour
 			desiredPosition.y = m_yLevel;
 			m_enemy.Rigidbody.MovePosition(desiredPosition);
 
+			// animation
+			m_enemy.SetAnimatorFloat("Speed", movementVector.magnitude);
+
 			// if reached current corner, move to next
 			if (AtPosition(m_path.corners[m_currentCorner]))
 			{
@@ -79,6 +82,10 @@ public class EnemyPathfinding : MonoBehaviour
 				Quaternion desiredRotation = Quaternion.LookRotation(movementVector);
 				transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, m_steeringSpeed * Time.deltaTime);
 			}
+		}
+		else
+		{
+			m_enemy.SetAnimatorFloat("Speed", 0f);
 		}
 	}
 

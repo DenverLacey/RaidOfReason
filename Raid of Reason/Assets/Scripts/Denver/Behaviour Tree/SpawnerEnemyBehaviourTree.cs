@@ -20,46 +20,9 @@ public class SpawnerEnemyBehaviourTree : BehaviourTree
 	/// </summary>
 	SpawnerEnemyBehaviourTree() 
     {
-		// create components for behaviour tree
-		StunnedCondition stunned = new StunnedCondition();
-
-		Sequence withinRangeSequence = new Sequence();
-		withinRangeSequence.AddChild(new Not(new MinAttackRangeCondition()));
-		withinRangeSequence.AddChild(new MaxAttackRangeCondition());
-
-		Sequence tauntSequence = new Sequence();
-		tauntSequence.AddChild(new TauntEvent());
-		tauntSequence.AddChild(new SetDestination());
-		tauntSequence.AddChild(new SightlineCondition());
-		tauntSequence.AddChild(withinRangeSequence);
-		tauntSequence.AddChild(new StopPathing());
-
-		Sequence canSeePlayerSequence = new Sequence();
-		canSeePlayerSequence.AddChild(new ViewRangeCondition());
-		canSeePlayerSequence.AddChild(new SightlineCondition());
-
-		Selector calculateTargetSelector = new Selector();
-		calculateTargetSelector.AddChild(tauntSequence);
-		calculateTargetSelector.AddChild(canSeePlayerSequence);
-
-		Sequence attackSequence = new Sequence();
-		attackSequence.AddChild(new SightlineCondition());
-		attackSequence.AddChild(new TurnManualSteeringOn());
-		attackSequence.AddChild(new GetIntoPosition());
-		attackSequence.AddChild(new SpawnerEnemyAttack());
-
-		Sequence middleSequence = new Sequence();
-		middleSequence.AddChild(calculateTargetSelector);
-		middleSequence.AddChild(attackSequence);
-
-		Sequence wanderSequence = new Sequence();
-		wanderSequence.AddChild(new TurnManualSteeringOff());
-		wanderSequence.AddChild(new Wander());
-
 		// add components to behaviour tree
-		m_behaviourTree.AddChild(stunned);
-		m_behaviourTree.AddChild(middleSequence);
-		m_behaviourTree.AddChild(wanderSequence);
+		m_behaviourTree.AddChild(new StunnedCondition());
+		m_behaviourTree.AddChild(new SpawnerEnemyAttack());
 	}
 
     public override void Execute(EnemyData agent) 

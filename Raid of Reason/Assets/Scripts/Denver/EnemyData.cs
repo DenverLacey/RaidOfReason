@@ -36,8 +36,6 @@ public class EnemyData : MonoBehaviour
     [SerializeField] 
 	private EnemyType m_type;
 
-    public Material mat;
-
     [SerializeField]
     private GameObject m_tauntIcon;
 
@@ -62,7 +60,15 @@ public class EnemyData : MonoBehaviour
 
 	public Rigidbody Rigidbody { get; private set; }
 
-	public MeshRenderer Renderer { get; private set; }
+	[SerializeField]
+	[Tooltip("Renderer of Enemy's mesh")]
+	private Renderer m_renderer;
+
+	public Renderer Renderer { get => m_renderer; }
+
+	[SerializeField]
+	[Tooltip("Animator Controller component of enemy")]
+	private Animator m_animator;
 
 	[HideInInspector]
     // Afridi added this for the skill tree
@@ -83,14 +89,6 @@ public class EnemyData : MonoBehaviour
 		m_collider = GetComponent<Collider>();
 
 		Pathfinder = GetComponent<EnemyPathfinding>();
-		
-        Renderer = GetComponent<MeshRenderer>();
-        if (!Renderer)
-        {
-            Renderer = GetComponentInChildren<MeshRenderer>();
-        }
-
-        mat = GetComponent<Renderer>().material;
     }
 
 	/// <summary>
@@ -193,8 +191,8 @@ public class EnemyData : MonoBehaviour
     IEnumerator DissolveLerp(float time)
     {
         yield return new WaitForEndOfFrame();
-        float lerp = Mathf.Lerp(mat.GetFloat("_DissolveAmount"), 1f, time * Time.deltaTime);
-        mat.SetFloat("_DissolveAmount", lerp);
+        float lerp = Mathf.Lerp(Renderer.material.GetFloat("_DissolveAmount"), 1f, time * Time.deltaTime);
+        Renderer.material.SetFloat("_DissolveAmount", lerp);
         if(lerp > 0.98f)
         {
             Destroy(gameObject);
@@ -218,5 +216,21 @@ public class EnemyData : MonoBehaviour
 	public Behaviour.Result ExecutePendingBehaviour()
 	{
 		return PendingBehaviour.Execute(this);
+	}
+
+	public void SetAnimatorFloat(string id, float value)
+	{
+		if (m_animator)
+		{
+			m_animator.SetFloat(id, value);
+		}
+	}
+
+	public void SetAnimatorTrigger(string id)
+	{
+		if (m_animator)
+		{
+			m_animator.SetTrigger(id);
+		}
 	}
 }

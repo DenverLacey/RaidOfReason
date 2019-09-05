@@ -4712,13 +4712,14 @@ GameObject:
   - component: {fileID: 1033110116055260544}
   - component: {fileID: 275341746}
   - component: {fileID: 563109259601913347}
+  - component: {fileID: 78001871}
   m_Layer: 10
   m_Name: Spawner_02
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4269507381942666822
 Transform:
   m_ObjectHideFlags: 0
@@ -4750,6 +4751,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_type: 3
   m_tauntIcon: {fileID: 5677986908986166690}
+  m_renderer: {fileID: 934801341805187268}
+  m_animator: {fileID: 0}
   isDeadbByKenron: 0
   isAttackingNashorn: 1
 --- !u!65 &8457266304823864806
@@ -4795,6 +4798,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   burnAmount: 0
 --- !u!114 &563109259601913347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8457266304823864805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57e978f948cd8ab4e85be8837061a16d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_speed: 3
+  m_steeringSpeed: 10
+  manualSteering: 0
+--- !u!114 &78001871
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4885,6 +4903,12 @@ PrefabInstance:
 --- !u!4 &934801341807481380 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: fb34b4f35b540ad48827e25a57bab976,
+    type: 3}
+  m_PrefabInstance: {fileID: 934801341807085732}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &934801341805187268 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2300000, guid: fb34b4f35b540ad48827e25a57bab976,
     type: 3}
   m_PrefabInstance: {fileID: 934801341807085732}
   m_PrefabAsset: {fileID: 0}

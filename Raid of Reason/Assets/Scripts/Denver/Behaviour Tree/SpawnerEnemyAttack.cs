@@ -53,7 +53,12 @@ public class SpawnerEnemyAttack : Behaviour
 				{
 					int randIdx = Random.Range(0, agent.AttackPrefabs.Length);
 					spawnVector *= 2.5f;
-					GameObject.Instantiate(agent.AttackPrefabs[randIdx], spawnVector + agent.transform.position, agent.transform.rotation);
+					EnemyData ed = GameObject.Instantiate(agent.AttackPrefabs[randIdx], spawnVector + agent.transform.position, agent.transform.rotation).GetComponent<EnemyData>();
+					
+					if (agent.Taunted)
+					{
+						ed.Taunted = true;
+					}
 				}
 			}
 		}

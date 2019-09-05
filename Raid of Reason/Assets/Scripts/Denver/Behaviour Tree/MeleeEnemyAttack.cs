@@ -43,6 +43,10 @@ public class MeleeEnemyAttack : Behaviour
 
 			// attack player
 			// TODO: Replace with Instantiate(agent.AttackPrefab, agent.transform.position + agent.transform.forward, Quaternion.identity);
+
+			// play attack animation
+			agent.SetAnimatorTrigger("Attack");
+
 			if (Physics.Raycast(agent.transform.position, agent.transform.forward, out RaycastHit hit, agent.AttackRange.max))
 			{
 				BaseCharacter player = hit.collider.GetComponent<BaseCharacter>();

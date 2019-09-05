@@ -343,6 +343,16 @@ public class Nashorn : BaseCharacter
             // Ability is active
             isTaunting = true;
 
+			// taunt enemies
+			foreach (EnemyData enemy in GameObject.FindObjectsOfType<EnemyData>())
+			{
+				float sqrDist = (enemy.transform.position - transform.position).sqrMagnitude;
+				if (sqrDist <= m_tauntRadius * m_tauntRadius)
+				{
+					enemy.Taunted = true;
+				}
+			}
+
             // Set active
             isActive = true;
 

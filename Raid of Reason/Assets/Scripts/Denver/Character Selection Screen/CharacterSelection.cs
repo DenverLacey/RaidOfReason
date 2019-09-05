@@ -33,22 +33,17 @@ public class CharacterSelection : InteractableUIElement
 	private int m_firstLevelIndex;
 
 	// Start is called before the first frame update
-	void Start()
+	void Awake()
     {
-		m_p1Cursor.controller = XboxController.First;
-		m_p1InactivePosition = m_p1Cursor.transform.position;
-
-		m_p2Cursor.controller = XboxController.Second;
-		m_p2InactivePosition = m_p2Cursor.transform.position;
-
-		m_p3Cursor.controller = XboxController.Third;
-		m_p3InactivePosition = m_p3Cursor.transform.position;
+		m_p1Cursor.SetController(1);
+		m_p2Cursor.SetController(2);
+		m_p3Cursor.SetController(3);
 
 		m_startButtonPosition = m_startButton.transform.position;
-    }
+	}
 
-    // Update is called once per frame
-    void Update()
+	// Update is called once per frame
+	void Update()
     {
 		// check plugged in controllers
         if (XCI.IsPluggedIn(m_p1Cursor.controller))
@@ -57,7 +52,7 @@ public class CharacterSelection : InteractableUIElement
 		}
 		else if (m_p1Cursor.gameObject.activeSelf)
 		{
-			m_p1Cursor.Deactivate(m_p1InactivePosition);
+			m_p1Cursor.Deactivate();
 		}
 
 		if (XCI.IsPluggedIn(m_p2Cursor.controller))
@@ -66,7 +61,7 @@ public class CharacterSelection : InteractableUIElement
 		}
 		else if (m_p2Cursor.gameObject.activeSelf)
 		{
-			m_p2Cursor.Deactivate(m_p2InactivePosition);
+			m_p2Cursor.Deactivate();
 		}
 
 		if (XCI.IsPluggedIn(m_p3Cursor.controller))
@@ -75,7 +70,7 @@ public class CharacterSelection : InteractableUIElement
 		}
 		else if (m_p3Cursor.gameObject.activeSelf)
 		{
-			m_p3Cursor.Deactivate(m_p3InactivePosition);
+			m_p3Cursor.Deactivate();
 		}
 	}
 

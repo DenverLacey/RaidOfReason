@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using DG.Tweening;
 using XboxCtrlrInput;
+using XInputDotNetPure;
 
 public class PlayerCursor : MonoBehaviour
 {
@@ -23,11 +24,20 @@ public class PlayerCursor : MonoBehaviour
 	[Tooltip("Colour selected border will go when this clicks it")]
 	Color m_tweenColour;
 
+	[SerializeField]
+	[Tooltip("Rumble intensity")]
+	private float m_rumbleIntensity = 1000f;
+
+	[SerializeField]
+	[Tooltip("Duration of rumble")]
+	private float m_rumbleDuration = 0.1f;
+
 	[HideInInspector]
 	public bool hasToken;
 
 	[HideInInspector]
 	public XboxController controller = XboxController.Any;
+	private PlayerIndex m_playerIndex;
 
 	private Character m_selectedCharacter;
 	private bool m_characterSelected;
@@ -35,10 +45,29 @@ public class PlayerCursor : MonoBehaviour
 	private Transform m_collidedTransform = null;
 	private Transform m_currentCharInfoTransform = null;
 
+	private Vector3 m_inactivePosition;
+
 	// Start is called before the first frame update
 	void Start()
     {
 		hasToken = true;
+
+		m_inactivePosition = transform.position;
+
+		switch (controller)
+		{
+			case XboxController.First:
+				m_playerIndex = PlayerIndex.One;
+				break;
+
+			case XboxController.Second:
+				m_playerIndex = PlayerIndex.Two;
+				break;
+
+			case XboxController.Third:
+				m_playerIndex = PlayerIndex.Three;
+				break;
+		}
 	}
 
     // Update is called once per frame
@@ -85,6 +114,7 @@ public class PlayerCursor : MonoBehaviour
 			{
 				if (((CharacterInformation)temp).SelectCharacter(ref m_selectedCharacter, m_tweenColour))
 				{
+					DoRumble();
 					m_currentCharInfoTransform = m_collidedTransform;
 					m_characterSelected = true;
 					hasToken = false;
@@ -102,6 +132,8 @@ public class PlayerCursor : MonoBehaviour
 		{
 			if (m_currentCharInfoTransform.GetComponent<CharacterInformation>().DeselectCharacter())
 			{
+				DoRumble();
+
 				m_characterSelected = false;
 				hasToken = true;
 				m_currentCharInfoTransform = null;
@@ -135,11 +167,11 @@ public class PlayerCursor : MonoBehaviour
 		token.gameObject.SetActive(true);
 	}
 
-	public void Deactivate(Vector3 inactivePosition)
+	public void Deactivate()
 	{
 		// move to inactive position
-		transform.position = inactivePosition;
-		token.position = inactivePosition;
+		transform.position = m_inactivePosition;
+		token.position = m_inactivePosition;
 
 		// deselect character
 		if (m_characterSelected)
@@ -157,5 +189,39 @@ public class PlayerCursor : MonoBehaviour
 	public bool HasSelectedCharacter()
 	{
 		return m_characterSelected;
+	}
+
+	void DoRumble()
+	{
+		GamePad.SetVibration(m_playerIndex, m_rumbleIntensity, m_rumbleIntensity);
+		StartCoroutine(StopRumble());
+	}
+
+	IEnumerator StopRumble()
+	{
+		yield return new WaitForSeconds(m_rumbleDuration);
+		GamePad.SetVibration(m_playerIndex, 0f, 0f);
+	}
+
+	public void SetController(int index)
+	{
+		switch (index)
+		{
+			case 1:
+				controller = XboxController.First;
+				m_playerIndex = PlayerIndex.One;
+				break;
+			case 2:
+				controller = XboxController.Second;
+				m_playerIndex = PlayerIndex.Two;
+				break;
+			case 3:
+				controller = XboxController.Third;
+				m_playerIndex = PlayerIndex.Three;
+				break;
+			default:
+				Debug.LogFormat("invalid index: {0} tried to be assigned to {1}", index, gameObject.name);
+				break;
+		}
 	}
 }
