@@ -48,9 +48,8 @@ public abstract class BaseCharacter : MonoBehaviour
     [Tooltip("A List of How Many Skill Upgrades the Players Have")]
     public List<SkillsAbilities> m_skillUpgrades = new List<SkillsAbilities>();
 
-    [SerializeField]
     [Tooltip("How much max shield can the player get?")]
-    private float m_maxShield;
+    public float m_maxShield;
 
     public float currentShield;
 
@@ -150,13 +149,6 @@ public abstract class BaseCharacter : MonoBehaviour
         {
             // Set shield to 0.
             currentShield = 0;
-        }
-
-        // If player has more than the max shield.
-        if (currentShield >= m_maxShield)
-        {
-            // Max out their shield.
-            currentShield = m_maxShield;
         }
     }
 

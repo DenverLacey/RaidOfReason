@@ -32,9 +32,12 @@ public class SmashDamage : MonoBehaviour
                 {
 
                 }
-                if (GameManager.Instance.Kenron.m_skillUpgrades.Find(skill => skill.Name == "Shuras Reckoning") && GameManager.Instance.Kenron.isActive == true)
+                if (GameManager.Instance.Kenron != null)
                 {
-                    other.GetComponent<StatusEffectManager>().ApplyBurn(4);
+                    if (GameManager.Instance.Kenron.m_skillUpgrades.Find(skill => skill.Name == "Shuras Reckoning") && GameManager.Instance.Kenron.isActive == true)
+                    {
+                        other.GetComponent<StatusEffectManager>().ApplyBurn(4);
+                    }
                 }
             }
         }
