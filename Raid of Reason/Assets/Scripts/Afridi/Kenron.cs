@@ -42,6 +42,8 @@ public class Kenron : BaseCharacter {
 	[Tooltip("Buffer distance to avoid Kenron getting stuck in walls")]
 	private float m_dashBufferDistance = 3f;
 
+	private Vector3 m_dashVelocity;
+
     [SerializeField]
     [Tooltip("Hit box for dash attack")]
     private BoxCollider m_dashCollider;
@@ -243,8 +245,11 @@ public class Kenron : BaseCharacter {
 		{
 			if (!m_controllerOn)
 			{
-				Vector3 lerpPosition = Vector3.Lerp(transform.position, m_dashPosition, m_dashSpeed * Time.deltaTime);
-                m_rigidbody.MovePosition(lerpPosition);
+				//Vector3 lerpPosition = Vector3.Lerp(transform.position, m_dashPosition, m_dashSpeed * Time.deltaTime);
+    //            m_rigidbody.MovePosition(lerpPosition);
+
+				Vector3 smoothPosition = Vector3.SmoothDamp(transform.position, m_dashPosition, ref m_dashVelocity, 1f / m_dashSpeed);
+				m_rigidbody.MovePosition(smoothPosition);
 			}
 
             // if completed dash
