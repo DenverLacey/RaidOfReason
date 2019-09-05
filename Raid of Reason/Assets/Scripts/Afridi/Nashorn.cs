@@ -14,6 +14,9 @@ using XboxCtrlrInput;
 
 public class Nashorn : BaseCharacter
 {
+    [Tooltip("How much shield will Nashorn gain on every punch?")]
+    public float shieldGain;
+
     [Tooltip("The Collider of Nashorns Left Gauntlet")]
     public Collider LeftGauntlet;
 
@@ -71,6 +74,7 @@ public class Nashorn : BaseCharacter
     [SerializeField]
     [Tooltip("How much delay between consecutive lunges in seconds")]
     private float m_lungeDelay;
+
 
     private float m_lungeDelayTimer;
     // Desired position to lunge.

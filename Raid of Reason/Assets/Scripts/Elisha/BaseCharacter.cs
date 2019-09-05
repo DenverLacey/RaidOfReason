@@ -24,14 +24,7 @@ public abstract class BaseCharacter : MonoBehaviour
     public PlayerState playerState;
     public float m_maxHealth;
     public float m_currentHealth;
-
-    //[SerializeField]
-   // private ParticleSystem m_downedRing;
     protected Rigidbody m_rigidbody;
-
-    //[SerializeField]
-    //[Tooltip("How long can a player be in revive state before they die?")]
-    //private float m_deathTimer;
 
     [SerializeField]
     [Tooltip("How much damage will the player deal?")]
@@ -54,6 +47,24 @@ public abstract class BaseCharacter : MonoBehaviour
 
     [Tooltip("A List of How Many Skill Upgrades the Players Have")]
     public List<SkillsAbilities> m_skillUpgrades = new List<SkillsAbilities>();
+
+    [SerializeField]
+    [Tooltip("How much max shield can the player get?")]
+    private float m_maxShield;
+
+    public float currentShield;
+
+    [SerializeField]
+    [Tooltip("How long will it take for the shield to start degenerating?")]
+    private float m_shieldBuffer;
+
+    [SerializeField]
+    [Tooltip("How long will it take to degenerate shield?")]
+    private float m_shieldDegenerationTimer;
+
+    [SerializeField]
+    [Tooltip("How much shield degenerates?")]
+    private float m_shieldDegenerateAmount;
 
     [HideInInspector]
     public bool m_controllerOn;
@@ -87,6 +98,7 @@ public abstract class BaseCharacter : MonoBehaviour
         m_vulnerability = 1.0f;
         m_controllerOn = true;
         m_bActive = false;
+        currentShield = 0;
     }
 
     /// <summary>
@@ -121,7 +133,32 @@ public abstract class BaseCharacter : MonoBehaviour
     /// <summary>
     /// Updates every frame.
     /// </summary>
-    protected virtual void Update() {  }
+    protected virtual void Update()
+    {
+        DebugTools.LogVariable("Shield", currentShield);
+        DebugTools.LogVariable("health", m_currentHealth);
+
+        // If player has shield
+        if (currentShield > 0)
+        {
+            // Start buffer
+            StartCoroutine(StartShieldBuffer(m_shieldBuffer));
+        }
+
+        // if the player has no shield.
+        if(currentShield <= 0)
+        {
+            // Set shield to 0.
+            currentShield = 0;
+        }
+
+        // If player has more than the max shield.
+        if (currentShield >= m_maxShield)
+        {
+            // Max out their shield.
+            currentShield = m_maxShield;
+        }
+    }
 
     /// <summary>
     /// Handles the main movement of each derived character using Xinput.
@@ -183,10 +220,19 @@ public abstract class BaseCharacter : MonoBehaviour
     /// <param name="damage"></param>
     public virtual void TakeDamage(float damage)
     {
-        // Take an amount of damage from the players current health.
-        m_currentHealth -= damage * m_vulnerability;
-        // Player damage indicator.
-        IndicateHit();
+        if (currentShield > 0)
+        {
+            currentShield -= damage * m_vulnerability;
+            IndicateHit();
+        }
+
+        if (currentShield <= 0)
+        {
+            // Take an amount of damage from the players current health.
+            m_currentHealth -= damage * m_vulnerability;
+            // Player damage indicator.
+            IndicateHit();
+        }
 
         // If player has no health.
         if (m_currentHealth <= 0.0f)
@@ -310,15 +356,35 @@ public abstract class BaseCharacter : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Changes colour to red when player is hit.
+    /// </summary>
     void IndicateHit()
     {
         m_renderer.material.color = Color.red;
         StartCoroutine(ResetColour(.2f));
     }
 
+    /// <summary>
+    /// Resets colour.
+    /// </summary>
+    /// <param name="duration"></param>
+    /// <returns></returns>
     IEnumerator ResetColour(float duration)
     {
         yield return new WaitForSeconds(duration);
         m_renderer.material.color = m_originalColour;
+    }
+
+    /// <summary>
+    /// Buffer for shield before degeneration.
+    /// </summary>
+    /// <param name="buffer"></param>
+    /// <returns></returns>
+    IEnumerator StartShieldBuffer(float buffer)
+    {
+        yield return new WaitForSeconds(buffer);
+        // Degenerate shield per second by the amount.
+        currentShield -= m_shieldDegenerateAmount * Time.deltaTime;
     }
 }

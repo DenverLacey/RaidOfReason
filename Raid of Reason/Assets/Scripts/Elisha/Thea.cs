@@ -453,7 +453,6 @@ public class Thea : BaseCharacter
         m_HealRadius_3.Play();
         yield return new WaitForSeconds(0.5f);
         m_waterPrefab.SetActive(false);
-        
     }
 
     public void Regenerate() {
