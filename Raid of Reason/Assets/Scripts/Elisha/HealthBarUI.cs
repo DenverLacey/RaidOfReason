@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /* 
- * Author: Elisha_Anagnostakis
+ * Author: Elisha_Anagnostakis, Afridi Rahim
  * Description: Handles updating each characters’ health bar.
  */
 
@@ -42,6 +42,7 @@ public class HealthBarUI : MonoBehaviour
             {
                 m_overhealBar.gameObject.SetActive(true);
                 m_overhealBar.fillAmount = m_character.m_currentHealth / m_character.m_maxHealth;
+
             }
             else
             {
