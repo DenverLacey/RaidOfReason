@@ -4755,6 +4755,7 @@ MonoBehaviour:
   m_animator: {fileID: 0}
   isDeadbByKenron: 0
   isAttackingNashorn: 1
+  m_damageIndicator: {fileID: 0}
 --- !u!65 &8457266304823864806
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4780,7 +4781,7 @@ Rigidbody:
   m_Drag: 0.5
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
@@ -4838,6 +4839,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hollows_Mother_Base_001
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: fb34b4f35b540ad48827e25a57bab976, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 87dc5ea5723ce764793aff013e8ab52a, type: 2}
     - target: {fileID: 400000, guid: fb34b4f35b540ad48827e25a57bab976, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
@@ -4894,10 +4899,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 50
       objectReference: {fileID: 0}
-    - target: {fileID: 2300000, guid: fb34b4f35b540ad48827e25a57bab976, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 87dc5ea5723ce764793aff013e8ab52a, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb34b4f35b540ad48827e25a57bab976, type: 3}
 --- !u!4 &934801341807481380 stripped
