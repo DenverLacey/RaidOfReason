@@ -190,13 +190,15 @@ public class EnemyData : MonoBehaviour
 
     IEnumerator DissolveLerp(float time)
     {
-        yield return new WaitForEndOfFrame();
-        float lerp = Mathf.Lerp(Renderer.material.GetFloat("_DissolveAmount"), 1f, time * Time.deltaTime);
-        Renderer.material.SetFloat("_DissolveAmount", lerp);
-        if(lerp > 0.98f)
+        float lerp = 0f;
+        Stunned = true;
+        while (lerp < 0.5f)
         {
-            Destroy(gameObject);
+            yield return new WaitForEndOfFrame();
+            lerp = Mathf.Lerp(Renderer.material.GetFloat("_DissolveAmount"), 1f, time * Time.deltaTime);
+            Renderer.material.SetFloat("_DissolveAmount", lerp);
         }
+        Destroy(gameObject);
     }
 
 	/// <summary>

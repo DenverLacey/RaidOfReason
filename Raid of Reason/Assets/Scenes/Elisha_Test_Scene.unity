@@ -607,7 +607,7 @@ PrefabInstance:
     - target: {fileID: 9177747288968116300, guid: d1688a9842b208a42b0186bf1175fd68,
         type: 3}
       propertyPath: controller
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4086268057125856014, guid: d1688a9842b208a42b0186bf1175fd68,
         type: 3}
@@ -870,26 +870,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 759607516821861293, guid: 0ec7fead950632146b7cda42c7f49dc4,
-        type: 3}
-      propertyPath: m_Drag
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 759607516821861293, guid: 0ec7fead950632146b7cda42c7f49dc4,
-        type: 3}
-      propertyPath: m_UseGravity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8343399046292329857, guid: 0ec7fead950632146b7cda42c7f49dc4,
-        type: 3}
-      propertyPath: DissolveSpeed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8343399046292329857, guid: 0ec7fead950632146b7cda42c7f49dc4,
-        type: 3}
-      propertyPath: currentY
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ec7fead950632146b7cda42c7f49dc4, type: 3}
@@ -1183,26 +1163,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 820624621134379181, guid: 1a7661fa950b2cc42b35751633494eb9,
-        type: 3}
-      propertyPath: m_Drag
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 820624621134379181, guid: 1a7661fa950b2cc42b35751633494eb9,
-        type: 3}
-      propertyPath: m_UseGravity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3774334560616408342, guid: 1a7661fa950b2cc42b35751633494eb9,
-        type: 3}
-      propertyPath: DissolveSpeed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3774334560616408342, guid: 1a7661fa950b2cc42b35751633494eb9,
-        type: 3}
-      propertyPath: currentY
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a7661fa950b2cc42b35751633494eb9, type: 3}
@@ -1638,27 +1598,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52b848c53e1ebcd418915859c93aa87f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1354082589 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3774334560616408345, guid: 1a7661fa950b2cc42b35751633494eb9,
-    type: 3}
-  m_PrefabInstance: {fileID: 635256533}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1354082597
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1354082589}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57e978f948cd8ab4e85be8837061a16d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_speed: 3
-  m_steeringSpeed: 10
-  manualSteering: 0
 --- !u!114 &1453966187 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4248511710841724527, guid: e645cb267fcc2db478863b9dc482236b,
@@ -1694,6 +1633,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Range_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 3774334560616408345, guid: 1a7661fa950b2cc42b35751633494eb9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5707208689818696768, guid: 1a7661fa950b2cc42b35751633494eb9,
         type: 3}
@@ -1760,6 +1704,11 @@ PrefabInstance:
       propertyPath: currentY
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5600712715307690209, guid: 1a7661fa950b2cc42b35751633494eb9,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: d0a8cfb9381b796449b9bbe9cfd6b392, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a7661fa950b2cc42b35751633494eb9, type: 3}
 --- !u!1001 &1501095539
@@ -2346,7 +2295,7 @@ PrefabInstance:
     - target: {fileID: 5343003624369889655, guid: 028f443e64577e14d88d5b1ea697cf88,
         type: 3}
       propertyPath: controller
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3449384978197968183, guid: 028f443e64577e14d88d5b1ea697cf88,
         type: 3}
@@ -2416,6 +2365,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Melee_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 8343399046292329858, guid: 0ec7fead950632146b7cda42c7f49dc4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3821506756914221167, guid: 0ec7fead950632146b7cda42c7f49dc4,
         type: 3}
@@ -2973,6 +2927,7 @@ MonoBehaviour:
   showTitle: {fileID: 568774352}
   objectiveComplete: {fileID: 824191887}
   objectiveFailed: {fileID: 328960575}
+  skillTreeUnlock: {fileID: 0}
 --- !u!4 &2121258189
 Transform:
   m_ObjectHideFlags: 0
@@ -3129,6 +3084,11 @@ PrefabInstance:
       propertyPath: m_character
       value: 
       objectReference: {fileID: 320144548}
+    - target: {fileID: 7385370102312925771, guid: e645cb267fcc2db478863b9dc482236b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000008583069
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e645cb267fcc2db478863b9dc482236b, type: 3}
 --- !u!1001 &8215263390478445212
