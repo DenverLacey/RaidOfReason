@@ -77,6 +77,9 @@ public class EnemyManager : MonoBehaviour
 
 	private Dictionary<EnemyType, GameObject[]> m_attackPrefabDict = new Dictionary<EnemyType, GameObject[]>();
 
+	[SerializeField]
+	private GameObject m_damageIndicatorPrefab; 
+
 	private List<EnemyData> m_enemies = new List<EnemyData>();
 
     // Start is called before the first frame update
@@ -136,6 +139,7 @@ public class EnemyManager : MonoBehaviour
 			m_attackRangeDict[enemy.Type],
 			m_attackCooldownDict[enemy.Type],
 			m_attackDamageDict[enemy.Type],
+			m_damageIndicatorPrefab,
 			m_attackPrefabDict[enemy.Type]
 		);
 

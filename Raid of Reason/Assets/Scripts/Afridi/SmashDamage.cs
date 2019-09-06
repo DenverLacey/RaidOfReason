@@ -9,6 +9,10 @@ public class SmashDamage : MonoBehaviour
     [Tooltip("How much force will be applied")]
     private float m_knockBackForce;
 
+	[SerializeField]
+	[Tooltip("How long enemies will be stunned for")]
+	private float m_stunTime = 0.75f;
+
     public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Enemy")
@@ -28,6 +32,7 @@ public class SmashDamage : MonoBehaviour
                     rb.AddForce(direction.normalized * m_knockBackForce, ForceMode.Impulse);
                 }
                 enemy.TakeDamage(GameManager.Instance.Nashorn.GetDamage());
+				enemy.Stun(m_stunTime);
                 if (GameManager.Instance.Nashorn.m_skillUpgrades.Find(skill => skill.Name == "Shockwave"))
                 {
 

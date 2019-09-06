@@ -151,9 +151,6 @@ public abstract class BaseCharacter : MonoBehaviour
     /// </summary>
     protected virtual void Update()
     {
-        DebugTools.LogVariable("Shield", currentShield);
-        DebugTools.LogVariable("health", m_currentHealth);
-
         // If player has shield
         if (currentShield > 0)
         {

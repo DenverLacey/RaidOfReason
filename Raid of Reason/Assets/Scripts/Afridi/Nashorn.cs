@@ -150,6 +150,9 @@ public class Nashorn : BaseCharacter
     {
         // Allows Nashorn to perform Melee Punches 
         base.Update();
+
+		DebugTools.LogVariable("Health", m_currentHealth);
+
         Punch();
     }
 

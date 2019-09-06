@@ -7,7 +7,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
+using UnityEngine.UI;
+using TMPro;
 
 [System.Serializable]
 public enum EnemyType 
@@ -83,6 +84,8 @@ public class EnemyData : MonoBehaviour
 	// Pathfinding Stuff
 	public EnemyPathfinding Pathfinder { get; private set; }
 
+	public GameObject m_damageIndicator;
+
 	private void Awake()
 	{
 		Rigidbody = GetComponent<Rigidbody>();
@@ -115,7 +118,7 @@ public class EnemyData : MonoBehaviour
 	/// <param name="players">
 	/// References to player objects
 	/// </param>
-	public void Init(float viewRange, float maxHealth, EnemyAttackRange attackRange, float attackCooldown, float attackDamage, GameObject[] attackPrefabs)
+	public void Init(float viewRange, float maxHealth, EnemyAttackRange attackRange, float attackCooldown, float attackDamage, GameObject damageIndicatorPrefab, GameObject[] attackPrefabs)
     {
         ViewRange = viewRange;
         MaxHealth = maxHealth;
@@ -125,6 +128,7 @@ public class EnemyData : MonoBehaviour
         AttackTimer = 0.0f;
 		AttackDamage = attackDamage;
 		AttackPrefabs = attackPrefabs;
+		m_damageIndicator = damageIndicatorPrefab;
 		Stunned = false;
     }
 
@@ -137,6 +141,9 @@ public class EnemyData : MonoBehaviour
 	public void Stun(float duration) 
 	{
 		Stunned = true;
+
+		DebugTools.LogVariable("Stunned", Stunned);
+
 		StartCoroutine(ResetStun(duration));
 	}
 
@@ -153,6 +160,7 @@ public class EnemyData : MonoBehaviour
 	{
 		yield return new WaitForSeconds(duration);
 		Stunned = false;
+		DebugTools.LogVariable("Stunned", Stunned);
 	}
 
 	/// <summary>
@@ -165,12 +173,13 @@ public class EnemyData : MonoBehaviour
 	{
 		Health -= damage;
 
-		IndicateHit();
-
 		if (Health <= 0)
 		{
 			Die();
 		}
+
+		DisplayDamage(damage);
+		IndicateHit();
 	}
 
 	/// <summary>
@@ -186,6 +195,13 @@ public class EnemyData : MonoBehaviour
 	{
 		yield return new WaitForSeconds(duration);
 		Renderer.material.color = Color.clear;
+	}
+
+	void DisplayDamage(float damage)
+	{
+		// spawn new damage indicator
+		DamageIndicator damageIndicator = Instantiate(m_damageIndicator, transform.position, Quaternion.identity).GetComponent<DamageIndicator>();
+		damageIndicator.Init(damage);
 	}
 
     IEnumerator DissolveLerp(float time)
