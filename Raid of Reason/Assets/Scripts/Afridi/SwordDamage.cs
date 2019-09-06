@@ -17,7 +17,7 @@ public class SwordDamage : MonoBehaviour
 		if (other.gameObject.tag == "Enemy")
 		{
 			EnemyData enemy = other.gameObject.GetComponent<EnemyData>();
-            enemy.TakeDamage(GameManager.Instance.Kenron.GetDamage());
+            enemy.TakeDamage(GameManager.Instance.Kenron.GetDamage(), GameManager.Instance.Kenron);
 
             // if the player doesnt have shuras upgrade applied
             if (enemy && !GameManager.Instance.Kenron.m_skillUpgrades.Find(skill => skill.Name == "Shuras Reckoning"))

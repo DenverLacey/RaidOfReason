@@ -31,7 +31,7 @@ public class SmashDamage : MonoBehaviour
 
                     rb.AddForce(direction.normalized * m_knockBackForce, ForceMode.Impulse);
                 }
-                enemy.TakeDamage(GameManager.Instance.Nashorn.GetDamage());
+                enemy.TakeDamage(GameManager.Instance.Nashorn.GetDamage(), GameManager.Instance.Nashorn);
 				enemy.Stun(m_stunTime);
                 if (GameManager.Instance.Nashorn.m_skillUpgrades.Find(skill => skill.Name == "Shockwave"))
                 {

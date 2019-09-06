@@ -114,6 +114,7 @@ public class Kenron : BaseCharacter {
 	protected override void Awake () {
         // Initalisation
         base.Awake();
+        CharacterType = Character.KENRON;
         m_Enemy = FindObjectOfType<EnemyData>();
 		childKenron = FindObjectOfType<ChildKenron>();
 

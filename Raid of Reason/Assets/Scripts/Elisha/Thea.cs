@@ -111,6 +111,7 @@ public class Thea : BaseCharacter
 	protected override void Awake()
     {
         base.Awake();
+        CharacterType = Character.THEA;
         m_isActive = false;
         neverDone = true;
         m_isHealthRegen = false;
@@ -303,7 +304,7 @@ public class Thea : BaseCharacter
                     {
                         enemy.Stun(0.5f);
                         enemy.Rigidbody.AddExplosionForce(knockbackForce, transform.position, m_AOERadius, 0, ForceMode.Impulse);
-                        enemy.TakeDamage(-5);
+                        enemy.TakeDamage(-5, this);
                     }
                 }
             }

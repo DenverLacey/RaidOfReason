@@ -63,7 +63,7 @@ public class ProjectileMove : MonoBehaviour {
            
             if (enemy)
             {
-                enemy.TakeDamage(m_damage);
+                enemy.TakeDamage(m_damage, GameManager.Instance.Thea);
                 
                 //NASHORN ABILITY
                 if (GameManager.Instance.Thea.nashornBuffGiven == true && GameManager.Instance.Nashorn.isTaunting == true)

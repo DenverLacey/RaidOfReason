@@ -13,6 +13,8 @@ using XboxCtrlrInput;
 [RequireComponent(typeof(Rigidbody))]
 public abstract class BaseCharacter : MonoBehaviour 
 {
+    public Character CharacterType { get; protected set; }
+
 	public enum MovementAxis
 	{
 		MOVE	= 0x01 << 0,
@@ -245,7 +247,7 @@ public abstract class BaseCharacter : MonoBehaviour
             // Take an amount of damage from the players current health.
             m_currentHealth -= damage * m_vulnerability;
             // Player damage indicator.
-            IndicateHit();
+            //IndicateHit();
         }
 
         // If player has no health.

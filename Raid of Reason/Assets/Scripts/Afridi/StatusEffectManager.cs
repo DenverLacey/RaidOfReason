@@ -9,7 +9,6 @@ public class StatusEffectManager : MonoBehaviour
     private bool burnOn = false;
     private Rigidbody m_rigidBody;
     
-
     public int burnAmount;
 
     void Start()
@@ -39,7 +38,7 @@ public class StatusEffectManager : MonoBehaviour
     IEnumerator Burn() {
         for (; remainingTicks != 0; remainingTicks--)
         {
-            enemy.TakeDamage(burnAmount);
+            enemy.TakeDamage(burnAmount, GameManager.Instance.Kenron);
             enemy.Renderer.material.color = Color.red;
             StartCoroutine(ResetMaterialColour(enemy, 0.75f));
             yield return new WaitForSeconds(0.75f);

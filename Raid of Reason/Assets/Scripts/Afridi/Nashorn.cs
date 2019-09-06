@@ -113,6 +113,7 @@ public class Nashorn : BaseCharacter
     {
         // Initialisation 
         base.Awake();
+        CharacterType = Character.NASHORN;
         m_tauntParticle.GetComponentInChildren<ParticleSystem>();
         LeftGauntlet.enabled = false;
         RightGauntlet.enabled = false;
@@ -212,7 +213,7 @@ public class Nashorn : BaseCharacter
             if (isTaunting == true && m_skillUpgrades.Find(skill => skill.Name == "Kinetic Discharge"))
             {
                 if (enemies.isAttackingNashorn == true) {
-                    enemies.TakeDamage(enemies.AttackDamage);
+                    enemies.TakeDamage(enemies.AttackDamage, this);
                 }
             } 
 
@@ -262,7 +263,7 @@ public class Nashorn : BaseCharacter
             EnemyData enemy = hitCol.transform.GetComponent<EnemyData>();
             if (enemy != null)
             {
-                enemy.TakeDamage(0);
+                enemy.TakeDamage(0, this);
             }
         }
     }
