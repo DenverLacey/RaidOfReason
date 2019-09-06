@@ -78,12 +78,14 @@ public class GameManager : MonoBehaviour
 	{
         if (m_isInstance)
         {
-            CharacterSkillUpgrades = new Dictionary<Character, List<SkillsAbilities>>();
-            CharacterSkillUpgrades.Add(Character.KENRON, new List<SkillsAbilities>());
-            CharacterSkillUpgrades.Add(Character.NASHORN, new List<SkillsAbilities>());
-            CharacterSkillUpgrades.Add(Character.THEA, new List<SkillsAbilities>());
+			CharacterSkillUpgrades = new Dictionary<Character, List<SkillsAbilities>>
+			{
+				{ Character.KENRON, new List<SkillsAbilities>() },
+				{ Character.NASHORN, new List<SkillsAbilities>() },
+				{ Character.THEA, new List<SkillsAbilities>() }
+			};
 
-            DontDestroyOnLoad(gameObject);
+			DontDestroyOnLoad(gameObject);
         }
         else
         {

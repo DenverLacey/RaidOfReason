@@ -26,8 +26,6 @@ public class CharacterSelection : InteractableUIElement
 	[Tooltip("Start Button Object")]
 	private GameObject m_startButton;
 
-	private Vector3 m_startButtonPosition;
-
 	[SerializeField]
 	[Tooltip("Scene Index of first level")]
 	private int m_firstLevelIndex;
@@ -38,8 +36,6 @@ public class CharacterSelection : InteractableUIElement
 		m_p1Cursor.SetController(1);
 		m_p2Cursor.SetController(2);
 		m_p3Cursor.SetController(3);
-
-		m_startButtonPosition = m_startButton.transform.position;
 	}
 
 	// Update is called once per frame
@@ -76,8 +72,7 @@ public class CharacterSelection : InteractableUIElement
 
 	public void OnPressed()
 	{
-		transform.DOKill();
-		transform.position = m_startButtonPosition;
+		transform.DOKill(complete: true);
 
 		// get player cursor information
 		var p1Info = m_p1Cursor.GetSelectedCharacter();

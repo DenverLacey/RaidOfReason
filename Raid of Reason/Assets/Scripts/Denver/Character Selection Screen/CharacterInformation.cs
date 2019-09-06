@@ -35,9 +35,29 @@ public class CharacterInformation : InteractableUIElement
 	[Tooltip("How long it takes for colour to change to target colour")]
 	private float m_colourDuration = 0.7f;
 
-	private bool m_selected;
+	[Header("Ready Movement Tweening")]
+	[SerializeField]
+	[Tooltip("Beginning local position of ready image")]
+	private Vector3 m_readyStartLocalPosition = new Vector3(0f, 500f, 0f);
 
-	private Vector3 m_originalPosition;
+	[SerializeField]
+	[Tooltip("End local position of ready image")]
+	private Vector3 m_readyEndLocalPosition = new Vector3(0f, -500f, 0f);
+
+	[SerializeField]
+	[Tooltip("Duration of tween")]
+	private float m_readyTweenDuration = 0.1f;
+
+	[Header("SFX")]
+	[SerializeField]
+	[Tooltip("Sound played when selected")]
+	private SoundData m_selectedSound;
+
+	[SerializeField]
+	[Tooltip("Sound played when selection attempted but failed")]
+	private SoundData m_failedSound;
+
+	private bool m_selected;
 
 	// child objects
 	private Image m_artwork;
@@ -53,8 +73,8 @@ public class CharacterInformation : InteractableUIElement
 	{
 		m_artwork = transform.Find("CharacterCell").Find("Artwork Mask").Find("artwork").GetComponent<Image>();
 		m_border = transform.Find("CharacterCell").Find("border").GetComponent<Image>();
-		m_selectedBorder = transform.Find("CharacterCell").Find("selectedBorder").GetComponent<Image>();
-		m_selectedTick = transform.Find("CharacterCell").Find("selectedTick");
+		m_selectedBorder = transform.Find("CharacterCell").Find("Panel").Find("selectedBorder").GetComponent<Image>();
+		m_selectedTick = transform.Find("CharacterCell").Find("Panel").Find("selectedTick");
 
 		m_childImages = GetComponentsInChildren<Image>();
 
@@ -63,8 +83,6 @@ public class CharacterInformation : InteractableUIElement
 			m_childImageOriginalColours.Add(child.color);
 			child.color *= Color.gray;
 		}
-
-		m_originalPosition = transform.position;
 	}
 
 	public void Hover()
@@ -99,18 +117,17 @@ public class CharacterInformation : InteractableUIElement
 			character = m_character;
 
 			// kill tweening
-			transform.DOKill();
-			transform.position = m_originalPosition;
+			transform.DOKill(complete: true);
 			transform.DOPunchPosition(Vector3.down * m_punchForce, m_punchDuration, m_punchVibrato, m_punchElasticity);
 
 			// TODO: Make nice sound
+			AudioManager.Instance.PlaySound(m_selectedSound);
 
-			// tween selectedBorder colour
-			m_selectedBorder.DOColor(tweenColour, m_colourDuration).SetLoops(-1);
+			m_selectedBorder.DOColor(tweenColour, m_colourDuration).SetLoops(-1, LoopType.Yoyo);
 
 			// tween selectedTick position in
-			m_selectedTick.localPosition = new Vector3(400, 0, 0);
-			m_selectedTick.DOLocalMoveX(0, .1f);
+			m_selectedTick.localPosition = m_readyStartLocalPosition;
+			m_selectedTick.DOLocalMove(Vector3.zero, m_readyTweenDuration);
 
 			m_selected = true;
 
@@ -119,6 +136,8 @@ public class CharacterInformation : InteractableUIElement
 		else
 		{
 			// TODO: Make bad sound
+			AudioManager.Instance.PlaySound(m_failedSound);
+
 			return false;
 		}
 	}
@@ -130,8 +149,7 @@ public class CharacterInformation : InteractableUIElement
 			m_selected = false;
 
 			// do transform tweeing
-			transform.DOKill();
-			transform.position = m_originalPosition;
+			transform.DOKill(complete: true);
 
 			transform.DOPunchPosition(Vector3.up * m_punchForce, m_punchDuration, m_punchVibrato, m_punchElasticity);
 
@@ -140,7 +158,7 @@ public class CharacterInformation : InteractableUIElement
 			m_selectedBorder.color = Color.clear;
 
 			// tween selectedTick position out
-			m_selectedTick.DOLocalMoveX(-400, .1f);
+			m_selectedTick.DOLocalMove(m_readyEndLocalPosition, m_readyTweenDuration);
 
 			if (m_hoverers == 0)
 			{

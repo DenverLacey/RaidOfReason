@@ -272,13 +272,10 @@ public class Nashorn : BaseCharacter
         // if right trigger down and attack animation is not playing
         if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1f && !m_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack Left") && !m_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack Right") && !islunging)
         {
-            islunging = true;
             m_animator.SetBool("LeftGauntlet", !m_animator.GetBool("LeftGauntlet"));
             m_animator.SetBool("Attack", true);
 
-            RightGauntlet.enabled = true;
-            LeftGauntlet.enabled = true;
-            m_controllerOn = false;
+			CanMove = false;
 
             m_lungeDelayTimer = m_lungeDelay;
 
@@ -302,7 +299,7 @@ public class Nashorn : BaseCharacter
 
         if (islunging)
         {
-            if (!m_controllerOn)
+            if (!CanMove)
             {
                 Vector3 lerpPosition = Vector3.Lerp(transform.position, m_lungePosition, m_lungeSpeed * Time.deltaTime);
                 m_rigidbody.MovePosition(lerpPosition);
@@ -318,17 +315,31 @@ public class Nashorn : BaseCharacter
             // if ready to lunge again 
             if (m_lungeDelayTimer <= 0.0f)
             {
-                m_controllerOn = true;
+                CanMove = true;
                 islunging = false;
             }
         }
-        else
-        {
-            // Disable colliders and reset speed
-            RightGauntlet.enabled = false;
-            LeftGauntlet.enabled = false;
-        }
     }
+
+	void StartLunge()
+	{
+		islunging = true;
+
+		CanRotate = false;
+
+		// enable colliders
+		RightGauntlet.enabled = true;
+		LeftGauntlet.enabled = true;
+	}
+
+	void StopLunge()
+	{
+		CanRotate = true;
+
+		// Disable colliders
+		RightGauntlet.enabled = false;
+		LeftGauntlet.enabled = false;
+	}
 
     IEnumerator MachinasDareVisual()
     {

@@ -45,6 +45,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     private static AudioManager ms_instance;
 
+	public static AudioManager Instance { get => ms_instance; }
+
     /// <summary>
     /// When the game boots up this will check if theres only one instance of this object.
     /// Makes sure the object this script is attached to doesnt get destroyed when changing scenes.
@@ -110,6 +112,20 @@ public class AudioManager : MonoBehaviour
         // If name can be found then play audio clip
         s.source.Play();      
     }
+
+	public void PlaySound(SoundData sound)
+	{
+		// create audio source for sound data
+		sound.source = gameObject.AddComponent<AudioSource>();
+		sound.source.clip = sound.clip;
+		sound.source.volume = sound.volume;
+		sound.source.pitch = sound.pitch;
+		sound.source.loop = sound.loop;
+		sound.source.spatialBlend = sound.spatialBlend;
+
+		// play sound
+		sound.source.Play();
+	}
 
     /// <summary>
     /// Stops playing individual sound.

@@ -103,10 +103,10 @@ public class PlayerCursor : MonoBehaviour
 		transform.Translate(x, y, 0);
 
 		// clamp to screen
-		Vector3 desiredPosition = transform.localPosition;
 		float widthExtents = m_canvas.referenceResolution.x * m_canvas.scaleFactor / 2f;
 		float heightExtents = m_canvas.referenceResolution.y * m_canvas.scaleFactor / 2f;
 
+		Vector3 desiredPosition = transform.localPosition;
 		desiredPosition.x = Mathf.Clamp(desiredPosition.x, -widthExtents, widthExtents);
 		desiredPosition.y = Mathf.Clamp(desiredPosition.y, -heightExtents, heightExtents);
 

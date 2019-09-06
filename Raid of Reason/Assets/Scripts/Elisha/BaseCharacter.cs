@@ -13,9 +13,13 @@ using XboxCtrlrInput;
 [RequireComponent(typeof(Rigidbody))]
 public abstract class BaseCharacter : MonoBehaviour 
 {
-    const int CAN_ROTATION = 0x01 << 0;
-    const int CAN_MOVE = 0x01 << 1;
-    public enum PlayerState
+	public enum MovementAxis
+	{
+		MOVE	= 0x01 << 0,
+		ROTATE	= 0x01 << 1,
+	}
+
+	public enum PlayerState
     {
         ALIVE,
         DEAD
@@ -67,6 +71,19 @@ public abstract class BaseCharacter : MonoBehaviour
 
     [HideInInspector]
     public bool m_controllerOn;
+	private int movementAxes = (int)MovementAxis.MOVE | (int)MovementAxis.ROTATE;
+
+	public bool CanMove
+	{
+		get => (movementAxes & (int)MovementAxis.MOVE) == (int)MovementAxis.MOVE;
+		set => movementAxes = value ? movementAxes | (int)MovementAxis.MOVE : movementAxes & ~(int)MovementAxis.MOVE;
+	}
+
+	public bool CanRotate
+	{
+		get => (movementAxes & (int)MovementAxis.ROTATE) == (int)MovementAxis.ROTATE;
+		set => movementAxes = value ? movementAxes | (int)MovementAxis.ROTATE : movementAxes & ~(int)MovementAxis.ROTATE;
+	}
 
 	[HideInInspector]
     public MultiTargetCamera m_camera;
@@ -160,50 +177,58 @@ public abstract class BaseCharacter : MonoBehaviour
         // Checks if player is active.
         if (m_controllerOn)
         {
-            // Calculates the x axis of the left stick (left and right movement).
-            float axisX = XCI.GetAxis(XboxAxis.LeftStickX, controller) * m_movementSpeed;
-            // Calculates the z axis of the left stick (forward and backward movement).
-            float axisZ = XCI.GetAxis(XboxAxis.LeftStickY, controller) * m_movementSpeed;
-            // Makes sure Player movement is relative to the direction of the cameras forward.
-            Vector3 movement = m_camera.transform.TransformDirection(axisX, 0, axisZ);
-            m_rigidbody.MovePosition(transform.position + new Vector3(movement.x, 0, movement.z) * Time.deltaTime);
+			// Calculates the x axis of the left stick (left and right movement).
+			float axisX = XCI.GetAxis(XboxAxis.LeftStickX, controller) * m_movementSpeed;
+			// Calculates the z axis of the left stick (forward and backward movement).
+			float axisZ = XCI.GetAxis(XboxAxis.LeftStickY, controller) * m_movementSpeed;
+			// Makes sure Player movement is relative to the direction of the cameras forward.
+			Vector3 movement = m_camera.transform.TransformDirection(axisX, 0, axisZ);
 
-            // Calculates the rotation on the x axis of the right stick.
-            float rotAxisX = XCI.GetAxis(XboxAxis.RightStickX, controller) * m_rotationSpeed;
-            // Calculates the rotation on the z axis of the right stick.
-            float rotAxisZ = XCI.GetAxis(XboxAxis.RightStickY, controller) * m_rotationSpeed;
-            // Makes sure Player rotation is relative to the direction of the cameras forward.
-            Vector3 rawDir = m_camera.transform.TransformDirection(rotAxisX, 0, rotAxisZ);
-            Vector3 direction = new Vector3(rawDir.x, 0, rawDir.z); 
-            // Checks if the magnitude of the vector is less than 0.1
-            if (direction.magnitude < 0.1f)
-            {
-                // Change direction of the vector.
-                direction = m_prevRotDirection;
-            }
-            // Normalise the vector to 1.
-            direction.Normalize();
-            // New direction
-            m_prevRotDirection = direction;
-            // Rotate the player to that direction.
-            transform.localRotation = Quaternion.LookRotation(direction);
+			if (CanMove)
+			{
+				m_rigidbody.MovePosition(transform.position + new Vector3(movement.x, 0, movement.z) * Time.deltaTime);
+			}
 
-            if (m_animator)
-            {
-                // Calculate angle between character's direction and forward
-                float angle = Vector3.SignedAngle(direction, Vector3.forward, Vector3.up);
+			// Calculates the rotation on the x axis of the right stick.
+			float rotAxisX = XCI.GetAxis(XboxAxis.RightStickX, controller) * m_rotationSpeed;
+			// Calculates the rotation on the z axis of the right stick.
+			float rotAxisZ = XCI.GetAxis(XboxAxis.RightStickY, controller) * m_rotationSpeed;
+			// Makes sure Player rotation is relative to the direction of the cameras forward.
+			Vector3 rawDir = m_camera.transform.TransformDirection(rotAxisX, 0, rotAxisZ);
+			Vector3 direction = new Vector3(rawDir.x, 0, rawDir.z);
+			// Checks if the magnitude of the vector is less than 0.1
+			if (direction.magnitude < 0.1f)
+			{
+				// Change direction of the vector.
+				direction = m_prevRotDirection;
+			}
+			// Normalise the vector to 1.
+			direction.Normalize();
+			// New direction
+			m_prevRotDirection = direction;
 
-                // Rotate movement into world space to get animation movement
-                Vector3 animationMovement = Quaternion.AngleAxis(angle, Vector3.up) * movement.normalized;
+			if (CanRotate)
+			{
+				// Rotate the player to that direction.
+				transform.localRotation = Quaternion.LookRotation(direction);
+			}
 
-                // flip x movement if walking backwards
-                animationMovement.x *= animationMovement.z >= 0 ? 1 : -1;
+			if (m_animator)
+			{
+				// Calculate angle between character's direction and forward
+				float angle = Vector3.SignedAngle(direction, Vector3.forward, Vector3.up);
 
-                // Set animator's movement floats
-                m_animator.SetFloat("MovX", animationMovement.x);
-                m_animator.SetFloat("MovZ", animationMovement.z);
-            }
-        }
+				// Rotate movement into world space to get animation movement
+				Vector3 animationMovement = Quaternion.AngleAxis(angle, Vector3.up) * movement.normalized;
+
+				// flip x movement if walking backwards
+				animationMovement.x *= animationMovement.z >= 0 ? 1 : -1;
+
+				// Set animator's movement floats
+				m_animator.SetFloat("MovX", animationMovement.x);
+				m_animator.SetFloat("MovZ", animationMovement.z);
+			}
+		}
     }
 
     /// <summary>
