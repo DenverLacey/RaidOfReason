@@ -205,7 +205,7 @@ public class Kenron : BaseCharacter {
             m_skillPopups[0].enabled = true;
 
 			// calculate desired dash position
-			int layerMask = Utility.GetIgnoreMask("Enemy", "Player");
+			int layerMask = Utility.GetIgnoreMask("Enemy", "Player", "Ignore Raycast");
             RaycastHit hit = new RaycastHit();
             if (Physics.Raycast(transform.position, transform.forward, out hit, m_maxDashDistance + m_dashBufferDistance, layerMask))
             {
