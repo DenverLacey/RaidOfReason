@@ -38,9 +38,17 @@ public class DamageIndicator : MonoBehaviour
 
 	private float m_lifetimeTimer;
 
-	private void Start()
+	public void Init(float damageDealt)
 	{
+		m_textMesh = GetComponent<TextMesh>();
 		m_lifetimeTimer = 0.0f;
+
+		// set text
+		m_textMesh.text = damageDealt.ToString();
+
+		// set colour
+		float percentage = damageDealt / m_maxDamage;
+		m_textMesh.color = m_damageGradient.Evaluate(percentage);
 	}
 
 	// Update is called once per frame
@@ -68,17 +76,5 @@ public class DamageIndicator : MonoBehaviour
 			m_textMesh.color.b,
 			alpha
 		);
-	}
-
-	public void Init(float damageDealt)
-	{
-		m_textMesh = GetComponent<TextMesh>();
-
-		// set text
-		m_textMesh.text = damageDealt.ToString();
-
-		// set colour
-		float percentage = damageDealt / m_maxDamage;
-		m_textMesh.color = m_damageGradient.Evaluate(percentage);
 	}
 }

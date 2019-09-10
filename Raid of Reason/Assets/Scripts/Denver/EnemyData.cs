@@ -169,7 +169,7 @@ public class EnemyData : MonoBehaviour
 	/// <param name="damage">
 	/// How much to decrease enemy's health
 	/// </param>
-	public void TakeDamage(float damage)
+	public void TakeDamage(float damage, BaseCharacter character)
 	{
 		Health -= damage;
 
