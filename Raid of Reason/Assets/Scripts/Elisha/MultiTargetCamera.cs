@@ -57,8 +57,6 @@ public class MultiTargetCamera : MonoBehaviour
 	/// </summary>
 	void FixedUpdate()
     {
-        targets.RemoveAll(target => !target);
-
         // If all players are dead from the array dont do anything.
         if (targets.Count == 0)
 		{

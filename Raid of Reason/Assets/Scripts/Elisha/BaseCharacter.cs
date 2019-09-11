@@ -148,9 +148,10 @@ public abstract class BaseCharacter : MonoBehaviour
                 // Player gets removed from camera array.
                 if (m_camera.targets.Count > 0)
                 {
-                    m_camera.targets.Remove(this.gameObject.transform);
+                    m_camera.targets.Remove(transform);
                 }
-                m_playerCollider.enabled = false;
+                gameObject.SetActive(false);
+                Destroy(gameObject);
                 break;
 
 			default:
@@ -272,7 +273,6 @@ public abstract class BaseCharacter : MonoBehaviour
         {
             //OnDeath();
             playerState = PlayerState.DEAD;
-            gameObject.SetActive(false);
         }
     } 
 

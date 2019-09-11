@@ -126,7 +126,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4820443638325163085}
   - component: {fileID: 8109628020683557465}
-  - component: {fileID: 4106053625272342730}
   - component: {fileID: 988320159138187896}
   - component: {fileID: 4604071969392488354}
   - component: {fileID: 3777708967802242873}
@@ -172,19 +171,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 3
---- !u!135 &4106053625272342730
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4820443638325454957}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!136 &988320159138187896
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -236,7 +222,7 @@ MonoBehaviour:
   m_projectile: {fileID: 1119944734783606, guid: 4dab86d7c4169194e9d7640ac578ff72,
     type: 3}
   m_projectileDelay: 0.2
-  m_AOEParticleCollider: {fileID: 4106053625272342730}
+  m_AOEParticleCollider: {fileID: 0}
   m_HealRadius: {fileID: 8649241569059682644}
   m_HealRadius_2: {fileID: 8649241569059708452}
   m_HealRadius_3: {fileID: 9022507036371813924}
@@ -530,13 +516,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4820443638325163085}
     m_Modifications:
-    - target: {fileID: 19849970, guid: 37e803394624a5c48ae5f13fd212ac0b, type: 3}
-      propertyPath: ShapeModule.radius.value
-      value: 0.0001
-      objectReference: {fileID: 0}
-    - target: {fileID: 19809666, guid: 37e803394624a5c48ae5f13fd212ac0b, type: 3}
-      propertyPath: ShapeModule.radius.value
-      value: 0.0001
+    - target: {fileID: 159196, guid: 37e803394624a5c48ae5f13fd212ac0b, type: 3}
+      propertyPath: m_Name
+      value: GiftOfPoseidon
       objectReference: {fileID: 0}
     - target: {fileID: 428174, guid: 37e803394624a5c48ae5f13fd212ac0b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -582,9 +564,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 159196, guid: 37e803394624a5c48ae5f13fd212ac0b, type: 3}
-      propertyPath: m_Name
-      value: GiftOfPoseidon
+    - target: {fileID: 19849970, guid: 37e803394624a5c48ae5f13fd212ac0b, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 0.0001
+      objectReference: {fileID: 0}
+    - target: {fileID: 19809666, guid: 37e803394624a5c48ae5f13fd212ac0b, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 0.0001
       objectReference: {fileID: 0}
     - target: {fileID: 19857428, guid: 37e803394624a5c48ae5f13fd212ac0b, type: 3}
       propertyPath: ShapeModule.type
@@ -653,14 +639,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4820443638325163085}
     m_Modifications:
-    - target: {fileID: 19891704, guid: 7dc0b63f67faaf9479803bcfdff7f71e, type: 3}
-      propertyPath: looping
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 19891704, guid: 7dc0b63f67faaf9479803bcfdff7f71e, type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 100672, guid: 7dc0b63f67faaf9479803bcfdff7f71e, type: 3}
       propertyPath: m_Name
       value: HealEffect_3
@@ -707,6 +685,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 484662, guid: 7dc0b63f67faaf9479803bcfdff7f71e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19891704, guid: 7dc0b63f67faaf9479803bcfdff7f71e, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19891704, guid: 7dc0b63f67faaf9479803bcfdff7f71e, type: 3}
+      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 19840972, guid: 7dc0b63f67faaf9479803bcfdff7f71e, type: 3}
