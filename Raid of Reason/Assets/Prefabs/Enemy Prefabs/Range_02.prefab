@@ -76,7 +76,6 @@ MonoBehaviour:
   m_animator: {fileID: 0}
   isDeadbByKenron: 0
   isAttackingNashorn: 1
-  m_damageIndicator: {fileID: 0}
 --- !u!114 &8514988622669061710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,6 +119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_speed: 3
   m_steeringSpeed: 10
+  m_destBufferDist: 0.1
   manualSteering: 0
 --- !u!1001 &2137774039022456821
 PrefabInstance:
@@ -400,6 +400,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5707208689818696768}
     m_Modifications:
+    - target: {fileID: 100000, guid: d0a8cfb9381b796449b9bbe9cfd6b392, type: 3}
+      propertyPath: m_Name
+      value: Hollows_Skulker_Base_001
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d0a8cfb9381b796449b9bbe9cfd6b392, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.171
@@ -443,10 +447,6 @@ PrefabInstance:
     - target: {fileID: 400000, guid: d0a8cfb9381b796449b9bbe9cfd6b392, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: d0a8cfb9381b796449b9bbe9cfd6b392, type: 3}
-      propertyPath: m_Name
-      value: Hollows_Skulker_Base_001
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: d0a8cfb9381b796449b9bbe9cfd6b392, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -564,6 +564,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5707208689818696768}
     m_Modifications:
+    - target: {fileID: 19800002, guid: b4160dd0a48b65c4d8f5c8f01715ca1b, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: b4160dd0a48b65c4d8f5c8f01715ca1b, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: b4160dd0a48b65c4d8f5c8f01715ca1b, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[1].countCurve.scalar
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 100008, guid: b4160dd0a48b65c4d8f5c8f01715ca1b, type: 3}
       propertyPath: m_Name
       value: GauntletParticle
@@ -611,18 +623,6 @@ PrefabInstance:
     - target: {fileID: 400006, guid: b4160dd0a48b65c4d8f5c8f01715ca1b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 19800002, guid: b4160dd0a48b65c4d8f5c8f01715ca1b, type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 19800002, guid: b4160dd0a48b65c4d8f5c8f01715ca1b, type: 3}
-      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 19800002, guid: b4160dd0a48b65c4d8f5c8f01715ca1b, type: 3}
-      propertyPath: EmissionModule.m_Bursts.Array.data[1].countCurve.scalar
-      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 19800000, guid: b4160dd0a48b65c4d8f5c8f01715ca1b, type: 3}
       propertyPath: playOnAwake
