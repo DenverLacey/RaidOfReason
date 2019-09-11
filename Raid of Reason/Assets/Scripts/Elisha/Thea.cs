@@ -22,9 +22,9 @@ public class Thea : BaseCharacter
     [Tooltip("How long of a delay will it take for her next projectile to instiantiate?")]
     private float m_projectileDelay;
 
-    [SerializeField]
-    [Tooltip("AOE collider that grows over time.")]
-    private SphereCollider m_AOEParticleCollider;
+    //[SerializeField]
+    //[Tooltip("AOE collider that grows over time.")]
+    //private SphereCollider m_AOEParticleCollider;
 
     [SerializeField]
     [Tooltip("The AOE particle used for visual effect.")]
@@ -123,7 +123,6 @@ public class Thea : BaseCharacter
         m_HealRadius_2.gameObject.SetActive(false);
         m_AOEShapeModule = m_HealRadius.shape;
         m_AOEShapeModule_2 = m_HealRadius_2.shape;
-        m_AOEParticleCollider.enabled = false;
         foreach (Image display in m_skillPopups)
         {
             display.enabled = false;
@@ -320,8 +319,6 @@ public class Thea : BaseCharacter
     public void GiftOfPoseidon()
     { 
         m_isActive = true;
-        // Enables collider for the ability.
-        m_AOEParticleCollider.enabled = true;
 
         // Checks if player can use the ability.
         if (m_isActive == true)
@@ -339,12 +336,10 @@ public class Thea : BaseCharacter
             m_AOERadius = Mathf.Lerp(m_AOERadius, m_AOEMax, m_AOETimer / m_AOEGrowTime);
 
             // AOE collider radius grows in conjuction to the lerp.
-            m_AOEParticleCollider.radius = m_AOERadius;
-            Debug.Log("Collider radius: " + m_AOEParticleCollider.radius + "Float radius: " + m_AOERadius);
+            Debug.Log("Float radius: " + m_AOERadius);
 
-            // Temporary way of doing the particles.
-            m_AOEShapeModule.radius = m_AOEParticleCollider.radius;
-            m_AOEShapeModule_2.radius = m_AOEParticleCollider.radius;
+            m_AOEShapeModule.radius = m_AOERadius;
+            m_AOEShapeModule_2.radius = m_AOERadius;
             m_skillActive = true;
         }
 
@@ -429,7 +424,7 @@ public class Thea : BaseCharacter
         m_AOETimer = 0f;
         m_isActive = false;
         m_AOERadius = m_AOEMin;
-        m_AOEParticleCollider.enabled = false;
+        //m_AOEParticleCollider.enabled = false;
         m_controllerOn = true;
         m_AOEShapeModule.radius = 1;
 

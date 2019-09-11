@@ -152,6 +152,7 @@ public abstract class BaseCharacter : MonoBehaviour
                 }
                 gameObject.SetActive(false);
                 Destroy(gameObject);
+                Destroy(gameObject);
                 break;
 
 			default:
