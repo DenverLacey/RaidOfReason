@@ -40,6 +40,18 @@ public class EnemyData : MonoBehaviour
     [SerializeField]
     private GameObject m_tauntIcon;
 
+    [SerializeField]
+    private ParticleSystem m_electricEffect;
+
+    [SerializeField]
+    private ParticleSystem m_bloodEffect;
+
+    [SerializeField]
+    private ParticleSystem m_waterEffect;
+
+    [SerializeField]
+    private ParticleSystem m_burningEffect;
+
     public EnemyType Type { get => m_type; }
     public float ViewRange { get; private set; }
     public float MaxHealth { get; private set; }
@@ -179,16 +191,67 @@ public class EnemyData : MonoBehaviour
 		}
 
 		DisplayDamage(damage);
-		IndicateHit();
+		IndicateHit(character);
 	}
 
 	/// <summary>
 	/// Changes enemy's renderer's material colour to red for .2 seconds
 	/// </summary>
-	public void IndicateHit()
+	public void IndicateHit(BaseCharacter character)
 	{
-		Renderer.material.color = Color.red;
-		StartCoroutine(ResetColour(.2f));
+        Renderer.material.color = Color.red;
+        StartCoroutine(ResetColour(.2f));
+
+        switch (character.CharacterType)
+        {
+            case Character.KENRON:
+                if (GameManager.Instance.Kenron.isActive)
+                {
+                    if(m_burningEffect != null)
+                    {
+                        m_burningEffect.Play();
+                    }
+                    else
+                    {
+                        Debug.LogFormat("{0} is null", m_burningEffect.name);
+                    }
+                }
+                else
+                {
+                    if(m_bloodEffect != null)
+                    {
+                        m_bloodEffect.Play();
+                    }
+                    else
+                    {
+                        Debug.LogFormat("{0} is null", m_bloodEffect.name);
+                    }
+                    m_burningEffect.Stop();
+                }
+                break;
+
+            case Character.NASHORN:
+                if (m_electricEffect != null)
+                {
+                    m_electricEffect.Play();
+                }
+                else
+                {
+                    Debug.LogFormat("{0} is null", m_electricEffect.name);
+                }
+                break;
+
+            case Character.THEA:
+                if (m_waterEffect != null)
+                {
+                    m_waterEffect.Play();
+                }
+                else
+                {
+                    Debug.LogFormat("{0} is null", m_waterEffect.name);
+                }
+                break;
+        }
 	}
 
 	IEnumerator ResetColour(float duration)

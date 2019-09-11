@@ -609,6 +609,11 @@ PrefabInstance:
       propertyPath: controller
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9177747288968116300, guid: d1688a9842b208a42b0186bf1175fd68,
+        type: 3}
+      propertyPath: m_maxHealth
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 4086268057125856014, guid: d1688a9842b208a42b0186bf1175fd68,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1634,11 +1639,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Range_02
       objectReference: {fileID: 0}
-    - target: {fileID: 3774334560616408345, guid: 1a7661fa950b2cc42b35751633494eb9,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5707208689818696768, guid: 1a7661fa950b2cc42b35751633494eb9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1694,21 +1694,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3774334560616408342, guid: 1a7661fa950b2cc42b35751633494eb9,
-        type: 3}
-      propertyPath: DissolveSpeed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3774334560616408342, guid: 1a7661fa950b2cc42b35751633494eb9,
-        type: 3}
-      propertyPath: currentY
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5600712715307690209, guid: 1a7661fa950b2cc42b35751633494eb9,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 4300000, guid: d0a8cfb9381b796449b9bbe9cfd6b392, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a7661fa950b2cc42b35751633494eb9, type: 3}
 --- !u!1001 &1501095539
@@ -1828,6 +1813,11 @@ PrefabInstance:
       propertyPath: skillManager
       value: 
       objectReference: {fileID: 1578306635}
+    - target: {fileID: 4604071969392488354, guid: db1a93841802ddd4d9bb862ae4b9deaf,
+        type: 3}
+      propertyPath: controller
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7506323965490325401, guid: db1a93841802ddd4d9bb862ae4b9deaf,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2295,7 +2285,7 @@ PrefabInstance:
     - target: {fileID: 5343003624369889655, guid: 028f443e64577e14d88d5b1ea697cf88,
         type: 3}
       propertyPath: controller
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3449384978197968183, guid: 028f443e64577e14d88d5b1ea697cf88,
         type: 3}
@@ -2366,11 +2356,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Melee_02
       objectReference: {fileID: 0}
-    - target: {fileID: 8343399046292329858, guid: 0ec7fead950632146b7cda42c7f49dc4,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3821506756914221167, guid: 0ec7fead950632146b7cda42c7f49dc4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2428,13 +2413,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8343399046292329857, guid: 0ec7fead950632146b7cda42c7f49dc4,
         type: 3}
-      propertyPath: DissolveSpeed
+      propertyPath: m_electricEffect
+      value: 
+      objectReference: {fileID: 2018702074079837751}
+    - target: {fileID: 2018702074097755997, guid: 0ec7fead950632146b7cda42c7f49dc4,
+        type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8343399046292329857, guid: 0ec7fead950632146b7cda42c7f49dc4,
+    - target: {fileID: 1723701932058832903, guid: 0ec7fead950632146b7cda42c7f49dc4,
         type: 3}
-      propertyPath: currentY
-      value: 3
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1723701932058832903, guid: 0ec7fead950632146b7cda42c7f49dc4,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.24888891
+      objectReference: {fileID: 0}
+    - target: {fileID: 1723701932058832903, guid: 0ec7fead950632146b7cda42c7f49dc4,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ec7fead950632146b7cda42c7f49dc4, type: 3}
@@ -2942,6 +2942,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!198 &2018702074079837751 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2018702074079837751, guid: 0ec7fead950632146b7cda42c7f49dc4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1831158203}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2401059402264598625
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3088,6 +3094,41 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -0.000008583069
+      objectReference: {fileID: 0}
+    - target: {fileID: 1078968941617604928, guid: e645cb267fcc2db478863b9dc482236b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1985697081456252743, guid: e645cb267fcc2db478863b9dc482236b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1985697081456252743, guid: e645cb267fcc2db478863b9dc482236b,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1985697081456252743, guid: e645cb267fcc2db478863b9dc482236b,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 401147802215840416, guid: e645cb267fcc2db478863b9dc482236b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 401147802215840416, guid: e645cb267fcc2db478863b9dc482236b,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 401147802215840416, guid: e645cb267fcc2db478863b9dc482236b,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e645cb267fcc2db478863b9dc482236b, type: 3}

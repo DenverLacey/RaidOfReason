@@ -234,7 +234,7 @@ public class Thea : BaseCharacter
             {
                 // Instantiate projectile object.
                 Vector3 desiredPosition = transform.position + transform.forward;
-                desiredPosition.y = m_collider.bounds.size.y * transform.lossyScale.y;
+                desiredPosition.y = 1;
                 GameObject temp = Instantiate(m_projectile, desiredPosition, transform.rotation);
                 // Set projectile damage and move projectile.
 				temp.GetComponent<ProjectileMove>().SetDamage(m_damage);
