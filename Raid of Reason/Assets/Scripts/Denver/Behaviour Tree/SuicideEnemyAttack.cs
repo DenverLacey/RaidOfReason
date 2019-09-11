@@ -48,6 +48,8 @@ public class SuicideEnemyAttack : Behaviour
 
 			GameObject.Instantiate(agent.AttackPrefabs[0], agent.transform.position, Quaternion.identity);
 			agent.Die();
+
+			return SUCCESS;
 		}
 
 		return PENDING_MONO;
