@@ -14,9 +14,6 @@ using XboxCtrlrInput;
 
 public class Kenron : BaseCharacter {
 
-    [Tooltip("The Aethereal Kenron that Spawns on Death")]
-    public ChildKenron childKenron;
-
     [Tooltip("The Sword Kenron Is Using")]
     public GameObject Amaterasu;
 
@@ -105,6 +102,10 @@ public class Kenron : BaseCharacter {
     // Kenrons Collider
 	private CapsuleCollider m_collider;
 
+    // Stat Tracker
+    [HideInInspector]
+    public StatTrackingManager m_statManager;
+
 	private void Start()
 	{
 		GameManager.Instance.GiveCharacterReference(this);
@@ -116,12 +117,7 @@ public class Kenron : BaseCharacter {
         base.Awake();
         CharacterType = Character.KENRON;
         m_Enemy = FindObjectOfType<EnemyData>();
-		childKenron = FindObjectOfType<ChildKenron>();
-
-		if (childKenron)
-		{
-			childKenron.gameObject.SetActive(false);
-		}
+        m_statManager = FindObjectOfType<StatTrackingManager>();
 
         isDashing = false;
         isBurning = false;
@@ -133,6 +129,7 @@ public class Kenron : BaseCharacter {
                 display.enabled = false;
             }
         }
+
 		// set size of dash hit box
 		Vector3 hitBoxSize = new Vector3(m_dashCollider.size.x, m_dashCollider.size.y, m_maxDashDistance);
 		m_dashCollider.size = hitBoxSize;
@@ -180,6 +177,7 @@ public class Kenron : BaseCharacter {
                 SetHealth(m_currentHealth / 2);
                 SetDamage(m_chaosFlameDamage);
                 SetSpeed(m_chaosFlameSpeed);
+                m_statManager.chaosFlameUsed++;
             }
         }
     }
@@ -212,6 +210,7 @@ public class Kenron : BaseCharacter {
             {
                 m_dashPosition = hit.point;
 				m_dashPosition -= transform.forward * (m_collider.radius * transform.lossyScale.x + m_dashBufferDistance);
+                m_statManager.dashesUsed++;
             }
             else
             {
@@ -237,9 +236,7 @@ public class Kenron : BaseCharacter {
 		if (isDashing)
 		{
 			if (!m_controllerOn)
-			{
-				//Vector3 lerpPosition = Vector3.Lerp(transform.position, m_dashPosition, m_dashSpeed * Time.deltaTime);
-    //            m_rigidbody.MovePosition(lerpPosition);
+            { 
 
 				Vector3 smoothPosition = Vector3.SmoothDamp(transform.position, m_dashPosition, ref m_dashVelocity, 1f / m_dashSpeed);
 				m_rigidbody.MovePosition(smoothPosition);
@@ -251,20 +248,23 @@ public class Kenron : BaseCharacter {
             {
 				// reset boolean flags
 				m_dashCollider.enabled = false;
-				m_animator.SetBool("Attack", false);
+				m_animator.SetBool("Attack", false);               
 
                 // Icon pops up
                 m_skillPopups[0].enabled = false;
 
                 // run delay timer
                 m_dashDelayTimer -= Time.deltaTime;
-			}
+
+                m_dashCollider.GetComponent<SwordDamage>().CalculateNewMostDamageDealt();
+            }
 
 			// if ready to dash again 
 			if (m_dashDelayTimer <= 0.0f)
 			{
 				m_controllerOn = true;
 				isDashing = false;
+
 			}
         }
     }
@@ -325,13 +325,7 @@ public class Kenron : BaseCharacter {
             // If Kenron has the skill specificed and his health is less than or equal to 0
             if (m_skillUpgrades.Find(skill => skill.Name == "Curse of Amaterasu") && m_currentHealth <= 0.0f)
             {
-                //GameObject part = Instantiate(m_CurseEffect, childKenron.transform.position + Vector3.down * 0.5f, Quaternion.Euler(270, 0, 0), transform);
-				if (childKenron != null)
-				{
-					// Disables Main kenron, Spawns and enables Child kenron at Main Kenrons position 
-					childKenron.gameObject.SetActive(true);                  
-					childKenron.CheckStatus();
-				}
+               
             }
         }
     }

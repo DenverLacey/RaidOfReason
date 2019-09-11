@@ -6,47 +6,55 @@ using UnityEngine.UI;
 
 public class StatTrackingManager : MonoBehaviour
 {
-    public TextMeshPro K_Damage_Dealt_Count;
-    public TextMeshPro K_HellFire_Dash_Count;
-    public TextMeshPro K_Chaos_Flame_Count;
-    public TextMeshPro K_Damage_In_A_Single_Dash_Count;
+    public TextMeshProUGUI K_Damage_Dealt_Count;
+    public TextMeshProUGUI K_HellFire_Dash_Count;
+    public TextMeshProUGUI K_Chaos_Flame_Count;
+    public TextMeshProUGUI K_Damage_In_A_Single_Dash_Count;
 
-    public TextMeshPro N_Damage_Taken_Count;
-    public TextMeshPro N_Enemies_Taunted_Count;
-    public TextMeshPro N_Sheilds_Charged_Count;
-    public TextMeshPro N_Enemies_Taunted_At_Once_Count;
+    public TextMeshProUGUI N_Damage_Taken_Count;
+    public TextMeshProUGUI N_Enemies_Taunted_Count;
+    public TextMeshProUGUI N_Sheilds_Charged_Count;
+    public TextMeshProUGUI N_Enemies_Taunted_At_Once_Count;
 
-    public TextMeshPro T_Damage_Healed_Count;
-    public TextMeshPro T_Total_Number_Of_Heals_Count;
-    public TextMeshPro T_Fully_Charged_GOP_Count;
-    public TextMeshPro T_All_Three_Players_Healed_Count;
-
-    [HideInInspector]
-    public int m_dashesUsed;
-    [HideInInspector]
-    public int m_chaosFlameUsed;
+    public TextMeshProUGUI T_Damage_Healed_Count;
+    public TextMeshProUGUI T_Total_Number_Of_Heals_Count;
+    public TextMeshProUGUI T_Fully_Charged_GOP_Count;
+    public TextMeshProUGUI T_All_Three_Players_Healed_Count;
 
     [HideInInspector]
-    public int m_enemiesTaunted;
+    public int dashesUsed;
     [HideInInspector]
-    public int m_highestTaunted;
+    public int chaosFlameUsed;
+    [HideInInspector]
+    public float damageInTotal;
+    [HideInInspector]
+    public float mostDamageInASingleDash;
 
     [HideInInspector]
-    public int m_gopUsed;
+    public float damageTaken;
     [HideInInspector]
-    public int m_gopHitThree;
+    public int enemiesTaunted;
+    [HideInInspector]
+    public float highestTaunted;
+    [HideInInspector]
+    public float totalSheildsCharged;
+
+    [HideInInspector]
+    public int gopUsed;
+    [HideInInspector]
+    public int gopHitThree;
 
     private GameManager m_gameManager;
 
     public void Awake()
     {
         m_gameManager = FindObjectOfType<GameManager>();
-        m_dashesUsed = 0;
-        m_chaosFlameUsed = 0;
-        m_enemiesTaunted = 0;
-        m_highestTaunted = 0;
-        m_gopUsed = 0;
-        m_gopHitThree = 0;
+        dashesUsed = 0;
+        chaosFlameUsed = 0;
+        enemiesTaunted = 0;
+        highestTaunted = 0;
+        gopUsed = 0;
+        gopHitThree = 0;
     }
 
     public void Update()
@@ -55,18 +63,23 @@ public class StatTrackingManager : MonoBehaviour
         {
             if (m_gameManager.Kenron)
             {
-                K_HellFire_Dash_Count.text = m_dashesUsed.ToString("f0");
-                K_Chaos_Flame_Count.text = m_chaosFlameUsed.ToString("f0");                
+                K_HellFire_Dash_Count.text = dashesUsed.ToString("f0");
+                K_Chaos_Flame_Count.text = chaosFlameUsed.ToString("f0");
+                K_Damage_Dealt_Count.text = damageInTotal.ToString("f0");
+                K_Damage_In_A_Single_Dash_Count.text = mostDamageInASingleDash.ToString("f0");
             }
             if (m_gameManager.Nashorn)
-            {
-                N_Enemies_Taunted_Count.text = m_enemiesTaunted.ToString("f0");
-                N_Enemies_Taunted_At_Once_Count.text = m_highestTaunted.ToString("f0");
+            {               
+                N_Damage_Taken_Count.text = damageTaken.ToString("f0");
+                N_Sheilds_Charged_Count.text = totalSheildsCharged.ToString("f0");
+                N_Enemies_Taunted_Count.text = enemiesTaunted.ToString("f0");
+                N_Enemies_Taunted_At_Once_Count.text = highestTaunted.ToString("f0");
+                DebugTools.LogVariable("Shields Taken", totalSheildsCharged);
             }
             if (m_gameManager.Thea)
             {
-                T_Total_Number_Of_Heals_Count.text = m_gopUsed.ToString("f0");
-                T_All_Three_Players_Healed_Count.text = m_gopHitThree.ToString("f0");
+                T_Total_Number_Of_Heals_Count.text = gopUsed.ToString("f0");
+                T_All_Three_Players_Healed_Count.text = gopHitThree.ToString("f0");
             }
 
         }
@@ -74,12 +87,12 @@ public class StatTrackingManager : MonoBehaviour
 
     public void ResetStats()
     {
-        m_dashesUsed = 0;
-        m_chaosFlameUsed = 0;
-        m_enemiesTaunted = 0;
-        m_highestTaunted = 0;
-        m_gopHitThree = 0;
-        m_gopUsed = 0;
+        dashesUsed = 0;
+        chaosFlameUsed = 0;
+        enemiesTaunted = 0;
+        highestTaunted = 0;
+        gopHitThree = 0;
+        gopUsed = 0;
     }
 
   

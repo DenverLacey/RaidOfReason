@@ -102,8 +102,13 @@ public class Nashorn : BaseCharacter
     // Nearby enemies
     [SerializeField]
     public EnemyData enemies;
+    // Stat Tracker
+    [HideInInspector]
+    public StatTrackingManager m_statManager;
 
-	private void Start()
+    private float totalAmountTaunted;
+    private float amountTaunted;
+    private void Start()
 	{
 		GameManager.Instance.GiveCharacterReference(this);
         m_collider = GetComponent<CapsuleCollider>();
@@ -115,6 +120,7 @@ public class Nashorn : BaseCharacter
         base.Awake();
         CharacterType = Character.NASHORN;
         m_tauntParticle.GetComponentInChildren<ParticleSystem>();
+        m_statManager = FindObjectOfType<StatTrackingManager>();
         LeftGauntlet.enabled = false;
         RightGauntlet.enabled = false;
         isTaunting = false;
@@ -151,9 +157,6 @@ public class Nashorn : BaseCharacter
     {
         // Allows Nashorn to perform Melee Punches 
         base.Update();
-
-		DebugTools.LogVariable("Health", m_currentHealth);
-
         Punch();
     }
 
@@ -368,7 +371,7 @@ public class Nashorn : BaseCharacter
 				float sqrDist = (enemy.transform.position - transform.position).sqrMagnitude;
 				if (sqrDist <= m_tauntRadius * m_tauntRadius)
 				{
-					enemy.Taunted = true;
+                    enemy.Taunted = true;
 				}
 			}
 
@@ -377,6 +380,7 @@ public class Nashorn : BaseCharacter
 
             m_tauntParticle.Play();
             StartCoroutine(MachinasDareVisual());
+            totalAmountTaunted = 0;
 
             // set vulnerability
             m_vulnerability = m_tauntVulnerability;
@@ -397,4 +401,5 @@ public class Nashorn : BaseCharacter
             isTaunting = false;
         }
     }
+
 }

@@ -22,6 +22,7 @@ public class SmashDamage : MonoBehaviour
             if (enemy && XCI.GetAxis(XboxAxis.RightTrigger, GameManager.Instance.Nashorn.controller) > 0.1)
             {
                 GameManager.Instance.Nashorn.currentShield += GameManager.Instance.Nashorn.shieldGain;
+
                 // Knock back enemies with every punch Nashorn lands.
                 Rigidbody rb = other.GetComponent<Rigidbody>();
                 if (rb != null)

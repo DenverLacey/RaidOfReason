@@ -100,6 +100,7 @@ public abstract class BaseCharacter : MonoBehaviour
     private MeshRenderer m_renderer;
     private Color m_originalColour;
 
+
     /// <summary>
     /// This will be called first.
     /// </summary>
@@ -161,7 +162,7 @@ public abstract class BaseCharacter : MonoBehaviour
         }
 
         // if the player has no shield.
-        if(currentShield <= 0)
+        if (currentShield <= 0)
         {
             // Set shield to 0.
             currentShield = 0;
@@ -236,6 +237,12 @@ public abstract class BaseCharacter : MonoBehaviour
     /// <param name="damage"></param>
     public virtual void TakeDamage(float damage)
     {
+        if (this.gameObject.tag == "Nashorn")
+        {
+            GameManager.Instance.Nashorn.m_statManager.damageTaken += damage;
+            GameManager.Instance.Nashorn.m_statManager.totalSheildsCharged += GameManager.Instance.Nashorn.currentShield;
+        }
+
         if (currentShield > 0)
         {
             currentShield -= damage * m_vulnerability;
