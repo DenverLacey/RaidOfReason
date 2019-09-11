@@ -13,8 +13,30 @@ using static Behaviour.Result;
 /// </summary>
 public class MeleeEnemyAttack : Behaviour
 {
+	private BaseCharacter m_targetPlayer;
+
+	void OnAttackAnimation(EnemyData agent)
+	{
+		// reset attack timer
+		agent.AttackTimer = 0.0f;
+		agent.Attacking = false;
+
+		// attack player
+		// TODO: Replace with Instantiate(agent.AttackPrefab, agent.transform.position + agent.transform.forward, Quaternion.identity);
+
+		if (m_targetPlayer)
+		{
+			m_targetPlayer.TakeDamage(agent.AttackDamage);
+
+			if (m_targetPlayer.tag == "Nashorn")
+			{
+				agent.isAttackingNashorn = true;
+			}
+		}
+	}
+
 	/// <summary>
-	/// Performs attack behav     hgdsgszdglkjadfglkjsd g   iour on given melee enemy agent
+	/// Performs attack behaviour on given melee enemy agent
 	/// </summary>
 	/// <param name="agent">
 	/// Agent to perform behaviour on
@@ -24,47 +46,39 @@ public class MeleeEnemyAttack : Behaviour
 	/// </returns>
     public override Result Execute(EnemyData agent)
 	{
+		// set OnAttackAnimation delegate for agent
+		if (agent.OnAttackDelegate == null)
+		{
+			agent.OnAttackDelegate = OnAttackAnimation;
+		}
+
 		// rotate to face player
 		Vector3 direction = (agent.Target - agent.transform.position).normalized;
 		direction.y = 0f;
 		Quaternion desiredRotation = Quaternion.LookRotation(direction, Vector3.up);
 		agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, desiredRotation, .25f);
 
-		agent.Attacking = true;
 		agent.AttackTimer += Time.deltaTime;
 
 		agent.Pathfinder.StopPathing();
 
-		if (agent.AttackTimer >= agent.AttackCooldown)
+		if (agent.AttackTimer >= agent.AttackCooldown && !agent.Attacking)
 		{
-			// reset attacking variables
-			agent.Attacking = false;
-			agent.AttackTimer = 0.0f;
-
-			// attack player
-			// TODO: Replace with Instantiate(agent.AttackPrefab, agent.transform.position + agent.transform.forward, Quaternion.identity);
+			agent.Attacking = true;
 
 			// play attack animation
 			agent.SetAnimatorTrigger("Attack");
 
 			if (Physics.Raycast(agent.transform.position, agent.transform.forward, out RaycastHit hit, agent.AttackRange.max))
 			{
-				BaseCharacter player = hit.collider.GetComponent<BaseCharacter>();
-
-				if (player)
-				{                    
-					player.TakeDamage(agent.AttackDamage);
-                    if (player.tag == "Nashorn")
-                        agent.isAttackingNashorn = true;
-
-                }
+				m_targetPlayer = hit.collider.GetComponent<BaseCharacter>();
 			}
 			else
 			{
+				m_targetPlayer = null;
 				return FAILURE;
 			}
 		}
-
 		return PENDING_COMPOSITE;
 	}
 }

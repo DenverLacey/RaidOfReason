@@ -30,7 +30,7 @@ public class DebugTools : MonoBehaviour
 		string newText = "";
 		foreach (var pair in m_loggedVariables)
 		{
-			newText += string.Format("{0}: {1}\n", pair.Key, pair.Value.ToString());
+			newText += string.Format("{0}: {1}\n", pair.Key, (pair.Value != null ? pair.Value.ToString() : "null"));
 		}
 		m_textField.text = newText;
 	}

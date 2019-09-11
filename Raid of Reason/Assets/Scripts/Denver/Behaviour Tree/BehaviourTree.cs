@@ -12,9 +12,6 @@ using UnityEngine;
 /// </summary>
 public abstract class BehaviourTree : ScriptableObject
 {
-    public GameObject m_tauntIcon;
-    public float m_tauntIconOffset;
-
 	/// <summary>
 	/// Executes Behaviours functionality
 	/// </summary>

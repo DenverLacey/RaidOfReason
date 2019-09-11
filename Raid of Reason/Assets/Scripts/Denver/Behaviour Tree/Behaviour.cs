@@ -22,6 +22,8 @@ public abstract class Behaviour
 		PENDING_ABORT
     }
 
+	public delegate void OnAnimationEvent(EnemyData agent);
+
 	/// <summary>
 	/// Executes Behaviours functionality
 	/// </summary>

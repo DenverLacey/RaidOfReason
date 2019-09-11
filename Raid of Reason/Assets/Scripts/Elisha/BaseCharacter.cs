@@ -15,10 +15,20 @@ public abstract class BaseCharacter : MonoBehaviour
 {
     public Character CharacterType { get; protected set; }
 
-	public enum MovementAxis
+	//public enum MovementAxis
+	//{
+	//	MOVE	= 0x01 << 0,
+	//	ROTATE	= 0x01 << 1,
+	//}
+
+	public struct MovementAxis
 	{
-		MOVE	= 0x01 << 0,
-		ROTATE	= 0x01 << 1,
+		public static int Move   { get => 0x01 << 0; }
+		public static int Rotate { get => 0x01 << 1; }
+		public static int All	 { get => Move | Rotate; }
+
+		private static int[] m_enumerate = { Move, Rotate };
+		public static int[] Enumerate { get => m_enumerate; }
 	}
 
 	public enum PlayerState
@@ -73,18 +83,18 @@ public abstract class BaseCharacter : MonoBehaviour
 
     [HideInInspector]
     public bool m_controllerOn;
-	private int movementAxes = (int)MovementAxis.MOVE | (int)MovementAxis.ROTATE;
+	private int movementAxes = MovementAxis.Move | MovementAxis.Rotate;
 
 	public bool CanMove
 	{
-		get => (movementAxes & (int)MovementAxis.MOVE) == (int)MovementAxis.MOVE;
-		set => movementAxes = value ? movementAxes | (int)MovementAxis.MOVE : movementAxes & ~(int)MovementAxis.MOVE;
+		get => (movementAxes & MovementAxis.Move) == MovementAxis.Move;
+		set => movementAxes = value ? movementAxes | MovementAxis.Move : movementAxes & ~MovementAxis.Move;
 	}
 
 	public bool CanRotate
 	{
-		get => (movementAxes & (int)MovementAxis.ROTATE) == (int)MovementAxis.ROTATE;
-		set => movementAxes = value ? movementAxes | (int)MovementAxis.ROTATE : movementAxes & ~(int)MovementAxis.ROTATE;
+		get => (movementAxes & MovementAxis.Rotate) == MovementAxis.Rotate;
+		set => movementAxes = value ? movementAxes | MovementAxis.Rotate : movementAxes & ~MovementAxis.Rotate;
 	}
 
 	[HideInInspector]

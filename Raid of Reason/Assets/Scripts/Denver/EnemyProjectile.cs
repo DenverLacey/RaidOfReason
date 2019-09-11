@@ -21,6 +21,10 @@ public class EnemyProjectile : MonoBehaviour
     [SerializeField] 
     private float m_speed;
 
+	[Tooltip("Maximum angle of inaccuracy")]
+	[SerializeField]
+	private float m_maxInaccuracyAngle;
+
     private float m_timer;
     private float m_damage;
 
@@ -30,6 +34,10 @@ public class EnemyProjectile : MonoBehaviour
     void Start() 
     {
         m_timer = m_lifetime;
+
+		// introduce inaccuracy to shot
+		float angle = Random.Range(-m_maxInaccuracyAngle, m_maxInaccuracyAngle);
+		transform.rotation = Quaternion.AngleAxis(angle, Vector3.up) * transform.rotation;
     }
 
     // Update is called once per frame
@@ -40,7 +48,7 @@ public class EnemyProjectile : MonoBehaviour
 
         if (m_timer <= 0.0f) 
         {
-            Destroy(gameObject);
+			KillProjectile();
         }
     }
 
@@ -82,8 +90,12 @@ public class EnemyProjectile : MonoBehaviour
 		// if hit some object
 		if (other.tag != "EnemyManager" && other.tag != "Enemy")
 		{
-			Destroy(gameObject);
+			KillProjectile();
 		}
-
     }
+
+	void KillProjectile()
+	{
+		Destroy(gameObject);
+	}
 }

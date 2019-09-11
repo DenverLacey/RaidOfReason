@@ -96,7 +96,9 @@ public class EnemyData : MonoBehaviour
 	// Pathfinding Stuff
 	public EnemyPathfinding Pathfinder { get; private set; }
 
-	public GameObject m_damageIndicator;
+	private GameObject m_damageIndicator;
+
+	public Behaviour.OnAnimationEvent OnAttackDelegate { get; set; }
 
 	private void Awake()
 	{
@@ -191,6 +193,7 @@ public class EnemyData : MonoBehaviour
 		}
 
 		DisplayDamage(damage);
+		
 		IndicateHit(character);
 	}
 
@@ -307,11 +310,24 @@ public class EnemyData : MonoBehaviour
 		}
 	}
 
+	public void SetAnimatorBool(string id, bool value)
+	{
+		if (m_animator)
+		{
+			m_animator.SetBool(id, value);
+		}
+	}
+
 	public void SetAnimatorTrigger(string id)
 	{
 		if (m_animator)
 		{
 			m_animator.SetTrigger(id);
 		}
+	}
+
+	void OnAttackAnimation()
+	{
+		OnAttackDelegate?.Invoke(this);
 	}
 }

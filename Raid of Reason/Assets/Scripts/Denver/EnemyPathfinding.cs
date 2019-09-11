@@ -13,6 +13,10 @@ public class EnemyPathfinding : MonoBehaviour
 	[Tooltip("How fast the enemy will turn")]
 	private float m_steeringSpeed = 10f;
 
+	[SerializeField]
+	[Tooltip("How close enemy needs to be to target destination before it finds new target")]
+	private float m_destBufferDist = 0.1f;
+
 	private NavMeshPath m_path;
 	private bool m_pathing;
 	private int m_currentCorner;
@@ -161,6 +165,6 @@ public class EnemyPathfinding : MonoBehaviour
 		difference.x = Mathf.Abs(difference.x);
 		difference.y = Mathf.Abs(difference.y);
 
-		return difference.magnitude < 0.01f;
+		return difference.magnitude < m_destBufferDist;
 	}
 }
