@@ -58,17 +58,11 @@ public class CountdownObjective : BaseObjective
     {
         // Timer starts going down
         currentTimer -= Time.deltaTime;
-
-        // If the timer is greater than 0
-        if (currentTimer > 0)
-        {
-            m_enemies.RemoveAll(e => !e);
-        }
     }
 
     public override bool IsDone()
     {
-        return m_enemies.Count == 0;
+        return m_enemies.TrueForAll(e => !e);
     }
 
     public override bool HasFailed()
