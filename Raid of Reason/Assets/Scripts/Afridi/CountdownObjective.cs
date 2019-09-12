@@ -20,9 +20,6 @@ public class CountdownObjective : BaseObjective
     [Tooltip("Name of the Objective")]
     public string name;
 
-    // Amount of enemies in the game
-    private int amount;
-
     // Current Timer
     private float currentTimer;
 
@@ -35,13 +32,11 @@ public class CountdownObjective : BaseObjective
         Reset();
         m_enemies.AddRange(FindObjectsOfType<EnemyData>());
         currentTimer = maxtimer;
-        amount = m_enemies.Count;
     }
 
     public void Reset()
     {
         m_enemies.Clear();
-        amount = 0;
     }
 
     public override float Timer()
@@ -67,22 +62,13 @@ public class CountdownObjective : BaseObjective
         // If the timer is greater than 0
         if (currentTimer > 0)
         {
-            // For each enemy in the array
-            foreach (EnemyData data in m_enemies)
-            {
-                // if one of the enemies die
-                if (data.Health <= 0)
-                {
-                    // Amount is decremented 
-                    amount--;
-                }
-            }
+            m_enemies.RemoveAll(e => !e);
         }
     }
 
     public override bool IsDone()
     {
-        return amount <= 0;
+        return m_enemies.Count == 0;
     }
 
     public override bool HasFailed()
