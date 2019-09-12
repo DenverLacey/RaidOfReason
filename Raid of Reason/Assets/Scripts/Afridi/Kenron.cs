@@ -128,7 +128,7 @@ public class Kenron : BaseCharacter {
         {
             foreach (Image display in m_skillPopups)
             {
-                display.enabled = false;
+                display.gameObject.SetActive(false);
             }
         }
 
@@ -152,12 +152,16 @@ public class Kenron : BaseCharacter {
     {
         // Updates Player Movement
         base.Update();
+        Debug.Log(m_skillUpgrades.Count);
 
-        // Checks Kenrons Skill Tree
-        SkillChecker();
-    
-        // Uses his Dash
-        DashAttack();
+        if (this.gameObject != null)
+        {
+            // Checks Kenrons Skill Tree
+            SkillChecker();
+
+            // Uses his Dash
+            DashAttack();
+        }
     }
 
     /// <summary>
@@ -218,12 +222,12 @@ public class Kenron : BaseCharacter {
 			{
 				m_dashPosition = hit.point;
 				m_dashPosition -= transform.forward * (m_collider.radius * transform.lossyScale.x + m_dashBufferDistance);
-				//m_statManager.dashesUsed++;
-			}
-			else
-			{
-				m_dashPosition = transform.position + transform.forward * m_maxDashDistance;
-			}
+                GameManager.Instance.Kenron.m_statManager.dashesUsed++;
+            }
+            else
+            {
+                m_dashPosition = transform.position + transform.forward * m_maxDashDistance;
+            }
 
 			// check for potential collisions at dash position
 
@@ -383,22 +387,22 @@ public class Kenron : BaseCharacter {
             if (m_skillUpgrades.Find(skill => skill.Name == "Vile Infusion"))
             {
                 // Icon pops up
-                m_skillPopups[1].enabled = true;
+                m_skillPopups[1].gameObject.SetActive(true);
             }
             if (m_skillUpgrades.Find(skill => skill.Name == "Bloodlust"))
             {
                 // Icon pops up
-                m_skillPopups[2].enabled = true;
+                m_skillPopups[2].gameObject.SetActive(true);
             }
             if (m_skillUpgrades.Find(skill => skill.Name == "Shuras Reckoning"))
             {
                 // Icon pops up
-                m_skillPopups[3].enabled = true;
+                m_skillPopups[3].gameObject.SetActive(true);
             }
-            if (m_skillUpgrades.Find(skill => skill.Name == "Curse of Amaterasu"))
+            if (m_skillUpgrades.Find(skill => skill.Name == "Malevolent_Inferno"))
             {
                 // Icon pops up
-                m_skillPopups[4].enabled = true;
+                m_skillPopups[4].gameObject.SetActive(true);
             }
         }
     }
@@ -421,7 +425,7 @@ public class Kenron : BaseCharacter {
             if (skillManager.m_mainSkills[0].m_currentDuration >= skillManager.m_mainSkills[0].m_duration)
             {
                 // Resets Stats and Skill
-                SetDamage(40);
+                SetDamage(m_damage);
                 SetSpeed(15.0f);
                 isActive = false;
                 isBurning = true;

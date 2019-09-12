@@ -34,6 +34,7 @@ public class ObjectiveManager : MonoBehaviour
             m_objective.Awake();
             objectiveComplete.SetActive(false);
             objectiveFailed.SetActive(false);
+            skillTreeUnlock.SetActive(false);
             objectiveTimer.text = m_objective.Timer().ToString("f0");
             objectiveDescription.text = m_objective.GrabDescription();
             showTitle.text = m_objective.GrabTitle();
@@ -71,13 +72,12 @@ public class ObjectiveManager : MonoBehaviour
     {
         if (m_objective.IsDone())
         {
-
             ObjectiveCompleted = true;
             Debug.LogFormat("{0} is complete", m_objective);
             objectiveComplete.SetActive(true);
             yield return new WaitForSeconds(3);
             skillTreeUnlock.SetActive(true);
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(timeUntilSceneChange);
             SceneManager.LoadScene(sceneIndex);
         }
 
@@ -85,7 +85,7 @@ public class ObjectiveManager : MonoBehaviour
         {
             Debug.LogFormat("{0} has been failed", m_objective);
             objectiveFailed.SetActive(true);
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(timeUntilSceneChange);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }

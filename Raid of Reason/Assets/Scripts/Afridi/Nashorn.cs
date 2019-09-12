@@ -132,7 +132,7 @@ public class Nashorn : BaseCharacter
         {
             foreach (Image display in m_skillPopups)
             {
-                display.enabled = false;
+                display.gameObject.SetActive(false);
             }
         }
 
@@ -167,22 +167,22 @@ public class Nashorn : BaseCharacter
             if (m_skillUpgrades.Find(skill => skill.Name == "Roaring Thunder"))
             {
                 // Icon pops up
-                m_skillPopups[1].enabled = true;
+                m_skillPopups[1].gameObject.SetActive(true);
             }
             if (m_skillUpgrades.Find(skill => skill.Name == "Kinetic Discharge"))
             {
                 // Icon pops up
-                m_skillPopups[2].enabled = true;
+                m_skillPopups[2].gameObject.SetActive(true);
             }
             if (m_skillUpgrades.Find(skill => skill.Name == "Static Sheild"))
             {
                 // Icon pops up
-                m_skillPopups[3].enabled = true;
+                m_skillPopups[3].gameObject.SetActive(true);
             }
             if (m_skillUpgrades.Find(skill => skill.Name == "Macht Des Sturms"))
             {
                 // Icon pops up
-                m_skillPopups[4].enabled = true;
+                m_skillPopups[4].gameObject.SetActive(true);
             }
         }
     }

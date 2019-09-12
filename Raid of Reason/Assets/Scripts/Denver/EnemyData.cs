@@ -254,6 +254,13 @@ public class EnemyData : MonoBehaviour
                     Debug.LogFormat("{0} is null", m_waterEffect.name);
                 }
                 break;
+
+            default:
+                m_waterEffect.Stop();
+                m_burningEffect.Stop();
+                m_electricEffect.Stop();
+                m_bloodEffect.Stop();
+                break;
         }
 	}
 

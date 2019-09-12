@@ -132,7 +132,7 @@ public class Thea : BaseCharacter
         m_AOEShapeModule_2 = m_HealRadius_2.shape;
         foreach (Image display in m_skillPopups)
         {
-            display.enabled = false;
+            display.gameObject.SetActive(false);
         }
 
         m_aimCursor = GameObject.FindGameObjectWithTag("AimCursor");
@@ -363,22 +363,22 @@ public class Thea : BaseCharacter
             if (m_skillUpgrades.Find(skill => skill.Name == "Settling Tide"))
             {
                 // Icon pops up
-                m_skillPopups[1].enabled = true;
+                m_skillPopups[1].gameObject.SetActive(true);
             }
             if (m_skillUpgrades.Find(skill => skill.Name == "Oceans Ally"))
             {
                 // Icon pops up
-                m_skillPopups[2].enabled = true;
+                m_skillPopups[2].gameObject.SetActive(true);
             }
             if (m_skillUpgrades.Find(skill => skill.Name == "Hydro Pressure"))
             {
                 // Icon pops up
-                m_skillPopups[3].enabled = true;
+                m_skillPopups[3].gameObject.SetActive(true);
             }
             if (m_skillUpgrades.Find(skill => skill.Name == "Serenade of Water"))
             {
                 // Icon pops up
-                m_skillPopups[4].enabled = true;
+                m_skillPopups[4].gameObject.SetActive(true);
             }
         }
     }
