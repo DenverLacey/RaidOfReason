@@ -147,6 +147,7 @@ public abstract class BaseCharacter : MonoBehaviour
 			case PlayerState.ALIVE:
                 // Call this.
                 m_playerCollider.enabled = true;
+				CharacterMovement();
                 break;
 
 			case PlayerState.DEAD:

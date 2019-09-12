@@ -145,7 +145,6 @@ public class Thea : BaseCharacter
         if(this.gameObject != null)
         {
 			base.FixedUpdate();
-            CharacterMovement();
             Projectile();
         }
     }
