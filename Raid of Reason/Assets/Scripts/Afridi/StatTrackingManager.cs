@@ -43,6 +43,10 @@ public class StatTrackingManager : MonoBehaviour
     public int gopUsed;
     [HideInInspector]
     public int gopHitThree;
+    [HideInInspector]
+    public int gopFullCharged;
+    [HideInInspector]
+    public float damageHealed;
 
     private GameManager m_gameManager;
 
@@ -74,12 +78,14 @@ public class StatTrackingManager : MonoBehaviour
                 N_Sheilds_Charged_Count.text = totalSheildsCharged.ToString("f0");
                 N_Enemies_Taunted_Count.text = enemiesTaunted.ToString("f0");
                 N_Enemies_Taunted_At_Once_Count.text = highestTaunted.ToString("f0");
-                DebugTools.LogVariable("Shields Taken", totalSheildsCharged);
             }
             if (m_gameManager.Thea)
             {
                 T_Total_Number_Of_Heals_Count.text = gopUsed.ToString("f0");
                 T_All_Three_Players_Healed_Count.text = gopHitThree.ToString("f0");
+                T_Fully_Charged_GOP_Count.text = gopFullCharged.ToString("f0");
+                T_Damage_Healed_Count.text = damageHealed.ToString("f0");
+                DebugTools.LogVariable("Damage Healed", damageHealed);
             }
 
         }

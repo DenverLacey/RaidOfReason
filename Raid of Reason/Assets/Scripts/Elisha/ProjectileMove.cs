@@ -97,7 +97,9 @@ public class ProjectileMove : MonoBehaviour {
 			if (hitPlayer.playerState == BaseCharacter.PlayerState.ALIVE)
 			{
 				hitPlayer.m_currentHealth += m_healAmount;
-			}
+                GameManager.Instance.Thea.m_statManager.damageHealed += m_healAmount;
+
+            }
 		}
 
 		if (other.gameObject.tag != "Thea")

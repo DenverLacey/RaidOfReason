@@ -372,7 +372,10 @@ public class Nashorn : BaseCharacter
 				if (sqrDist <= m_tauntRadius * m_tauntRadius)
 				{
                     enemy.Taunted = true;
-				}
+                    GameManager.Instance.Nashorn.m_statManager.enemiesTaunted++;
+                    totalAmountTaunted++;
+
+                }
 			}
 
             // Set active
@@ -380,7 +383,6 @@ public class Nashorn : BaseCharacter
 
             m_tauntParticle.Play();
             StartCoroutine(MachinasDareVisual());
-            totalAmountTaunted = 0;
 
             // set vulnerability
             m_vulnerability = m_tauntVulnerability;
@@ -399,7 +401,14 @@ public class Nashorn : BaseCharacter
 
             // Skill no longer active
             isTaunting = false;
+
+            MostTaunted();
         }
     }
 
+    public void MostTaunted()
+    {
+        GameManager.Instance.Nashorn.m_statManager.highestTaunted = Mathf.Max(totalAmountTaunted, GameManager.Instance.Nashorn.m_statManager.highestTaunted);
+        totalAmountTaunted = 0.0f;
+    }
 }

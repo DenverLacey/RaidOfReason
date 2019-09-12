@@ -68,6 +68,10 @@ public class Thea : BaseCharacter
     [SerializeField]
     private List<EnemyData> m_nearbyEnemies = new List<EnemyData>();
 
+    // Stat Tracker
+    [HideInInspector]
+    public StatTrackingManager m_statManager;
+
     [Tooltip("hpw much the enemies are knockbacked by theas third skill")]
     public float knockbackForce;
 
@@ -115,6 +119,7 @@ public class Thea : BaseCharacter
         m_isActive = false;
         neverDone = true;
         m_isHealthRegen = false;
+        m_statManager = FindObjectOfType<StatTrackingManager>();
         m_waterPrefab.SetActive(false);
         m_nashorn = FindObjectOfType<Nashorn>();
 		m_kenron = FindObjectOfType<Kenron>();
@@ -334,7 +339,7 @@ public class Thea : BaseCharacter
 
             // Grow AOE radius.
             m_AOERadius = Mathf.Lerp(m_AOERadius, m_AOEMax, m_AOETimer / m_AOEGrowTime);
-
+            Debug.Log(m_AOERadius);
             // AOE collider radius grows in conjuction to the lerp.
             Debug.Log("Float radius: " + m_AOERadius);
 
@@ -383,6 +388,10 @@ public class Thea : BaseCharacter
     /// </summary>
     public void GiveHealth()
     {
+        // Stat Tracking Stuff
+        bool kenHealed = false;
+        bool nashHealed = false;
+
         foreach (BaseCharacter player in GameManager.Instance.Players)
         {
             if (!player || player == this)
@@ -390,11 +399,13 @@ public class Thea : BaseCharacter
                 continue;
             }
 
-            float sqrDistance = (player.transform.position - transform.position).sqrMagnitude;
+            float sqrDistance = (player.transform.position - transform.position).sqrMagnitude;           
 
             // check if inside radius
             if (sqrDistance <= m_AOERadius * m_AOERadius && player.m_controllerOn)
             {
+                if (player.tag == "Nashorn") { nashHealed = true; }
+                if (player.tag == "Kenron") { kenHealed = true;  }
                 m_waterPrefab.SetActive(true);
                 player.m_currentHealth += m_AOETimer * m_GOPEffect;
                 m_waterPrefab.transform.position = player.transform.position;
@@ -406,6 +417,13 @@ public class Thea : BaseCharacter
 
         // Heal Thea.
         SetHealth(m_currentHealth + m_AOETimer * m_GOPEffect);
+        GameManager.Instance.Thea.m_statManager.damageHealed += m_currentHealth;
+
+        // Stat Tracking
+        if (kenHealed && nashHealed) { GameManager.Instance.Thea.m_statManager.gopHitThree++; kenHealed = false; nashHealed = false; }
+        if (kenHealed) { GameManager.Instance.Thea.m_statManager.damageHealed += m_kenron.m_currentHealth; }
+        if (nashHealed) { GameManager.Instance.Thea.m_statManager.damageHealed += m_nashorn.m_currentHealth; }
+        if (m_AOERadius > 9.95f) { GameManager.Instance.Thea.m_statManager.gopFullCharged++;  }
 
         if (m_skillActive = true & m_skillUpgrades.Find(skill => skill.name == "Serenade Of Water"))
         {
@@ -433,6 +451,9 @@ public class Thea : BaseCharacter
 
         m_HealRadius_2.gameObject.SetActive(false);
         m_HealRadius_2.Stop();
+
+        GameManager.Instance.Thea.m_statManager.gopUsed++;
+        GameManager.Instance.Thea.m_statManager.damageHealed += m_nashorn.m_currentHealth + m_kenron.m_currentHealth + m_currentHealth;
     }
 
     private IEnumerator HealthOverTime() {
