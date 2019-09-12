@@ -76,6 +76,10 @@ public abstract class BaseCharacter : MonoBehaviour
     [Tooltip("How much shield degenerates?")]
     private float m_shieldDegenerateAmount;
 
+    [SerializeField]
+    [Tooltip("The particle that spawns on death")]
+    private ParticleSystem m_deathParticle;
+
     [HideInInspector]
     public bool m_controllerOn;
 	private int movementAxes = MovementAxis.Move | MovementAxis.Rotate;
@@ -142,7 +146,6 @@ public abstract class BaseCharacter : MonoBehaviour
 		{
 			case PlayerState.ALIVE:
                 // Call this.
-                CharacterMovement();
                 m_playerCollider.enabled = true;
                 break;
 
@@ -274,7 +277,6 @@ public abstract class BaseCharacter : MonoBehaviour
         // If player has no health.
         if (m_currentHealth <= 0.0f)
         {
-            //OnDeath();
             playerState = PlayerState.DEAD;
         }
     } 
