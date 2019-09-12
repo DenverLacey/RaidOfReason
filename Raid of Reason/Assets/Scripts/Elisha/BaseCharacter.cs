@@ -11,15 +11,9 @@ using XboxCtrlrInput;
  */
 
 [RequireComponent(typeof(Rigidbody))]
-public abstract class BaseCharacter : MonoBehaviour 
+public abstract class BaseCharacter : MonoBehaviour
 {
     public Character CharacterType { get; protected set; }
-
-	//public enum MovementAxis
-	//{
-	//	MOVE	= 0x01 << 0,
-	//	ROTATE	= 0x01 << 1,
-	//}
 
 	public struct MovementAxis
 	{
@@ -30,6 +24,7 @@ public abstract class BaseCharacter : MonoBehaviour
 		private static int[] m_enumerate = { Move, Rotate };
 		public static int[] Enumerate { get => m_enumerate; }
 	}
+
 
 	public enum PlayerState
     {

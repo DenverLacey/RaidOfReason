@@ -10,63 +10,98 @@ using UnityEngine;
 
 public class ObjectPooling : MonoBehaviour
 {
-    [System.Serializable]
-    public class Pool
+    private const int m_defaultPoolSize = 20;
+
+    public static bool expandWhenNecessary = true;
+
+    public static Dictionary<string, List<GameObject>> objectPools = new Dictionary<string, List<GameObject>>();
+
+    #region Object Pool Checks
+
+    // determines if a pool for a certain prefab has been created
+    private static bool PoolExistsForPrefab(string prefabPath)
     {
-        public string tag;
-        public GameObject prefab;
-        public int size;
+        return objectPools.ContainsKey(prefabPath);
     }
 
-    #region Singleton
-    public static ObjectPooling Instance;
-
-    private void Awake()
+    // Determines if we can reuse a gameObject for retrieval based on an availability comparator
+    private static bool IsAvailableForReuse(GameObject gameObject)
     {
-        Instance = this;
+        return !gameObject.activeSelf;
     }
 
     #endregion
 
-    public List<Pool> pools;
-    public Dictionary<string, Queue<GameObject>> pooledDictionary;
+    #region Object Retrieval
 
-    private void Start()
+    public static GameObject GetPooledObject(string prefabPath, int poolSize = m_defaultPoolSize)
     {
-        pooledDictionary = new Dictionary<string, Queue<GameObject>>();
+        if (!PoolExistsForPrefab(prefabPath))
+            return CreateAndRetrieveFromPool(prefabPath, poolSize);
 
-        foreach(Pool pool in pools)
+        var pool = objectPools[prefabPath];
+
+        GameObject instance;
+
+        // Pick the next inactive object.            
+        return (instance = FindFirstAvailablePooledObject(pool)) != null ?
+            instance : ExpandPoolAndGetObject(prefabPath, pool);
+    }
+
+    private static GameObject CreateAndRetrieveFromPool(string prefabPath, int poolSize = m_defaultPoolSize)
+    {
+        CreateObjectPool(prefabPath, poolSize);
+        return GetPooledObject(prefabPath);
+    }
+
+    private static GameObject FindFirstAvailablePooledObject(List<GameObject> pool)
+    {
+        for (int i = 0; i < pool.Count; i++)
         {
-            Queue<GameObject> objectPool = new Queue<GameObject>();
-
-            for(int i = 0; i < pool.size; i++)
+            if (IsAvailableForReuse(pool[i]))
             {
-                GameObject obj = Instantiate(pool.prefab);
-                obj.SetActive(false);
-                objectPool.Enqueue(obj);
+                return pool[i];
             }
-
-            pooledDictionary.Add(pool.tag, objectPool);
         }
+
+        return null;
     }
 
-    public GameObject SpawnFromPool (string tag, Vector3 pos, Quaternion rotation)
+    #endregion
+
+    #region Object Pool Creation
+
+    private static GameObject ExpandPoolAndGetObject(string prefabPath, List<GameObject> pool)
     {
+        if (!expandWhenNecessary) return null;
 
-        if (!pooledDictionary.ContainsKey(tag))
+        GameObject prefab = Resources.Load<GameObject>(prefabPath);
+
+        GameObject instance = Object.Instantiate(prefab) as GameObject;
+        pool.Add(instance);
+        return instance;
+    }
+
+    public static List<GameObject> CreateObjectPool(string prefabPath, int count)
+    {
+        if (count <= 0) count = 1;
+
+        GameObject prefab = Resources.Load<GameObject>(prefabPath);
+        List<GameObject> objects = new List<GameObject>();
+
+        for (int i = 0; i < count; i++)
         {
-            Debug.LogWarning("pool " + tag + " doesnt exist.");
-            return null;
+            GameObject instance = Object.Instantiate<GameObject>(prefab);
+
+            objects.Add(instance);
+
+            instance.SetActive(false);
         }
 
-        GameObject objectToSpawn = pooledDictionary[tag].Dequeue();
+        objectPools.Add(prefabPath, objects);
 
-        objectToSpawn.SetActive(true);
-        objectToSpawn.transform.position = pos;
-        objectToSpawn.transform.rotation = rotation;
-
-        pooledDictionary[tag].Enqueue(objectToSpawn);
-
-        return objectToSpawn;
+        return objects;
     }
+
+    #endregion
 }

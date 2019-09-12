@@ -9,7 +9,7 @@ using XboxCtrlrInput;
  * Description: Thea's main class, which handles her basic attacks and abilities.
  */
 
-public class Thea : BaseCharacter
+public class Thea : BaseCharacter 
 {
     [SerializeField]
     [Tooltip("How much more healing Thea does with her Fourth ability")]
@@ -68,8 +68,6 @@ public class Thea : BaseCharacter
     [SerializeField]
     private List<EnemyData> m_nearbyEnemies = new List<EnemyData>();
 
-    private ObjectPooling m_objectPooling;
-
     // Stat Tracker
     [HideInInspector]
     public StatTrackingManager m_statManager;
@@ -105,6 +103,8 @@ public class Thea : BaseCharacter
 
     private CapsuleCollider m_collider;
 
+    private const string PROJECTILE_PREFAB_PATH = "projectile";
+
 	private void Start()
 	{
 		GameManager.Instance.GiveCharacterReference(this);
@@ -136,7 +136,6 @@ public class Thea : BaseCharacter
         }
 
         m_aimCursor = GameObject.FindGameObjectWithTag("AimCursor");
-        m_objectPooling = GetComponent<ObjectPooling>();
     }
 
     // Update is called once per frame
@@ -224,38 +223,73 @@ public class Thea : BaseCharacter
    // }
 
     /// <summary>
-    /// Theas projectile instantiation and damage when pressing the trigger button.
+    /// Triggering the shootinf
     /// </summary>
     public void Projectile()
     {
         m_counter += Time.deltaTime;
-
-        // If the player presses the right trigger button.
-        if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1)
+        if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1f)
         {
-            //m_skillPopups[0].enabled = true;
-            // Start the shot counter.
             m_shotCounter += Time.deltaTime;
 
             if (m_counter > m_projectileDelay)
             {
-                // Instantiate projectile object.
                 Vector3 desiredPosition = transform.position + transform.forward;
                 desiredPosition.y = 1;
-                GameObject temp = Instantiate(m_projectile, desiredPosition, transform.rotation);
-                // Set projectile damage and move projectile.
-                temp.GetComponent<ProjectileMove>().SetDamage(m_damage);
-                // Reset counter.
-                m_counter = 0f;
+                FireProjectile(desiredPosition, transform.rotation);
+                m_counter = 0;
             }
         }
-        // If player releases the right trigger button.
-        else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) < 0.1)
+        else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) < 0.1f)
         {
-            // Reset the counter.
-            m_shotCounter = 0f;
-            //m_skillPopups[0].enabled = false;
+            m_shotCounter = 0;
         }
+
+        #region Old Shooting Mech
+        //m_counter += Time.deltaTime;
+
+        //// If the player presses the right trigger button.
+        //if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1)
+        //{
+        //    //m_skillPopups[0].enabled = true;
+        //    // Start the shot counter.
+        //    m_shotCounter += Time.deltaTime;
+
+        //    if (m_counter > m_projectileDelay)
+        //    {
+        //        // Instantiate projectile object.
+        //        Vector3 desiredPosition = transform.position + transform.forward;
+        //        desiredPosition.y = 1;
+        //        GameObject temp = Instantiate(m_projectile, desiredPosition, transform.rotation);
+        //        // Set projectile damage and move projectile.
+        //        temp.GetComponent<ProjectileMove>().SetDamage(m_damage);
+        //        // Reset counter.
+        //        m_counter = 0f;
+        //    }
+        //}
+        //// If player releases the right trigger button.
+        //else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) < 0.1)
+        //{
+        //    // Reset the counter.
+        //    m_shotCounter = 0f;
+        //    //m_skillPopups[0].enabled = false;
+        //}
+        #endregion
+    }
+
+    /// <summary>
+    /// Implements the object pooling for the projectiles thea shoots.
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <param name="rot"></param>
+    private void FireProjectile(Vector3 pos, Quaternion rot)
+    {
+        var projectile = ObjectPooling.GetPooledObject(PROJECTILE_PREFAB_PATH);
+
+        projectile.transform.position = pos;
+        projectile.transform.rotation = rot;
+
+        projectile.SetActive(true);
     }
 
     void SkillChecker()
