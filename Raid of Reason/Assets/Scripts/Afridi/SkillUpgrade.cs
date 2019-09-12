@@ -24,34 +24,34 @@ public class SkillUpgrade : MonoBehaviour
     {
         if (player)
         {
-            if (objective.tempCleared == true)
+            if (objective.ObjectiveCompleted == true)
             {
                 if (player.m_skillUpgrades.Count == 0 && WaitTillNextScene)
                 {
                     player.AddSkillUpgrade(m_characterSkills[0]);
                     m_UIObjects[0].gameObject.SetActive(true);
-                    objective.tempCleared = false;
+                    objective.ObjectiveCompleted = false;
                     WaitTillNextScene = false;
                 }
                 else if (player.m_skillUpgrades.Count == 1 && WaitTillNextScene)
                 {
                     player.AddSkillUpgrade(m_characterSkills[1]);
                     m_UIObjects[1].gameObject.SetActive(true);
-                    objective.tempCleared = false;
+                    objective.ObjectiveCompleted = false;
                     WaitTillNextScene = false;
                 }
                 else if (player.m_skillUpgrades.Count == 2 && WaitTillNextScene)
                 {
                     player.AddSkillUpgrade(m_characterSkills[2]);
                     m_UIObjects[2].gameObject.SetActive(true);
-                    objective.tempCleared = false;
+                    objective.ObjectiveCompleted = false;
                     WaitTillNextScene = false;
                 }
                 else if (player.m_skillUpgrades.Count == 3 && WaitTillNextScene)
                 {
                     player.AddSkillUpgrade(m_characterSkills[3]);
                     m_UIObjects[3].gameObject.SetActive(true);
-                    objective.tempCleared = false;
+                    objective.ObjectiveCompleted = false;
                     WaitTillNextScene = false;
                 }
             }

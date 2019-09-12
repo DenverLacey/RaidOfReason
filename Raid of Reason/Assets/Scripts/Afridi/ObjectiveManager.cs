@@ -17,12 +17,12 @@ public class ObjectiveManager : MonoBehaviour
     [Tooltip("How long the current scene will wait until it loads the next scene")]
     public float timeUntilSceneChange;
 
-    [Tooltip("Temporary Bool, will be removed")]
-    public bool tempCleared;
+    public bool ObjectiveCompleted;
 
     public Text objectiveTimer;
     public Text objectiveDescription;
     public Text showTitle;
+
     public GameObject objectiveComplete;
     public GameObject objectiveFailed;
     public GameObject skillTreeUnlock;
@@ -38,7 +38,7 @@ public class ObjectiveManager : MonoBehaviour
             objectiveDescription.text = m_objective.GrabDescription();
             showTitle.text = m_objective.GrabTitle();
         }
-        tempCleared = false;
+        ObjectiveCompleted = false;
     }
 
     private void Update()
@@ -71,12 +71,11 @@ public class ObjectiveManager : MonoBehaviour
     {
         if (m_objective.IsDone())
         {
-        
-            tempCleared = true;
+
+            ObjectiveCompleted = true;
             Debug.LogFormat("{0} is complete", m_objective);
             objectiveComplete.SetActive(true);
             yield return new WaitForSeconds(3);
-            objectiveComplete.SetActive(false);
             skillTreeUnlock.SetActive(true);
             yield return new WaitForSeconds(5);
             SceneManager.LoadScene(sceneIndex);

@@ -12,6 +12,10 @@ using XboxCtrlrInput;
 public class Thea : BaseCharacter
 {
     [SerializeField]
+    [Tooltip("How much more healing Thea does with her Fourth ability")]
+    public float m_healMultiplier;
+
+    [SerializeField]
     private GameObject m_waterPrefab;
 
     [SerializeField]
@@ -21,10 +25,6 @@ public class Thea : BaseCharacter
     [SerializeField]
     [Tooltip("How long of a delay will it take for her next projectile to instiantiate?")]
     private float m_projectileDelay;
-
-    //[SerializeField]
-    //[Tooltip("AOE collider that grows over time.")]
-    //private SphereCollider m_AOEParticleCollider;
 
     [SerializeField]
     [Tooltip("The AOE particle used for visual effect.")]
@@ -427,9 +427,9 @@ public class Thea : BaseCharacter
 
         if (m_skillActive = true & m_skillUpgrades.Find(skill => skill.name == "Serenade Of Water"))
         {
-            m_kenron.SetHealth(m_kenron.m_currentHealth * 1.5f);
-            m_nashorn.SetHealth(m_nashorn.m_currentHealth * 1.5f);
-            SetHealth(m_currentHealth * 1.5f);
+            m_kenron.SetHealth(m_kenron.m_currentHealth * m_healMultiplier);
+            m_nashorn.SetHealth(m_nashorn.m_currentHealth * m_healMultiplier);
+            SetHealth(m_currentHealth * m_healMultiplier);
             m_skillActive = false;
         }
     }
