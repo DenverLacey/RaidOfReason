@@ -68,6 +68,8 @@ public class Thea : BaseCharacter
     [SerializeField]
     private List<EnemyData> m_nearbyEnemies = new List<EnemyData>();
 
+    private ObjectPooling m_objectPooling;
+
     // Stat Tracker
     [HideInInspector]
     public StatTrackingManager m_statManager;
@@ -134,6 +136,7 @@ public class Thea : BaseCharacter
         }
 
         m_aimCursor = GameObject.FindGameObjectWithTag("AimCursor");
+        m_objectPooling = GetComponent<ObjectPooling>();
     }
 
     // Update is called once per frame
@@ -241,7 +244,7 @@ public class Thea : BaseCharacter
                 desiredPosition.y = 1;
                 GameObject temp = Instantiate(m_projectile, desiredPosition, transform.rotation);
                 // Set projectile damage and move projectile.
-				temp.GetComponent<ProjectileMove>().SetDamage(m_damage);
+                temp.GetComponent<ProjectileMove>().SetDamage(m_damage);
                 // Reset counter.
                 m_counter = 0f;
             }
@@ -328,7 +331,6 @@ public class Thea : BaseCharacter
         // Checks if player can use the ability.
         if (m_isActive == true)
         {
-            
             // Start AOE timer.
             m_AOETimer += Time.deltaTime;
             // Disable player movement and rotation.
