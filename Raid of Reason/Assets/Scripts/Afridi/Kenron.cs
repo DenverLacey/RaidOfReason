@@ -96,6 +96,8 @@ public class Kenron : BaseCharacter {
     // Delay until next dash
     private float m_dashDelayTimer;
 
+	private float m_estimatedDashTime;
+
     // Sets the burn 
     public bool isBurning;
 
@@ -205,29 +207,72 @@ public class Kenron : BaseCharacter {
 
 			// calculate desired dash position
 			int layerMask = Utility.GetIgnoreMask("Enemy", "Player", "Ignore Raycast");
-            RaycastHit hit = new RaycastHit();
-            if (Physics.Raycast(transform.position, transform.forward, out hit, m_maxDashDistance + m_dashBufferDistance, layerMask))
-            {
-                m_dashPosition = hit.point;
+			RaycastHit hit = new RaycastHit();
+
+			float radius = (m_collider.radius * transform.localScale).magnitude;
+			bool collisionAtDashPos = false;
+			Vector3 hitBoxEndPos = m_dashPosition;
+
+			if (Physics.SphereCast(transform.position + transform.forward * radius / 2f, radius, transform.forward, out hit, m_maxDashDistance + 0.1f, layerMask) ||
+				Physics.Raycast(transform.position + transform.forward * 0.5f, transform.forward, out hit, m_maxDashDistance + 0.1f, layerMask))
+			{
+				m_dashPosition = hit.point;
 				m_dashPosition -= transform.forward * (m_collider.radius * transform.lossyScale.x + m_dashBufferDistance);
-                m_statManager.dashesUsed++;
-            }
-            else
-            {
-                m_dashPosition = transform.position + transform.forward * m_maxDashDistance;
-            }
+				//m_statManager.dashesUsed++;
+			}
+			else
+			{
+				m_dashPosition = transform.position + transform.forward * m_maxDashDistance;
+			}
 
-            // size hit box
-            float dashDistance = (m_dashPosition - transform.position).magnitude;
-            Vector3 hitBoxSize = new Vector3(m_dashCollider.size.x, m_dashCollider.size.y, dashDistance);
-            m_dashCollider.size = hitBoxSize;
+			// check for potential collisions at dash position
 
-            // rotate hit box
-            m_dashCollider.transform.rotation = transform.rotation;
+			var colliders = Physics.OverlapSphere(m_dashPosition, radius);
+			Vector3 nearest = new Vector3();
+			float nearestSqrDist = Mathf.Infinity;
+			foreach (var collider in colliders)
+			{
+				if (collider.tag != "Enemy" && collider.tag != "Player")
+				{
+					continue;
+				}
 
-            // position hit box
-            m_dashCollider.transform.position = transform.position + transform.forward * (dashDistance / 2f);
-        }
+				collisionAtDashPos = true;
+
+				float sqrDist = (collider.transform.position - transform.position).sqrMagnitude;
+				if (sqrDist < nearestSqrDist)
+				{
+					nearestSqrDist = sqrDist;
+					nearest = collider.transform.position;
+				}
+			}
+
+			float dashDistance;
+			if (collisionAtDashPos)
+			{
+				hitBoxEndPos = m_dashPosition;
+				Vector3 direction = transform.position - nearest;
+				m_dashPosition = nearest + direction * (radius / 2f);
+				dashDistance = Mathf.Sqrt(nearestSqrDist);
+			}
+			else
+			{
+				dashDistance = (m_dashPosition - transform.position).magnitude;
+			}
+
+			// calculate estimated time of dash
+			m_estimatedDashTime = dashDistance / m_dashSpeed;
+
+			// size hit box
+			Vector3 hitBoxSize = new Vector3(m_dashCollider.size.x, m_dashCollider.size.y, dashDistance);
+			m_dashCollider.size = hitBoxSize;
+
+			// rotate hit box
+			m_dashCollider.transform.rotation = transform.rotation;
+
+			// position hit box
+			m_dashCollider.transform.position = transform.position + transform.forward * (dashDistance / 2f);
+		}
         else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) < 0.1f && !isDashing)
         {
             m_triggerDown = false;
@@ -235,16 +280,12 @@ public class Kenron : BaseCharacter {
 
 		if (isDashing)
 		{
-			if (!m_controllerOn)
-            { 
+			m_estimatedDashTime -= Time.deltaTime;
 
-				Vector3 smoothPosition = Vector3.SmoothDamp(transform.position, m_dashPosition, ref m_dashVelocity, 1f / m_dashSpeed);
-				m_rigidbody.MovePosition(smoothPosition);
-			}
-
-            // if completed dash
-            if ((m_dashPosition - transform.position).sqrMagnitude <= 0.1f ||
-				m_controllerOn)
+			// if completed dash
+			if ((m_dashPosition - transform.position).sqrMagnitude <= 0.1f ||
+				m_controllerOn || 
+				m_estimatedDashTime <= 0.0f)
             {
 				// reset boolean flags
 				m_dashCollider.enabled = false;
@@ -258,6 +299,11 @@ public class Kenron : BaseCharacter {
 
                 m_dashCollider.GetComponent<SwordDamage>().CalculateNewMostDamageDealt();
             }
+			else
+			{
+				Vector3 smoothPosition = Vector3.SmoothDamp(transform.position, m_dashPosition, ref m_dashVelocity, 1f / m_dashSpeed);
+				m_rigidbody.MovePosition(smoothPosition);
+			}
 
 			// if ready to dash again 
 			if (m_dashDelayTimer <= 0.0f)
