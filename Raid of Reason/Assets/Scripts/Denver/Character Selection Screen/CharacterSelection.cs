@@ -105,7 +105,7 @@ public class CharacterSelection : InteractableUIElement
 			}
 
 			// load first level
-			SceneManager.LoadScene(m_firstLevelIndex);
+			SceneManager.LoadScene(m_firstLevelIndex, LoadSceneMode.Single);
 		}
 		else
 		{
