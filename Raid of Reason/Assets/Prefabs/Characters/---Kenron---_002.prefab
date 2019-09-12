@@ -240,9 +240,9 @@ MonoBehaviour:
   Amaterasu: {fileID: 9157860088018418702}
   isActive: 0
   m_maxDashDistance: 10
-  m_dashSpeed: 15
+  m_dashSpeed: 120
   m_dashDelay: 0.15
-  m_dashBufferDistance: 3
+  m_dashBufferDistance: 0.5
   m_dashCollider: {fileID: 576475735797821664}
   m_chaosFlameDamage: 66
   m_chaosFlameSpeed: 25
@@ -372,6 +372,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5877011709370991675}
     m_Modifications:
+    - target: {fileID: 4153159892060089487, guid: 8d2906bfe6894dc40bebb3b9e1fcc21d,
+        type: 3}
+      propertyPath: m_Name
+      value: CFX2_Big_Splash (No Collision)
+      objectReference: {fileID: 0}
     - target: {fileID: 4155115819597000241, guid: 8d2906bfe6894dc40bebb3b9e1fcc21d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -442,11 +447,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 100
       objectReference: {fileID: 0}
-    - target: {fileID: 4153159892060089487, guid: 8d2906bfe6894dc40bebb3b9e1fcc21d,
-        type: 3}
-      propertyPath: m_Name
-      value: CFX2_Big_Splash (No Collision)
-      objectReference: {fileID: 0}
     - target: {fileID: 4258319205150877521, guid: 8d2906bfe6894dc40bebb3b9e1fcc21d,
         type: 3}
       propertyPath: playOnAwake
@@ -482,15 +482,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5877011709370991675}
     m_Modifications:
-    - target: {fileID: 198796712453205768, guid: c0bd40913acc33645a6f92f39e5dfb84,
-        type: 3}
-      propertyPath: looping
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 198796712453205768, guid: c0bd40913acc33645a6f92f39e5dfb84,
-        type: 3}
-      propertyPath: playOnAwake
-      value: 0
+    - target: {fileID: 1727626132299242, guid: c0bd40913acc33645a6f92f39e5dfb84, type: 3}
+      propertyPath: m_Name
+      value: ChaosFlame
       objectReference: {fileID: 0}
     - target: {fileID: 4159976647224570, guid: c0bd40913acc33645a6f92f39e5dfb84, type: 3}
       propertyPath: m_LocalPosition.x
@@ -548,9 +542,15 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 100
       objectReference: {fileID: 0}
-    - target: {fileID: 1727626132299242, guid: c0bd40913acc33645a6f92f39e5dfb84, type: 3}
-      propertyPath: m_Name
-      value: ChaosFlame
+    - target: {fileID: 198796712453205768, guid: c0bd40913acc33645a6f92f39e5dfb84,
+        type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198796712453205768, guid: c0bd40913acc33645a6f92f39e5dfb84,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 198310897626484064, guid: c0bd40913acc33645a6f92f39e5dfb84,
         type: 3}
@@ -598,21 +598,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5877011709370991675}
     m_Modifications:
-    - target: {fileID: 19800000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 19800000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
-      propertyPath: ShapeModule.m_Scale.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19800000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
-      propertyPath: ShapeModule.m_Scale.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19800000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
-      propertyPath: ShapeModule.m_Scale.z
-      value: 3
+    - target: {fileID: 100000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
+      propertyPath: m_Name
+      value: ChaosFlame_2
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -670,9 +658,21 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 100
       objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
-      propertyPath: m_Name
-      value: ChaosFlame_2
+    - target: {fileID: 19800000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
+      propertyPath: ShapeModule.m_Scale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
+      propertyPath: ShapeModule.m_Scale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
+      propertyPath: ShapeModule.m_Scale.z
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
