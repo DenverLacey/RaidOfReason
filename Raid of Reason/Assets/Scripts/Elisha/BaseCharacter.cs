@@ -106,14 +106,18 @@ public abstract class BaseCharacter : MonoBehaviour
     private Color m_originalColour;
 
 
+    private Color m_original;
+    private SpriteRenderer m_spriteRend;
+
+
     /// <summary>
     /// This will be called first.
     /// </summary>
     protected virtual void Awake()
     {
-        m_renderer = GetComponentInChildren<MeshRenderer>();
+       // m_renderer = GetComponentInChildren<MeshRenderer>();
         // Gets the original colour of the player.
-        m_originalColour = m_renderer.sharedMaterial.color;
+        //m_originalColour = m_renderer.sharedMaterial.color;
         m_camera = FindObjectOfType<MultiTargetCamera>();
         m_playerCollider = GetComponent<CapsuleCollider>();
         m_rigidbody = GetComponent<Rigidbody>();
@@ -123,6 +127,9 @@ public abstract class BaseCharacter : MonoBehaviour
         m_controllerOn = true;
         m_bActive = false;
         currentShield = 0;
+
+        m_spriteRend = GetComponentInChildren<SpriteRenderer>();
+        m_original = m_spriteRend.sharedMaterial.color;
     }
 
     /// <summary>
@@ -261,7 +268,7 @@ public abstract class BaseCharacter : MonoBehaviour
             // Take an amount of damage from the players current health.
             m_currentHealth -= damage * m_vulnerability;
             // Player damage indicator.
-            //IndicateHit();
+            IndicateHit();
         }
 
         // If player has no health.
@@ -390,8 +397,8 @@ public abstract class BaseCharacter : MonoBehaviour
     /// </summary>
     void IndicateHit()
     {
-        m_renderer.material.color = Color.red;
-        StartCoroutine(ResetColour(.2f));
+        m_spriteRend.material.color = Color.red;
+        StartCoroutine(ResetSpriteColour(.2f));
     }
 
     /// <summary>
@@ -399,11 +406,18 @@ public abstract class BaseCharacter : MonoBehaviour
     /// </summary>
     /// <param name="duration"></param>
     /// <returns></returns>
-    IEnumerator ResetColour(float duration)
+    //IEnumerator ResetColour(float duration)
+    //{
+    //    yield return new WaitForSeconds(duration);
+    //    m_renderer.material.color = m_originalColour;
+    //}
+
+    IEnumerator ResetSpriteColour(float duration)
     {
         yield return new WaitForSeconds(duration);
-        m_renderer.material.color = m_originalColour;
+        m_spriteRend.material.color = m_original;
     }
+
 
     /// <summary>
     /// Buffer for shield before degeneration.
