@@ -101,7 +101,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 167fd21a0f14ff147bcf92ea81614b8b, type: 3}
-  m_Color: {r: 0.23120695, g: 0.7924528, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.57067186, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -139,7 +139,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5877011709370636315}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -3.58}
+  m_LocalPosition: {x: -3.36, y: 1.17, z: -8.06}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children:
   - {fileID: 9157860088018837540}
@@ -218,18 +218,18 @@ MonoBehaviour:
   playerState: 0
   m_maxHealth: 100
   m_currentHealth: 0
-  m_damage: 33
+  m_minDamage: 30
+  m_maxDamage: 35
   m_movementSpeed: 15
-  controller: 3
+  controller: 1
   m_skillPopups:
-  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   skillManager: {fileID: 0}
   m_skillUpgrades: []
-  m_maxShield: 0
+  m_maxShield: 100
   currentShield: 0
   m_shieldBuffer: 0
   m_shieldDegenerationTimer: 0
@@ -241,10 +241,11 @@ MonoBehaviour:
   isActive: 0
   m_maxDashDistance: 10
   m_dashSpeed: 120
-  m_dashDelay: 0.15
-  m_dashBufferDistance: 0.5
+  m_dashDelay: 0.2
+  m_dashBufferDistance: 0.2
   m_dashCollider: {fileID: 576475735797821664}
-  m_chaosFlameDamage: 66
+  m_minCFDamage: 60
+  m_maxCFDamage: 65
   m_chaosFlameSpeed: 25
   m_healthGained: 5
   m_durationIncreased: 3
@@ -256,6 +257,7 @@ MonoBehaviour:
   m_charges: 4
   m_currentCharges: 0
   m_rechargeRate: 5
+  chargeText: {fileID: 0}
   nashornBuffGiven: 0
   isBurning: 0
   m_statManager: {fileID: 0}

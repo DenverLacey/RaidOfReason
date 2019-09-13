@@ -7,9 +7,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ObjectPooling : MonoBehaviour
 {
+
     private const int m_defaultPoolSize = 20;
 
     public static bool expandWhenNecessary = true;
@@ -68,6 +70,11 @@ public class ObjectPooling : MonoBehaviour
     }
 
     #endregion
+
+    public static void OnSceneUnloaded(Scene currnet)
+    {
+        objectPools.Clear();
+    }
 
     #region Object Pool Creation
 

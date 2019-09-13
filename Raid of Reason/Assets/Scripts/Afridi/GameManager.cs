@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using XboxCtrlrInput;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Enum used to differentiate between characters
@@ -33,6 +34,8 @@ public class GameManager : MonoBehaviour
 		{
 			ms_instance = this;
             m_isInstance = true;
+
+            SceneManager.sceneUnloaded += ObjectPooling.OnSceneUnloaded;
 		}
 		else
 		{

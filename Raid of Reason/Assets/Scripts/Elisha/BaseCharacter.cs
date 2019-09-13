@@ -198,6 +198,11 @@ public abstract class BaseCharacter : MonoBehaviour
             currentShield = 0;
         }
 
+        if (currentShield > m_maxShield)
+        {
+            currentShield = m_maxShield;
+        }
+
         if (XCI.GetButtonDown(XboxButton.Back, controller))
         {
             SceneManager.LoadScene(0);
@@ -295,7 +300,7 @@ public abstract class BaseCharacter : MonoBehaviour
         // If player has no health.
         if (m_currentHealth <= 0.0f)
         {
-            playerState = PlayerState.DEAD;
+            //playerState = PlayerState.DEAD;
         }
     } 
 
@@ -425,7 +430,11 @@ public abstract class BaseCharacter : MonoBehaviour
     void IndicateHit()
     {
         m_spriteRend.material.color = Color.red;
-        StartCoroutine(ResetSpriteColour(.2f));
+
+        if (gameObject.activeSelf)
+        {
+            StartCoroutine(ResetSpriteColour(.2f));
+        }
     }
     IEnumerator ResetSpriteColour(float duration)
     {

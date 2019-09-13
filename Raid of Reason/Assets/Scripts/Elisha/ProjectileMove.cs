@@ -27,6 +27,12 @@ public class ProjectileMove : MonoBehaviour {
         Invoke("Destroy", m_projectileLife);
     }
 
+    private void OnDisable()
+    {
+        m_hasHitKenron = false;
+        m_hasHitNashorn = false;
+    }
+
     /// <summary>
     /// Sets the damage dealt by the projectile.
     /// </summary>

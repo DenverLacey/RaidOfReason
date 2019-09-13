@@ -184,7 +184,7 @@ public class Nashorn : BaseCharacter
                 // Icon pops up
                 m_skillPopups[2].gameObject.SetActive(true);
             }
-            if (m_skillUpgrades.Find(skill => skill.Name == "Static Sheild"))
+            if (m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
             {
                 // Icon pops up
                 m_skillPopups[3].gameObject.SetActive(true);

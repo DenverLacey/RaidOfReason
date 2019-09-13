@@ -88,7 +88,7 @@ public class Kenron : BaseCharacter {
 
     // charge times
     [SerializeField]
-    private int m_currentCharges;
+    public int m_currentCharges;
 
     [SerializeField]
     [Tooltip("Time till a charge is recharged again")]
@@ -143,7 +143,7 @@ public class Kenron : BaseCharacter {
         m_statManager = FindObjectOfType<StatTrackingManager>();
 
         m_currentCharges = m_charges;
-        //chargeText.text = m_currentCharges.ToString();
+        chargeText.text = m_currentCharges.ToString();
 
         isDashing = false;
         isBurning = false;
@@ -187,7 +187,7 @@ public class Kenron : BaseCharacter {
             DashAttack();
         }
 
-        //chargeText.text = m_currentCharges.ToString();
+        chargeText.text = m_currentCharges.ToString();
         Vector3 position = transform.position;
 		position.y = 0.1f;
 		Debug.DrawLine(position, position + transform.forward * 0.5f);
@@ -239,9 +239,6 @@ public class Kenron : BaseCharacter {
 			// set animator's trigger
 			m_animator.SetBool("Attack", true);
 
-            // Icon pops up
-            m_skillPopups[0].enabled = true;
-
 			if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, m_maxDashDistance, Utility.GetIgnoreMask("Enemy", "Player", "Ignore Raycast")))
 			{
 				m_dashPosition = hit.point - transform.forward * m_dashBufferDistance;
@@ -290,9 +287,6 @@ public class Kenron : BaseCharacter {
 				// stop kenron
 				m_rigidbody.velocity = Vector3.zero;
 
-                // Icon pops up
-                m_skillPopups[0].enabled = false;
-
                 // run delay timer
                 m_dashDelayTimer -= Time.deltaTime;
 
@@ -300,7 +294,7 @@ public class Kenron : BaseCharacter {
             }
 
 			// if ready to dash again 
-			if (m_dashDelayTimer <= 0.0f)
+			if (m_dashDelayTimer <= 0.0f && gameObject.activeSelf)
 			{
                 StartCoroutine(TimeTillRecharge());
 				m_controllerOn = true;
@@ -384,7 +378,7 @@ public class Kenron : BaseCharacter {
                 // Icon pops up
                 m_skillPopups[3].gameObject.SetActive(true);
             }
-            if (m_skillUpgrades.Find(skill => skill.Name == "Malevolent_Inferno"))
+            if (m_skillUpgrades.Find(skill => skill.Name == "Malevolent Inferno"))
             {
                 // Icon pops up
                 m_skillPopups[4].gameObject.SetActive(true);

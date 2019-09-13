@@ -174,7 +174,7 @@ public class PlayerCursor : MonoBehaviour
 
 	private void OnTriggerExit2D(Collider2D collision)
 	{
-		var info = m_collidedTransform.GetComponent<CharacterInformation>();
+		var info = m_collidedTransform?.GetComponent<CharacterInformation>();
 
 		if (info)
 		{
