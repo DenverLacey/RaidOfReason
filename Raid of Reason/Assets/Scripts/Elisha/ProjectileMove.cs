@@ -19,11 +19,8 @@ public class ProjectileMove : MonoBehaviour {
     [SerializeField]
     private int m_damage;
 
-    private Collider m_enemyManagerCollider;
-
     private void Start()
     {
-        m_enemyManagerCollider = FindObjectOfType<EnemyManager>().GetComponent<Collider>();
         Invoke("Destroy", m_projectileLife);
     }
 
@@ -48,7 +45,7 @@ public class ProjectileMove : MonoBehaviour {
         }
 	}
 
-    private void Destroy()
+    public void Destroy()
     {
         gameObject.SetActive(false);
     }
@@ -58,9 +55,9 @@ public class ProjectileMove : MonoBehaviour {
     /// with enemies, allies or the enviornment.
     /// </summary>
     /// <param name="other"></param>
-    public void OnCollisionEnter(Collision other)
+    public void OnTriggerEnter(Collider other)
 	{
-        Physics.IgnoreCollision(GameManager.Instance.Thea.GetComponent<Collider>(), other.collider);
+        Physics.IgnoreCollision(GameManager.Instance.Thea.GetComponent<Collider>(), other);
 
         if (other.gameObject.tag == "Enemy")
         {
@@ -100,9 +97,5 @@ public class ProjectileMove : MonoBehaviour {
                 GameManager.Instance.Thea.m_statManager.damageHealed += m_healAmount;
             }
 		}
-        if (other.gameObject.tag != "Thea")
-        {
-            Destroy();
-        }
     }
 }
