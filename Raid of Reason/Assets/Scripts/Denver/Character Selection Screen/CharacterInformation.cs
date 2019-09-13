@@ -63,7 +63,6 @@ public class CharacterInformation : InteractableUIElement
 	private Image m_artwork;
 	private Image m_border;
 	private Image m_selectedBorder;
-	private Transform m_selectedTick;
 
 	private Image[] m_childImages;
 	private List<Color> m_childImageOriginalColours = new List<Color>();
@@ -74,7 +73,6 @@ public class CharacterInformation : InteractableUIElement
 		m_artwork = transform.Find("CharacterCell").Find("Artwork Mask").Find("artwork").GetComponent<Image>();
 		m_border = transform.Find("CharacterCell").Find("border").GetComponent<Image>();
 		m_selectedBorder = transform.Find("CharacterCell").Find("Panel").Find("selectedBorder").GetComponent<Image>();
-		m_selectedTick = transform.Find("CharacterCell").Find("Panel").Find("selectedTick");
 
 		m_childImages = GetComponentsInChildren<Image>();
 
@@ -125,10 +123,6 @@ public class CharacterInformation : InteractableUIElement
 
 			m_selectedBorder.DOColor(tweenColour, m_colourDuration).SetLoops(-1, LoopType.Yoyo);
 
-			// tween selectedTick position in
-			m_selectedTick.localPosition = m_readyStartLocalPosition;
-			m_selectedTick.DOLocalMove(Vector3.zero, m_readyTweenDuration);
-
 			m_selected = true;
 
 			return true;
@@ -156,9 +150,6 @@ public class CharacterInformation : InteractableUIElement
 			// stop tweening selectedBorder colour
 			m_selectedBorder.DOKill();
 			m_selectedBorder.color = Color.clear;
-
-			// tween selectedTick position out
-			m_selectedTick.DOLocalMove(m_readyEndLocalPosition, m_readyTweenDuration);
 
 			if (m_hoverers == 0)
 			{
