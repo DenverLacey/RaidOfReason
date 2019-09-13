@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using XboxCtrlrInput;
+using UnityEngine.SceneManagement;
 
 /* 
  * Author: Elisha, Denver, Afridi
@@ -195,6 +196,11 @@ public abstract class BaseCharacter : MonoBehaviour
         {
             // Set shield to 0.
             currentShield = 0;
+        }
+
+        if (XCI.GetButtonDown(XboxButton.Back, controller))
+        {
+            SceneManager.LoadScene(0);
         }
     }
 
@@ -421,24 +427,11 @@ public abstract class BaseCharacter : MonoBehaviour
         m_spriteRend.material.color = Color.red;
         StartCoroutine(ResetSpriteColour(.2f));
     }
-
-    /// <summary>
-    /// Resets colour.
-    /// </summary>
-    /// <param name="duration"></param>
-    /// <returns></returns>
-    //IEnumerator ResetColour(float duration)
-    //{
-    //    yield return new WaitForSeconds(duration);
-    //    m_renderer.material.color = m_originalColour;
-    //}
-
     IEnumerator ResetSpriteColour(float duration)
     {
         yield return new WaitForSeconds(duration);
         m_spriteRend.material.color = m_original;
     }
-
 
     /// <summary>
     /// Buffer for shield before degeneration.

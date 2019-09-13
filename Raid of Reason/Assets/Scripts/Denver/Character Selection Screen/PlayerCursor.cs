@@ -97,8 +97,8 @@ public class PlayerCursor : MonoBehaviour
 		float y = XCI.GetAxis(XboxAxis.LeftStickY, controller);
 
 		// scale input by speed and time
-		x *= m_speed * Time.deltaTime;
-		y *= m_speed * Time.deltaTime;
+		x *= m_speed * Time.unscaledDeltaTime;
+		y *= m_speed * Time.unscaledDeltaTime;
 
 		transform.Translate(x, y, 0);
 
