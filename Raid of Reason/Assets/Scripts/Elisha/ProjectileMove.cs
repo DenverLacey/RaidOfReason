@@ -19,6 +19,9 @@ public class ProjectileMove : MonoBehaviour {
     [SerializeField]
     private int m_damage;
 
+	private bool m_hasHitKenron;
+	private bool m_hasHitNashorn;
+
     private void Start()
     {
         Invoke("Destroy", m_projectileLife);
@@ -87,14 +90,27 @@ public class ProjectileMove : MonoBehaviour {
                 }
             }
 		}
-        else if (other.gameObject.tag == "Kenron" || other.gameObject.tag == "Nashorn")
+        else if ((other.gameObject.tag == "Kenron" && !m_hasHitKenron) || (other.gameObject.tag == "Nashorn" && !m_hasHitNashorn))
         {
+			if (other.tag == "Kenron")
+			{
+				m_hasHitKenron = true;
+			}
+			else if (other.tag == "Nashorn")
+			{
+				m_hasHitNashorn = true;
+			}
+
 			BaseCharacter hitPlayer = other.gameObject.GetComponent<BaseCharacter>();
 
 			if (hitPlayer.playerState == BaseCharacter.PlayerState.ALIVE)
 			{
 				hitPlayer.m_currentHealth += m_healAmount;
-                GameManager.Instance.Thea.m_statManager.damageHealed += m_healAmount;
+
+				if (GameManager.Instance.Thea.m_statManager)
+				{
+					GameManager.Instance.Thea.m_statManager.damageHealed += m_healAmount;
+				}
             }
 		}
     }
