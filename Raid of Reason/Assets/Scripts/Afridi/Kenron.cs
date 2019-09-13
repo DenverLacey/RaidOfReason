@@ -43,8 +43,12 @@ public class Kenron : BaseCharacter {
     private BoxCollider m_dashCollider;
 
     [SerializeField]
-    [Tooltip("Kenrons Damage Boost whilst in Chaos Flame")]
-    private float m_chaosFlameDamage;
+    [Tooltip("Kenrons Minimum Damage Boost whilst in Chaos Flame")]
+    private float m_minCFDamage;
+
+    [SerializeField]
+    [Tooltip("Kenrons Maximum Damage Boost whilst in Chaos Flame")]
+    private float m_maxCFDamage;
 
     [SerializeField]
     [Tooltip("Kenrons Speed Boost whilst in Chaos Flame")]
@@ -202,7 +206,7 @@ public class Kenron : BaseCharacter {
                 m_kenronParticle.Play();
                 // Halves his Health and sets a higher Damage/Speed
                 SetHealth(m_currentHealth / 2);
-                SetDamage(m_chaosFlameDamage);
+                SetDamage(m_minCFDamage, m_maxCFDamage);
                 SetSpeed(m_chaosFlameSpeed);
                 m_statManager.chaosFlameUsed++;
             }
@@ -415,7 +419,7 @@ public class Kenron : BaseCharacter {
             if (skillManager.m_mainSkills[0].m_currentDuration >= skillManager.m_mainSkills[0].m_duration)
             {
                 // Resets Stats and Skill
-                SetDamage(m_damage);
+                SetDamage(m_minDamage, m_maxDamage);
                 SetSpeed(15.0f);
                 isActive = false;
                 isBurning = true;

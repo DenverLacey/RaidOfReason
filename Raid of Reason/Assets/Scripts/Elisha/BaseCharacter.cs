@@ -37,9 +37,16 @@ public abstract class BaseCharacter : MonoBehaviour
     public float m_currentHealth;
     protected Rigidbody m_rigidbody;
 
+    // Damage Dealt
+    private float m_damage;
+
     [SerializeField]
     [Tooltip("How much damage will the player deal?")]
-    protected float m_damage;
+    protected float m_minDamage;
+
+    [SerializeField]
+    [Tooltip("How much damage will the player deal?")]
+    protected float m_maxDamage;
 
     [SerializeField]
     [Tooltip("Hpw fast will the player move?")]
@@ -286,9 +293,11 @@ public abstract class BaseCharacter : MonoBehaviour
     /// Sets damage to a float value.
     /// </summary>
     /// <param name="damage"></param>
-    virtual public void SetDamage(float damage)
+    virtual public void SetDamage(float minimum, float maximum)
     {
-        m_damage = damage;
+        m_minDamage = minimum;
+        m_maxDamage = maximum;
+        m_damage = Random.Range(minimum, maximum);
     }
 
     /// <summary>
