@@ -86,9 +86,9 @@ public class EnemyProjectile : MonoBehaviour
 				m_parent.isAttackingNashorn = true;
 			}
         }
-        
+
 		// if hit some object
-		if (other.tag != "EnemyManager" && other.tag != "Enemy")
+		if (other.tag != "EnemyManager" && other.tag != "Enemy" && other.name != "projectile(Clone)" && other.name != "Wall Detector")
 		{
 			KillProjectile();
 		}
