@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class Respawn : MonoBehaviour
 {
@@ -28,6 +31,11 @@ public class Respawn : MonoBehaviour
             StartCoroutine(WaitTillISaySo2());
         }
 
+        if (GameManager.Instance.Nashorn.m_currentHealth <= 0 && GameManager.Instance.Thea.m_currentHealth <= 0 && GameManager.Instance.Kenron.m_currentHealth <= 0)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+          
+        }
 
         IEnumerator WaitTillISaySo()
         {
