@@ -78,6 +78,18 @@ public class Kenron : BaseCharacter {
     [Tooltip("Effect when Cursed Kenron Spawns")]
     private GameObject m_CurseEffect;
 
+    [SerializeField]
+    [Tooltip("How many charges it takes for dashes to go off")]
+    public int m_charges;
+
+    // charge times
+    [SerializeField]
+    private int m_currentCharges;
+
+    [SerializeField]
+    [Tooltip("Time till a charge is recharged again")]
+    public float m_rechargeRate;
+
     // Enemy reference used for skill checking
     private EnemyData m_Enemy;
 
@@ -123,6 +135,8 @@ public class Kenron : BaseCharacter {
         m_Enemy = FindObjectOfType<EnemyData>();
         m_statManager = FindObjectOfType<StatTrackingManager>();
 
+        m_currentCharges = m_charges;
+
         isDashing = false;
         isBurning = false;
 
@@ -154,7 +168,7 @@ public class Kenron : BaseCharacter {
     {
         // Updates Player Movement
         base.Update();
-        Debug.Log(m_skillUpgrades.Count);
+        DebugTools.LogVariable("Charges", m_currentCharges);
 
         if (this.gameObject != null)
         {
@@ -201,7 +215,7 @@ public class Kenron : BaseCharacter {
     public void DashAttack()
     {
         // dash attack
-        if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1f && m_controllerOn && !m_triggerDown)
+        if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1f && m_controllerOn && !m_triggerDown && m_currentCharges > 0)
         {
             // set boolean flags
             m_triggerDown = true;
@@ -211,6 +225,7 @@ public class Kenron : BaseCharacter {
             m_dashCollider.enabled = true;
 			m_dashDelayTimer = m_dashDelay;
 			m_dashStartPosition = transform.position;
+            m_currentCharges--;
 
 			// set animator's trigger
 			m_animator.SetBool("Attack", true);
@@ -255,6 +270,7 @@ public class Kenron : BaseCharacter {
 			m_estimatedDashTime -= Time.deltaTime;
 			if ((m_dashStartPosition - transform.position).sqrMagnitude >= m_dashDistance*m_dashDistance || m_estimatedDashTime <= 0.0f)
             {
+
 				// reset boolean flags
 				m_dashCollider.enabled = false;
 				m_animator.SetBool("Attack", false);
@@ -271,14 +287,15 @@ public class Kenron : BaseCharacter {
                 m_dashDelayTimer -= Time.deltaTime;
 
                 m_dashCollider.GetComponent<SwordDamage>().CalculateNewMostDamageDealt();
+                GameManager.Instance.Kenron.m_statManager.dashesUsed++;
             }
 
 			// if ready to dash again 
 			if (m_dashDelayTimer <= 0.0f)
 			{
+                StartCoroutine(TimeTillRecharge());
 				m_controllerOn = true;
 				isDashing = false;
-
 			}
         }
     }
@@ -376,6 +393,15 @@ public class Kenron : BaseCharacter {
         m_startParticle.Play();
         yield return new WaitForSeconds(0.1f);
         m_startParticle.Stop();
+    }
+
+    IEnumerator TimeTillRecharge()
+    {
+        yield return new WaitForSeconds(m_rechargeRate);
+        if (m_currentCharges < m_charges)
+        {
+            m_currentCharges++;
+        }
     }
 
     /// <summary>

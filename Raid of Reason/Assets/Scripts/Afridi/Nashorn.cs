@@ -262,7 +262,6 @@ public class Nashorn : BaseCharacter
 
         foreach (Collider hitCol in hitColliders)
         {
-            Debug.Log(hitCol.gameObject.name);
             EnemyData enemy = hitCol.transform.GetComponent<EnemyData>();
             if (enemy != null)
             {
