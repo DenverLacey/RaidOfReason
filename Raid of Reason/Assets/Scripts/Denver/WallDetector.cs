@@ -18,7 +18,6 @@ public class WallDetector : MonoBehaviour
 
 		if (CollidedWithWall(other))
 		{
-			Debug.LogFormat("{0} collided with {1}", gameObject.name, other.name);
 			m_projectile.Destroy();
 		}
 	}

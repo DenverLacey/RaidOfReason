@@ -44,7 +44,7 @@ public class DamageIndicator : MonoBehaviour
 		m_lifetimeTimer = 0.0f;
 
 		// set text
-		m_textMesh.text = damageDealt.ToString();
+		m_textMesh.text = Mathf.RoundToInt(damageDealt).ToString();
 
 		// set colour
 		float percentage = damageDealt / m_maxDamage;
