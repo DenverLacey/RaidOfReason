@@ -75,6 +75,10 @@ public class Nashorn : BaseCharacter
     [Tooltip("How much delay between consecutive lunges in seconds")]
     private float m_lungeDelay;
 
+    [SerializeField]
+    [Tooltip("How much shields Nashorns Third Upgrade Gives")]
+    private float m_shieldsGiven;
+
 
     private float m_lungeDelayTimer;
     // Desired position to lunge.
@@ -92,6 +96,8 @@ public class Nashorn : BaseCharacter
     // Empty Object for particle instantiating
     private GameObject particleInstantiate;
     private GameObject temp;
+    private bool runOnce;
+    private bool thornsUp;
 
     // Skill is active check
     public bool isActive;
@@ -101,7 +107,7 @@ public class Nashorn : BaseCharacter
     public LineRenderer lineRenderer;
     // Nearby enemies
     [SerializeField]
-    public EnemyData enemies;
+    private List<EnemyData> enemies = new List<EnemyData>();
     // Stat Tracker
     [HideInInspector]
     public StatTrackingManager m_statManager;
@@ -126,7 +132,9 @@ public class Nashorn : BaseCharacter
         isTaunting = false;
         isActive = false;
         triggerIsDown = false;
-        islunging = false; 
+        islunging = false;
+        runOnce = true;
+        thornsUp = false;
 
         if (m_skillPopups.Count > 0)
         {
@@ -135,6 +143,8 @@ public class Nashorn : BaseCharacter
                 display.gameObject.SetActive(false);
             }
         }
+
+        enemies.AddRange(FindObjectsOfType<EnemyData>());
 
         m_Thea = FindObjectOfType<Thea>();
         m_Kenron = FindObjectOfType<Kenron>();
@@ -202,70 +212,26 @@ public class Nashorn : BaseCharacter
             // Sets the image to true if the skills are found
             UnlockSkill();
             // If the skill is active and the player has the named skill
-            if (isTaunting == true && m_skillUpgrades.Find(skill => skill.Name == "Roaring Thunder"))
+            if (isTaunting == true && m_skillUpgrades.Find(skill => skill.Name == "Roaring Thunder") && runOnce)
             {
-
                 // Returns increased Radius
                 this.m_tauntRadius = m_tauntRadius + m_radiusIncreased;
-
                 // Cooldown is halved
                 skillManager.m_mainSkills[1].m_coolDown = skillManager.m_mainSkills[1].m_coolDown / 2;
-            }
 
-            // If the skill is active and the player has the named skill
-            if (isTaunting == true && m_skillUpgrades.Find(skill => skill.Name == "Kinetic Discharge"))
+                // Run this part once
+                runOnce = false;
+            }
+            if (isTaunting == true && m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
             {
-                if (enemies.isAttackingNashorn == true) {
-                    enemies.TakeDamage(enemies.AttackDamage, this);
-                }
-            } 
+                GameManager.Instance.Thea.currentShield = 50.0f;
+                GameManager.Instance.Kenron.currentShield = 50.0f;
+            }
 
             // If the skill is active and the player has the named skill
             if (isTaunting == true && m_skillUpgrades.Find(skill => skill.Name == "Macht Des Sturms"))
             {
-                // Gives his allies his stun buff
-                m_Kenron.nashornBuffGiven = true;
-                m_Thea.nashornBuffGiven = true;
 
-                if (isActive == true)
-                {
-                    Ray ray = new Ray(transform.position, transform.forward);
-                    RaycastHit hit;
-
-                    lineRenderer.SetPosition(0, ray.origin);
-                    lineRenderer.SetPosition(1, ray.GetPoint(100));
-
-                    if (Physics.Raycast(transform.position, transform.forward, out hit, 100))
-                    {
-                        lineRenderer.SetPosition(1, hit.point);
-                        ChainLightning();
-                    }
-                    isActive = false;
-                }
-            }
-        }
-    }
-
-    /// <summary>
-    /// Chain Lightning Attack
-    /// </summary>
-    public void ChainLightning()
-    {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, m_lightningRadius);
-
-        listOfPosition[1] = hitColliders[1].transform.position;
-        listOfPosition[2] = hitColliders[2].transform.position;
-        listOfPosition[3] = hitColliders[3].transform.position;
-        listOfPosition[4] = hitColliders[4].transform.position;
-
-        lineRenderer.SetPositions(listOfPosition.ToArray());
-
-        foreach (Collider hitCol in hitColliders)
-        {
-            EnemyData enemy = hitCol.transform.GetComponent<EnemyData>();
-            if (enemy != null)
-            {
-                enemy.TakeDamage(0, this);
             }
         }
     }
@@ -353,6 +319,7 @@ public class Nashorn : BaseCharacter
         m_debrisParticle.Play();
 
     }
+
 
     /// <summary>
 	/// Nashorn's Ability. Boosting His Health up and reducing incoming damage he taunts all enemies to himself

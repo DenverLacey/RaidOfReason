@@ -143,7 +143,7 @@ public class Kenron : BaseCharacter {
         m_statManager = FindObjectOfType<StatTrackingManager>();
 
         m_currentCharges = m_charges;
-        chargeText.text = m_currentCharges.ToString();
+        //chargeText.text = m_currentCharges.ToString();
 
         isDashing = false;
         isBurning = false;
@@ -187,7 +187,7 @@ public class Kenron : BaseCharacter {
             DashAttack();
         }
 
-        chargeText.text = m_currentCharges.ToString();
+        //chargeText.text = m_currentCharges.ToString();
         Vector3 position = transform.position;
 		position.y = 0.1f;
 		Debug.DrawLine(position, position + transform.forward * 0.5f);
@@ -268,6 +268,7 @@ public class Kenron : BaseCharacter {
 
 			// apply force
 			m_rigidbody.AddForce(transform.forward * m_dashSpeed * m_dashDistance / m_maxDashDistance, ForceMode.VelocityChange);
+            GameManager.Instance.Kenron.m_statManager.dashesUsed++;
 		}
         else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) < 0.1f && !isDashing)
         {
@@ -296,7 +297,6 @@ public class Kenron : BaseCharacter {
                 m_dashDelayTimer -= Time.deltaTime;
 
                 m_dashCollider.GetComponent<SwordDamage>().CalculateNewMostDamageDealt();
-                GameManager.Instance.Kenron.m_statManager.dashesUsed++;
             }
 
 			// if ready to dash again 
@@ -330,6 +330,7 @@ public class Kenron : BaseCharacter {
     /// </summary>
     public void SkillChecker() 
     {
+        DebugTools.LogVariable("CD", skillManager.m_mainSkills[0].m_currentDuration);
         // Empty Check
         if (this.gameObject != null && m_Enemy != null)
         {
@@ -338,26 +339,20 @@ public class Kenron : BaseCharacter {
             // If Kenron has the skill specified and is killed by Kenron
             if (m_skillUpgrades.Find(skill => skill.Name == "Vile Infusion") && m_Enemy.isDeadbByKenron)
             {
-                // Icon pops up
-                m_skillPopups[1].enabled = true;
                 // Return a bit of health to Kenrons current health
                 this.m_currentHealth = m_currentHealth + m_healthGained;
             }
             // If Kenron has the skill specified and is killed by Kenron
             if (isActive == true && m_skillUpgrades.Find(skill => skill.Name == "Bloodlust") && m_Enemy.isDeadbByKenron)
             {
-                // Icon pops up
-                m_skillPopups[2].enabled = true;
                 // Reduces the cooldown from Kenrons Cooldown 
                 skillManager.m_mainSkills[0].m_currentDuration = skillManager.m_mainSkills[0].m_currentDuration - m_durationIncreased;
             }
             // if the player does have shuras upgrade applied
-            if (m_skillUpgrades.Find(skill => skill.Name == "Shuras Reckoning") && isActive == true)
+            if (m_skillUpgrades.Find(skill => skill.Name == "Shuras Awakening") && isActive == true)
             {
                 if (isBurning)
                 {
-                    // Icon pops up
-                    m_skillPopups[3].enabled = true;
                     StartCoroutine(ShurasReckoningEffect());
                     isBurning = false;
                 }
@@ -384,7 +379,7 @@ public class Kenron : BaseCharacter {
                 // Icon pops up
                 m_skillPopups[2].gameObject.SetActive(true);
             }
-            if (m_skillUpgrades.Find(skill => skill.Name == "Shuras Reckoning"))
+            if (m_skillUpgrades.Find(skill => skill.Name == "Shuras Awakening"))
             {
                 // Icon pops up
                 m_skillPopups[3].gameObject.SetActive(true);

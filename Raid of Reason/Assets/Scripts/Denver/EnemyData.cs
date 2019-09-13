@@ -89,7 +89,7 @@ public class EnemyData : MonoBehaviour
 
     [HideInInspector]
     // Afridi added this for the skill tree
-    public bool isAttackingNashorn = true;
+    public bool isAttackingNashorn;
 
 	private Collider m_collider;
 
@@ -104,7 +104,7 @@ public class EnemyData : MonoBehaviour
 	{
 		Rigidbody = GetComponent<Rigidbody>();
 		m_collider = GetComponent<Collider>();
-
+        isAttackingNashorn = false;
 		Pathfinder = GetComponent<EnemyPathfinding>();
     }
 
@@ -208,7 +208,7 @@ public class EnemyData : MonoBehaviour
         switch (character.CharacterType)
         {
             case Character.KENRON:
-                if (GameManager.Instance.Kenron.isActive)
+                if (GameManager.Instance.Kenron.isActive && GameManager.Instance.Kenron.m_skillUpgrades.Find(skill => skill.Name == "Shuras Reckoning"))
                 {
                     if(m_burningEffect != null)
                     {

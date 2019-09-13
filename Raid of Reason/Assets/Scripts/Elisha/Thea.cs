@@ -311,28 +311,24 @@ public class Thea : BaseCharacter
             }
             if (m_skillUpgrades.Find(skill => skill.name == "Oceans Ally"))
             {
-                float healthcomparison = m_kenron.m_currentHealth + m_nashorn.m_currentHealth;
+                float healthcomparison = GameManager.Instance.Kenron.m_currentHealth + GameManager.Instance.Nashorn.m_currentHealth;
 
-                //if (healthcomparison <= 150)
-                //{
-                //    m_projectileDelay = 0.7f;
-                //    m_damage = 13.0f;
-                //}
-                //if (healthcomparison <= 130)
-                //{
-                //    m_projectileDelay = 0.5f;
-                //    m_damage = 18.0f;
-                //}
-                //if (healthcomparison <= 60)
-                //{
-                //    m_projectileDelay = 0.3f;
-                //    m_damage = 24.0f;
-                //}
-                //if (healthcomparison <= 25)
-                //{
-                //    m_projectileDelay = 0.1f;
-                //    m_damage = 35.0f;
-                //}
+                if (healthcomparison <= 150)
+                {
+                    m_projectileDelay = 0.6f;
+                }
+                if (healthcomparison <= 130)
+                {
+                    m_projectileDelay = 0.5f;
+                }
+                if (healthcomparison <= 60)
+                {
+                    m_projectileDelay = 0.4f;
+                }
+                if (healthcomparison <= 25)
+                {
+                    m_projectileDelay = 0.3f;
+                }
             }
             if (m_isActive == true && m_skillUpgrades.Find(skill => skill.name == "Hydro Pressure"))
             {
