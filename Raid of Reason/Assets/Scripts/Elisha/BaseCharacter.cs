@@ -296,8 +296,7 @@ public abstract class BaseCharacter : MonoBehaviour
     virtual public void SetDamage(float minimum, float maximum)
     {
         m_minDamage = minimum;
-        m_maxDamage = maximum;
-        m_damage = Random.Range(minimum, maximum);
+        m_maxDamage = maximum;      
     }
 
     /// <summary>
@@ -333,7 +332,7 @@ public abstract class BaseCharacter : MonoBehaviour
     /// <returns> float value. </returns>
     virtual public float GetDamage()
     {
-        return m_damage;
+        return m_damage = Random.Range(m_minDamage, m_maxDamage);
     }
 
     /// <summary>
