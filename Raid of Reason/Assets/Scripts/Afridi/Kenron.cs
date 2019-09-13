@@ -97,6 +97,9 @@ public class Kenron : BaseCharacter {
     // Enemy reference used for skill checking
     private EnemyData m_Enemy;
 
+    // Charges Display
+    public Text chargeText;
+
     // Desired position to dash
     private Vector3 m_dashPosition;
 	private Vector3 m_dashStartPosition;
@@ -140,6 +143,7 @@ public class Kenron : BaseCharacter {
         m_statManager = FindObjectOfType<StatTrackingManager>();
 
         m_currentCharges = m_charges;
+        chargeText.text = m_currentCharges.ToString();
 
         isDashing = false;
         isBurning = false;
@@ -183,7 +187,8 @@ public class Kenron : BaseCharacter {
             DashAttack();
         }
 
-		Vector3 position = transform.position;
+        chargeText.text = m_currentCharges.ToString();
+        Vector3 position = transform.position;
 		position.y = 0.1f;
 		Debug.DrawLine(position, position + transform.forward * 0.5f);
 

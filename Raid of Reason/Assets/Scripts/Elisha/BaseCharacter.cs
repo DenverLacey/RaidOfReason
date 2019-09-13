@@ -43,15 +43,11 @@ public abstract class BaseCharacter : MonoBehaviour
     [SerializeField]
     [Tooltip("How much damage will the player deal?")]
     protected float m_minDamage;
-
-    [SerializeField]
     protected float m_mincurrentDamage;
 
     [SerializeField]
     [Tooltip("How much damage will the player deal?")]
     protected float m_maxDamage;
-
-    [SerializeField]
     protected float m_maxcurrentDamage;
 
     [SerializeField]
