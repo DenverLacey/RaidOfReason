@@ -45,8 +45,14 @@ public abstract class BaseCharacter : MonoBehaviour
     protected float m_minDamage;
 
     [SerializeField]
+    protected float m_mincurrentDamage;
+
+    [SerializeField]
     [Tooltip("How much damage will the player deal?")]
     protected float m_maxDamage;
+
+    [SerializeField]
+    protected float m_maxcurrentDamage;
 
     [SerializeField]
     [Tooltip("Hpw fast will the player move?")]
@@ -134,6 +140,8 @@ public abstract class BaseCharacter : MonoBehaviour
         m_rigidbody = GetComponent<Rigidbody>();
         m_animator = GetComponentInChildren<Animator>();
         m_currentHealth = m_maxHealth;
+        m_mincurrentDamage = m_minDamage;
+        m_maxcurrentDamage = m_maxDamage;
         m_vulnerability = 1.0f;
         m_controllerOn = true;
         m_bActive = false;
@@ -295,8 +303,8 @@ public abstract class BaseCharacter : MonoBehaviour
     /// <param name="damage"></param>
     virtual public void SetDamage(float minimum, float maximum)
     {
-        m_minDamage = minimum;
-        m_maxDamage = maximum;      
+        m_mincurrentDamage = minimum;
+        m_maxcurrentDamage = maximum;      
     }
 
     /// <summary>
@@ -332,7 +340,13 @@ public abstract class BaseCharacter : MonoBehaviour
     /// <returns> float value. </returns>
     virtual public float GetDamage()
     {
-        return m_damage = Random.Range(m_minDamage, m_maxDamage);
+        return m_damage = Random.Range(m_mincurrentDamage, m_maxcurrentDamage);
+    }
+
+    virtual public void ResetDamage()
+    {
+        m_mincurrentDamage = m_minDamage;
+        m_maxcurrentDamage = m_maxDamage;
     }
 
     /// <summary>
