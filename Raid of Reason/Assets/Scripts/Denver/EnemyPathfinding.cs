@@ -25,7 +25,7 @@ public class EnemyPathfinding : MonoBehaviour
 	[HideInInspector]
 	public bool manualSteering;
 
-	EnemyData m_enemy;
+	private EnemyData m_enemy;
 
 	private void Awake()
 	{
@@ -44,6 +44,29 @@ public class EnemyPathfinding : MonoBehaviour
     {
 		if (m_path.corners.Length == 0)
 		{
+			return;
+		}
+
+		// move away from nearby players
+		bool playersNear = false;
+		Vector3 avoidVector = new Vector3();
+		foreach (BaseCharacter character in GameManager.Instance.Players)
+		{
+			if (!character) { continue; }
+
+			Vector3 difference = transform.position - character.transform.position;
+			difference.y = transform.position.y;
+
+			if (difference.sqrMagnitude <= 2f)
+			{
+				playersNear = true;
+				avoidVector += difference.normalized;
+			}
+		}
+
+		if (playersNear)
+		{
+			m_enemy.Rigidbody.velocity += avoidVector * m_speed;
 			return;
 		}
 
