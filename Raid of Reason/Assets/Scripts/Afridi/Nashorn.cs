@@ -14,50 +14,13 @@ using XboxCtrlrInput;
 
 public class Nashorn : BaseCharacter
 {
-    [Tooltip("How much shield will Nashorn gain on every punch?")]
-    public float shieldGain;
+    [Header("Punching Attacks")]
 
     [Tooltip("The Collider of Nashorns Left Gauntlet")]
     public Collider LeftGauntlet;
 
     [Tooltip("The Collider of Nashorns Right Gauntlet")]
     public Collider RightGauntlet;
-
-    [Tooltip("Checks if Nashorns Skill is Active")]
-    public bool isTaunting;
-
-    [SerializeField]
-    [Tooltip("Size of the area of effect for taunt ability")]
-    private float m_tauntRadius;
-	public float TauntRadius { get => m_tauntRadius; }
-
-    [SerializeField]
-    [Tooltip("How vulnerable Nashorn is while taunting (1.0 is default)")]
-    private float m_tauntVulnerability;
-
-    [SerializeField]
-    [Tooltip("Electric Effect That Appears When Nashorn Taunts")]
-    private ParticleSystem m_tauntParticle;
-
-    [SerializeField]
-    [Tooltip("Shock Effect That Appears When Nashorn Taunts")]
-    private ParticleSystem m_debrisParticle;
-
-    [SerializeField]
-    [Tooltip("Increased Radius from Nashorns Roaring Thunder ability")]
-    private float m_radiusIncreased;
-
-    [Tooltip("Chance of Stun dealt by Nashorns Macht Des Sturms ability")]
-    public float stunChance;
-
-    [SerializeField]
-    [Tooltip("Damage done by Chain Lightning dealt by Macht Des Sturms ability")]
-    private float m_lightningDamage;
-
-    [SerializeField]
-    [Tooltip("Range Chain Lightning spreads dealt by Macht Des Sturms ability")]
-    private float m_lightningRadius;
-
 
     [SerializeField]
     [Tooltip("Buffer distance to avoid Nashorn getting stuck in walls")]
@@ -75,10 +38,58 @@ public class Nashorn : BaseCharacter
     [Tooltip("How much delay between consecutive lunges in seconds")]
     private float m_lungeDelay;
 
+    [Tooltip("How much shield will Nashorn gain on every punch?")]
+    public float shieldGain;
+
     [SerializeField]
     [Tooltip("How much shields Nashorns Third Upgrade Gives")]
     private float m_shieldsGiven;
 
+    [Header("--Skills--")]
+
+    [SerializeField]
+    [Tooltip("Size of the area of effect for taunt ability")]
+    private float m_tauntRadius;
+	public float TauntRadius { get => m_tauntRadius; }
+
+    [SerializeField]
+    [Tooltip("How vulnerable Nashorn is while taunting (1.0 is default)")]
+    private float m_tauntVulnerability;
+
+    [SerializeField]
+    [Tooltip("Increased Radius from Nashorns Roaring Thunder ability")]
+    private float m_radiusIncreased;
+
+    [Tooltip("Chance of Stun dealt by Nashorns Macht Des Sturms ability")]
+    public float stunChance;
+
+    [SerializeField]
+    [Tooltip("Damage done by Chain Lightning dealt by Macht Des Sturms ability")]
+    private float m_lightningDamage;
+
+    [SerializeField]
+    [Tooltip("Range Chain Lightning spreads dealt by Macht Des Sturms ability")]
+    private float m_lightningRadius;
+
+    // Nearby enemies
+    [SerializeField]
+    private List<EnemyData> enemies = new List<EnemyData>();
+
+    [Tooltip("Checks if Nashorns Skill is Active")]
+    public bool isTaunting;
+
+    // Skill is active check
+    public bool isActive;
+
+    [Header("--Particles And UI--")]
+
+    [SerializeField]
+    [Tooltip("Electric Effect That Appears When Nashorn Taunts")]
+    private ParticleSystem m_tauntParticle;
+
+    [SerializeField]
+    [Tooltip("Shock Effect That Appears When Nashorn Taunts")]
+    private ParticleSystem m_debrisParticle;
 
     private float m_lungeDelayTimer;
     // Desired position to lunge.
@@ -97,23 +108,14 @@ public class Nashorn : BaseCharacter
     private GameObject particleInstantiate;
     private GameObject temp;
     private bool runOnce;
-    private bool thornsUp;
 
-    // Skill is active check
-    public bool isActive;
-    // Container for Enemy position
-    public List<Vector3> listOfPosition;
-    // Chain lightning visual
-    public LineRenderer lineRenderer;
-    // Nearby enemies
-    [SerializeField]
-    private List<EnemyData> enemies = new List<EnemyData>();
     // Stat Tracker
     [HideInInspector]
     public StatTrackingManager m_statManager;
 
     private float totalAmountTaunted;
     private float amountTaunted;
+
     private void Start()
 	{
 		GameManager.Instance.GiveCharacterReference(this);
@@ -134,7 +136,6 @@ public class Nashorn : BaseCharacter
         triggerIsDown = false;
         islunging = false;
         runOnce = true;
-        thornsUp = false;
 
         if (m_skillPopups.Count > 0)
         {
@@ -177,22 +178,22 @@ public class Nashorn : BaseCharacter
             if (m_skillUpgrades.Find(skill => skill.Name == "Roaring Thunder"))
             {
                 // Icon pops up
-                m_skillPopups[1].gameObject.SetActive(true);
+                m_skillPopups[0].gameObject.SetActive(true);
             }
             if (m_skillUpgrades.Find(skill => skill.Name == "Kinetic Discharge"))
             {
                 // Icon pops up
-                m_skillPopups[2].gameObject.SetActive(true);
+                m_skillPopups[1].gameObject.SetActive(true);
             }
             if (m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
             {
                 // Icon pops up
-                m_skillPopups[3].gameObject.SetActive(true);
+                m_skillPopups[2].gameObject.SetActive(true);
             }
             if (m_skillUpgrades.Find(skill => skill.Name == "Macht Des Sturms"))
             {
                 // Icon pops up
-                m_skillPopups[4].gameObject.SetActive(true);
+                m_skillPopups[3].gameObject.SetActive(true);
             }
         }
     }

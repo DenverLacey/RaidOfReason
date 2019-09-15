@@ -14,11 +14,7 @@ using XboxCtrlrInput;
 
 public class Kenron : BaseCharacter {
 
-    [Tooltip("The Sword Kenron Is Using")]
-    public GameObject Amaterasu;
-
-    [Tooltip("Checks if Kenrons Skill is Active")]
-    public bool isActive = false;
+    [Header("--Dash Attack Stats--")]
 
 	[SerializeField]
 	[Tooltip("Distance of Dash Attack")]
@@ -32,15 +28,32 @@ public class Kenron : BaseCharacter {
 	[Tooltip("How much delay between consecutive dashes in seconds")]
 	private float m_dashDelay;
 
+    // charge times
+    [SerializeField]
+    public int m_currentCharges;
+
 	[SerializeField]
 	[Tooltip("Buffer distance to avoid Kenron getting stuck in walls")]
 	private float m_dashBufferDistance = 3f;
+
+    [SerializeField]
+    [Tooltip("How many charges it takes for dashes to go off")]
+    public int m_charges;
+
+    [SerializeField]
+    [Tooltip("Time till a charge is recharged again")]
+    public float m_rechargeRate;
 
 	private Vector3 m_dashVelocity;
 
     [SerializeField]
     [Tooltip("Hit box for dash attack")]
     private BoxCollider m_dashCollider;
+
+    [Header("--Skills--")]
+
+    [Tooltip("Checks if Kenrons Skill is Active")]
+    public bool isActive = false;
 
     [SerializeField]
     [Tooltip("Kenrons Minimum Damage Boost whilst in Chaos Flame")]
@@ -63,12 +76,20 @@ public class Kenron : BaseCharacter {
     private float m_durationIncreased;
 
     [SerializeField]
-    [Tooltip("The Radius that effects the enemies with Kenrons Shuras Awakening Skill")]
-    private float m_damageRadius;
+    [Tooltip("How long the burn damage lasts from Kenrons Shuras Awakening Skill")]
+    private float m_burnRate;
 
     [SerializeField]
-    [Tooltip("The Damage dealth within the radius hit by Kenrons Shuras Awakening Skill")]
-    private float m_damageWithin;
+    [Tooltip("How much damage the burn deals from Shuras Awakening Lust Skill")]
+    private float m_burnDamage;
+
+	// A bool that checks if nashorn has give kenron his buff
+	public bool nashornBuffGiven = false;
+
+    // Sets the burn 
+    public bool isBurning;
+
+    [Header("--Particles And UI--")]
 
     [SerializeField]
     [Tooltip("Particle Effect That Appears on the Kenrons Body When Chaos Flame is Active")]
@@ -77,22 +98,6 @@ public class Kenron : BaseCharacter {
     [SerializeField]
     [Tooltip("Particle Effect That Indicates Chaos Flame is Active")]
     private ParticleSystem m_startParticle;
-
-    [SerializeField]
-    [Tooltip("Effect when Cursed Kenron Spawns")]
-    private GameObject m_CurseEffect;
-
-    [SerializeField]
-    [Tooltip("How many charges it takes for dashes to go off")]
-    public int m_charges;
-
-    // charge times
-    [SerializeField]
-    public int m_currentCharges;
-
-    [SerializeField]
-    [Tooltip("Time till a charge is recharged again")]
-    public float m_rechargeRate;
 
     // Enemy reference used for skill checking
     private EnemyData m_Enemy;
@@ -116,11 +121,6 @@ public class Kenron : BaseCharacter {
 	// Checks if a specific trigger on the controller is pressed
 	private bool m_triggerDown;
 
-	// A bool that checks if nashorn has give kenron his buff
-	public bool nashornBuffGiven = false;
-
-    // Sets the burn 
-    public bool isBurning;
 
     // Kenrons Collider
 	private CapsuleCollider m_collider;
@@ -141,12 +141,14 @@ public class Kenron : BaseCharacter {
         CharacterType = Character.KENRON;
         m_Enemy = FindObjectOfType<EnemyData>();
         m_statManager = FindObjectOfType<StatTrackingManager>();
-
         m_currentCharges = m_charges;
-        chargeText.text = m_currentCharges.ToString();
-
         isDashing = false;
         isBurning = false;
+
+        if (chargeText)
+        {
+            chargeText.text = m_currentCharges.ToString();
+        }
 
         if (m_skillPopups.Count > 0)
         {
@@ -176,22 +178,23 @@ public class Kenron : BaseCharacter {
     {
         // Updates Player Movement
         base.Update();
-        DebugTools.LogVariable("Charges", m_currentCharges);
 
-        if (this.gameObject != null)
+        if (gameObject != null)
         {
             // Checks Kenrons Skill Tree
             SkillChecker();
-
             // Uses his Dash
             DashAttack();
+
+            if (chargeText)
+            {
+                chargeText.text = m_currentCharges.ToString();
+            }
         }
 
-        chargeText.text = m_currentCharges.ToString();
         Vector3 position = transform.position;
 		position.y = 0.1f;
 		Debug.DrawLine(position, position + transform.forward * 0.5f);
-
 	}
 
     /// <summary>
@@ -200,7 +203,7 @@ public class Kenron : BaseCharacter {
     public void ChaosFlame(float skillDuration)
     {
         // Empty Check
-        if (this.gameObject != null && Amaterasu != null)
+        if (this.gameObject != null)
         {
             if (skillDuration >= skillManager.m_mainSkills[0].m_duration)
             {
@@ -304,18 +307,6 @@ public class Kenron : BaseCharacter {
     }
 
     /// <summary>
-    /// The Effects that are given to the enemies/players when Kenrons third skill is active
-    /// </summary>
-    IEnumerator ShurasReckoningEffect() {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, m_damageRadius, LayerMask.GetMask("Enemy"));
-        foreach (Collider hit in hitColliders)
-        {
-            hit.GetComponent<StatusEffectManager>().ApplyBurn(3);
-        }
-        yield return new WaitForSeconds(3);
-    }
-
-    /// <summary>
     /// Checks how many skills Kenron has obtained from his skill tree
     /// - Vile Infusion: Kenron Gains Health Back for each kill (Passive)
     /// - Blood Lust: Kenrons Cooldown is reduced
@@ -324,9 +315,8 @@ public class Kenron : BaseCharacter {
     /// </summary>
     public void SkillChecker() 
     {
-        DebugTools.LogVariable("CD", skillManager.m_mainSkills[0].m_currentDuration);
         // Empty Check
-        if (this.gameObject != null && m_Enemy != null)
+        if (gameObject != null && m_Enemy != null)
         {
             // Sets the image to true if the skills are found
             UnlockSkill();
@@ -342,46 +332,37 @@ public class Kenron : BaseCharacter {
                 // Reduces the cooldown from Kenrons Cooldown 
                 skillManager.m_mainSkills[0].m_currentDuration = skillManager.m_mainSkills[0].m_currentDuration - m_durationIncreased;
             }
-            // if the player does have shuras upgrade applied
-            if (m_skillUpgrades.Find(skill => skill.Name == "Shuras Awakening") && isActive == true)
-            {
-                if (isBurning)
-                {
-                    StartCoroutine(ShurasReckoningEffect());
-                    isBurning = false;
-                }
-            }
             // If Kenron has the skill specificed and his health is less than or equal to 0
             if (m_skillUpgrades.Find(skill => skill.Name == "Curse of Amaterasu") && m_currentHealth <= 0.0f)
             {
-               
+               // TODO: Charge Held + Release Wave of Particle
             }
         }
     }
 
     public void UnlockSkill()
     {
-        if (m_skillPopups.Count > 1)
+        if (m_skillPopups != null)
         {
             if (m_skillUpgrades.Find(skill => skill.Name == "Vile Infusion"))
             {
                 // Icon pops up
-                m_skillPopups[1].gameObject.SetActive(true);
+                m_skillPopups[0].gameObject.SetActive(true);
             }
             if (m_skillUpgrades.Find(skill => skill.Name == "Bloodlust"))
             {
                 // Icon pops up
-                m_skillPopups[2].gameObject.SetActive(true);
+                m_skillPopups[1].gameObject.SetActive(true);
             }
             if (m_skillUpgrades.Find(skill => skill.Name == "Shuras Awakening"))
             {
                 // Icon pops up
-                m_skillPopups[3].gameObject.SetActive(true);
+                m_skillPopups[2].gameObject.SetActive(true);
             }
             if (m_skillUpgrades.Find(skill => skill.Name == "Malevolent Inferno"))
             {
                 // Icon pops up
-                m_skillPopups[4].gameObject.SetActive(true);
+                m_skillPopups[3].gameObject.SetActive(true);
             }
         }
     }

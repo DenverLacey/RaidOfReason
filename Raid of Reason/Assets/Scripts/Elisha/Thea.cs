@@ -11,34 +11,7 @@ using XboxCtrlrInput;
 
 public class Thea : BaseCharacter 
 {
-    [SerializeField]
-    [Tooltip("How much more healing Thea does with her Fourth ability")]
-    public float m_healMultiplier;
-
-    [SerializeField]
-    private GameObject m_waterPrefab;
-
-    [SerializeField]
-    [Tooltip("Insert Theas projectile object.")]
-    private GameObject m_projectile;
-
-    [SerializeField]
-    [Tooltip("How long of a delay will it take for her next projectile to instiantiate?")]
-    private float m_projectileDelay;
-
-    [SerializeField]
-    [Tooltip("The AOE particle used for visual effect.")]
-    private ParticleSystem m_HealRadius;
-
-    [SerializeField]
-    [Tooltip("The Second AOE particle used for visual effect.")]
-    private ParticleSystem m_HealRadius_2;
-
-
-    [SerializeField]
-    [Tooltip("The Final particle used for visual effect.")]
-    private ParticleSystem m_HealRadius_3;
-
+    [Header("--GOP Growth--")]
     [SerializeField]
     [Tooltip("How big can Thea's AOE get?")]
     private float m_AOEMax;
@@ -55,9 +28,7 @@ public class Thea : BaseCharacter
     [Tooltip("How much the Gift of Poseidon heals by?")]
     private float m_GOPEffect;
 
-    [SerializeField]
-    [Tooltip("How fast will Thea's cursor move?")]
-    private float aimCursorSpeed;
+    [Header("--Skills--")]
 
     [Tooltip("How much health thea passively heals with her first skill")]
     public float healthRegenerated;
@@ -66,19 +37,62 @@ public class Thea : BaseCharacter
     public float regenEachFrame;
 
     [SerializeField]
+    [Tooltip("How much more healing Thea does with her Fourth ability")]
+    public float m_healMultiplier;
+
+    [Tooltip("how much the enemies are knockbacked by theas third skill")]
+    public float knockbackForce;
+
+    public bool nashornBuffGiven = false;
+
+    public bool m_skillActive;
+
+    [SerializeField]
     private List<EnemyData> m_nearbyEnemies = new List<EnemyData>();
+
+    [Header("--Projectile Attacks--")]
+
+    [SerializeField]
+    [Tooltip("Insert Theas projectile object.")]
+    private GameObject m_projectile;
+
+    public GameObject m_aimCursor;
+
+    [SerializeField]
+    [Tooltip("How long of a delay will it take for her next projectile to instiantiate?")]
+    private float m_projectileDelay;
+
+    [SerializeField]
+    [Tooltip("How fast will Thea's cursor move?")]
+    private float aimCursorSpeed;
+
+    public float m_aimCursorRadius;
+
+    [Header("--Particles And UI--")]
+
+    [SerializeField]
+    private GameObject m_waterPrefab;
+
+    [SerializeField]
+    [Tooltip("The AOE particle used for visual effect.")]
+    private ParticleSystem m_HealRadius;
+
+    [SerializeField]
+    [Tooltip("The Second AOE particle used for visual effect.")]
+    private ParticleSystem m_HealRadius_2;
+
+    [SerializeField]
+    [Tooltip("The Final particle used for visual effect.")]
+    private ParticleSystem m_HealRadius_3;
 
     // Stat Tracker
     [HideInInspector]
     public StatTrackingManager m_statManager;
 
-    [Tooltip("hpw much the enemies are knockbacked by theas third skill")]
-    public float knockbackForce;
 
     // Runs once check
     private bool neverDone;
 
-    public float m_aimCursorRadius;
 
     private Vector3 newLocation;
 
@@ -88,15 +102,12 @@ public class Thea : BaseCharacter
     private Nashorn m_nashorn;
     private Vector3 m_hitLocation;
     private LayerMask m_layerMask;
-    public GameObject m_aimCursor;
     private float m_shotCounter;
     private float m_counter;
     private bool m_isActive;
-    public bool m_skillActive;
     private float m_AOERadius;
     private float m_AOETimer;
     private float m_particleRadius;
-    public bool nashornBuffGiven = false;
 
     private ParticleSystem.ShapeModule m_AOEShapeModule;
     private ParticleSystem.ShapeModule m_AOEShapeModule_2;
@@ -392,22 +403,22 @@ public class Thea : BaseCharacter
             if (m_skillUpgrades.Find(skill => skill.Name == "Settling Tide"))
             {
                 // Icon pops up
-                m_skillPopups[1].gameObject.SetActive(true);
+                m_skillPopups[0].gameObject.SetActive(true);
             }
             if (m_skillUpgrades.Find(skill => skill.Name == "Oceans Ally"))
             {
                 // Icon pops up
-                m_skillPopups[2].gameObject.SetActive(true);
+                m_skillPopups[1].gameObject.SetActive(true);
             }
             if (m_skillUpgrades.Find(skill => skill.Name == "Hydro Pressure"))
             {
                 // Icon pops up
-                m_skillPopups[3].gameObject.SetActive(true);
+                m_skillPopups[2].gameObject.SetActive(true);
             }
             if (m_skillUpgrades.Find(skill => skill.Name == "Serenade of Water"))
             {
                 // Icon pops up
-                m_skillPopups[4].gameObject.SetActive(true);
+                m_skillPopups[3].gameObject.SetActive(true);
             }
         }
     }

@@ -29,7 +29,7 @@ public class SmashDamage : MonoBehaviour
 
             GameManager.Instance.Nashorn.currentShield += GameManager.Instance.Nashorn.shieldGain;
 
-            if (GameManager.Instance.Nashorn.m_skillUpgrades.Find(skill => skill.Name == "Kinetic Discharge"))
+            if (GameManager.Instance.Nashorn != null && GameManager.Instance.Nashorn.m_skillUpgrades.Find(skill => skill.Name == "Kinetic Discharge"))
             {
                 haveSkill = true;
                 // TODO: Knockback enemies deal damage to other enemies 

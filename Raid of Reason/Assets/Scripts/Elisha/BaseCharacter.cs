@@ -33,45 +33,34 @@ public abstract class BaseCharacter : MonoBehaviour
         DEAD
     }
 
+    [Header("--Player Stats--")]
+
     public PlayerState playerState;
     public float m_maxHealth;
     public float m_currentHealth;
     protected Rigidbody m_rigidbody;
-
-    // Damage Dealt
     private float m_damage;
+
+    [SerializeField]
+    [Tooltip("How fast will the player move?")]
+    protected float m_movementSpeed;
 
     [SerializeField]
     [Tooltip("How much damage will the player deal?")]
     protected float m_minDamage;
-    protected float m_mincurrentDamage;
+
+    private float m_mincurrentDamage;
+    private float m_maxcurrentDamage;
 
     [SerializeField]
     [Tooltip("How much damage will the player deal?")]
     protected float m_maxDamage;
-    protected float m_maxcurrentDamage;
 
-    [SerializeField]
-    [Tooltip("Hpw fast will the player move?")]
-    protected float m_movementSpeed;
-
-    [Tooltip("Pick what controller this player is.")]
-    public XboxController controller;
-
-    // Player Colliders
-    private CapsuleCollider m_playerCollider;
-
-    public List<Image> m_skillPopups = new List<Image>();
-
-    [Tooltip("The Skill Manager that manages the skills of the players")]
-    public SkillManager skillManager;
-
-    [Tooltip("A List of How Many Skill Upgrades the Players Have")]
-    public List<SkillsAbilities> m_skillUpgrades = new List<SkillsAbilities>();
 
     [Tooltip("How much max shield can the player get?")]
     public float m_maxShield;
 
+    [HideInInspector]
     public float currentShield;
 
     [SerializeField]
@@ -86,9 +75,20 @@ public abstract class BaseCharacter : MonoBehaviour
     [Tooltip("How much shield degenerates?")]
     private float m_shieldDegenerateAmount;
 
-    [SerializeField]
-    [Tooltip("The particle that spawns on death")]
-    private ParticleSystem m_deathParticle;
+    [Tooltip("Pick what controller this player is.")]
+    public XboxController controller;
+
+    // Player Colliders
+    private CapsuleCollider m_playerCollider;
+
+    [Tooltip("The Skill Manager that manages the skills of the players")]
+    public SkillManager skillManager;
+
+    public List<Image> m_skillPopups = new List<Image>();
+
+    [Tooltip("A List of How Many Skill Upgrades the Players Have")]
+    public List<SkillsAbilities> m_skillUpgrades = new List<SkillsAbilities>();
+
 
     [HideInInspector]
     public bool m_controllerOn;
@@ -143,7 +143,7 @@ public abstract class BaseCharacter : MonoBehaviour
         m_controllerOn = true;
         m_bActive = false;
         currentShield = 0;
-
+        skillManager = FindObjectOfType<SkillManager>();
         m_spriteRend = GetComponentInChildren<SpriteRenderer>();
         m_original = m_spriteRend.sharedMaterial.color;
     }
@@ -163,7 +163,7 @@ public abstract class BaseCharacter : MonoBehaviour
                 break;
 
 			case PlayerState.DEAD:
-                //// Player gets removed from camera array.
+                // Player gets removed from camera array.
                 //if (m_camera.targets.Count > 0)
                 //{
                 //    m_camera.targets.Remove(transform);

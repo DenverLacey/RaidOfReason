@@ -16,8 +16,6 @@ public class ProjectileMove : MonoBehaviour {
     private float m_projectileSpeed;
     [SerializeField]
     private float m_healAmount;
-    [SerializeField]
-    private int m_damage;
 
 	private bool m_hasHitKenron;
 	private bool m_hasHitNashorn;
@@ -33,14 +31,6 @@ public class ProjectileMove : MonoBehaviour {
         m_hasHitNashorn = false;
     }
 
-    /// <summary>
-    /// Sets the damage dealt by the projectile.
-    /// </summary>
-    /// <param name="damage"></param>
-    public void SetDamage(float damage)
-    {
-        this.m_damage = (int)damage;
-    }
 
     // Update is called once per frame
     void Update () {
@@ -74,10 +64,10 @@ public class ProjectileMove : MonoBehaviour {
            
             if (enemy)
             {
-                enemy.TakeDamage(m_damage, GameManager.Instance.Thea);
+                enemy.TakeDamage(GameManager.Instance.Thea.GetDamage(), GameManager.Instance.Thea);
                 
                 //NASHORN ABILITY
-                if (GameManager.Instance.Thea.nashornBuffGiven == true && GameManager.Instance.Nashorn.isTaunting == true)
+                if (GameManager.Instance.Nashorn != null && GameManager.Instance.Thea.nashornBuffGiven == true && GameManager.Instance.Nashorn.isTaunting == true)
                 {
                     float randomValue = Random.value;
                     if (GameManager.Instance.Nashorn.stunChance < randomValue)
@@ -85,12 +75,12 @@ public class ProjectileMove : MonoBehaviour {
                         other.gameObject.GetComponent<StatusEffectManager>().ApplyStun(1.5f);
                     }
                 }
-                else if (GameManager.Instance.Nashorn.isTaunting == false)
+                else if (GameManager.Instance.Nashorn != null && GameManager.Instance.Nashorn.isTaunting == false)
                 {
                     GameManager.Instance.Thea.nashornBuffGiven = false;
                 }
 
-                if (GameManager.Instance.Kenron.m_skillUpgrades.Find(skill => skill.Name == "Shuras Reckoning") && GameManager.Instance.Kenron.isActive == true)
+                if (GameManager.Instance.Kenron && GameManager.Instance.Kenron.m_skillUpgrades.Find(skill => skill.Name == "Shuras Reckoning") && GameManager.Instance.Kenron.isActive == true)
                 {
                     other.gameObject.GetComponent<StatusEffectManager>().ApplyBurn(4);
                 }
