@@ -163,14 +163,7 @@ public abstract class BaseCharacter : MonoBehaviour
                 break;
 
 			case PlayerState.DEAD:
-                // Player gets removed from camera array.
-                //if (m_camera.targets.Count > 0)
-                //{
-                //    m_camera.targets.Remove(transform);
-                //}
-                //gameObject.SetActive(false);
-                //Destroy(gameObject);
-                //Destroy(gameObject);
+                playerState = PlayerState.ALIVE;
                 break;
 
 			default:
@@ -203,9 +196,9 @@ public abstract class BaseCharacter : MonoBehaviour
             currentShield = m_maxShield;
         }
 
-        if (XCI.GetButtonDown(XboxButton.Back, controller))
+        if (m_currentHealth < 0)
         {
-            SceneManager.LoadScene(0);
+            m_currentHealth = 0;    
         }
     }
 
@@ -300,7 +293,7 @@ public abstract class BaseCharacter : MonoBehaviour
         // If player has no health.
         if (m_currentHealth <= 0.0f)
         {
-            //playerState = PlayerState.DEAD;
+           playerState = PlayerState.DEAD;
         }
     } 
 
@@ -321,6 +314,16 @@ public abstract class BaseCharacter : MonoBehaviour
     public void SetHealth(float health)
     {
         m_currentHealth = health;
+
+        if (m_currentHealth > m_maxHealth)
+        {
+            m_currentHealth = m_maxHealth;
+        }
+    }
+
+    public void AddHealth(float amount)
+    {
+        SetHealth(m_currentHealth + amount);
     }
 
     /// <summary>

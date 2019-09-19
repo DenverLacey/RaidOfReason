@@ -210,13 +210,13 @@ public class Kenron : BaseCharacter {
                 // Sets the Skill to be Active
                 isActive = true;
                 isBurning = true;
+                m_statManager.chaosFlameUsed++;
                 StartCoroutine(ChaosFlameVisual());
                 m_kenronParticle.Play();
                 // Halves his Health and sets a higher Damage/Speed
                 SetHealth(m_currentHealth / 2);
                 SetDamage(m_minCFDamage, m_maxCFDamage);
                 SetSpeed(m_chaosFlameSpeed);
-                m_statManager.chaosFlameUsed++;
             }
         }
     }

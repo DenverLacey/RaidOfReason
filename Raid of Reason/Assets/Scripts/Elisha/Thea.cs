@@ -351,7 +351,7 @@ public class Thea : BaseCharacter
                     {
                         enemy.Stun(0.5f);
                         enemy.Rigidbody.AddExplosionForce(knockbackForce, transform.position, m_AOERadius, 0, ForceMode.Impulse);
-                        enemy.TakeDamage(-5, this);
+                        enemy.TakeDamage(1, this);
                     }
                 }
             }
@@ -369,7 +369,7 @@ public class Thea : BaseCharacter
         m_isActive = true;
 
         // Checks if player can use the ability.
-        if (m_isActive == true)
+        if (m_isActive == true && GameManager.Instance.Thea.gameObject.activeSelf)
         {
             // Start AOE timer.
             m_AOETimer += Time.deltaTime;
@@ -394,6 +394,12 @@ public class Thea : BaseCharacter
         if (m_isActive == false)
         {
             return;
+        }
+
+        if (!GameManager.Instance.Thea.gameObject.activeSelf)
+        {
+            m_HealRadius.gameObject.SetActive(false);
+            m_HealRadius_2.gameObject.SetActive(false);
         }
     }
     public void UnlockSkill()
@@ -430,50 +436,64 @@ public class Thea : BaseCharacter
     /// </summary>
     public void GiveHealth()
     {
-        // Stat Tracking Stuff
-        bool kenHealed = false;
-        bool nashHealed = false;
 
-        foreach (BaseCharacter player in GameManager.Instance.Players)
+        if (GameManager.Instance.Thea.gameObject.activeSelf)
         {
-            if (!player || player == this)
+            // Stat Tracking Stuff
+            bool kenHealed = false;
+            bool nashHealed = false;
+
+            foreach (BaseCharacter player in GameManager.Instance.Players)
             {
-                continue;
+                if (!player || player == this)
+                {
+                    continue;
+                }
+
+                float sqrDistance = (player.transform.position - transform.position).sqrMagnitude;
+
+                // check if inside radius
+                if (sqrDistance <= m_AOERadius * m_AOERadius && player.m_controllerOn)
+                {
+                    if (player.tag == "Nashorn") { nashHealed = true; }
+                    if (player.tag == "Kenron") { kenHealed = true; }
+                    m_waterPrefab.SetActive(true);
+                    if (m_skillUpgrades.Find(skill => skill.Name == "Serenade Of Water"))
+                    {
+                        player.m_currentHealth += m_AOETimer * m_GOPEffect;
+                    }
+                    else
+                    {
+                        player.AddHealth(m_AOETimer * m_GOPEffect);
+                    }
+                    m_waterPrefab.transform.position = player.transform.position;
+                    GameObject m_temp = Instantiate(m_waterPrefab, player.transform.position + Vector3.down * (player.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), player.transform);
+                    Destroy(m_temp, 0.5f);
+                    StartCoroutine(GOPVisual());
+                }
             }
 
-            float sqrDistance = (player.transform.position - transform.position).sqrMagnitude;           
+            // Heal Thea.
+            AddHealth(m_AOETimer * m_GOPEffect);
+            GameManager.Instance.Thea.m_statManager.damageHealed += m_currentHealth;
 
-            // check if inside radius
-            if (sqrDistance <= m_AOERadius * m_AOERadius && player.m_controllerOn)
+            // Stat Tracking
+            if (kenHealed && nashHealed) { GameManager.Instance.Thea.m_statManager.gopHitThree++; kenHealed = false; nashHealed = false; }
+            if (kenHealed) { GameManager.Instance.Thea.m_statManager.damageHealed += m_kenron.m_currentHealth; }
+            if (nashHealed) { GameManager.Instance.Thea.m_statManager.damageHealed += m_nashorn.m_currentHealth; }
+            if (m_AOERadius > 9.95f) { GameManager.Instance.Thea.m_statManager.gopFullCharged++; }
+
+            if (m_skillActive = true & m_skillUpgrades.Find(skill => skill.name == "Serenade Of Water"))
             {
-                if (player.tag == "Nashorn") { nashHealed = true; }
-                if (player.tag == "Kenron") { kenHealed = true;  }
-                m_waterPrefab.SetActive(true);
-                player.m_currentHealth += m_AOETimer * m_GOPEffect;
-                m_waterPrefab.transform.position = player.transform.position;
-                GameObject m_temp = Instantiate(m_waterPrefab, player.transform.position + Vector3.down * (player.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), player.transform);
-                Destroy(m_temp, 0.5f);
-                StartCoroutine(GOPVisual());
+                m_kenron.SetHealth(m_kenron.m_currentHealth * m_healMultiplier);
+                m_nashorn.SetHealth(m_nashorn.m_currentHealth * m_healMultiplier);
+                SetHealth(m_currentHealth * m_healMultiplier);
+                m_skillActive = false;
             }
         }
 
-        // Heal Thea.
-        SetHealth(m_currentHealth + m_AOETimer * m_GOPEffect);
-        GameManager.Instance.Thea.m_statManager.damageHealed += m_currentHealth;
 
-        // Stat Tracking
-        if (kenHealed && nashHealed) { GameManager.Instance.Thea.m_statManager.gopHitThree++; kenHealed = false; nashHealed = false; }
-        if (kenHealed) { GameManager.Instance.Thea.m_statManager.damageHealed += m_kenron.m_currentHealth; }
-        if (nashHealed) { GameManager.Instance.Thea.m_statManager.damageHealed += m_nashorn.m_currentHealth; }
-        if (m_AOERadius > 9.95f) { GameManager.Instance.Thea.m_statManager.gopFullCharged++;  }
-
-        if (m_skillActive = true & m_skillUpgrades.Find(skill => skill.name == "Serenade Of Water"))
-        {
-            m_kenron.SetHealth(m_kenron.m_currentHealth * m_healMultiplier);
-            m_nashorn.SetHealth(m_nashorn.m_currentHealth * m_healMultiplier);
-            SetHealth(m_currentHealth * m_healMultiplier);
-            m_skillActive = false;
-        }
+       
     }
 
     /// <summary>
@@ -509,12 +529,16 @@ public class Thea : BaseCharacter
 
     private IEnumerator GOPVisual()
     {
-        m_HealRadius_3.Play();
-        yield return new WaitForSeconds(0.5f);
-        m_waterPrefab.SetActive(false);
+        if (GameManager.Instance.Thea.gameObject.activeSelf)
+        {
+            m_HealRadius_3.Play();
+            yield return new WaitForSeconds(0.5f);
+            m_waterPrefab.SetActive(false);
+            m_HealRadius_3.Stop();
+        }
     }
 
     public void Regenerate() {
-        m_currentHealth += healthRegenerated;
+        AddHealth(healthRegenerated);
     }
 }

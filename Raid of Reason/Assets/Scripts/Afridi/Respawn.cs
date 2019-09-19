@@ -7,35 +7,29 @@ using UnityEngine.UI;
 
 public class Respawn : MonoBehaviour
 {
-    private MultiTargetCamera m_camera;
     public float timetillrespawn;
-
-    private void Awake()
-    {
-        m_camera = FindObjectOfType<MultiTargetCamera>();
-    }
 
     private void Update()
     {
-        if (GameManager.Instance.Kenron != null && GameManager.Instance.Kenron.m_currentHealth <= 0)
+        if (GameManager.Instance.Kenron.gameObject.activeSelf && GameManager.Instance.Kenron.m_currentHealth <= 0)
         {
             GameManager.Instance.Kenron.gameObject.SetActive(false);
             StartCoroutine(WaitTillISaySo());
         }
 
-        if (GameManager.Instance.Nashorn != null && GameManager.Instance.Nashorn.m_currentHealth <= 0)
+        if (!GameManager.Instance.Nashorn.gameObject.activeSelf && GameManager.Instance.Nashorn.m_currentHealth <= 0)
         {
             GameManager.Instance.Nashorn.gameObject.SetActive(false);
             StartCoroutine(WaitTillISaySo1());
         }
 
-        if (GameManager.Instance.Thea != null && GameManager.Instance.Thea.m_currentHealth <= 0)
-        {
+        if (!GameManager.Instance.Thea.gameObject.activeSelf && GameManager.Instance.Thea.m_currentHealth <= 0)
+        { 
             GameManager.Instance.Thea.gameObject.SetActive(false);
             StartCoroutine(WaitTillISaySo2());
         }
-        if (GameManager.Instance.Nashorn != null && GameManager.Instance.Thea != null && GameManager.Instance.Kenron != null) {
-            if (GameManager.Instance.Nashorn.m_currentHealth <= 0 && GameManager.Instance.Thea.m_currentHealth <= 0 && GameManager.Instance.Kenron.m_currentHealth <= 0)
+        if (!GameManager.Instance.Nashorn.gameObject.activeSelf && !GameManager.Instance.Thea.gameObject.activeSelf && !GameManager.Instance.Kenron.gameObject.activeSelf) {
+            if (GameManager.Instance.Kenron.m_currentHealth <= 0 && GameManager.Instance.Nashorn.m_currentHealth <= 0 && GameManager.Instance.Thea.m_currentHealth <= 0)
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
@@ -54,7 +48,7 @@ public class Respawn : MonoBehaviour
         {
             yield return new WaitForSeconds(timetillrespawn);
             GameManager.Instance.Nashorn.gameObject.SetActive(true);
-            GameManager.Instance.Nashorn.m_currentHealth = GameManager.Instance.Kenron.m_maxHealth;
+            GameManager.Instance.Nashorn.m_currentHealth = GameManager.Instance.Nashorn.m_maxHealth;
             GameManager.Instance.Nashorn.m_controllerOn = true;
         }
 
@@ -62,7 +56,7 @@ public class Respawn : MonoBehaviour
         {
             yield return new WaitForSeconds(timetillrespawn);
             GameManager.Instance.Thea.gameObject.SetActive(true);
-            GameManager.Instance.Thea.m_currentHealth = GameManager.Instance.Kenron.m_maxHealth;
+            GameManager.Instance.Thea.m_currentHealth = GameManager.Instance.Thea.m_maxHealth;
             GameManager.Instance.Thea.m_controllerOn = true;
         }
     }

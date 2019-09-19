@@ -22,9 +22,6 @@ public class HealthBarUI : MonoBehaviour
     [SerializeField]
     private Image m_overhealBar;
 
-    private float m_maxoverheal = 200;
-    private float m_currentheal = 0;
-
     void Awake()
     {
         m_healthBar.gameObject.SetActive(true);
@@ -38,13 +35,20 @@ public class HealthBarUI : MonoBehaviour
         // If player is true.
         if (m_character)
         {
-            // This will output visually how much health the players have.
-            m_healthBar.fillAmount = m_character.m_currentHealth / m_character.m_maxHealth;
+            if (m_character.m_currentHealth > 0)
+            {
+                // This will output visually how much health the players have.
+                m_healthBar.fillAmount = m_character.m_currentHealth / m_character.m_maxHealth;
+            }
+            else
+            {
+                m_healthBar.fillAmount = 0;
+            }
 
-            if (m_currentheal > 0)
+            if (m_character.m_currentHealth > m_character.m_maxHealth)
             {
                 m_overhealBar.gameObject.SetActive(true);
-                m_overhealBar.fillAmount = m_currentheal / m_maxoverheal;
+                m_overhealBar.fillAmount = m_character.m_currentHealth / m_character.m_maxHealth;
             }
             else
             {
@@ -60,10 +64,6 @@ public class HealthBarUI : MonoBehaviour
             {
                 m_shieldBar.gameObject.SetActive(false);
             }
-        }
-        else {
-            // Players health is 0.
-            m_healthBar.fillAmount = 0;
         }
     }
 }

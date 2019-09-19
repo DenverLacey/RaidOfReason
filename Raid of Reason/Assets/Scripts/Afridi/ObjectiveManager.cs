@@ -27,6 +27,9 @@ public class ObjectiveManager : MonoBehaviour
     public GameObject objectiveFailed;
     public GameObject skillTreeUnlock;
 
+    private bool m_isDone;
+    private bool m_hasFailed;
+
     private void Awake()
     {
         if (m_objective)
@@ -46,13 +49,16 @@ public class ObjectiveManager : MonoBehaviour
     {
         if (m_objective)
         {
+            m_isDone = m_objective.IsDone();
+            m_hasFailed = m_objective.HasFailed();
+
             m_objective.Update();
 
-            if (m_objective.IsDone())
+            if (m_isDone && !m_hasFailed)
             {
                 StartCoroutine(TimeTillChange());
             }
-            else if (m_objective.HasFailed())
+            else if (m_hasFailed && !m_isDone)
             {
                 StartCoroutine(TimeTillChange());
             }
@@ -70,22 +76,22 @@ public class ObjectiveManager : MonoBehaviour
 
     IEnumerator TimeTillChange()
     {
-        if (m_objective.IsDone())
-        {
-            ObjectiveCompleted = true;
+        if (m_isDone && !m_hasFailed)
+        {ObjectiveCompleted = true;
             Debug.LogFormat("{0} is complete", m_objective);
             objectiveComplete.SetActive(true);
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSecondsRealtime(3);
+            Time.timeScale = 0.0f;
             skillTreeUnlock.SetActive(true);
-            yield return new WaitForSeconds(timeUntilSceneChange);
+            yield return new WaitForSecondsRealtime(timeUntilSceneChange);
             SceneManager.LoadScene(sceneIndex);
         }
 
-        if (m_objective.HasFailed())
+        if (m_hasFailed && !m_isDone)
         {
             Debug.LogFormat("{0} has been failed", m_objective);
             objectiveFailed.SetActive(true);
-            yield return new WaitForSeconds(timeUntilSceneChange);
+            yield return new WaitForSecondsRealtime(timeUntilSceneChange);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }

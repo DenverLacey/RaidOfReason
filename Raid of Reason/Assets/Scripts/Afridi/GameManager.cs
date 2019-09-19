@@ -88,6 +88,9 @@ public class GameManager : MonoBehaviour
 				{ Character.THEA, new List<SkillsAbilities>() }
 			};
 
+            // unfreeze scene
+            SceneManager.sceneLoaded += (scene, sceneMode) => Time.timeScale = 1.0f;
+
 			DontDestroyOnLoad(gameObject);
         }
         else
@@ -96,13 +99,21 @@ public class GameManager : MonoBehaviour
         }
 	}
 
-	/// <summary>
-	/// Lets characters give a reference to themselves to the GameManager
-	/// </summary>
-	/// <param name="character">
-	/// The character that is giving the GameManager a reference to itself
-	/// </param>
-	public void GiveCharacterReference(BaseCharacter character)
+    private void Update()
+    {
+        if (XCI.GetButtonDown(XboxButton.Back, XboxController.Any))
+        {
+            SceneManager.LoadScene(0);
+        }
+    }
+
+    /// <summary>
+    /// Lets characters give a reference to themselves to the GameManager
+    /// </summary>
+    /// <param name="character">
+    /// The character that is giving the GameManager a reference to itself
+    /// </param>
+    public void GiveCharacterReference(BaseCharacter character)
 	{
 		if (character is Kenron)
 		{

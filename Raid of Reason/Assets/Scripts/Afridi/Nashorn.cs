@@ -120,6 +120,26 @@ public class Nashorn : BaseCharacter
 	{
 		GameManager.Instance.GiveCharacterReference(this);
         m_collider = GetComponent<CapsuleCollider>();
+        InitialiseUpgrades();
+    }
+
+    void InitialiseUpgrades()
+    {
+        UnlockSkill();
+        if (m_skillUpgrades.Find(skill => skill.Name == "Roaring Thunder"))
+        {
+            // Returns increased Radius
+            this.m_tauntRadius += m_radiusIncreased;
+
+            // Cooldown is halved
+            skillManager.m_mainSkills[1].m_coolDown = skillManager.m_mainSkills[1].m_coolDown - 2;
+        }
+
+        if (m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
+        {
+            GameManager.Instance.Thea.currentShield = 50.0f;
+            GameManager.Instance.Kenron.currentShield = 50.0f;
+        }
     }
 
 	protected override void Awake()
@@ -207,34 +227,37 @@ public class Nashorn : BaseCharacter
     /// </summary>
     public void SkillChecker()
     {
-        // Empty Check
-        if (this.gameObject != null)
-        {
-            // Sets the image to true if the skills are found
-            UnlockSkill();
-            // If the skill is active and the player has the named skill
-            if (isTaunting == true && m_skillUpgrades.Find(skill => skill.Name == "Roaring Thunder") && runOnce)
-            {
-                // Returns increased Radius
-                this.m_tauntRadius = m_tauntRadius + m_radiusIncreased;
-                // Cooldown is halved
-                skillManager.m_mainSkills[1].m_coolDown = skillManager.m_mainSkills[1].m_coolDown / 2;
+        //Empty Check
+        //if (this.gameObject != null)
+        //{
+        //    Sets the image to true if the skills are found
+        //    UnlockSkill();
+        //    If the skill is active and the player has the named skill
+        //    if (isTaunting == true && m_skillUpgrades.Find(skill => skill.Name == "Roaring Thunder") && runOnce)
+        //    {
+        //        Returns increased Radius
+        //        this.m_tauntRadius += m_radiusIncreased;
 
-                // Run this part once
-                runOnce = false;
-            }
-            if (isTaunting == true && m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
-            {
-                GameManager.Instance.Thea.currentShield = 50.0f;
-                GameManager.Instance.Kenron.currentShield = 50.0f;
-            }
+        //        Cooldown is halved
+        //       skillManager.m_mainSkills[1].m_coolDown = skillManager.m_mainSkills[1].m_coolDown / 2;
 
-            // If the skill is active and the player has the named skill
-            if (isTaunting == true && m_skillUpgrades.Find(skill => skill.Name == "Macht Des Sturms"))
-            {
+        //        Run this part once
+        //        runOnce = false;
 
-            }
-        }
+        //        Debug.Log(m_tauntRadius);
+        //    }
+        //    if (isTaunting == true && m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
+        //    {
+        //        GameManager.Instance.Thea.currentShield = 50.0f;
+        //        GameManager.Instance.Kenron.currentShield = 50.0f;
+        //    }
+
+        //    If the skill is active and the player has the named skill
+        //    if (isTaunting == true && m_skillUpgrades.Find(skill => skill.Name == "Macht Des Sturms"))
+        //    {
+
+        //    }
+        //}
     }
 
     /// <summary>
@@ -331,6 +354,8 @@ public class Nashorn : BaseCharacter
         {
             // Ability is active
             isTaunting = true;
+
+            Debug.Log(m_tauntRadius);
 
 			// taunt enemies
 			foreach (EnemyData enemy in GameObject.FindObjectsOfType<EnemyData>())
