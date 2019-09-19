@@ -35,19 +35,6 @@ public class CharacterInformation : InteractableUIElement
 	[Tooltip("How long it takes for colour to change to target colour")]
 	private float m_colourDuration = 0.7f;
 
-	[Header("Ready Movement Tweening")]
-	[SerializeField]
-	[Tooltip("Beginning local position of ready image")]
-	private Vector3 m_readyStartLocalPosition = new Vector3(0f, 500f, 0f);
-
-	[SerializeField]
-	[Tooltip("End local position of ready image")]
-	private Vector3 m_readyEndLocalPosition = new Vector3(0f, -500f, 0f);
-
-	[SerializeField]
-	[Tooltip("Duration of tween")]
-	private float m_readyTweenDuration = 0.1f;
-
 	[Header("SFX")]
 	[SerializeField]
 	[Tooltip("Sound played when selected")]
@@ -60,9 +47,8 @@ public class CharacterInformation : InteractableUIElement
 	private bool m_selected;
 
 	// child objects
-	private Image m_artwork;
-	private Image m_border;
 	private Image m_selectedBorder;
+	private Color m_selectedBorderColour;
 
 	private Image[] m_childImages;
 	private List<Color> m_childImageOriginalColours = new List<Color>();
@@ -70,9 +56,8 @@ public class CharacterInformation : InteractableUIElement
 
 	private void Start()
 	{
-		m_artwork = transform.Find("CharacterCell").Find("Artwork Mask").Find("artwork").GetComponent<Image>();
-		m_border = transform.Find("CharacterCell").Find("border").GetComponent<Image>();
-		m_selectedBorder = transform.Find("CharacterCell").Find("Panel").Find("selectedBorder").GetComponent<Image>();
+		m_selectedBorder = transform.Find("SelectedBorder").GetComponent<Image>();
+		m_selectedBorderColour = m_selectedBorder.color;
 
 		m_childImages = GetComponentsInChildren<Image>();
 
@@ -149,7 +134,7 @@ public class CharacterInformation : InteractableUIElement
 
 			// stop tweening selectedBorder colour
 			m_selectedBorder.DOKill();
-			m_selectedBorder.color = Color.clear;
+			m_selectedBorder.color = m_selectedBorderColour;
 
 			if (m_hoverers == 0)
 			{
