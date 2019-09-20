@@ -20,12 +20,12 @@ public class MultiTargetCamera : MonoBehaviour
 	private float m_smoothTime = 20f;
 
 	[SerializeField]
-	[Tooltip("Closest the camera will get to players")]
-	private float m_minDistance = 5f;
+	[Tooltip("Lowest the camera can go")]
+	private float m_minYPosition = 5f;
 
 	[SerializeField]
-	[Tooltip("Farthest the camera will get to players")]
-	private float m_maxDistance = 10f;
+	[Tooltip("Highest the camera can go")]
+	private float m_maxYPosition = 10f;
 
 	[SerializeField]
 	[Tooltip("How sensitive the camera is to the size of the bounds")]
@@ -52,6 +52,15 @@ public class MultiTargetCamera : MonoBehaviour
 	private float m_zoomVelocity;
 	private float m_currentDistance;
 
+	private Vector3 m_averagePosition = new Vector3();
+
+	private float m_middleDistance;
+
+	private void Start()
+	{
+		m_middleDistance = (m_minYPosition + m_maxYPosition) / 2f;
+	}
+
 	/// <summary>
 	/// Physics update.
 	/// </summary>
@@ -63,35 +72,8 @@ public class MultiTargetCamera : MonoBehaviour
 			return;
 		}
 
-        var bounds = new Bounds(targets[0].position, Vector3.zero);
-
-		// calculate centre point of bounds
-		Vector3 centre = GetCentrePoint(ref bounds);
-
-		// calculate required distance
-		m_currentDistance = Mathf.SmoothDamp(m_currentDistance, bounds.size.magnitude * m_distanceScalar, ref m_zoomVelocity, m_smoothTime * Time.fixedDeltaTime);
-		m_currentDistance = Mathf.Clamp(m_currentDistance, m_minDistance, m_maxDistance);
-
-		// calculate offset needed to achieve distance
-		Vector3 requiredOffset = m_offset - transform.forward * m_currentDistance;
-
-		transform.position = Vector3.SmoothDamp(transform.position, centre + requiredOffset, ref m_moveVelocity, m_smoothTime * Time.fixedDeltaTime);
-
-		// do rotation stuff
-		if (m_rotate)
-		{
-			// calculate direciton and rotation
-			Vector3 direction = (centre - transform.position).normalized;
-			Quaternion rotation = Quaternion.LookRotation(direction);
-			Quaternion slerpRotation = Quaternion.Slerp(transform.rotation, rotation, m_rotateSlerpT);
-
-			// rotate
-			transform.rotation = Quaternion.Euler(
-				slerpRotation.eulerAngles.x,
-				slerpRotation.eulerAngles.y,
-				transform.rotation.eulerAngles.z
-			);
-		}
+		DoMovement();
+		DoDolly();
     }
 
     /// <summary>
@@ -117,4 +99,23 @@ public class MultiTargetCamera : MonoBehaviour
 
         return bounds.center;
     }
+
+	void DoMovement()
+	{
+		foreach (var target in targets)
+		{
+			m_averagePosition += target.position;
+		}
+		m_averagePosition /= targets.Count;
+		transform.position = Vector3.SmoothDamp(transform.position, m_averagePosition + m_offset, ref m_moveVelocity, m_smoothTime);
+	}
+
+	void DoDolly()
+	{
+		Bounds playerBounds = new Bounds();
+		foreach (var target in targets)
+		{
+			playerBounds.Encapsulate(target.position);
+		}
+	}
 }

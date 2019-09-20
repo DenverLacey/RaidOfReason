@@ -139,7 +139,7 @@ PrefabInstance:
     - target: {fileID: 8457266304823864805, guid: 6c520212684f8f649bcc9d9d3119a984,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4269507381942666822, guid: 6c520212684f8f649bcc9d9d3119a984,
         type: 3}
@@ -359,7 +359,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 40
+  field of view: 50
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -384,13 +384,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 215099356}
-  m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
-  m_LocalPosition: {x: 0, y: 30, z: -15}
+  m_LocalRotation: {x: 0.5600969, y: 0, z: 0, w: 0.8284271}
+  m_LocalPosition: {x: 3.3085506, y: 34.970966, z: -19.065836}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 60, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 68.125, y: 0, z: 0}
 --- !u!114 &215099363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,8 +404,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_smoothTime: 20
-  m_minDistance: 5
-  m_maxDistance: 10
+  m_minYPosition: 5
+  m_maxYPosition: 10
   m_distanceScalar: 1
   m_offset: {x: 0, y: 30, z: -15}
   targets:
@@ -1213,6 +1213,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Melee_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 8343399046292329858, guid: 0ec7fead950632146b7cda42c7f49dc4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3821506756914221167, guid: 0ec7fead950632146b7cda42c7f49dc4,
         type: 3}
@@ -3314,7 +3319,7 @@ PrefabInstance:
     - target: {fileID: 7506323965490325403, guid: db1a93841802ddd4d9bb862ae4b9deaf,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7506323965490325403, guid: db1a93841802ddd4d9bb862ae4b9deaf,
         type: 3}
@@ -3329,7 +3334,7 @@ PrefabInstance:
     - target: {fileID: 4604071969392488354, guid: db1a93841802ddd4d9bb862ae4b9deaf,
         type: 3}
       propertyPath: controller
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4604071969392488354, guid: db1a93841802ddd4d9bb862ae4b9deaf,
         type: 3}
@@ -3711,7 +3716,7 @@ PrefabInstance:
     - target: {fileID: 3449384978197968182, guid: 028f443e64577e14d88d5b1ea697cf88,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5877011709370991675, guid: 028f443e64577e14d88d5b1ea697cf88,
         type: 3}
