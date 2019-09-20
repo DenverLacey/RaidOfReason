@@ -32,6 +32,7 @@ public class MeleeEnemyBehaviourTree : BehaviourTree
 		tauntSelector.AddChild(sightlineSequence);
 
 		Sequence attackSequence = new Sequence();
+		attackSequence.AddChild(sightlineSequence);
 		attackSequence.AddChild(new MaxAttackRangeCondition());
 		attackSequence.AddChild(new MeleeEnemyAttack());
 

@@ -38,7 +38,7 @@ public class EnemyData : MonoBehaviour
 	private EnemyType m_type;
 
     [SerializeField]
-    private GameObject m_tauntIcon;
+    private ParticleSystem m_tauntedEffect;
 
     [SerializeField]
     private ParticleSystem m_electricEffect;
@@ -54,6 +54,7 @@ public class EnemyData : MonoBehaviour
 
     public EnemyType Type { get => m_type; }
     public float ViewRange { get; private set; }
+	public float SqrViewRange { get => ViewRange * ViewRange; }
     public float MaxHealth { get; private set; }
     public float Health { get; private set; }
     public EnemyAttackRange AttackRange { get; private set; }
@@ -61,10 +62,30 @@ public class EnemyData : MonoBehaviour
     public float AttackTimer { get; set; }
 	public float AttackDamage { get; private set; }
     public bool Attacking { get; set; }
-	public bool Taunted { get; set; }
+
+	private bool m_taunted;
+	public bool Taunted
+	{
+		get => m_taunted;
+		set
+		{
+			m_taunted = value;
+
+			if (m_taunted)
+			{
+				m_tauntedEffect.Play();
+			}
+			else
+			{
+				m_tauntedEffect.Stop();
+			}
+		}
+	}
 	public bool Stunned { get; set; }
 	public GameObject[] AttackPrefabs { get; private set; }
-    public GameObject TauntIcon { get => m_tauntIcon; }
+	public CharacterType PriorityCharacter { get; private set; }
+	public float PriorityThreshold { get; private set; }
+	public float SqrPriorityThreashold { get => PriorityThreshold * PriorityThreshold; }
 
     public Vector3 Target { get; set; }
 	public BaseCharacter TargetPlayer { get; set; }
@@ -126,24 +147,41 @@ public class EnemyData : MonoBehaviour
 	/// <param name="attackDamage">
 	/// How much damage enemy's attack deals
 	/// </param>
+	/// <param name="priorityCharacter">
+	/// Which character enemy should focus
+	/// </param>
+	/// <param name="priorityThreshold">
+	/// How much closer another character has to be to override character priority
+	/// </param>
+	/// <param name="damageIndicatorPrefab">
+	/// prefa for damage indicator object
+	/// </param>
 	/// <param name="attackPrefabs">
 	/// effect object of enemy's attack
 	/// </param>
-	/// <param name="players">
-	/// References to player objects
-	/// </param>
-	public void Init(float viewRange, float maxHealth, EnemyAttackRange attackRange, float attackCooldown, float attackDamage, GameObject damageIndicatorPrefab, GameObject[] attackPrefabs)
+	public void Init(
+		float viewRange, 
+		float maxHealth, 
+		EnemyAttackRange attackRange, float attackCooldown, float attackDamage, 
+		CharacterType priorityCharacter, float priorityThreshold,
+		GameObject damageIndicatorPrefab, GameObject[] attackPrefabs)
     {
         ViewRange = viewRange;
+
         MaxHealth = maxHealth;
         Health = MaxHealth;
+
         AttackRange = attackRange;
         AttackCooldown = attackCooldown;
         AttackTimer = 0.0f;
 		AttackDamage = attackDamage;
 		AttackPrefabs = attackPrefabs;
 		m_damageIndicator = damageIndicatorPrefab;
+
 		Stunned = false;
+
+		PriorityCharacter = priorityCharacter;
+		PriorityThreshold = priorityThreshold;
     }
 
 	/// <summary>
@@ -207,7 +245,7 @@ public class EnemyData : MonoBehaviour
 
         switch (character.CharacterType)
         {
-            case Character.KENRON:
+            case CharacterType.KENRON:
                 if (GameManager.Instance.Kenron.isActive && GameManager.Instance.Kenron.m_skillUpgrades.Find(skill => skill.Name == "Shuras Reckoning"))
                 {
                     if(m_burningEffect != null)
@@ -233,7 +271,7 @@ public class EnemyData : MonoBehaviour
                 }
                 break;
 
-            case Character.NASHORN:
+            case CharacterType.NASHORN:
                 if (m_electricEffect != null)
                 {
                     m_electricEffect.Play();
@@ -244,7 +282,7 @@ public class EnemyData : MonoBehaviour
                 }
                 break;
 
-            case Character.THEA:
+            case CharacterType.THEA:
                 if (m_waterEffect != null)
                 {
                     m_waterEffect.Play();

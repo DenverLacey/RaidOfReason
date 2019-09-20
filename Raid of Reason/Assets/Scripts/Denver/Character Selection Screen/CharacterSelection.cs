@@ -79,7 +79,7 @@ public class CharacterSelection : InteractableUIElement
 		var p2Info = m_p2Cursor.GetSelectedCharacter();
 		var p3Info = m_p3Cursor.GetSelectedCharacter();
 
-		List<(XboxController, Character, bool)> playerInformation = new List<(XboxController, Character, bool)>();
+		List<(XboxController, CharacterType, bool)> playerInformation = new List<(XboxController, CharacterType, bool)>();
 		
 		// focus controllers that are plugged in
 		if (m_p1Cursor.gameObject.activeSelf)

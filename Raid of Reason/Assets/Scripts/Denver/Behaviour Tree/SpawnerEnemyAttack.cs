@@ -35,31 +35,21 @@ public class SpawnerEnemyAttack : Behaviour
 		if (agent.AttackTimer >= agent.AttackCooldown)
 		{
 			// reset attacking variables
-			agent.Attacking = false;
 			agent.AttackTimer = 0f;
 
-			agent.Pathfinder.SetDestination(agent.transform.position);
+			// spawn attack prefab
+			GameObject attackPrefab = ObjectPooling.GetPooledObject("EnemyDeathParticle");
+			attackPrefab.transform.position = agent.transform.position;
+			attackPrefab.SetActive(true);
+			attackPrefab.GetComponent<ParticleSystem>().Play();
 
-			float angle = 360f / agent.AttackDamage;
+			// spawn child enemy
+			GameObject child = Object.Instantiate(agent.AttackPrefabs[Random.Range(0, agent.AttackPrefabs.Length - 1)], agent.transform.position, Quaternion.identity);
 
-			for (int i = 0; i < agent.AttackDamage; i++)
+			if (agent.Taunted)
 			{
-				// calculate enemy's spawn position
-				Vector3 spawnVector = agent.transform.right;
-				spawnVector = Quaternion.AngleAxis(angle * i, Vector3.up) * spawnVector;
-
-				// check that no obstacle where we want to spawn enemy
-				if (!Physics.SphereCast(agent.transform.position, 1f, spawnVector, out RaycastHit info, 2f))
-				{
-					int randIdx = Random.Range(0, agent.AttackPrefabs.Length);
-					spawnVector *= 2.5f;
-					EnemyData ed = GameObject.Instantiate(agent.AttackPrefabs[randIdx], spawnVector + agent.transform.position, agent.transform.rotation).GetComponent<EnemyData>();
-					
-					if (agent.Taunted && ed)
-					{
-						ed.Taunted = true;
-					}
-				}
+				EnemyData childData = child.GetComponentInChildren<EnemyData>();
+				childData.Taunted = true;
 			}
 		}
 		return PENDING_COMPOSITE;

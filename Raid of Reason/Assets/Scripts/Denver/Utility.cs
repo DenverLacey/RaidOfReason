@@ -49,8 +49,13 @@ public static class Utility
 	/// <returns>
 	/// True if player can be attacked and false otherwise
 	/// </returns>
-	public static bool IsPlayerAttackable(BaseCharacter character)
+	public static bool PlayerIsAttackable(BaseCharacter character)
 	{
-		return character != null && (character.CanMove || character.CanRotate) && character.m_currentHealth > 0f && character.playerState != BaseCharacter.PlayerState.DEAD;
+		return 
+			character != null && 
+			character.gameObject.activeSelf && 
+			(character.CanMove || character.CanRotate) && 
+			character.m_currentHealth > 0f && 
+			character.playerState != BaseCharacter.PlayerState.DEAD;
 	}
 }

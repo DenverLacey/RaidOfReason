@@ -28,13 +28,11 @@ public class TauntEvent : Behaviour
 		{
 			agent.Target = GameManager.Instance.Nashorn.transform.position;
 			agent.TargetPlayer = GameManager.Instance.Nashorn;
-			agent.TauntIcon.SetActive(true);
 			return SUCCESS;
 		}
 		else
 		{
 			agent.Taunted = false;
-			agent.TauntIcon.SetActive(false);
 			return FAILURE;
 		}
 	}

@@ -146,7 +146,7 @@ public class Nashorn : BaseCharacter
     {
         // Initialisation 
         base.Awake();
-        CharacterType = Character.NASHORN;
+        CharacterType = CharacterType.NASHORN;
         m_tauntParticle.GetComponentInChildren<ParticleSystem>();
         m_statManager = FindObjectOfType<StatTrackingManager>();
         LeftGauntlet.enabled = false;

@@ -138,7 +138,7 @@ public class Kenron : BaseCharacter {
 	protected override void Awake () {
         // Initalisation
         base.Awake();
-        CharacterType = Character.KENRON;
+        CharacterType = CharacterType.KENRON;
         m_Enemy = FindObjectOfType<EnemyData>();
         m_statManager = FindObjectOfType<StatTrackingManager>();
         m_currentCharges = m_charges;

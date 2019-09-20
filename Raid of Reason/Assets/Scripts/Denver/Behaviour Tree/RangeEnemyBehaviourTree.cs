@@ -44,7 +44,7 @@ public class RangeEnemyBehaviourTree : BehaviourTree
 		calculateTargetSelector.AddChild(canSeePlayerSequence);
 
 		Sequence attackSequence = new Sequence();
-		attackSequence.AddChild(new SightlineCondition());
+		attackSequence.AddChild(canSeePlayerSequence);
 		attackSequence.AddChild(new TurnManualSteeringOn());
 		attackSequence.AddChild(new GetIntoPosition());
 		attackSequence.AddChild(new RangeEnemyAttack());

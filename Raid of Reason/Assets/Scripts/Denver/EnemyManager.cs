@@ -36,6 +36,13 @@ public struct EnemyTypeGameObjectsPair
 	public GameObject[] value;
 }
 
+[System.Serializable]
+public struct EnemyTypeCharacterTypePair
+{
+	public EnemyType key;
+	public CharacterType value;
+}
+
 /// <summary>
 /// EnemyManager will handle giving each enemy their initial data based on their type and 
 /// will execute assosiated behaviour tree on each enemy that it manages
@@ -46,6 +53,16 @@ public class EnemyManager : MonoBehaviour
 	private List<EnemyTypeFloatPair> m_viewRanges;
 
 	Dictionary<EnemyType, float> m_viewRangeDict = new Dictionary<EnemyType, float>();
+
+	[SerializeField]
+	private List<EnemyTypeCharacterTypePair> m_characterPriorities = new List<EnemyTypeCharacterTypePair>();
+
+	Dictionary<EnemyType, CharacterType> m_characterPriorityDict = new Dictionary<EnemyType, CharacterType>();
+
+	[SerializeField]
+	private List<EnemyTypeFloatPair> m_priorityThresholds = new List<EnemyTypeFloatPair>();
+
+	Dictionary<EnemyType, float> m_priorityThresholdDict = new Dictionary<EnemyType, float>();
 
     [SerializeField]
 	private List<EnemyTypeEnemyAttackRangePair> m_attackRanges;
@@ -86,13 +103,17 @@ public class EnemyManager : MonoBehaviour
     void Start() 
 	{
 		// move data from lists into dictionaries
-        foreach (var range in m_viewRanges)			{ m_viewRangeDict.Add(range.key, range.value); }
-        foreach (var range in m_attackRanges)		{ m_attackRangeDict.Add(range.key, range.value); }
-        foreach (var cooldown in m_attackCooldowns) { m_attackCooldownDict.Add(cooldown.key, cooldown.value); }
-        foreach (var health in m_maxHealths)		{ m_maxHealthDict.Add(health.key, health.value); }
-        foreach (var damage in m_attackDamages)		{ m_attackDamageDict.Add(damage.key, damage.value); }
-        foreach (var tree in m_behaviourTrees)		{ m_behaviourTreeDict.Add(tree.key, tree.value); }
-		foreach (var prefab in m_attackPrefabs)		{ m_attackPrefabDict.Add(prefab.key, prefab.value); }
+        foreach (var range in m_viewRanges)				{ m_viewRangeDict.Add(range.key, range.value); }
+		foreach (var priority in m_characterPriorities) { m_characterPriorityDict.Add(priority.key, priority.value); }
+		foreach (var threshold in m_priorityThresholds) { m_priorityThresholdDict.Add(threshold.key, threshold.value); }
+        foreach (var range in m_attackRanges)			{ m_attackRangeDict.Add(range.key, range.value); }
+        foreach (var cooldown in m_attackCooldowns)		{ m_attackCooldownDict.Add(cooldown.key, cooldown.value); }
+        foreach (var health in m_maxHealths)			{ m_maxHealthDict.Add(health.key, health.value); }
+        foreach (var damage in m_attackDamages)			{ m_attackDamageDict.Add(damage.key, damage.value); }
+        foreach (var tree in m_behaviourTrees)			{ m_behaviourTreeDict.Add(tree.key, tree.value); }
+		foreach (var prefab in m_attackPrefabs)			{ m_attackPrefabDict.Add(prefab.key, prefab.value); }
+
+		ObjectPooling.CreateObjectPool("EnemyDeathParticle", 20);
     }
 
 	/// <summary>
@@ -134,12 +155,14 @@ public class EnemyManager : MonoBehaviour
     private void InitEnemy(EnemyData enemy) 
 	{
 		enemy.Init(
-			m_viewRangeDict[enemy.Type],
-			m_maxHealthDict[enemy.Type],
+			m_viewRangeDict[enemy.Type], 
+			m_maxHealthDict[enemy.Type], 
 			m_attackRangeDict[enemy.Type],
 			m_attackCooldownDict[enemy.Type],
 			m_attackDamageDict[enemy.Type],
-			m_damageIndicatorPrefab,
+			m_characterPriorityDict[enemy.Type], 
+			m_priorityThresholdDict[enemy.Type], 
+			m_damageIndicatorPrefab, 
 			m_attackPrefabDict[enemy.Type]
 		);
 

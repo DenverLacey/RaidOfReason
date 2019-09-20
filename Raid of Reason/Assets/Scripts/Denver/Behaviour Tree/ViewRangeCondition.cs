@@ -24,24 +24,40 @@ public class ViewRangeCondition : Behaviour
     /// </returns>
     public override Result Execute(EnemyData agent)
 	{
-        float closestDist = float.MaxValue;
+        float closestSqrDist = float.MaxValue;
         Vector3 closestTar = Vector3.zero;
 		BaseCharacter closestCharacter = null;
 
         foreach (BaseCharacter player in GameManager.Instance.Players)
 		{
-			if (!Utility.IsPlayerAttackable(player)) { continue; }
+			if (!Utility.PlayerIsAttackable(player))
+				continue;
 
-            float sqrDistance = (player.transform.position - agent.transform.position).sqrMagnitude;
-            if (sqrDistance < closestDist)
+			float sqrDistance = (player.transform.position - agent.transform.position).sqrMagnitude;
+
+			bool isPriority = false;
+			if (player.CharacterType == agent.PriorityCharacter)
 			{
-                closestDist = sqrDistance;
-                closestTar = player.transform.position;
+				sqrDistance -= agent.SqrPriorityThreashold;
+				isPriority = true;
+			}
+
+			bool shouldChange = false;
+			if (isPriority && sqrDistance <= closestSqrDist ||
+				sqrDistance < closestSqrDist)
+			{
+				shouldChange = true;
+			}
+
+			if (shouldChange)
+			{
+				closestSqrDist = sqrDistance;
+				closestTar = player.transform.position;
 				closestCharacter = player;
-            }
+			}
         }
 
-        if (closestDist <= agent.ViewRange * agent.ViewRange)
+        if (closestSqrDist <= agent.SqrViewRange)
 		{
             agent.Target = closestTar;
 			agent.TargetPlayer = closestCharacter;

@@ -14,7 +14,7 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(Rigidbody))]
 public abstract class BaseCharacter : MonoBehaviour
 {
-    public Character CharacterType { get; protected set; }
+    public CharacterType CharacterType { get; protected set; }
 
 	public struct MovementAxis
 	{
@@ -25,7 +25,6 @@ public abstract class BaseCharacter : MonoBehaviour
 		private static int[] m_enumerate = { Move, Rotate };
 		public static int[] Enumerate { get => m_enumerate; }
 	}
-
 
 	public enum PlayerState
     {
@@ -114,8 +113,7 @@ public abstract class BaseCharacter : MonoBehaviour
     protected float m_vulnerability;
     protected bool m_bActive;
     protected float m_rotationSpeed = 250.0f;
-    private Vector3 m_direction;
-    protected Vector3 m_prevRotDirection = Vector3.forward;
+    protected Vector3 m_direction;
     private MeshRenderer m_renderer;
     private Color m_originalColour;
 
@@ -210,52 +208,48 @@ public abstract class BaseCharacter : MonoBehaviour
         // Checks if player is active.
         if (m_controllerOn)
         {
-			// Calculates the x axis of the left stick (left and right movement).
-			float axisX = XCI.GetAxis(XboxAxis.LeftStickX, controller) * m_movementSpeed;
-			// Calculates the z axis of the left stick (forward and backward movement).
-			float axisZ = XCI.GetAxis(XboxAxis.LeftStickY, controller) * m_movementSpeed;
-			// Makes sure Player movement is relative to the direction of the cameras forward.
-			Vector3 movement = m_camera.transform.TransformDirection(axisX, 0, axisZ);
+			// get stick input
+			float leftX = XCI.GetAxis(XboxAxis.LeftStickX, controller);
+			float leftY = XCI.GetAxis(XboxAxis.LeftStickY, controller);
+
+			float rightX = XCI.GetAxis(XboxAxis.RightStickX, controller);
+			float rightY = XCI.GetAxis(XboxAxis.RightStickY, controller);
+
+			// make sure player movement is relative to the direction of the cameras forward
+			Vector3 input = new Vector3(leftX, 0, leftY);
+
+			// make sure player direction override is relative to the direction of the cameras forward
+			Vector3 directionOverride = new Vector3(rightX, 0, rightY);
 
 			if (CanMove)
 			{
-				m_rigidbody.MovePosition(transform.position + new Vector3(movement.x, 0, movement.z) * Time.deltaTime);
+				Vector3 movePosition = transform.position + input * m_movementSpeed * Time.deltaTime;
+				m_rigidbody.MovePosition(movePosition);
 			}
-
-			// Calculates the rotation on the x axis of the right stick.
-			float rotAxisX = XCI.GetAxis(XboxAxis.RightStickX, controller) * m_rotationSpeed;
-			// Calculates the rotation on the z axis of the right stick.
-			float rotAxisZ = XCI.GetAxis(XboxAxis.RightStickY, controller) * m_rotationSpeed;
-			// Makes sure Player rotation is relative to the direction of the cameras forward.
-			Vector3 rawDir = m_camera.transform.TransformDirection(rotAxisX, 0, rotAxisZ);
-			Vector3 direction = new Vector3(rawDir.x, 0, rawDir.z);
-			// Checks if the magnitude of the vector is less than 0.1
-			if (direction.magnitude < 0.1f)
-			{
-				// Change direction of the vector.
-				direction = m_prevRotDirection;
-			}
-			// Normalise the vector to 1.
-			direction.Normalize();
-			// New direction
-			m_prevRotDirection = direction;
 
 			if (CanRotate)
 			{
-				// Rotate the player to that direction.
-				transform.localRotation = Quaternion.LookRotation(direction);
+				// determine which direction vector to rotate to
+				if (directionOverride.sqrMagnitude > 0.01f)
+				{
+					m_direction = directionOverride;
+				}
+				else if (input.sqrMagnitude > 0.01f)
+				{
+					m_direction = input;
+				}
+
+				// rotate player
+				transform.localRotation = Quaternion.LookRotation(m_direction);
 			}
 
 			if (m_animator)
 			{
 				// Calculate angle between character's direction and forward
-				float angle = Vector3.SignedAngle(direction, Vector3.forward, Vector3.up);
+				float angle = Vector3.SignedAngle(m_direction, Vector3.forward, Vector3.up);
 
 				// Rotate movement into world space to get animation movement
-				Vector3 animationMovement = Quaternion.AngleAxis(angle, Vector3.up) * movement.normalized;
-
-				// flip x movement if walking backwards
-				animationMovement.x *= animationMovement.z >= 0 ? 1 : -1;
+				Vector3 animationMovement = Quaternion.AngleAxis(angle, Vector3.up) * input;
 
 				// Set animator's movement floats
 				m_animator.SetFloat("MovX", animationMovement.x);

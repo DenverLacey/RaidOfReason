@@ -14,7 +14,7 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// Enum used to differentiate between characters
 /// </summary>
-public enum Character
+public enum CharacterType
 {
 	KENRON,
 	NASHORN,
@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public Dictionary<Character, List<SkillsAbilities>> CharacterSkillUpgrades { get; private set; }
+    public Dictionary<CharacterType, List<SkillsAbilities>> CharacterSkillUpgrades { get; private set; }
 
 	public List<BaseCharacter> AlivePlayers
 	{
@@ -81,11 +81,11 @@ public class GameManager : MonoBehaviour
 	{
         if (m_isInstance)
         {
-			CharacterSkillUpgrades = new Dictionary<Character, List<SkillsAbilities>>
+			CharacterSkillUpgrades = new Dictionary<CharacterType, List<SkillsAbilities>>
 			{
-				{ Character.KENRON, new List<SkillsAbilities>() },
-				{ Character.NASHORN, new List<SkillsAbilities>() },
-				{ Character.THEA, new List<SkillsAbilities>() }
+				{ CharacterType.KENRON, new List<SkillsAbilities>() },
+				{ CharacterType.NASHORN, new List<SkillsAbilities>() },
+				{ CharacterType.THEA, new List<SkillsAbilities>() }
 			};
 
             // unfreeze scene
@@ -156,7 +156,7 @@ public class GameManager : MonoBehaviour
 	/// <param name="controller">
 	/// Controller that will control character
 	/// </param>
-	public void SetCharacterController(Character character, XboxController controller)
+	public void SetCharacterController(CharacterType character, XboxController controller)
 	{
 		m_controllers[(int)character] = controller;
 	}
@@ -168,15 +168,15 @@ public static class BaseCharacterExtension
     {
         if (character is Kenron)
         {
-            return GameManager.Instance.CharacterSkillUpgrades[Character.KENRON];
+            return GameManager.Instance.CharacterSkillUpgrades[CharacterType.KENRON];
         }
         else if (character is Nashorn)
         {
-            return GameManager.Instance.CharacterSkillUpgrades[Character.NASHORN];
+            return GameManager.Instance.CharacterSkillUpgrades[CharacterType.NASHORN];
         }
         else
         {
-            return GameManager.Instance.CharacterSkillUpgrades[Character.THEA];
+            return GameManager.Instance.CharacterSkillUpgrades[CharacterType.THEA];
         }
     }
 
@@ -184,15 +184,15 @@ public static class BaseCharacterExtension
     {
         if (character is Kenron)
         {
-            GameManager.Instance.CharacterSkillUpgrades[Character.KENRON].Add(ability);
+            GameManager.Instance.CharacterSkillUpgrades[CharacterType.KENRON].Add(ability);
         }
         else if (character is Nashorn)
         {
-            GameManager.Instance.CharacterSkillUpgrades[Character.NASHORN].Add(ability);
+            GameManager.Instance.CharacterSkillUpgrades[CharacterType.NASHORN].Add(ability);
         }
         else
         {
-            GameManager.Instance.CharacterSkillUpgrades[Character.THEA].Add(ability);
+            GameManager.Instance.CharacterSkillUpgrades[CharacterType.THEA].Add(ability);
         }
     }
 }

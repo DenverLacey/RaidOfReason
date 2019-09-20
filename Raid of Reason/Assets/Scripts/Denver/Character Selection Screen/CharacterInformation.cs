@@ -9,8 +9,8 @@ public class CharacterInformation : InteractableUIElement
 {
 	[SerializeField]
 	[Tooltip("Character that information is about")]
-	private Character m_character;
-	public Character Character { get => m_character; }
+	private CharacterType m_character;
+	public CharacterType Character { get => m_character; }
 
 	[Header("Punch Tweening")]
 	[SerializeField]
@@ -92,7 +92,7 @@ public class CharacterInformation : InteractableUIElement
 		}
 	}
 
-	public bool SelectCharacter(ref Character character, Color tweenColour)
+	public bool SelectCharacter(ref CharacterType character, Color tweenColour)
 	{
 		if (!m_selected)
 		{
