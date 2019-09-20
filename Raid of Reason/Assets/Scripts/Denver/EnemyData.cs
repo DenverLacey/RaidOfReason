@@ -82,6 +82,7 @@ public class EnemyData : MonoBehaviour
 		}
 	}
 	public bool Stunned { get; set; }
+    private bool m_knockedBack;
 	public GameObject[] AttackPrefabs { get; private set; }
 	public CharacterType PriorityCharacter { get; private set; }
 	public float PriorityThreshold { get; private set; }
@@ -214,6 +215,20 @@ public class EnemyData : MonoBehaviour
 		Stunned = false;
 		DebugTools.LogVariable("Stunned", Stunned);
 	}
+
+    public void KnockBack(float duration)
+    {
+        m_knockedBack = true;
+        Stunned = true;
+        StartCoroutine(ResetKnockBack(duration));
+    }
+
+    IEnumerator ResetKnockBack(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        m_knockedBack = false;
+        Stunned = false;
+    }
 
 	/// <summary>
 	/// Decreases enemy's health by an amount
@@ -375,4 +390,15 @@ public class EnemyData : MonoBehaviour
 	{
 		OnAttackDelegate?.Invoke(this);
 	}
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "EnemyEnemyCollision")
+        {
+            if (m_knockedBack == true)
+            {
+                other.GetComponentInParent<EnemyData>().TakeDamage(GameManager.Instance.Nashorn.KDKnockbackDamage, GameManager.Instance.Nashorn);
+            }
+        }
+    }
 }

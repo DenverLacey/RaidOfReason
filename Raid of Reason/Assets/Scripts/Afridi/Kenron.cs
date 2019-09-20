@@ -12,29 +12,30 @@ using XboxCtrlrInput;
   *          game
 */
 
-public class Kenron : BaseCharacter {
+public class Kenron : BaseCharacter
+{
 
     [Header("--Dash Attack Stats--")]
 
-	[SerializeField]
-	[Tooltip("Distance of Dash Attack")]
-	private float m_maxDashDistance;
+    [SerializeField]
+    [Tooltip("Distance of Dash Attack")]
+    private float m_maxDashDistance;
 
-	[SerializeField]
-	[Tooltip("How quickly Kenron dashes")]
-	private float m_dashSpeed;
+    [SerializeField]
+    [Tooltip("How quickly Kenron dashes")]
+    private float m_dashSpeed;
 
-	[SerializeField]
-	[Tooltip("How much delay between consecutive dashes in seconds")]
-	private float m_dashDelay;
+    [SerializeField]
+    [Tooltip("How much delay between consecutive dashes in seconds")]
+    private float m_dashDelay;
 
     // charge times
     [SerializeField]
     public int m_currentCharges;
 
-	[SerializeField]
-	[Tooltip("Buffer distance to avoid Kenron getting stuck in walls")]
-	private float m_dashBufferDistance = 3f;
+    [SerializeField]
+    [Tooltip("Buffer distance to avoid Kenron getting stuck in walls")]
+    private float m_dashBufferDistance = 3f;
 
     [SerializeField]
     [Tooltip("How many charges it takes for dashes to go off")]
@@ -44,7 +45,7 @@ public class Kenron : BaseCharacter {
     [Tooltip("Time till a charge is recharged again")]
     public float m_rechargeRate;
 
-	private Vector3 m_dashVelocity;
+    private Vector3 m_dashVelocity;
 
     [SerializeField]
     [Tooltip("Hit box for dash attack")]
@@ -68,26 +69,29 @@ public class Kenron : BaseCharacter {
     private float m_chaosFlameSpeed;
 
     [SerializeField]
-    [Tooltip("Health Gained Back from Kenrons Life Steal Skill")]
+    [Tooltip("Health Gained Back from Kenrons Vile Infusion Skill")]
     private float m_healthGained;
 
     [SerializeField]
     [Tooltip("Ability Duration Increase from Kenrons Blood Lust Skill")]
-    private float m_durationIncreased;
+    private float m_RTDurationIncreased;
 
     [SerializeField]
-    [Tooltip("How long the burn damage lasts from Kenrons Shuras Awakening Skill")]
-    private float m_burnRate;
+    [Tooltip("Kenrons Minimum Damage Boost whilst in Chaos Flame with Ronin Mastery")]
+    private float m_minSADamage;
 
     [SerializeField]
-    [Tooltip("How much damage the burn deals from Shuras Awakening Lust Skill")]
-    private float m_burnDamage;
+    [Tooltip("Kenrons Maximum Damage Boost whilst in Chaos Flame with Ronin Mastery")]
+    private float m_maxSADamage;
 
-	// A bool that checks if nashorn has give kenron his buff
-	public bool nashornBuffGiven = false;
+    [SerializeField]
+    [Tooltip("Kenrons Speed Boost whilst in Chaos Flame with Ronin Mastery")]
+    private float m_SAFlameSpeed;
 
-    // Sets the burn 
-    public bool isBurning;
+    [SerializeField]
+    [Tooltip("How long it takes for the trail in Kenrons Ability To Go Away")]
+    private float m_BTDegen;
+
 
     [Header("--Particles And UI--")]
 
@@ -99,43 +103,43 @@ public class Kenron : BaseCharacter {
     [Tooltip("Particle Effect That Indicates Chaos Flame is Active")]
     private ParticleSystem m_startParticle;
 
+
     // Enemy reference used for skill checking
     private EnemyData m_Enemy;
 
-    // Charges Display
-    public Text chargeText;
-
     // Desired position to dash
     private Vector3 m_dashPosition;
-	private Vector3 m_dashStartPosition;
+    private Vector3 m_dashStartPosition;
 
     // Delay until next dash
     private float m_dashDelayTimer;
-	private float m_estimatedDashTime;
-	private float m_dashDistance;
-	private bool m_dashDone;
+    private float m_estimatedDashTime;
+    private float m_dashDistance;
+    private bool m_dashDone;
+    private bool m_InfiniteDash;
 
-	// Checks if Kenron is Dashing or Not
-	private bool isDashing;
+    // Checks if Kenron is Dashing or Not
+    private bool isDashing;
 
-	// Checks if a specific trigger on the controller is pressed
-	private bool m_triggerDown;
+    // Checks if a specific trigger on the controller is pressed
+    private bool m_triggerDown;
 
 
     // Kenrons Collider
-	private CapsuleCollider m_collider;
+    private CapsuleCollider m_collider;
 
     // Stat Tracker
     [HideInInspector]
     public StatTrackingManager m_statManager;
 
-	private void Start()
-	{
-		GameManager.Instance.GiveCharacterReference(this);
+    private void Start()
+    {
+        GameManager.Instance.GiveCharacterReference(this);
         m_collider = GetComponent<CapsuleCollider>();
-	}
+    }
 
-	protected override void Awake () {
+    protected override void Awake()
+    {
         // Initalisation
         base.Awake();
         CharacterType = CharacterType.KENRON;
@@ -143,14 +147,9 @@ public class Kenron : BaseCharacter {
         m_statManager = FindObjectOfType<StatTrackingManager>();
         m_currentCharges = m_charges;
         isDashing = false;
-        isBurning = false;
+        m_InfiniteDash = false;
 
-        if (chargeText)
-        {
-            chargeText.text = m_currentCharges.ToString();
-        }
-
-        if (m_skillPopups.Count > 0)
+        if (m_skillPopups.Count != 0)
         {
             foreach (Image display in m_skillPopups)
             {
@@ -158,11 +157,11 @@ public class Kenron : BaseCharacter {
             }
         }
 
-		// set size of dash hit box
-		Vector3 hitBoxSize = new Vector3(m_dashCollider.size.x, m_dashCollider.size.y, m_maxDashDistance);
-		m_dashCollider.size = hitBoxSize;
-		m_dashCollider.enabled = false;
-	}
+        // set size of dash hit box
+        Vector3 hitBoxSize = new Vector3(m_dashCollider.size.x, m_dashCollider.size.y, m_maxDashDistance);
+        m_dashCollider.size = hitBoxSize;
+        m_dashCollider.enabled = false;
+    }
 
     protected override void FixedUpdate()
     {
@@ -170,9 +169,9 @@ public class Kenron : BaseCharacter {
         if (this.gameObject != null)
         {
             // Updates Player Movement
-			base.FixedUpdate();
+            base.FixedUpdate();
         }
-	}
+    }
 
     protected override void Update()
     {
@@ -181,21 +180,15 @@ public class Kenron : BaseCharacter {
 
         if (gameObject != null)
         {
-            // Checks Kenrons Skill Tree
-            SkillChecker();
             // Uses his Dash
             DashAttack();
-
-            if (chargeText)
-            {
-                chargeText.text = m_currentCharges.ToString();
-            }
+            SkillChecker();
         }
 
         Vector3 position = transform.position;
-		position.y = 0.1f;
-		Debug.DrawLine(position, position + transform.forward * 0.5f);
-	}
+        position.y = 0.1f;
+        Debug.DrawLine(position, position + transform.forward * 0.5f);
+    }
 
     /// <summary>
     /// Kenrons Skill. By Halving his health, he gains a boost of Speed and Damage 
@@ -208,15 +201,23 @@ public class Kenron : BaseCharacter {
             if (skillDuration >= skillManager.m_mainSkills[0].m_duration)
             {
                 // Sets the Skill to be Active
+                m_InfiniteDash = true;
                 isActive = true;
-                isBurning = true;
-                m_statManager.chaosFlameUsed++;
                 StartCoroutine(ChaosFlameVisual());
                 m_kenronParticle.Play();
                 // Halves his Health and sets a higher Damage/Speed
-                SetHealth(m_currentHealth / 2);
-                SetDamage(m_minCFDamage, m_maxCFDamage);
-                SetSpeed(m_chaosFlameSpeed);
+                if (isActive == true && m_skillUpgrades.Find(skill => skill.Name == "Ronin Mastery"))
+                {
+                    SetHealth(m_currentHealth / 3);
+                    SetDamage(m_minSADamage, m_maxSADamage);
+                    SetSpeed(m_SAFlameSpeed);
+                }
+                else
+                {
+                    SetHealth(m_currentHealth / 2);
+                    SetDamage(m_minCFDamage, m_maxCFDamage);
+                    SetSpeed(m_chaosFlameSpeed);
+                }
             }
         }
     }
@@ -226,69 +227,77 @@ public class Kenron : BaseCharacter {
     /// </summary>
     public void DashAttack()
     {
+        if (isActive && m_InfiniteDash) { m_dashDelay = 0.1f; }
+
         // dash attack
-        if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1f && m_controllerOn && !m_triggerDown && m_currentCharges > 0)
+        if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1f && m_controllerOn && !m_triggerDown)
         {
-            // set boolean flags
-            m_triggerDown = true;
-            m_controllerOn = false;
-            isDashing = true;
-			m_dashDone = false;
-            m_dashCollider.enabled = true;
-			m_dashDelayTimer = m_dashDelay;
-			m_dashStartPosition = transform.position;
-            m_currentCharges--;
+            if (m_currentCharges > 0 || m_InfiniteDash)
+            {
+                // set boolean flags
+                m_triggerDown = true;
+                m_controllerOn = false;
+                isDashing = true;
+                m_dashDone = false;
+                m_dashCollider.enabled = true;
+                m_dashDelayTimer = m_dashDelay;
+                m_dashStartPosition = transform.position;
+                m_currentCharges--;
 
-			// set animator's trigger
-			m_animator.SetBool("Attack", true);
+                // set animator's trigger
+                m_animator.SetBool("Attack", true);
 
-			if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, m_maxDashDistance, Utility.GetIgnoreMask("Enemy", "Player", "Ignore Raycast")))
-			{
-				m_dashPosition = hit.point - transform.forward * m_dashBufferDistance;
-			}
-			else
-			{
-				m_dashPosition = transform.position + transform.forward * m_maxDashDistance;
-			}
 
-			m_dashDistance = (m_dashPosition - m_dashStartPosition).magnitude;
+                if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, m_maxDashDistance, Utility.GetIgnoreMask("Enemy", "Player", "Ignore Raycast")))
+                {
+                    m_dashPosition = hit.point - transform.forward * m_dashBufferDistance;
+                }
+                else
+                {
+                    m_dashPosition = transform.position + transform.forward * m_maxDashDistance;
+                }
 
-			// calculate estimated time of dash
-			m_estimatedDashTime = m_maxDashDistance / m_dashSpeed;
+                m_dashDistance = (m_dashPosition - m_dashStartPosition).magnitude;
 
-			// size hit box
-			Vector3 hitBoxSize = new Vector3(m_dashCollider.size.x, m_dashCollider.size.y, m_dashDistance);
-			m_dashCollider.size = hitBoxSize;
+                // calculate estimated time of dash
+                m_estimatedDashTime = m_maxDashDistance / m_dashSpeed;
 
-			// rotate hit box
-			m_dashCollider.transform.rotation = transform.rotation;
+                // size hit box
+                Vector3 hitBoxSize = new Vector3(m_dashCollider.size.x, m_dashCollider.size.y, m_dashDistance);
+                m_dashCollider.size = hitBoxSize;
 
-			// position hit box
-			m_dashCollider.transform.position = transform.position + transform.forward * (m_dashDistance / 2f);
+                // rotate hit box
+                m_dashCollider.transform.rotation = transform.rotation;
 
-			// apply force
-			m_rigidbody.AddForce(transform.forward * m_dashSpeed * m_dashDistance / m_maxDashDistance, ForceMode.VelocityChange);
-            GameManager.Instance.Kenron.m_statManager.dashesUsed++;
-		}
+                // position hit box
+                m_dashCollider.transform.position = transform.position + transform.forward * (m_dashDistance / 2f);
+
+
+                // apply force
+                m_rigidbody.AddForce(transform.forward * m_dashSpeed * m_dashDistance / m_maxDashDistance, ForceMode.VelocityChange);
+
+                GameManager.Instance.Kenron.m_statManager.dashesUsed++;
+            }
+        }
         else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) < 0.1f && !isDashing)
         {
             m_triggerDown = false;
         }
 
-		if (isDashing)
-		{
-			m_estimatedDashTime -= Time.deltaTime;
-			if ((m_dashStartPosition - transform.position).sqrMagnitude >= m_dashDistance*m_dashDistance || m_estimatedDashTime <= 0.0f)
+        if (isDashing)
+        {
+            m_estimatedDashTime -= Time.deltaTime;
+            if ((m_dashStartPosition - transform.position).sqrMagnitude >= m_dashDistance * m_dashDistance || m_estimatedDashTime <= 0.0f)
             {
 
-				// reset boolean flags
-				m_dashCollider.enabled = false;
-				m_animator.SetBool("Attack", false);
+                // reset boolean flags
+                m_dashCollider.enabled = false;
+                m_animator.SetBool("Attack", false);
 
-				m_dashDone = true;
+                m_dashDone = true;
 
-				// stop kenron
-				m_rigidbody.velocity = Vector3.zero;
+                // stop kenron
+                m_rigidbody.velocity = Vector3.zero;
 
                 // run delay timer
                 m_dashDelayTimer -= Time.deltaTime;
@@ -296,13 +305,13 @@ public class Kenron : BaseCharacter {
                 m_dashCollider.GetComponent<SwordDamage>().CalculateNewMostDamageDealt();
             }
 
-			// if ready to dash again 
-			if (m_dashDelayTimer <= 0.0f && gameObject.activeSelf)
-			{
+            // if ready to dash again 
+            if (m_dashDelayTimer <= 0.0f && gameObject.activeSelf)
+            {
                 StartCoroutine(TimeTillRecharge());
-				m_controllerOn = true;
-				isDashing = false;
-			}
+                m_controllerOn = true;
+                isDashing = false;
+            }
         }
     }
 
@@ -313,29 +322,26 @@ public class Kenron : BaseCharacter {
     /// - Shuras Reckoning: AOE Cleave with a boost in speed
     /// - Curse of Amaterasu: Spawns A Demon Kenron after Main Kenron Dies (Passive)
     /// </summary>
-    public void SkillChecker() 
+    public void SkillChecker()
     {
         // Empty Check
         if (gameObject != null && m_Enemy != null)
         {
             // Sets the image to true if the skills are found
             UnlockSkill();
+
             // If Kenron has the skill specified and is killed by Kenron
             if (m_skillUpgrades.Find(skill => skill.Name == "Vile Infusion") && m_Enemy.isDeadbByKenron)
             {
                 // Return a bit of health to Kenrons current health
                 this.m_currentHealth = m_currentHealth + m_healthGained;
             }
+
             // If Kenron has the skill specified and is killed by Kenron
             if (isActive == true && m_skillUpgrades.Find(skill => skill.Name == "Bloodlust") && m_Enemy.isDeadbByKenron)
             {
                 // Reduces the cooldown from Kenrons Cooldown 
-                skillManager.m_mainSkills[0].m_currentDuration = skillManager.m_mainSkills[0].m_currentDuration - m_durationIncreased;
-            }
-            // If Kenron has the skill specificed and his health is less than or equal to 0
-            if (m_skillUpgrades.Find(skill => skill.Name == "Curse of Amaterasu") && m_currentHealth <= 0.0f)
-            {
-               // TODO: Charge Held + Release Wave of Particle
+                skillManager.m_mainSkills[0].m_currentDuration -= m_RTDurationIncreased;
             }
         }
     }
@@ -367,6 +373,29 @@ public class Kenron : BaseCharacter {
         }
     }
 
+    /// <summary>
+    /// Resets Kenrons Stats back to his base after Chaos Flame is Used
+    /// </summary>
+    public void ResetSkill()
+    {
+        // Empty Check
+        if (this.gameObject != null)
+        {
+            if (skillManager.m_mainSkills[0].m_currentDuration >= skillManager.m_mainSkills[0].m_duration)
+            {
+                // Resets Stats and Skill
+                isActive = false;
+                m_InfiniteDash = false;
+                m_currentCharges = m_charges;
+                SetDamage(m_minDamage, m_maxDamage);
+                SetSpeed(m_movementSpeed);
+                m_kenronParticle.Stop();
+                m_statManager.chaosFlameUsed++;
+            }
+        }
+    }
+
+
     IEnumerator ChaosFlameVisual()
     {
         m_startParticle.Play();
@@ -380,26 +409,6 @@ public class Kenron : BaseCharacter {
         if (m_currentCharges < m_charges)
         {
             m_currentCharges++;
-        }
-    }
-
-    /// <summary>
-    /// Resets Kenrons Stats back to his base after Chaos Flame is Used
-    /// </summary>
-    public void ResetSkill()
-    {
-        // Empty Check
-        if (this.gameObject != null)
-        {
-            if (skillManager.m_mainSkills[0].m_currentDuration >= skillManager.m_mainSkills[0].m_duration)
-            {
-                // Resets Stats and Skill
-                SetDamage(m_minDamage, m_maxDamage);
-                SetSpeed(15.0f);
-                isActive = false;
-                isBurning = true;
-                m_kenronParticle.Stop();
-            }
         }
     }
 }

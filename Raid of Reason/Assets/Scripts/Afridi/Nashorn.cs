@@ -41,10 +41,6 @@ public class Nashorn : BaseCharacter
     [Tooltip("How much shield will Nashorn gain on every punch?")]
     public float shieldGain;
 
-    [SerializeField]
-    [Tooltip("How much shields Nashorns Third Upgrade Gives")]
-    private float m_shieldsGiven;
-
     [Header("--Skills--")]
 
     [SerializeField]
@@ -57,23 +53,34 @@ public class Nashorn : BaseCharacter
     private float m_tauntVulnerability;
 
     [SerializeField]
+    [Tooltip("How much knockback is applied to Nashorns Hydraulic Pummel")]
+    public float knockBackForce;
+
+    [SerializeField]
     [Tooltip("Increased Radius from Nashorns Roaring Thunder ability")]
-    private float m_radiusIncreased;
-
-    [Tooltip("Chance of Stun dealt by Nashorns Macht Des Sturms ability")]
-    public float stunChance;
+    private float m_RTRadiusIncreased;
 
     [SerializeField]
-    [Tooltip("Damage done by Chain Lightning dealt by Macht Des Sturms ability")]
-    private float m_lightningDamage;
+    [Tooltip("Increased Duration from Nashorns Roaring Thunder ability")]
+    private float m_RTDurationIncreased;
 
     [SerializeField]
-    [Tooltip("Range Chain Lightning spreads dealt by Macht Des Sturms ability")]
-    private float m_lightningRadius;
+    [Tooltip("How much more knockback nashorn deals with Kinetic Dischage")]
+    public float KDForce;
 
-    // Nearby enemies
+    [Tooltip("How long the enemy is stunned by Kinetic Dischage")]
+    public float KDStun;
+
+    [Tooltip("How Much Damage dealt when an enemy gets hit by another Enemy by Kinetic Dischage")]
+    public float KDKnockbackDamage;
+
     [SerializeField]
-    private List<EnemyData> enemies = new List<EnemyData>();
+    [Tooltip("How much shields Nashorns Static Shield Gives To His Allies")]
+    private float m_SSShieldsGiven;
+
+    [SerializeField]
+    [Tooltip("How much damage Enemies take with Static Shield")]
+    public float SSDamageTaken;
 
     [Tooltip("Checks if Nashorns Skill is Active")]
     public bool isTaunting;
@@ -123,22 +130,25 @@ public class Nashorn : BaseCharacter
         InitialiseUpgrades();
     }
 
+
+    /// <summary>
+    /// Checks how many skills Nashorn has obtained from his skill tree
+    /// - Roaring Thunder: More Range for his Taunt and Cooldown is Halved
+    /// - Shock Wave: Melee now knocksback and has a chance to stun (Passive)
+    /// - Kinetic Discharge: Enemies now take damage when attacking Taunted Nashorn
+    /// - Macht Des Sturms: Chain Lightning attack that damages and stuns + team mates are granted electric damage (Stun Buff)
+    /// </summary>
+
     void InitialiseUpgrades()
     {
         UnlockSkill();
         if (m_skillUpgrades.Find(skill => skill.Name == "Roaring Thunder"))
         {
             // Returns increased Radius
-            this.m_tauntRadius += m_radiusIncreased;
+            this.m_tauntRadius += m_RTRadiusIncreased;
 
             // Cooldown is halved
-            skillManager.m_mainSkills[1].m_coolDown = skillManager.m_mainSkills[1].m_coolDown - 2;
-        }
-
-        if (m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
-        {
-            GameManager.Instance.Thea.currentShield = 50.0f;
-            GameManager.Instance.Kenron.currentShield = 50.0f;
+            skillManager.m_mainSkills[1].m_duration += m_RTDurationIncreased;
         }
     }
 
@@ -165,8 +175,6 @@ public class Nashorn : BaseCharacter
             }
         }
 
-        enemies.AddRange(FindObjectsOfType<EnemyData>());
-
         m_Thea = FindObjectOfType<Thea>();
         m_Kenron = FindObjectOfType<Kenron>();
     }
@@ -178,9 +186,6 @@ public class Nashorn : BaseCharacter
         {
             // Updates Player Movement
             base.FixedUpdate();
-
-            // Checks Nashorns Skill Tree
-            SkillChecker();
         }
     }
 
@@ -216,48 +221,6 @@ public class Nashorn : BaseCharacter
                 m_skillPopups[3].gameObject.SetActive(true);
             }
         }
-    }
-
-    /// <summary>
-    /// Checks how many skills Nashorn has obtained from his skill tree
-    /// - Roaring Thunder: More Range for his Taunt and Cooldown is Halved
-    /// - Shock Wave: Melee now knocksback and has a chance to stun (Passive)
-    /// - Kinetic Discharge: Enemies now take damage when attacking Taunted Nashorn
-    /// - Macht Des Sturms: Chain Lightning attack that damages and stuns + team mates are granted electric damage (Stun Buff)
-    /// </summary>
-    public void SkillChecker()
-    {
-        //Empty Check
-        //if (this.gameObject != null)
-        //{
-        //    Sets the image to true if the skills are found
-        //    UnlockSkill();
-        //    If the skill is active and the player has the named skill
-        //    if (isTaunting == true && m_skillUpgrades.Find(skill => skill.Name == "Roaring Thunder") && runOnce)
-        //    {
-        //        Returns increased Radius
-        //        this.m_tauntRadius += m_radiusIncreased;
-
-        //        Cooldown is halved
-        //       skillManager.m_mainSkills[1].m_coolDown = skillManager.m_mainSkills[1].m_coolDown / 2;
-
-        //        Run this part once
-        //        runOnce = false;
-
-        //        Debug.Log(m_tauntRadius);
-        //    }
-        //    if (isTaunting == true && m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
-        //    {
-        //        GameManager.Instance.Thea.currentShield = 50.0f;
-        //        GameManager.Instance.Kenron.currentShield = 50.0f;
-        //    }
-
-        //    If the skill is active and the player has the named skill
-        //    if (isTaunting == true && m_skillUpgrades.Find(skill => skill.Name == "Macht Des Sturms"))
-        //    {
-
-        //    }
-        //}
     }
 
     /// <summary>
@@ -317,6 +280,26 @@ public class Nashorn : BaseCharacter
         }
     }
 
+    public void SkillChecker()
+    {
+        if (gameObject != null)
+        {
+            if (isActive = true && m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
+            {
+                if (GameManager.Instance.Kenron.playerState != PlayerState.DEAD && !GameManager.Instance.Kenron)
+                {
+                    GameManager.Instance.Kenron.currentShield = m_SSShieldsGiven;
+                }
+                if (GameManager.Instance.Thea.playerState != PlayerState.DEAD && !GameManager.Instance.Thea)
+                {
+                    GameManager.Instance.Thea.currentShield = m_SSShieldsGiven;
+                }
+            }
+
+
+        }
+    }
+
 	void StartLunge()
 	{
 		islunging = true;
@@ -343,7 +326,6 @@ public class Nashorn : BaseCharacter
         m_debrisParticle.Play();
 
     }
-
 
     /// <summary>
 	/// Nashorn's Ability. Boosting His Health up and reducing incoming damage he taunts all enemies to himself
@@ -402,5 +384,16 @@ public class Nashorn : BaseCharacter
     {
         GameManager.Instance.Nashorn.m_statManager.highestTaunted = Mathf.Max(totalAmountTaunted, GameManager.Instance.Nashorn.m_statManager.highestTaunted);
         totalAmountTaunted = 0.0f;
+    }
+    
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Enemy" && isActive == true)
+        {
+            if (m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
+            {
+                collision.gameObject.GetComponent<EnemyData>().TakeDamage(SSDamageTaken, GameManager.Instance.Nashorn);             
+            }
+        }
     }
 }

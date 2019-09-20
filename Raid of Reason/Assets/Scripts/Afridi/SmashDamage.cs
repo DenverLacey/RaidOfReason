@@ -4,19 +4,7 @@ using UnityEngine;
 using XboxCtrlrInput;
 
 public class SmashDamage : MonoBehaviour
-{
-    [SerializeField]
-    [Tooltip("How much force will be applied")]
-    private float m_knockBackForce;
-
-    [SerializeField]
-    [Tooltip("How much knockback nashorn deals with his upgrade")]
-    private float m_kineticDischargeForce;
-
-    [SerializeField]
-	[Tooltip("How long enemies will be stunned for")]
-	private float m_stunTime = 1.0f;
-
+{ 
     private bool haveSkill = false;
 
     public void OnTriggerEnter(Collider other)
@@ -39,8 +27,8 @@ public class SmashDamage : MonoBehaviour
                     Vector3 direction = other.transform.position - GameManager.Instance.Nashorn.transform.position;
                     direction.y = 0;
 
-                    rb.AddForce(direction.normalized * m_kineticDischargeForce, ForceMode.Impulse);
-                    enemy.Stun(m_stunTime);
+                    rb.AddForce(direction.normalized * GameManager.Instance.Nashorn.KDForce, ForceMode.Impulse);
+                    enemy.KnockBack(GameManager.Instance.Nashorn.KDStun);
                 }
             }
            
@@ -49,18 +37,10 @@ public class SmashDamage : MonoBehaviour
                 Vector3 direction = other.transform.position - GameManager.Instance.Nashorn.transform.position;
                 direction.y = 0;
 
-                rb.AddForce(direction.normalized * m_knockBackForce, ForceMode.Impulse);
+                rb.AddForce(direction.normalized * GameManager.Instance.Nashorn.knockBackForce, ForceMode.Impulse);
             }
 
             enemy.TakeDamage(GameManager.Instance.Nashorn.GetDamage(), GameManager.Instance.Nashorn);
-		
-			if (GameManager.Instance.Kenron != null)
-			{
-			    if (GameManager.Instance.Kenron.m_skillUpgrades.Find(skill => skill.Name == "Shuras Reckoning") && GameManager.Instance.Kenron.isActive == true)
-			    {
-			        other.GetComponent<StatusEffectManager>().ApplyBurn(4);
-			    }
-			}
         }
     }
 }

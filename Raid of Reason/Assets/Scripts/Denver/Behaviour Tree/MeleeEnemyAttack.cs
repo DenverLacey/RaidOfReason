@@ -30,8 +30,11 @@ public class MeleeEnemyAttack : Behaviour
 
 			if (m_targetPlayer.tag == "Nashorn")
 			{
-				agent.isAttackingNashorn = true;
-			}
+                if (GameManager.Instance.Nashorn.isActive && GameManager.Instance.Nashorn.m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
+                {
+                    agent.TakeDamage(GameManager.Instance.Nashorn.SSDamageTaken, GameManager.Instance.Nashorn);
+                }
+            }
 		}
 	}
 

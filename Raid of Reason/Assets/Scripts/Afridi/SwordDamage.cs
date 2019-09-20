@@ -32,12 +32,6 @@ public class SwordDamage : MonoBehaviour
 
             enemy.IndicateHit(GameManager.Instance.Kenron);
 
-            // if the player does have shuras upgrade applied
-            if (enemy && GameManager.Instance.Kenron.m_skillUpgrades.Find(skill => skill.Name == "Shuras Reckoning") && GameManager.Instance.Kenron.isActive == true)
-            {
-                other.GetComponent<StatusEffectManager>().ApplyBurn(4);
-            }
-
             if (enemy.Health <= 0) {
                 enemy.isDeadbByKenron = true;
                 GameManager.Instance.Kenron.SkillChecker();

@@ -41,8 +41,11 @@ public class SuicideEnemyAttack : Behaviour
 					p.TakeDamage(agent.AttackDamage);
 					if (p.tag == "Nashorn")
 					{
-						agent.isAttackingNashorn = true;
-					}
+                        if (GameManager.Instance.Nashorn.isActive && GameManager.Instance.Nashorn.m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
+                        {
+                            agent.TakeDamage(GameManager.Instance.Nashorn.SSDamageTaken, GameManager.Instance.Nashorn);
+                        }
+                    }
 				}
 			}
 

@@ -55,10 +55,16 @@ public class StatTrackingManager : MonoBehaviour
         m_gameManager = FindObjectOfType<GameManager>();
         dashesUsed = 0;
         chaosFlameUsed = 0;
+        damageInTotal = 0;
+        mostDamageInASingleDash = 0;
+        damageTaken = 0;
         enemiesTaunted = 0;
         highestTaunted = 0;
+        totalSheildsCharged = 0;
         gopUsed = 0;
         gopHitThree = 0;
+        gopFullCharged = 0;
+        damageHealed = 0;
     }
 
     public void Update()

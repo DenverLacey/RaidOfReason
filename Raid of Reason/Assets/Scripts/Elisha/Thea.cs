@@ -43,8 +43,6 @@ public class Thea : BaseCharacter
     [Tooltip("how much the enemies are knockbacked by theas third skill")]
     public float knockbackForce;
 
-    public bool nashornBuffGiven = false;
-
     public bool m_skillActive;
 
     [SerializeField]
@@ -141,9 +139,13 @@ public class Thea : BaseCharacter
         m_HealRadius_2.gameObject.SetActive(false);
         m_AOEShapeModule = m_HealRadius.shape;
         m_AOEShapeModule_2 = m_HealRadius_2.shape;
-        foreach (Image display in m_skillPopups)
+
+        if (m_skillPopups.Count != 0)
         {
-            display.gameObject.SetActive(false);
+            foreach (Image display in m_skillPopups)
+            {
+                display.gameObject.SetActive(false);
+            }
         }
 
         m_aimCursor = GameObject.FindGameObjectWithTag("AimCursor");

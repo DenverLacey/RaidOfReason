@@ -65,25 +65,7 @@ public class ProjectileMove : MonoBehaviour {
             if (enemy)
             {
                 enemy.TakeDamage(GameManager.Instance.Thea.GetDamage(), GameManager.Instance.Thea);
-                
-                //NASHORN ABILITY
-                if (GameManager.Instance.Nashorn != null && GameManager.Instance.Thea.nashornBuffGiven == true && GameManager.Instance.Nashorn.isTaunting == true)
-                {
-                    float randomValue = Random.value;
-                    if (GameManager.Instance.Nashorn.stunChance < randomValue)
-                    {
-                        other.gameObject.GetComponent<StatusEffectManager>().ApplyStun(1.5f);
-                    }
-                }
-                else if (GameManager.Instance.Nashorn != null && GameManager.Instance.Nashorn.isTaunting == false)
-                {
-                    GameManager.Instance.Thea.nashornBuffGiven = false;
-                }
-
-                if (GameManager.Instance.Kenron && GameManager.Instance.Kenron.m_skillUpgrades.Find(skill => skill.Name == "Shuras Reckoning") && GameManager.Instance.Kenron.isActive == true)
-                {
-                    other.gameObject.GetComponent<StatusEffectManager>().ApplyBurn(4);
-                }
+                             
             }
 		}
         else if ((other.gameObject.tag == "Kenron" && !m_hasHitKenron) || (other.gameObject.tag == "Nashorn" && !m_hasHitNashorn))
