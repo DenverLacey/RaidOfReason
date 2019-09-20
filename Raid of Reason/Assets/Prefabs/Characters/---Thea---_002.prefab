@@ -129,7 +129,7 @@ MonoBehaviour:
   m_shieldBuffer: 0
   m_shieldDegenerationTimer: 0
   m_shieldDegenerateAmount: 0
-  controller: 3
+  controller: 1
   skillManager: {fileID: 0}
   m_skillPopups:
   - {fileID: 0}
@@ -142,18 +142,24 @@ MonoBehaviour:
   m_AOEMax: 10
   m_AOEMin: 1
   m_AOEGrowTime: 75
-  m_GOPEffect: 15
-  healthRegenerated: 0
-  regenEachFrame: 0
+  m_GOPEffect: 10
+  STHealthRegenerated: 0
+  STRegenEachFrame: 0
+  STReductionRate: 0
+  STChargeRate: 0
   m_healMultiplier: 0
   knockbackForce: 0
-  nashornBuffGiven: 0
-  m_skillActive: 0
   m_nearbyEnemies: []
+  AllyHealthChecks: 96000000820000003c00000019000000
+  FireRateIncreased:
+  - 0.6
+  - 0.5
+  - 0.4
+  - 0.3
   m_projectile: {fileID: 1119944734783606, guid: 4dab86d7c4169194e9d7640ac578ff72,
     type: 3}
   m_aimCursor: {fileID: 0}
-  m_projectileDelay: 1.2
+  m_projectileDelay: 0.9
   aimCursorSpeed: 20
   m_aimCursorRadius: 20
   m_waterPrefab: {fileID: 2256675738506950867}
@@ -161,6 +167,7 @@ MonoBehaviour:
   m_HealRadius_2: {fileID: 8649241569059708452}
   m_HealRadius_3: {fileID: 8490809386875847956}
   m_statManager: {fileID: 0}
+  m_skillActive: 0
 --- !u!23 &3777708967802242873
 MeshRenderer:
   m_ObjectHideFlags: 0

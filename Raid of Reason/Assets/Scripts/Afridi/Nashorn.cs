@@ -167,7 +167,7 @@ public class Nashorn : BaseCharacter
         islunging = false;
         runOnce = true;
 
-        if (m_skillPopups.Count > 0)
+        if (m_skillPopups.Count != 0)
         {
             foreach (Image display in m_skillPopups)
             {

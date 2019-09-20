@@ -109,10 +109,6 @@ public class EnemyData : MonoBehaviour
     // Afridi added this for the skill tree
     public bool isDeadbByKenron = false;
 
-    [HideInInspector]
-    // Afridi added this for the skill tree
-    public bool isAttackingNashorn;
-
 	private Collider m_collider;
 
 	// Pathfinding Stuff
@@ -126,7 +122,6 @@ public class EnemyData : MonoBehaviour
 	{
 		Rigidbody = GetComponent<Rigidbody>();
 		m_collider = GetComponent<Collider>();
-        isAttackingNashorn = false;
 		Pathfinder = GetComponent<EnemyPathfinding>();
     }
 
@@ -238,7 +233,7 @@ public class EnemyData : MonoBehaviour
 	/// </param>
 	public void TakeDamage(float damage, BaseCharacter character)
 	{
-		Health -= damage;
+        Health -= damage;
 
 		if (Health <= 0)
 		{
@@ -261,29 +256,15 @@ public class EnemyData : MonoBehaviour
         switch (character.CharacterType)
         {
             case CharacterType.KENRON:
-                if (GameManager.Instance.Kenron.isActive && GameManager.Instance.Kenron.m_skillUpgrades.Find(skill => skill.Name == "Shuras Reckoning"))
+                if (m_bloodEffect != null)
                 {
-                    if(m_burningEffect != null)
-                    {
-                        m_burningEffect.Play();
-                    }
-                    else
-                    {
-                        Debug.LogFormat("{0} is null", m_burningEffect.name);
-                    }
+                    m_bloodEffect.Play();
                 }
                 else
                 {
-                    if(m_bloodEffect != null)
-                    {
-                        m_bloodEffect.Play();
-                    }
-                    else
-                    {
-                        Debug.LogFormat("{0} is null", m_bloodEffect.name);
-                    }
-                    m_burningEffect.Stop();
+                    Debug.LogFormat("{0} is null", m_bloodEffect.name);
                 }
+                m_burningEffect.Stop();
                 break;
 
             case CharacterType.NASHORN:

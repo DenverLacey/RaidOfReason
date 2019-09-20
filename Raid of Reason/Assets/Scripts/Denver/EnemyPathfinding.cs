@@ -5,9 +5,8 @@ using UnityEngine.AI;
 
 public class EnemyPathfinding : MonoBehaviour
 {
-	[SerializeField]
-	[Tooltip("How fast the enemy will move")]
-	private float m_speed = 3f;
+    [Tooltip("How fast the enemy will move")]
+    public float m_speed;
 
 	[SerializeField]
 	[Tooltip("How fast the enemy will turn")]

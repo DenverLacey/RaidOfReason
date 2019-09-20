@@ -12,6 +12,7 @@ using XboxCtrlrInput;
 public class Thea : BaseCharacter 
 {
     [Header("--GOP Growth--")]
+
     [SerializeField]
     [Tooltip("How big can Thea's AOE get?")]
     private float m_AOEMax;
@@ -28,13 +29,32 @@ public class Thea : BaseCharacter
     [Tooltip("How much the Gift of Poseidon heals by?")]
     private float m_GOPEffect;
 
+
+
+
     [Header("--Skills--")]
 
-    [Tooltip("How much health thea passively heals with her first skill")]
-    public float healthRegenerated;
+    [Tooltip("How much health thea passively heals with her Settling Tide")]
+    public float STHealthRegenerated;
 
-    [Tooltip("The delay between how much health thea passively with her first skill")]
-    public float regenEachFrame;
+    [Tooltip("The delay between how much health thea passively with her Settling Tide")]
+    public float STRegenEachFrame;
+
+    [Tooltip("How much cooldown Reduction Thea gets with Settling Tide")]
+    [SerializeField]
+    private float STReductionRate;
+
+    [Tooltip("How much charge time reduction Thea gets with Settling Tide")]
+    [SerializeField]
+    private float STChargeRate;
+
+    [Tooltip("How much slower the Enemy can move inisde GOP with Hydro Pressure")]
+    [SerializeField]
+    private float HPSpeedReduction;
+
+    [Tooltip("How much less damage the Enemy can do inisde GOP with Hydro Pressure")]
+    [SerializeField]
+    public float HPAttackWeakened;
 
     [SerializeField]
     [Tooltip("How much more healing Thea does with her Fourth ability")]
@@ -43,10 +63,15 @@ public class Thea : BaseCharacter
     [Tooltip("how much the enemies are knockbacked by theas third skill")]
     public float knockbackForce;
 
-    public bool m_skillActive;
-
+    [Tooltip("Checks How Many Specific Times the Health of her allies have to be for Oceans Ally (MAX SIZE OF 3)")]
     [SerializeField]
-    private List<EnemyData> m_nearbyEnemies = new List<EnemyData>();
+    private int[] AllyHealthChecks;
+
+    [Tooltip("How Many Specific Times the Fire Rate of her Projectiles increases with Oceans Ally (MAX SIZE OF 3)")]
+    [SerializeField]
+    private float[] FireRateIncreased;
+
+
 
     [Header("--Projectile Attacks--")]
 
@@ -66,6 +91,9 @@ public class Thea : BaseCharacter
 
     public float m_aimCursorRadius;
 
+
+
+
     [Header("--Particles And UI--")]
 
     [SerializeField]
@@ -83,14 +111,14 @@ public class Thea : BaseCharacter
     [Tooltip("The Final particle used for visual effect.")]
     private ParticleSystem m_HealRadius_3;
 
+
+
+
     // Stat Tracker
     [HideInInspector]
     public StatTrackingManager m_statManager;
 
-
-    // Runs once check
-    private bool neverDone;
-
+    public bool m_skillActive;
 
     private Vector3 newLocation;
 
@@ -107,6 +135,7 @@ public class Thea : BaseCharacter
     private float m_AOETimer;
     private float m_particleRadius;
 
+    private List<EnemyData> m_nearbyEnemies = new List<EnemyData>();
     private ParticleSystem.ShapeModule m_AOEShapeModule;
     private ParticleSystem.ShapeModule m_AOEShapeModule_2;
 
@@ -128,7 +157,6 @@ public class Thea : BaseCharacter
         base.Awake();
         CharacterType = CharacterType.THEA;
         m_isActive = false;
-        neverDone = true;
         m_isHealthRegen = false;
         m_statManager = FindObjectOfType<StatTrackingManager>();
         m_waterPrefab.SetActive(false);
@@ -139,6 +167,9 @@ public class Thea : BaseCharacter
         m_HealRadius_2.gameObject.SetActive(false);
         m_AOEShapeModule = m_HealRadius.shape;
         m_AOEShapeModule_2 = m_HealRadius_2.shape;
+        IntialiseUpgrades();
+        AllyHealthChecks = new int[4];
+        FireRateIncreased = new float[4];
 
         if (m_skillPopups.Count != 0)
         {
@@ -149,6 +180,15 @@ public class Thea : BaseCharacter
         }
 
         m_aimCursor = GameObject.FindGameObjectWithTag("AimCursor");
+    }
+
+    void IntialiseUpgrades()
+    {
+        if (m_skillUpgrades.Find(skill => skill.name == "Settling Tide"))
+        {
+            skillManager.m_mainSkills[2].m_coolDown -= STReductionRate;
+            m_AOETimer -= STChargeRate;
+        }
     }
 
     // Update is called once per frame
@@ -289,11 +329,6 @@ public class Thea : BaseCharacter
             UnlockSkill();
             if (m_skillUpgrades.Find(skill => skill.name == "Settling Tide"))
             {
-                if (neverDone == true)
-                {
-                    skillManager.m_mainSkills[2].m_coolDown = skillManager.m_mainSkills[2].m_coolDown / 2;
-                    neverDone = false;
-                }
                 if (m_currentHealth != m_maxHealth && !m_isHealthRegen)
                 {
                     StartCoroutine(HealthOverTime());
@@ -303,21 +338,21 @@ public class Thea : BaseCharacter
             {
                 float healthcomparison = GameManager.Instance.Kenron.m_currentHealth + GameManager.Instance.Nashorn.m_currentHealth;
 
-                if (healthcomparison <= 150)
+                if (healthcomparison <= AllyHealthChecks[0])
                 {
-                    m_projectileDelay = 0.6f;
+                    m_projectileDelay = FireRateIncreased[0];
                 }
-                if (healthcomparison <= 130)
+                if (healthcomparison <= AllyHealthChecks[1])
                 {
-                    m_projectileDelay = 0.5f;
+                    m_projectileDelay = FireRateIncreased[1];
                 }
-                if (healthcomparison <= 60)
+                if (healthcomparison <= AllyHealthChecks[2])
                 {
-                    m_projectileDelay = 0.4f;
+                    m_projectileDelay = FireRateIncreased[2];
                 }
-                if (healthcomparison <= 25)
+                if (healthcomparison <= AllyHealthChecks[3])
                 {
-                    m_projectileDelay = 0.3f;
+                    m_projectileDelay = FireRateIncreased[3];
                 }
             }
             if (m_isActive == true && m_skillUpgrades.Find(skill => skill.name == "Hydro Pressure"))
@@ -328,9 +363,7 @@ public class Thea : BaseCharacter
                     float sqrDistance = (this.transform.position - enemy.transform.position).sqrMagnitude;
                     if (sqrDistance <= m_AOERadius * m_AOERadius)
                     {
-                        enemy.Stun(0.5f);
-                        enemy.Rigidbody.AddExplosionForce(knockbackForce, transform.position, m_AOERadius, 0, ForceMode.Impulse);
-                        enemy.TakeDamage(1, this);
+                        enemy.GetComponent<EnemyPathfinding>().m_speed -= HPSpeedReduction;
                     }
                 }
             }
@@ -357,13 +390,8 @@ public class Thea : BaseCharacter
 
             m_HealRadius.gameObject.SetActive(true);
             m_HealRadius_2.gameObject.SetActive(true);
-
-            // Grow AOE radius.
+            
             m_AOERadius = Mathf.Lerp(m_AOERadius, m_AOEMax, m_AOETimer / m_AOEGrowTime);
-            Debug.Log(m_AOERadius);
-            // AOE collider radius grows in conjuction to the lerp.
-            Debug.Log("Float radius: " + m_AOERadius);
-
             m_AOEShapeModule.radius = m_AOERadius;
             m_AOEShapeModule_2.radius = m_AOERadius;
             m_skillActive = true;
@@ -501,7 +529,7 @@ public class Thea : BaseCharacter
         m_isHealthRegen = true;
         while (m_currentHealth < m_maxHealth) {
             Regenerate();
-            yield return new WaitForSeconds(regenEachFrame);
+            yield return new WaitForSeconds(STRegenEachFrame);
         }
         m_isHealthRegen = false;
     }
@@ -518,6 +546,6 @@ public class Thea : BaseCharacter
     }
 
     public void Regenerate() {
-        AddHealth(healthRegenerated);
+        AddHealth(STHealthRegenerated);
     }
 }
