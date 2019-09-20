@@ -7,17 +7,15 @@ using UnityEngine.UI;
 
 public class PauseCursor : MonoBehaviour
 {
-    [HideInInspector]
-    public XboxController controller = XboxController.Any;
-    private PlayerIndex m_playerIndex;
-    private Transform m_collidedTransform = null;
-    private CanvasScaler m_canvas;
-    private Vector3 m_inactivePosition;
-
     [SerializeField]
     [Tooltip("How fast the cursor will move")]
     private float m_speed;
 
+    [HideInInspector]
+    public XboxController controller = XboxController.Any;
+    private PlayerIndex m_playerIndex;
+    private CanvasScaler m_canvas;
+    private Vector3 m_inactivePosition;
 
     public void Start()
     {
@@ -72,10 +70,25 @@ public class PauseCursor : MonoBehaviour
 
     void DoButtonInput()
     {
-        if (XCI.GetButtonDown(XboxButton.A, controller) && m_collidedTransform)
+        int layerMask = Utility.GetIgnoreMask("Ignore Raycast");
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.forward, 1, layerMask);
+        Debug.DrawRay(this.transform.position, transform.forward, Color.green);
+        PauseInformation pauseInfo = hit.collider.GetComponent<PauseInformation>();
+      
+        if (hit.collider)
         {
-            m_collidedTransform.GetComponent<PauseInformation>().Click();
+            pauseInfo.Hover();
+            if (XCI.GetButtonDown(XboxButton.A, controller))
+            {
+                pauseInfo.Click();
+                pauseInfo.Pressed();
+            }
         }
+        else if(!hit.collider)
+        {
+            pauseInfo.Unhover();
+        }
+        DebugTools.LogVariable("hit collider", hit.collider);
     }
 
     public void SetController(int index)
@@ -91,29 +104,5 @@ public class PauseCursor : MonoBehaviour
                 Debug.LogFormat("invalid index: {0} tried to be assigned to {1}", index, gameObject.name);
                 break;
         }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        m_collidedTransform = collision.transform;
-
-        var info = m_collidedTransform.GetComponent<PauseInformation>();
-
-        if (info)
-        {
-            info.Hover();
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        var info = m_collidedTransform.GetComponent<PauseInformation>();
-
-        if (info)
-        {
-            info.Unhover();
-        }
-
-        m_collidedTransform = null;
     }
 }

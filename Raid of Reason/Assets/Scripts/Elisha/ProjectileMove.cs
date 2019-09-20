@@ -16,31 +16,46 @@ public class ProjectileMove : MonoBehaviour {
     private float m_projectileSpeed;
     [SerializeField]
     private float m_healAmount;
+    [SerializeField]
+    private AnimationCurve m_speedGradient;
 
 	private bool m_hasHitKenron;
 	private bool m_hasHitNashorn;
 
+    private float m_lifeTimer;
+    private float m_currentSpeed;
+
     private void Start()
     {
-        Invoke("Destroy", m_projectileLife);
+        m_lifeTimer = 0.0f;
     }
 
     private void OnDisable()
     {
         m_hasHitKenron = false;
         m_hasHitNashorn = false;
+        m_lifeTimer = 0.0f;
+        m_currentSpeed = m_projectileSpeed;
     }
 
-
     // Update is called once per frame
-    void Update () {
+    void Update ()
+    {
+        m_lifeTimer += Time.deltaTime;
+        DebugTools.LogVariable("Timer", m_lifeTimer);
 
-        // If projectile is active
-		if(m_projectileSpeed != 0)
+        float percentage = m_lifeTimer / m_projectileLife;
+        m_currentSpeed = m_speedGradient.Evaluate(percentage) * m_projectileSpeed;
+        
+        DebugTools.LogVariable("Speed", m_currentSpeed);
+
+        // Project the objects transform forward 
+        var forward = transform.InverseTransformDirection(transform.forward);
+        transform.Translate(forward * m_currentSpeed * Time.deltaTime);
+
+        if (m_lifeTimer >= m_projectileLife)
         {
-            // Project the objects transform forward 
-            var forward = transform.InverseTransformDirection(transform.forward);
-            transform.Translate(forward * m_projectileSpeed * Time.deltaTime);
+            Destroy();
         }
 	}
 

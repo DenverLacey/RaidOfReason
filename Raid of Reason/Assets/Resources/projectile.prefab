@@ -107,9 +107,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_projectileLife: 4
-  m_projectileSpeed: 9
+  m_projectileSpeed: 12
   m_healAmount: 25
-  m_damage: 6
+  m_speedGradient:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.012482723
+      value: 0.99871624
+      inSlope: 0.09873908
+      outSlope: 0.09873908
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.16318059
+    - serializedVersion: 3
+      time: 1.1766357
+      value: -0.026893616
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!54 &3457263504230855082
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -38,12 +38,12 @@ public class PauseMenu : MonoBehaviour
 
     public void CharacterSelection()
     {
-        SceneManager.GetSceneByName("CharacterSelectionScene_002");
+        SceneManager.LoadScene(0);
     }
 
     public void Paused()
     {
-        Time.timeScale = 0;
+        Time.timeScale = 0.0f;
         m_isPaused = true;
         m_p1Cursor.gameObject.SetActive(true);
         m_pauseMenu.SetActive(true);
@@ -59,7 +59,7 @@ public class PauseMenu : MonoBehaviour
 
     public void RestartGame()
     {
-        SceneManager.GetSceneByName("Elisha_Test_Scene");
+        SceneManager.LoadScene(1);
     }
 
     public void Quit()

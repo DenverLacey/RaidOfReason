@@ -114,10 +114,6 @@ public abstract class BaseCharacter : MonoBehaviour
     protected bool m_bActive;
     protected float m_rotationSpeed = 250.0f;
     protected Vector3 m_direction;
-    private MeshRenderer m_renderer;
-    private Color m_originalColour;
-
-
     private Color m_original;
     private SpriteRenderer m_spriteRend;
 
@@ -127,9 +123,6 @@ public abstract class BaseCharacter : MonoBehaviour
     /// </summary>
     protected virtual void Awake()
     {
-       // m_renderer = GetComponentInChildren<MeshRenderer>();
-        // Gets the original colour of the player.
-        //m_originalColour = m_renderer.sharedMaterial.color;
         m_camera = FindObjectOfType<MultiTargetCamera>();
         m_playerCollider = GetComponent<CapsuleCollider>();
         m_rigidbody = GetComponent<Rigidbody>();
