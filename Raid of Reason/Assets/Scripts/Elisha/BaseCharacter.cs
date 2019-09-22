@@ -114,8 +114,8 @@ public abstract class BaseCharacter : MonoBehaviour
     protected bool m_bActive;
     protected float m_rotationSpeed = 250.0f;
     protected Vector3 m_direction;
-    private Color m_original;
-    private SpriteRenderer m_spriteRend;
+    private ParticleSystem.ColorOverLifetimeModule m_original;
+    public ParticleSystem m_spriteRend;
 
 
     /// <summary>
@@ -135,8 +135,7 @@ public abstract class BaseCharacter : MonoBehaviour
         m_bActive = false;
         currentShield = 0;
         skillManager = FindObjectOfType<SkillManager>();
-        m_spriteRend = GetComponentInChildren<SpriteRenderer>();
-        m_original = m_spriteRend.sharedMaterial.color;
+        m_original = m_spriteRend.colorOverLifetime;
     }
 
     /// <summary>
@@ -418,7 +417,7 @@ public abstract class BaseCharacter : MonoBehaviour
     /// </summary>
     void IndicateHit()
     {
-        m_spriteRend.material.color = Color.red;
+        m_original.color = Color.red;
 
         if (gameObject.activeSelf)
         {
@@ -428,7 +427,7 @@ public abstract class BaseCharacter : MonoBehaviour
     IEnumerator ResetSpriteColour(float duration)
     {
         yield return new WaitForSeconds(duration);
-        m_spriteRend.material.color = m_original;
+        m_original.color = m_spriteRend.colorOverLifetime.color;
     }
 
     /// <summary>
