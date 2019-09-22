@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 /* 
  * Author: Elisha, Denver, Afridi
- * Description: Abstract base class that will be derived by character classes Kenron, Nashorn and Thea. Handles everything to do 
+ * Description: Abstract base class that will be derived by character classes Kenron, Kreiger and Thea. Handles everything to do 
  *              with the characters movements and states.
  */
 
@@ -144,23 +144,7 @@ public abstract class BaseCharacter : MonoBehaviour
     /// </summary>
     protected virtual void FixedUpdate()
     {
-        // Checks the states of all derived players of this class.
-		switch (playerState)
-		{
-			case PlayerState.ALIVE:
-                // Call this.
-                m_playerCollider.enabled = true;
-				CharacterMovement();
-                break;
-
-			case PlayerState.DEAD:
-                playerState = PlayerState.ALIVE;
-                break;
-
-			default:
-                Debug.Log("default");
-				break;
-		}
+        
 	}
 
     /// <summary>
@@ -190,6 +174,21 @@ public abstract class BaseCharacter : MonoBehaviour
         if (m_currentHealth < 0)
         {
             m_currentHealth = 0;    
+        }
+
+        // Checks the states of all derived players of this class.
+        switch (playerState)
+        {
+            case PlayerState.ALIVE:
+                // Call this.
+                m_playerCollider.enabled = true;
+                CharacterMovement();
+                break;
+
+            case PlayerState.DEAD:
+                m_camera.targets.Remove(transform);
+                Destroy(gameObject);
+                break;
         }
     }
 
@@ -257,10 +256,10 @@ public abstract class BaseCharacter : MonoBehaviour
     /// <param name="damage"></param>
     public virtual void TakeDamage(float damage)
     {
-        if (this.gameObject.tag == "Nashorn")
+        if (this.gameObject.tag == "Kreiger")
         {
-            GameManager.Instance.Nashorn.m_statManager.damageTaken += damage;
-            GameManager.Instance.Nashorn.m_statManager.totalSheildsCharged += GameManager.Instance.Nashorn.currentShield;
+            GameManager.Instance.Kreiger.m_statManager.damageTaken += damage;
+            GameManager.Instance.Kreiger.m_statManager.totalSheildsCharged += GameManager.Instance.Kreiger.currentShield;
         }
 
         if (currentShield > 0)
@@ -373,7 +372,7 @@ public abstract class BaseCharacter : MonoBehaviour
     }
 
     /// <summary>
-    /// Gets Nashorns vulnerability status.
+    /// Gets Kreigers vulnerability status.
     /// </summary>
     /// <returns> float value. </returns>
     public float GetVulnerability() {
@@ -381,7 +380,7 @@ public abstract class BaseCharacter : MonoBehaviour
     }
 
     /// <summary>
-    /// Sets Nashorns vulnerability status.
+    /// Sets Kreigers vulnerability status.
     /// </summary>
     /// <param name="vulnerability"></param>
     public void SetVulnerability(float vulnerability) {
@@ -389,7 +388,7 @@ public abstract class BaseCharacter : MonoBehaviour
     }
 
     /// <summary>
-    /// Resets Nashorns vulnerability to 1.
+    /// Resets Kreigers vulnerability to 1.
     /// </summary>
     public void ResetVulernability() {
         m_vulnerability = 1.0f;

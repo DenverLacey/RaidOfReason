@@ -17,9 +17,9 @@ public class Respawn : MonoBehaviour
             StartCoroutine(WaitTillISaySo());
         }
 
-        if (!GameManager.Instance.Nashorn.gameObject.activeSelf && GameManager.Instance.Nashorn.m_currentHealth <= 0)
+        if (!GameManager.Instance.Kreiger.gameObject.activeSelf && GameManager.Instance.Kreiger.m_currentHealth <= 0)
         {
-            GameManager.Instance.Nashorn.gameObject.SetActive(false);
+            GameManager.Instance.Kreiger.gameObject.SetActive(false);
             StartCoroutine(WaitTillISaySo1());
         }
 
@@ -28,8 +28,8 @@ public class Respawn : MonoBehaviour
             GameManager.Instance.Thea.gameObject.SetActive(false);
             StartCoroutine(WaitTillISaySo2());
         }
-        if (!GameManager.Instance.Nashorn.gameObject.activeSelf && !GameManager.Instance.Thea.gameObject.activeSelf && !GameManager.Instance.Kenron.gameObject.activeSelf) {
-            if (GameManager.Instance.Kenron.m_currentHealth <= 0 && GameManager.Instance.Nashorn.m_currentHealth <= 0 && GameManager.Instance.Thea.m_currentHealth <= 0)
+        if (!GameManager.Instance.Kreiger.gameObject.activeSelf && !GameManager.Instance.Thea.gameObject.activeSelf && !GameManager.Instance.Kenron.gameObject.activeSelf) {
+            if (GameManager.Instance.Kenron.m_currentHealth <= 0 && GameManager.Instance.Kreiger.m_currentHealth <= 0 && GameManager.Instance.Thea.m_currentHealth <= 0)
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
@@ -47,9 +47,9 @@ public class Respawn : MonoBehaviour
         IEnumerator WaitTillISaySo1()
         {
             yield return new WaitForSeconds(timetillrespawn);
-            GameManager.Instance.Nashorn.gameObject.SetActive(true);
-            GameManager.Instance.Nashorn.m_currentHealth = GameManager.Instance.Nashorn.m_maxHealth;
-            GameManager.Instance.Nashorn.m_controllerOn = true;
+            GameManager.Instance.Kreiger.gameObject.SetActive(true);
+            GameManager.Instance.Kreiger.m_currentHealth = GameManager.Instance.Kreiger.m_maxHealth;
+            GameManager.Instance.Kreiger.m_controllerOn = true;
         }
 
         IEnumerator WaitTillISaySo2()

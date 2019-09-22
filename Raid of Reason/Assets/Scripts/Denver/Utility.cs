@@ -37,7 +37,7 @@ public static class Utility
 	/// </returns>
 	public static bool TagIsPlayerTag(string tag)
 	{
-		return tag == "Kenron" || tag == "Thea" || tag == "Nashorn";
+		return tag == "Kenron" || tag == "Thea" || tag == "Kreiger";
 	}
 
 	/// <summary>

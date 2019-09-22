@@ -31,9 +31,9 @@ public class Lava : MonoBehaviour
             ken.GetComponent<Kenron>().m_currentHealth += damage;
         }
 
-        if(other.tag == "Nashorn")
+        if(other.tag == "Kreiger")
         {
-            nash.GetComponent<Nashorn>().m_currentHealth += damage;
+            nash.GetComponent<Kreiger>().m_currentHealth += damage;
         }
 
         if (other.tag == "Thea")
@@ -51,9 +51,9 @@ public class Lava : MonoBehaviour
                 ken.GetComponent<Kenron>().m_currentHealth += damage;
             }
 
-            if (other.tag == "Nashorn")
+            if (other.tag == "Kreiger")
             {
-                nash.GetComponent<Nashorn>().m_currentHealth += damage;
+                nash.GetComponent<Kreiger>().m_currentHealth += damage;
             }
 
             if (other.tag == "Thea")

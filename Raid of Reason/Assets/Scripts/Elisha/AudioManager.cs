@@ -18,10 +18,10 @@ public enum SoundType
     KENRON_ATTACK,
     KENRON_HURT,
 
-    // Nashorn sounds
-    NASHORN_WALK,
-    NASHORN_ATTACK,
-    NASHORN_HURT,
+    // Kreiger sounds
+    Kreiger_WALK,
+    Kreiger_ATTACK,
+    Kreiger_HURT,
 
     // Thea sounds
     THEA_WALK,

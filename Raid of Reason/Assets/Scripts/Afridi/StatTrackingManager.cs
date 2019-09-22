@@ -78,7 +78,7 @@ public class StatTrackingManager : MonoBehaviour
                 K_Damage_Dealt_Count.text = damageInTotal.ToString("f0");
                 K_Damage_In_A_Single_Dash_Count.text = mostDamageInASingleDash.ToString("f0");
             }
-            if (m_gameManager.Nashorn)
+            if (m_gameManager.Kreiger)
             {               
                 N_Damage_Taken_Count.text = damageTaken.ToString("f0");
                 N_Sheilds_Charged_Count.text = totalSheildsCharged.ToString("f0");

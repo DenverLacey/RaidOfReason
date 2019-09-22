@@ -100,17 +100,17 @@ public class SkillManager : MonoBehaviour {
         }
 
         // Empty Check
-        if (GameManager.Instance.Nashorn != null)
+        if (GameManager.Instance.Kreiger != null)
         {
 
             // If the second players left trigger is pressed
-            if (XCI.GetAxis(XboxAxis.LeftTrigger, GameManager.Instance.Nashorn.controller) > 0.1f)
+            if (XCI.GetAxis(XboxAxis.LeftTrigger, GameManager.Instance.Kreiger.controller) > 0.1f)
             {
                 // if the current cooldown is greater than the main
                 if (m_mainSkills[1].m_currentCoolDown >= m_mainSkills[1].m_coolDown)
                 {
                     // Activate Ability
-                    GameManager.Instance.Nashorn.Spott(m_mainSkills[1].m_currentDuration);
+                    GameManager.Instance.Kreiger.Spott(m_mainSkills[1].m_currentDuration);
 
                     // Skill is Reset and has been Activated
                     m_mainSkills[1].m_currentCoolDown = 0;

@@ -39,11 +39,11 @@ public class SuicideEnemyAttack : Behaviour
 				if (sqrDistance <= agent.AttackRange.max * agent.AttackRange.max)
 				{
 					p.TakeDamage(agent.AttackDamage);
-					if (p.tag == "Nashorn")
+					if (p.tag == "Kreiger")
 					{
-                        if (GameManager.Instance.Nashorn.isActive && GameManager.Instance.Nashorn.m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
+                        if (GameManager.Instance.Kreiger.isActive && GameManager.Instance.Kreiger.m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
                         {
-                            agent.TakeDamage(GameManager.Instance.Nashorn.SSDamageTaken, GameManager.Instance.Nashorn);
+                            agent.TakeDamage(GameManager.Instance.Kreiger.SSDamageTaken, GameManager.Instance.Kreiger);
                         }
                     }
 				}

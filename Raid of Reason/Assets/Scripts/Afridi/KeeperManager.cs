@@ -9,7 +9,7 @@ public class KeeperManager : MonoBehaviour
     public Canvas shopCanvas;
     
     public GameObject kenronList;
-    public GameObject nashornList;
+    public GameObject KreigerList;
     public GameObject theaList;
 
     public List<Text> itemCost = new List<Text>();
@@ -19,7 +19,7 @@ public class KeeperManager : MonoBehaviour
     [SerializeField]
     private Kenron m_Kenron;
     [SerializeField]
-    private Nashorn m_Nashorn;
+    private Kreiger m_Kreiger;
     [SerializeField]
     private Thea m_Thea;
 
@@ -27,7 +27,7 @@ public class KeeperManager : MonoBehaviour
     {
         shopCanvas.gameObject.SetActive(false);
         kenronList.SetActive(false);
-        nashornList.SetActive(false);
+        KreigerList.SetActive(false);
         theaList.SetActive(false);
     }
 
@@ -38,7 +38,7 @@ public class KeeperManager : MonoBehaviour
             if (this.gameObject.activeInHierarchy == true)
             {
                 float ken_Dist = Vector3.Distance(m_Kenron.transform.position, this.gameObject.transform.position);
-                float nas_Dist = Vector3.Distance(m_Nashorn.transform.position, this.gameObject.transform.position);
+                float nas_Dist = Vector3.Distance(m_Kreiger.transform.position, this.gameObject.transform.position);
                 float the_Dist = Vector3.Distance(m_Thea.transform.position, this.gameObject.transform.position);
                 if (ken_Dist >= distance)
                 {
@@ -52,7 +52,7 @@ public class KeeperManager : MonoBehaviour
                     if (Input.GetKeyUp(KeyCode.K) || XCI.GetButtonUp(XboxButton.A, XboxController.Second))
                     {
                         shopCanvas.gameObject.SetActive(false);
-                        nashornList.SetActive(false);
+                        KreigerList.SetActive(false);
                     }
                 }
                 if (nas_Dist >= distance) {
@@ -60,13 +60,13 @@ public class KeeperManager : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.K) || XCI.GetButtonDown(XboxButton.A, XboxController.Second))
                     {
                         shopCanvas.gameObject.SetActive(true);
-                        nashornList.SetActive(true);
+                        KreigerList.SetActive(true);
                     }
                     //The sprite to press A should appear
                     if (Input.GetKeyUp(KeyCode.K) || XCI.GetButtonUp(XboxButton.A, XboxController.Second))
                     {
                         shopCanvas.gameObject.SetActive(false);
-                        nashornList.SetActive(false);
+                        KreigerList.SetActive(false);
                     }
                 }
                 if (the_Dist >= distance)
@@ -81,7 +81,7 @@ public class KeeperManager : MonoBehaviour
                     if (Input.GetKeyUp(KeyCode.K) || XCI.GetButtonUp(XboxButton.A, XboxController.Second))
                     {
                         shopCanvas.gameObject.SetActive(false);
-                        nashornList.SetActive(false);
+                        KreigerList.SetActive(false);
                     }
                 }
 

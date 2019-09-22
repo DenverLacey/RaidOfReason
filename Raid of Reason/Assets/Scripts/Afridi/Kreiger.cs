@@ -7,38 +7,38 @@ using XboxCtrlrInput;
 /*
   * Author: Afridi Rahim
   *
-  * Summary: The Stats and Management of Nashorns Core Mechanics.
+  * Summary: The Stats and Management of Kreigers Core Mechanics.
   *          Manages his abilites and his skill tree as he improves within the
   *          game
 */
 
-public class Nashorn : BaseCharacter
+public class Kreiger : BaseCharacter
 {
     [Header("Punching Attacks")]
 
-    [Tooltip("The Collider of Nashorns Left Gauntlet")]
+    [Tooltip("The Collider of Kreigers Left Gauntlet")]
     public Collider LeftGauntlet;
 
-    [Tooltip("The Collider of Nashorns Right Gauntlet")]
+    [Tooltip("The Collider of Kreigers Right Gauntlet")]
     public Collider RightGauntlet;
 
     [SerializeField]
-    [Tooltip("Buffer distance to avoid Nashorn getting stuck in walls")]
+    [Tooltip("Buffer distance to avoid Kreiger getting stuck in walls")]
     private float m_lungeBufferDistance;
 
     [SerializeField]
-    [Tooltip("The max distance Nashorn can lunge")]
+    [Tooltip("The max distance Kreiger can lunge")]
     private float m_maxLungeDistance;
 
     [SerializeField]
-    [Tooltip("How fast can Nashorn lunge when attacking?")]
+    [Tooltip("How fast can Kreiger lunge when attacking?")]
     private float m_lungeSpeed;
 
     [SerializeField]
     [Tooltip("How much delay between consecutive lunges in seconds")]
     private float m_lungeDelay;
 
-    [Tooltip("How much shield will Nashorn gain on every punch?")]
+    [Tooltip("How much shield will Kreiger gain on every punch?")]
     public float shieldGain;
 
     [Header("--Skills--")]
@@ -49,23 +49,23 @@ public class Nashorn : BaseCharacter
 	public float TauntRadius { get => m_tauntRadius; }
 
     [SerializeField]
-    [Tooltip("How vulnerable Nashorn is while taunting (1.0 is default)")]
+    [Tooltip("How vulnerable Kreiger is while taunting (1.0 is default)")]
     private float m_tauntVulnerability;
 
     [SerializeField]
-    [Tooltip("How much knockback is applied to Nashorns Hydraulic Pummel")]
+    [Tooltip("How much knockback is applied to Kreigers Hydraulic Pummel")]
     public float knockBackForce;
 
     [SerializeField]
-    [Tooltip("Increased Radius from Nashorns Roaring Thunder ability")]
+    [Tooltip("Increased Radius from Kreigers Roaring Thunder ability")]
     private float m_RTRadiusIncreased;
 
     [SerializeField]
-    [Tooltip("Increased Duration from Nashorns Roaring Thunder ability")]
+    [Tooltip("Increased Duration from Kreigers Roaring Thunder ability")]
     private float m_RTDurationIncreased;
 
     [SerializeField]
-    [Tooltip("How much more knockback nashorn deals with Kinetic Dischage")]
+    [Tooltip("How much more knockback Kreiger deals with Kinetic Dischage")]
     public float KDForce;
 
     [Tooltip("How long the enemy is stunned by Kinetic Dischage")]
@@ -75,14 +75,14 @@ public class Nashorn : BaseCharacter
     public float KDKnockbackDamage;
 
     [SerializeField]
-    [Tooltip("How much shields Nashorns Static Shield Gives To His Allies")]
+    [Tooltip("How much shields Kreigers Static Shield Gives To His Allies")]
     private float m_SSShieldsGiven;
 
     [SerializeField]
     [Tooltip("How much damage Enemies take with Static Shield")]
     public float SSDamageTaken;
 
-    [Tooltip("Checks if Nashorns Skill is Active")]
+    [Tooltip("Checks if Kreigers Skill is Active")]
     public bool isTaunting;
 
     // Skill is active check
@@ -91,17 +91,17 @@ public class Nashorn : BaseCharacter
     [Header("--Particles And UI--")]
 
     [SerializeField]
-    [Tooltip("Electric Effect That Appears When Nashorn Taunts")]
+    [Tooltip("Electric Effect That Appears When Kreiger Taunts")]
     private ParticleSystem m_tauntParticle;
 
     [SerializeField]
-    [Tooltip("Shock Effect That Appears When Nashorn Taunts")]
+    [Tooltip("Shock Effect That Appears When Kreiger Taunts")]
     private ParticleSystem m_debrisParticle;
 
     private float m_lungeDelayTimer;
     // Desired position to lunge.
     private Vector3 m_lungePosition;
-    // Nashorn's Collider
+    // Kreiger's Collider
     private CapsuleCollider m_collider;
     // Sets the lunge 
     private bool islunging;
@@ -132,10 +132,10 @@ public class Nashorn : BaseCharacter
 
 
     /// <summary>
-    /// Checks how many skills Nashorn has obtained from his skill tree
+    /// Checks how many skills Kreiger has obtained from his skill tree
     /// - Roaring Thunder: More Range for his Taunt and Cooldown is Halved
     /// - Shock Wave: Melee now knocksback and has a chance to stun (Passive)
-    /// - Kinetic Discharge: Enemies now take damage when attacking Taunted Nashorn
+    /// - Kinetic Discharge: Enemies now take damage when attacking Taunted Kreiger
     /// - Macht Des Sturms: Chain Lightning attack that damages and stuns + team mates are granted electric damage (Stun Buff)
     /// </summary>
 
@@ -156,7 +156,7 @@ public class Nashorn : BaseCharacter
     {
         // Initialisation 
         base.Awake();
-        CharacterType = CharacterType.NASHORN;
+        CharacterType = CharacterType.KREIGER;
         m_tauntParticle.GetComponentInChildren<ParticleSystem>();
         m_statManager = FindObjectOfType<StatTrackingManager>();
         LeftGauntlet.enabled = false;
@@ -191,7 +191,7 @@ public class Nashorn : BaseCharacter
 
     protected override void Update()
     {
-        // Allows Nashorn to perform Melee Punches 
+        // Allows Kreiger to perform Melee Punches 
         base.Update();
         Punch();
     }
@@ -224,7 +224,7 @@ public class Nashorn : BaseCharacter
     }
 
     /// <summary>
-    /// Nashorns Attack. By Pressing the Right Trigger, Nashorn Becomes Stationery and Punches his foes switching between fists
+    /// Kreigers Attack. By Pressing the Right Trigger, Kreiger Becomes Stationery and Punches his foes switching between fists
     /// </summary>
     public void Punch()
     {
@@ -328,7 +328,7 @@ public class Nashorn : BaseCharacter
     }
 
     /// <summary>
-	/// Nashorn's Ability. Boosting His Health up and reducing incoming damage he taunts all enemies to himself
+	/// Kreiger's Ability. Boosting His Health up and reducing incoming damage he taunts all enemies to himself
 	/// </summary>
     public void Spott(float skillDuration)
     {
@@ -346,7 +346,7 @@ public class Nashorn : BaseCharacter
 				if (sqrDist <= m_tauntRadius * m_tauntRadius)
 				{
                     enemy.Taunted = true;
-                    GameManager.Instance.Nashorn.m_statManager.enemiesTaunted++;
+                    GameManager.Instance.Kreiger.m_statManager.enemiesTaunted++;
                     totalAmountTaunted++;
 
                 }
@@ -364,7 +364,7 @@ public class Nashorn : BaseCharacter
     }
 
     /// <summary>
-    /// Resets Nashorns Stats back to his base after Spott is Used
+    /// Resets Kreigers Stats back to his base after Spott is Used
     /// </summary>
     public void ResetSkill()
     {
@@ -382,7 +382,7 @@ public class Nashorn : BaseCharacter
 
     public void MostTaunted()
     {
-        GameManager.Instance.Nashorn.m_statManager.highestTaunted = Mathf.Max(totalAmountTaunted, GameManager.Instance.Nashorn.m_statManager.highestTaunted);
+        GameManager.Instance.Kreiger.m_statManager.highestTaunted = Mathf.Max(totalAmountTaunted, GameManager.Instance.Kreiger.m_statManager.highestTaunted);
         totalAmountTaunted = 0.0f;
     }
     
@@ -392,7 +392,7 @@ public class Nashorn : BaseCharacter
         {
             if (m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
             {
-                collision.gameObject.GetComponent<EnemyData>().TakeDamage(SSDamageTaken, GameManager.Instance.Nashorn);             
+                collision.gameObject.GetComponent<EnemyData>().TakeDamage(SSDamageTaken, GameManager.Instance.Kreiger);             
             }
         }
     }

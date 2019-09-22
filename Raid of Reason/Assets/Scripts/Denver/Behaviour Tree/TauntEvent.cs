@@ -1,6 +1,6 @@
 ﻿/*
  * Author: Denver
- * Description: TauntEvent behaviour that checks if Nashorn is taunting
+ * Description: TauntEvent behaviour that checks if Kreiger is taunting
  */
 
 using System.Collections;
@@ -9,25 +9,25 @@ using UnityEngine;
 using static Behaviour.Result;
 
 /// <summary>
-/// A Behaviour that checks if Nashorn is taunting
+/// A Behaviour that checks if Kreiger is taunting
 /// </summary>
 public class TauntEvent : Behaviour
 {
 	/// <summary>
-    /// Checks if Nashorn is taunting
+    /// Checks if Kreiger is taunting
     /// </summary>
     /// <param name="agent">
     /// The agent to execute behaviour on
     /// </param>
     /// <returns>
-    /// If Nashorn is taunting
+    /// If Kreiger is taunting
     /// </returns>
     public override Result Execute(EnemyData agent) 
 	{
-		if (GameManager.Instance.Nashorn && GameManager.Instance.Nashorn.isTaunting && agent.Taunted)
+		if (GameManager.Instance.Kreiger && GameManager.Instance.Kreiger.isTaunting && agent.Taunted)
 		{
-			agent.Target = GameManager.Instance.Nashorn.transform.position;
-			agent.TargetPlayer = GameManager.Instance.Nashorn;
+			agent.Target = GameManager.Instance.Kreiger.transform.position;
+			agent.TargetPlayer = GameManager.Instance.Kreiger;
 			return SUCCESS;
 		}
 		else

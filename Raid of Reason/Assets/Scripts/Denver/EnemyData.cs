@@ -267,7 +267,7 @@ public class EnemyData : MonoBehaviour
                 m_burningEffect.Stop();
                 break;
 
-            case CharacterType.NASHORN:
+            case CharacterType.KREIGER:
                 if (m_electricEffect != null)
                 {
                     m_electricEffect.Play();
@@ -378,7 +378,7 @@ public class EnemyData : MonoBehaviour
         {
             if (m_knockedBack == true)
             {
-                other.GetComponentInParent<EnemyData>().TakeDamage(GameManager.Instance.Nashorn.KDKnockbackDamage, GameManager.Instance.Nashorn);
+                other.GetComponentInParent<EnemyData>().TakeDamage(GameManager.Instance.Kreiger.KDKnockbackDamage, GameManager.Instance.Kreiger);
             }
         }
     }

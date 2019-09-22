@@ -124,8 +124,6 @@ public class Thea : BaseCharacter
 
     private bool m_isHealthRegen;
 
-    private Kenron m_kenron;
-    private Nashorn m_nashorn;
     private Vector3 m_hitLocation;
     private LayerMask m_layerMask;
     private float m_shotCounter;
@@ -160,8 +158,6 @@ public class Thea : BaseCharacter
         m_isHealthRegen = false;
         m_statManager = FindObjectOfType<StatTrackingManager>();
         m_waterPrefab.SetActive(false);
-        m_nashorn = FindObjectOfType<Nashorn>();
-		m_kenron = FindObjectOfType<Kenron>();
         m_AOETimer = 0f;
         m_HealRadius.gameObject.SetActive(false);
         m_HealRadius_2.gameObject.SetActive(false);
@@ -336,7 +332,7 @@ public class Thea : BaseCharacter
             }
             if (m_skillUpgrades.Find(skill => skill.name == "Oceans Ally"))
             {
-                float healthcomparison = GameManager.Instance.Kenron.m_currentHealth + GameManager.Instance.Nashorn.m_currentHealth;
+                float healthcomparison = GameManager.Instance.Kenron.m_currentHealth + GameManager.Instance.Kreiger.m_currentHealth;
 
                 if (healthcomparison <= AllyHealthChecks[0])
                 {
@@ -462,7 +458,7 @@ public class Thea : BaseCharacter
                 // check if inside radius
                 if (sqrDistance <= m_AOERadius * m_AOERadius && player.m_controllerOn)
                 {
-                    if (player.tag == "Nashorn") { nashHealed = true; }
+                    if (player.tag == "Kreiger") { nashHealed = true; }
                     if (player.tag == "Kenron") { kenHealed = true; }
                     m_waterPrefab.SetActive(true);
                     if (m_skillUpgrades.Find(skill => skill.Name == "Serenade Of Water"))
@@ -486,14 +482,14 @@ public class Thea : BaseCharacter
 
             // Stat Tracking
             if (kenHealed && nashHealed) { GameManager.Instance.Thea.m_statManager.gopHitThree++; kenHealed = false; nashHealed = false; }
-            if (kenHealed) { GameManager.Instance.Thea.m_statManager.damageHealed += m_kenron.m_currentHealth; }
-            if (nashHealed) { GameManager.Instance.Thea.m_statManager.damageHealed += m_nashorn.m_currentHealth; }
+            if (kenHealed) { GameManager.Instance.Thea.m_statManager.damageHealed += GameManager.Instance.Kenron.m_currentHealth; }
+            if (nashHealed) { GameManager.Instance.Thea.m_statManager.damageHealed += GameManager.Instance.Kreiger.m_currentHealth; }
             if (m_AOERadius > 9.95f) { GameManager.Instance.Thea.m_statManager.gopFullCharged++; }
 
             if (m_skillActive = true & m_skillUpgrades.Find(skill => skill.name == "Serenade Of Water"))
             {
-                m_kenron.SetHealth(m_kenron.m_currentHealth * m_healMultiplier);
-                m_nashorn.SetHealth(m_nashorn.m_currentHealth * m_healMultiplier);
+                GameManager.Instance.Kenron.SetHealth(GameManager.Instance.Kenron.m_currentHealth * m_healMultiplier);
+                GameManager.Instance.Kreiger.SetHealth(GameManager.Instance.Kreiger.m_currentHealth * m_healMultiplier);
                 SetHealth(m_currentHealth * m_healMultiplier);
                 m_skillActive = false;
             }
@@ -522,7 +518,7 @@ public class Thea : BaseCharacter
         m_HealRadius_2.Stop();
 
         GameManager.Instance.Thea.m_statManager.gopUsed++;
-        GameManager.Instance.Thea.m_statManager.damageHealed += m_nashorn.m_currentHealth + m_kenron.m_currentHealth + m_currentHealth;
+        GameManager.Instance.Thea.m_statManager.damageHealed += GameManager.Instance.Kreiger.m_currentHealth + GameManager.Instance.Kenron.m_currentHealth + m_currentHealth;
     }
 
     private IEnumerator HealthOverTime() {

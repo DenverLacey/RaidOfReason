@@ -20,7 +20,7 @@ public class ProjectileMove : MonoBehaviour {
     private AnimationCurve m_speedGradient;
 
 	private bool m_hasHitKenron;
-	private bool m_hasHitNashorn;
+	private bool m_hasHitKreiger;
 
     private float m_lifeTimer;
     private float m_currentSpeed;
@@ -33,7 +33,7 @@ public class ProjectileMove : MonoBehaviour {
     private void OnDisable()
     {
         m_hasHitKenron = false;
-        m_hasHitNashorn = false;
+        m_hasHitKreiger = false;
         m_lifeTimer = 0.0f;
         m_currentSpeed = m_projectileSpeed;
     }
@@ -83,15 +83,15 @@ public class ProjectileMove : MonoBehaviour {
                              
             }
 		}
-        else if ((other.gameObject.tag == "Kenron" && !m_hasHitKenron) || (other.gameObject.tag == "Nashorn" && !m_hasHitNashorn))
+        else if ((other.gameObject.tag == "Kenron" && !m_hasHitKenron) || (other.gameObject.tag == "Kreiger" && !m_hasHitKreiger))
         {
 			if (other.tag == "Kenron")
 			{
 				m_hasHitKenron = true;
 			}
-			else if (other.tag == "Nashorn")
+			else if (other.tag == "Kreiger")
 			{
-				m_hasHitNashorn = true;
+				m_hasHitKreiger = true;
 			}
 
 			BaseCharacter hitPlayer = other.gameObject.GetComponent<BaseCharacter>();

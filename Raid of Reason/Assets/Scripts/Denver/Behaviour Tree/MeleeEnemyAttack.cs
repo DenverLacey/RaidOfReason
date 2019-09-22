@@ -28,11 +28,11 @@ public class MeleeEnemyAttack : Behaviour
 		{
 			m_targetPlayer.TakeDamage(agent.AttackDamage);
 
-			if (m_targetPlayer.tag == "Nashorn")
+			if (m_targetPlayer.tag == "Kreiger")
 			{
-                if (GameManager.Instance.Nashorn.isActive && GameManager.Instance.Nashorn.m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
+                if (GameManager.Instance.Kreiger.isActive && GameManager.Instance.Kreiger.m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
                 {
-                    agent.TakeDamage(GameManager.Instance.Nashorn.SSDamageTaken, GameManager.Instance.Nashorn);
+                    agent.TakeDamage(GameManager.Instance.Kreiger.SSDamageTaken, GameManager.Instance.Kreiger);
                 }
             }
 		}

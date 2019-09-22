@@ -34,7 +34,7 @@ public class SightlineCondition : Behaviour
 		int ignoreEnemies = Utility.GetIgnoreMask("Enemy", "Ignore Raycast");
 		if (Physics.Raycast(origin, dir, out RaycastHit info, agent.ViewRange, ignoreEnemies)) 
 		{
-			if (info.collider.tag == "Kenron" || info.collider.tag == "Nashorn" || info.collider.tag == "Thea")
+			if (info.collider.tag == "Kenron" || info.collider.tag == "Kreiger" || info.collider.tag == "Thea")
 			{
 				return SUCCESS;
 			}

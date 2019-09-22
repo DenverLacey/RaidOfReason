@@ -17,7 +17,7 @@ using UnityEngine.SceneManagement;
 public enum CharacterType
 {
 	KENRON,
-	NASHORN,
+	KREIGER,
 	THEA
 }
 
@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
 
     // All Three Players Within the Game
 	public Kenron Kenron { get; private set; }
-	public Nashorn Nashorn { get; private set; }
+	public Kreiger Kreiger { get; private set; }
 	public Thea Thea { get; private set; }
 
 	public List<BaseCharacter> Players
@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
         {
             return new List<BaseCharacter>()
             {
-                Kenron, Nashorn, Thea
+                Kenron, Kreiger, Thea
             };
         }
     }
@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
 			CharacterSkillUpgrades = new Dictionary<CharacterType, List<SkillsAbilities>>
 			{
 				{ CharacterType.KENRON, new List<SkillsAbilities>() },
-				{ CharacterType.NASHORN, new List<SkillsAbilities>() },
+				{ CharacterType.KREIGER, new List<SkillsAbilities>() },
 				{ CharacterType.THEA, new List<SkillsAbilities>() }
 			};
 
@@ -125,14 +125,14 @@ public class GameManager : MonoBehaviour
 				Kenron.controller = m_controllers[0];
 			}
 		}
-		else if (character is Nashorn)
+		else if (character is Kreiger)
 		{
-			Nashorn = character as Nashorn;
-            Nashorn.m_skillUpgrades.AddRange(Nashorn.GetSkillUpgrades());
+			Kreiger = character as Kreiger;
+            Kreiger.m_skillUpgrades.AddRange(Kreiger.GetSkillUpgrades());
 
 			if (m_controllers[1] != XboxController.Any)
 			{
-				Nashorn.controller = m_controllers[1];
+				Kreiger.controller = m_controllers[1];
 			}
 		}
 		else if (character is Thea)
@@ -170,9 +170,9 @@ public static class BaseCharacterExtension
         {
             return GameManager.Instance.CharacterSkillUpgrades[CharacterType.KENRON];
         }
-        else if (character is Nashorn)
+        else if (character is Kreiger)
         {
-            return GameManager.Instance.CharacterSkillUpgrades[CharacterType.NASHORN];
+            return GameManager.Instance.CharacterSkillUpgrades[CharacterType.KREIGER];
         }
         else
         {
@@ -186,9 +186,9 @@ public static class BaseCharacterExtension
         {
             GameManager.Instance.CharacterSkillUpgrades[CharacterType.KENRON].Add(ability);
         }
-        else if (character is Nashorn)
+        else if (character is Kreiger)
         {
-            GameManager.Instance.CharacterSkillUpgrades[CharacterType.NASHORN].Add(ability);
+            GameManager.Instance.CharacterSkillUpgrades[CharacterType.KREIGER].Add(ability);
         }
         else
         {
