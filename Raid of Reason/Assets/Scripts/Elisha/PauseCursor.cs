@@ -74,7 +74,7 @@ public class PauseCursor : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.forward, 1, layerMask);
         Debug.DrawRay(this.transform.position, transform.forward, Color.green);
         PauseInformation pauseInfo = hit.collider.GetComponent<PauseInformation>();
-      
+
         if (hit.collider)
         {
             pauseInfo.Hover();

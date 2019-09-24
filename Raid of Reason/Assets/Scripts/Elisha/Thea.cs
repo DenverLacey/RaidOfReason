@@ -81,8 +81,6 @@ public class Thea : BaseCharacter
     [Tooltip("Insert Theas projectile object.")]
     private GameObject m_projectile;
 
-    public GameObject m_aimCursor;
-
     [SerializeField]
     [Tooltip("How long of a delay will it take for her next projectile to instiantiate?")]
     private float m_projectileDelay;
@@ -92,9 +90,6 @@ public class Thea : BaseCharacter
     private float aimCursorSpeed;
 
     public float m_aimCursorRadius;
-
-
-
 
     [Header("--Particles And UI--")]
 
@@ -112,9 +107,6 @@ public class Thea : BaseCharacter
     [SerializeField]
     [Tooltip("The Final particle used for visual effect.")]
     private ParticleSystem m_HealRadius_3;
-
-
-
 
     // Stat Tracker
     [HideInInspector]
@@ -174,8 +166,6 @@ public class Thea : BaseCharacter
                 display.gameObject.SetActive(false);
             }
         }
-
-        m_aimCursor = GameObject.FindGameObjectWithTag("AimCursor");
     }
 
     void IntialiseUpgrades()
