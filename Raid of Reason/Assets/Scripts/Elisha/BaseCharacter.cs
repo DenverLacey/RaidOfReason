@@ -212,9 +212,9 @@ public abstract class BaseCharacter : MonoBehaviour
 			Vector3 directionOverride = new Vector3(rightX, 0, rightY);
 
 			// make input vectors relative to camera's rotation
-			input = m_camera.transform.TransformDirection(input);
+			input = m_camera.transform.TransformVector(input);
 			input.y = 0f;
-			directionOverride = m_camera.transform.TransformDirection(directionOverride);
+			directionOverride = m_camera.transform.TransformVector(directionOverride);
 			directionOverride.y = 0f;
 
 			if (CanMove)

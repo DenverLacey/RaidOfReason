@@ -41,7 +41,7 @@ public class MultiTargetCamera : MonoBehaviour
 	/// <summary>
 	/// Calculates where the camera should go and lerps the camera to that position
 	/// </summary>
-	void LateUpdate()
+	void FixedUpdate()
     {
 		List<BaseCharacter> activePlayers = GameManager.Instance.Players;
 		activePlayers.RemoveAll(p => !p || p.playerState == BaseCharacter.PlayerState.DEAD);
