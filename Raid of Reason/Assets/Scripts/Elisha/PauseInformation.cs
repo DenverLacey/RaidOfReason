@@ -27,29 +27,16 @@ public class PauseInformation : MonoBehaviour
 
     public void Hover()
     {
-        Interlocked.Increment(ref m_hoverers);
-        if(m_hoverers > 0)
-        {
-            m_images.color = Color.gray;
-        }
+        m_images.color = Color.gray;
     }
 
     public void Pressed()
     {
-        Interlocked.Increment(ref m_hoverers);
-        if (m_hoverers > 0)
-        {
-            m_images.color = Color.black;
-        }
+        m_images.color = Color.black;
     }
 
     public void Unhover()
     {
-        Interlocked.Decrement(ref m_hoverers);
-
-        if (m_hoverers <= 0)
-        {
-            m_images.color = m_originalImage;
-        }
+        m_images.color = m_originalImage;
     }
 }

@@ -17,6 +17,8 @@ public class PauseCursor : MonoBehaviour
     private CanvasScaler m_canvas;
     private Vector3 m_inactivePosition;
 
+    private PauseInformation m_pauseMenuInfo;
+    
     public void Start()
     {
         m_canvas = FindObjectOfType<CanvasScaler>();
@@ -68,26 +70,45 @@ public class PauseCursor : MonoBehaviour
         transform.localPosition = desiredPosition;
     }
 
+    /// <summary>
+    /// Raycaster for pause menu cursor.
+    /// </summary>
     void DoButtonInput()
     {
-        int layerMask = Utility.GetIgnoreMask("Ignore Raycast");
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.forward, 1, layerMask);
-        Debug.DrawRay(this.transform.position, transform.forward, Color.green);
-        PauseInformation pauseInfo = hit.collider.GetComponent<PauseInformation>();
+        // Create ray cast from cursors forward position.
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.forward, 5);
+        // Debug purposes.
+        Debug.DrawRay(this.transform.position, transform.forward * 100, Color.green);
 
-        if (hit.collider)
+        // Checks if the ray cast has hit a pause menu button with the same tag.
+        if (hit.collider && hit.collider.tag == "PauseMenuButton")
         {
-            pauseInfo.Hover();
+            // Unhover previous thing
+            if (m_pauseMenuInfo)
+            {
+                m_pauseMenuInfo.Unhover();
+            }
+
+            // Hovers over the button.
+            m_pauseMenuInfo = hit.collider.GetComponent<PauseInformation>();
+            m_pauseMenuInfo.Hover();
+
+            // If user presses A while on the button
             if (XCI.GetButtonDown(XboxButton.A, controller))
             {
-                pauseInfo.Click();
-                pauseInfo.Pressed();
+                // Do click.
+                m_pauseMenuInfo.Click();
+                m_pauseMenuInfo.Pressed();
             }
         }
-        else if(!hit.collider)
+        // Othewise user isnt on a button 
+        else if (m_pauseMenuInfo)
         {
-            pauseInfo.Unhover();
+            // Unhover.
+            m_pauseMenuInfo.Unhover();
+            m_pauseMenuInfo = null;
         }
+        // Debug checks if collider has been hit and what object it is hit.
         DebugTools.LogVariable("hit collider", hit.collider);
     }
 

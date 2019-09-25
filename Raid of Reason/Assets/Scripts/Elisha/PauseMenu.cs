@@ -9,8 +9,16 @@ public class PauseMenu : MonoBehaviour
     [SerializeField]
     [Tooltip("Player 1's cursor object")]
     private PauseCursor m_p1Cursor;
-    private Vector3 m_p1InactivePosition;
 
+    [SerializeField]
+    [Tooltip("Character Scene Index")]
+    private int m_characterSceneIndex;
+
+    [SerializeField]
+    [Tooltip("First Scene Index")]
+    private int m_FirstSceneIndex;
+
+    private Vector3 m_p1InactivePosition;
     private bool m_isPaused = false;
     public GameObject m_pauseMenu;
 
@@ -38,7 +46,7 @@ public class PauseMenu : MonoBehaviour
 
     public void CharacterSelection()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(m_characterSceneIndex, LoadSceneMode.Single);
     }
 
     public void Paused()
@@ -59,11 +67,11 @@ public class PauseMenu : MonoBehaviour
 
     public void RestartGame()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(m_FirstSceneIndex, LoadSceneMode.Single);
     }
 
     public void Quit()
     {
-        Application.Quit();
+        LevelManager.LoadLevel(0);
     }
 }

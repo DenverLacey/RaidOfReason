@@ -138,6 +138,11 @@ public class PlayerCursor : MonoBehaviour
 			{
 				((CharacterSelection)temp).OnPressed();
 			}
+            else if (temp is BackButton)
+            {
+                // load main menu scene
+                ((BackButton)temp).OnPressed();
+            }
 		}
 
 		// deselect character

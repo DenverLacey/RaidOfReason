@@ -4756,7 +4756,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1186740641760271627}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: -0.8, z: 0}
   m_LocalScale: {x: 1.4699999, y: 1.4700004, z: 1.4700004}
   m_Children:
   - {fileID: 7046532939236882492}
@@ -14110,7 +14110,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3237902023014289574}
   m_LocalRotation: {x: -0, y: -0, z: -1, w: 0}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: -0.38, z: 0}
   m_LocalScale: {x: 1.4699999, y: 1.4699999, z: 1.4699999}
   m_Children:
   - {fileID: 3319904826157135052}
@@ -18624,7 +18624,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3372519799086857770}
   m_LocalRotation: {x: -0.20245306, y: -0.00000022128609, z: -0.00000022128603, w: 0.979292}
-  m_LocalPosition: {x: 0, y: 1.00441, z: 0}
+  m_LocalPosition: {x: 0, y: -0.45, z: 0}
   m_LocalScale: {x: 1.4699999, y: 1.4699999, z: 1.4699999}
   m_Children:
   - {fileID: 7731069385104473248}
@@ -37658,7 +37658,6 @@ MonoBehaviour:
   m_renderer: {fileID: 541819215752356372}
   m_animator: {fileID: 8391121300513893016}
   isDeadbByKenron: 0
-  isAttackingNashorn: 1
 --- !u!95 &8391121300513893016
 Animator:
   serializedVersion: 3
@@ -37690,7 +37689,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f80a0f1bbf9d56c42b444b4931882c4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  burnAmount: 5
 --- !u!1 &8128921566490614483
 GameObject:
   m_ObjectHideFlags: 0
@@ -46913,13 +46911,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7498502567545903290}
     m_Modifications:
+    - target: {fileID: 1687118924408352, guid: 77c69ec12208c4c4380d15e30b6f8f68, type: 3}
+      propertyPath: m_Name
+      value: PlayerHealEffect
+      objectReference: {fileID: 0}
     - target: {fileID: 4201597293143198, guid: 77c69ec12208c4c4380d15e30b6f8f68, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4201597293143198, guid: 77c69ec12208c4c4380d15e30b6f8f68, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.77
       objectReference: {fileID: 0}
     - target: {fileID: 4201597293143198, guid: 77c69ec12208c4c4380d15e30b6f8f68, type: 3}
       propertyPath: m_LocalPosition.z
@@ -46956,10 +46958,6 @@ PrefabInstance:
     - target: {fileID: 4201597293143198, guid: 77c69ec12208c4c4380d15e30b6f8f68, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1687118924408352, guid: 77c69ec12208c4c4380d15e30b6f8f68, type: 3}
-      propertyPath: m_Name
-      value: PlayerHealEffect
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77c69ec12208c4c4380d15e30b6f8f68, type: 3}
