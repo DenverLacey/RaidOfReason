@@ -185,7 +185,6 @@ public abstract class BaseCharacter : MonoBehaviour
                 break;
 
             case PlayerState.DEAD:
-                m_camera.targets.Remove(transform);
                 Destroy(gameObject);
                 break;
         }

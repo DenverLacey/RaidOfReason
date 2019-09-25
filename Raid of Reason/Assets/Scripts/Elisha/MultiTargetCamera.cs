@@ -14,108 +14,69 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class MultiTargetCamera : MonoBehaviour
 {
-	[Header("Movement")]
 	[SerializeField]
 	[Tooltip("Maximum time it will take for camera to reach new position")]
-	private float m_smoothTime = 20f;
+	private float m_lerpAmount = 0.1f;
 
 	[SerializeField]
 	[Tooltip("Lowest the camera can go")]
-	private float m_minYPosition = 5f;
-
-	[SerializeField]
-	[Tooltip("Highest the camera can go")]
-	private float m_maxYPosition = 10f;
+	private float m_minYPosition = 20f;
 
 	[SerializeField]
 	[Tooltip("How sensitive the camera is to the size of the bounds")]
-	private float m_distanceScalar = 0.6f;
+	private float m_distanceScalar = 1.2f;
+
+	[SerializeField]
+	[Tooltip("Chages Y offset based on cameras Y position")]
+	private float m_yOffsetScalar = 0.025f;
 
 	[SerializeField]
 	[Tooltip("Offset of the camera")]
-	private Vector3 m_offset;
+	private Vector2 m_offset;
+
+	[SerializeField]
+	[Min(0.001f)]
+	private float m_paddiing = 4f;
 
 	[Tooltip("Every object the camera will attempt to encapsulate")]
-	public List<Transform> targets;
-
-	[Header("Rotation")]
-	[SerializeField]
-	[Tooltip("If camera should rotate to look at centre")]
-	private bool m_rotate = true;
-
-	[SerializeField]
-	[HideInInspector]
-	[Tooltip("t value for Quaternion.Slerp calculation")]
-	private float m_rotateSlerpT = 0.025f;
-
-	private Vector3 m_moveVelocity;
+	public List<BaseCharacter> targets;
 	private float m_zoomVelocity;
-	private float m_currentDistance;
-
-	private Vector3 m_averagePosition = new Vector3();
-
-	private float m_middleDistance;
-
-	private void Start()
-	{
-		m_middleDistance = (m_minYPosition + m_maxYPosition) / 2f;
-	}
 
 	/// <summary>
 	/// Physics update.
 	/// </summary>
-	void FixedUpdate()
+	void LateUpdate()
     {
         // If all players are dead from the array dont do anything.
-        if (targets.Count == 0)
+        if (targets.Count == 0 || targets.TrueForAll(p => p.playerState == BaseCharacter.PlayerState.DEAD))
 		{
 			return;
 		}
 
-		DoMovement();
-		DoDolly();
-    }
-
-    /// <summary>
-    /// This function allows the camera to adjust to the centre point based on where the players are.
-    /// </summary>
-    /// <param name="bounds"> Bounds of all targets </param>
-    /// <returns> Vector 3 value. </returns>
-    Vector3 GetCentrePoint(ref Bounds bounds) {
-
-        // Checks if theres only 1 player in the array of targets.
-        if (targets.Count == 1) 
-		{
-            // If so then return the position of the target left.
-            return targets[0].position;
-        }
-
-        // For every transform in the array of targets.
-        foreach (Transform t in targets) 
-		{
-            // Grow the bounds of that targets position.
-            bounds.Encapsulate(t.position);
-        }
-
-        return bounds.center;
-    }
-
-	void DoMovement()
-	{
+		List<Vector3> activePlayerPositions = new List<Vector3>();
 		foreach (var target in targets)
 		{
-			m_averagePosition += target.position;
-		}
-		m_averagePosition /= targets.Count;
-		transform.position = Vector3.SmoothDamp(transform.position, m_averagePosition + m_offset, ref m_moveVelocity, m_smoothTime);
-	}
+			if (target.playerState == BaseCharacter.PlayerState.DEAD)
+				continue;
 
-	void DoDolly()
-	{
-		Bounds playerBounds = new Bounds();
-		foreach (var target in targets)
-		{
-			playerBounds.Encapsulate(target.position);
+			activePlayerPositions.Add(target.transform.position);
 		}
+
+		Bounds playerBounds = new Bounds(activePlayerPositions[0], Vector3.one * m_paddiing);
+		for (int i = 1; i < activePlayerPositions.Count; i++)
+		{
+			playerBounds.Encapsulate(activePlayerPositions[i]);
+		}
+
+		Vector3 averagePosition = playerBounds.center;
+		float desiredY = Mathf.Max(playerBounds.size.magnitude * m_distanceScalar, m_minYPosition);
+
+		Vector3 desiredPosition = new Vector3(
+			averagePosition.x + m_offset.x,
+			desiredY,
+			averagePosition.z + (m_offset.y * desiredY * m_yOffsetScalar)
+		);
+
+		transform.position = Vector3.Lerp(transform.position, desiredPosition, m_lerpAmount);
 	}
 }
