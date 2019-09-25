@@ -167,14 +167,6 @@ public class Kreiger : BaseCharacter
         islunging = false;
         runOnce = true;
 
-        if (m_skillPopups.Count != 0)
-        {
-            foreach (Image display in m_skillPopups)
-            {
-                display.gameObject.SetActive(false);
-            }
-        }
-
         m_Thea = FindObjectOfType<Thea>();
         m_Kenron = FindObjectOfType<Kenron>();
     }

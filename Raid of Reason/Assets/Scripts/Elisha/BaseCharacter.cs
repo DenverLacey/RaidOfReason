@@ -136,6 +136,14 @@ public abstract class BaseCharacter : MonoBehaviour
         currentShield = 0;
         skillManager = FindObjectOfType<SkillManager>();
         m_original = m_spriteRend.colorOverLifetime;
+
+        if (m_skillPopups.Count > 0)
+        {
+            foreach (Image display in m_skillPopups)
+            {
+                display.gameObject.SetActive(false);
+            }
+        }
     }
 
     /// <summary>
@@ -266,19 +274,42 @@ public abstract class BaseCharacter : MonoBehaviour
             GameManager.Instance.Kreiger.m_statManager.totalSheildsCharged += GameManager.Instance.Kreiger.currentShield;
         }
 
-        if (currentShield > 0)
+        // If Thea exists and her Invincible is false
+        if (GameManager.Instance.Thea && GameManager.Instance.Thea.isInvincible == false)
         {
-            currentShield -= damage * m_vulnerability;
-            IndicateHit();
+            if (currentShield > 0)
+            {
+                currentShield -= damage * m_vulnerability;
+                IndicateHit();
+            }
+
+            if (currentShield <= 0)
+            {
+                // Take an amount of damage from the players current health.
+                m_currentHealth -= damage * m_vulnerability;
+                // Player damage indicator.
+                IndicateHit();
+            }
         }
 
-        if (currentShield <= 0)
+        // If She Doesnt exist or She does exist without her skill
+        if (!GameManager.Instance.Thea || GameManager.Instance.Thea.isInvincible == false)
         {
-            // Take an amount of damage from the players current health.
-            m_currentHealth -= damage * m_vulnerability;
-            // Player damage indicator.
-            IndicateHit();
+            if (currentShield > 0)
+            {
+                currentShield -= damage * m_vulnerability;
+                IndicateHit();
+            }
+
+            if (currentShield <= 0)
+            {
+                // Take an amount of damage from the players current health.
+                m_currentHealth -= damage * m_vulnerability;
+                // Player damage indicator.
+                IndicateHit();
+            }
         }
+
 
         // If player has no health.
         if (m_currentHealth <= 0.0f)

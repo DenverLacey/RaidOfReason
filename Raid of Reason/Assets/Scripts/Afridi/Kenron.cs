@@ -149,14 +149,6 @@ public class Kenron : BaseCharacter
         isDashing = false;
         m_InfiniteDash = false;
 
-        if (m_skillPopups.Count != 0)
-        {
-            foreach (Image display in m_skillPopups)
-            {
-                display.gameObject.SetActive(false);
-            }
-        }
-
         // set size of dash hit box
         Vector3 hitBoxSize = new Vector3(m_dashCollider.size.x, m_dashCollider.size.y, m_maxDashDistance);
         m_dashCollider.size = hitBoxSize;

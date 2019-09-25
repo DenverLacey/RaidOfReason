@@ -66,13 +66,15 @@ public class Thea : BaseCharacter
 
     [Tooltip("Checks How Many Specific Times the Health of her allies have to be for Oceans Ally (MAX SIZE OF 3)")]
     [SerializeField]
-    private int[] AllyHealthChecks = new int[4];
+    private int[] OAAllyHealthChecks = new int[4];
 
 
     [Tooltip("How Many Specific Times the Fire Rate of her Projectiles increases with Oceans Ally (MAX SIZE OF 3)")]
     [SerializeField]
-    private float[] FireRateIncreased = new float[4];
+    private float[] OAFireRateIncreased = new float[4];
 
+    [Tooltip("How Long Theas Damage Immunity Lasts for when She Uses Seranade Of Water")]
+    private float SOWImmunity;
 
 
     [Header("--Projectile Attacks--")]
@@ -112,12 +114,15 @@ public class Thea : BaseCharacter
     [HideInInspector]
     public StatTrackingManager m_statManager;
 
+    [HideInInspector]
+    public bool isInvincible;
+    
+    [HideInInspector]
     public bool m_skillActive;
 
     private Vector3 newLocation;
 
     private bool m_isHealthRegen;
-
     private Vector3 m_hitLocation;
     private LayerMask m_layerMask;
     private float m_shotCounter;
@@ -150,6 +155,7 @@ public class Thea : BaseCharacter
         CharacterType = CharacterType.THEA;
         m_isActive = false;
         m_isHealthRegen = false;
+        isInvincible = false;
         m_statManager = FindObjectOfType<StatTrackingManager>();
         m_waterPrefab.SetActive(false);
         m_AOETimer = 0f;
@@ -158,14 +164,6 @@ public class Thea : BaseCharacter
         m_AOEShapeModule = m_HealRadius.shape;
         m_AOEShapeModule_2 = m_HealRadius_2.shape;
         IntialiseUpgrades();
-
-        if (m_skillPopups.Count != 0)
-        {
-            foreach (Image display in m_skillPopups)
-            {
-                display.gameObject.SetActive(false);
-            }
-        }
     }
 
     void IntialiseUpgrades()
@@ -331,21 +329,21 @@ public class Thea : BaseCharacter
             {
                 float healthcomparison = GameManager.Instance.Kenron.m_currentHealth + GameManager.Instance.Kreiger.m_currentHealth;
 
-                if (healthcomparison <= AllyHealthChecks[0])
+                if (healthcomparison <= OAAllyHealthChecks[0])
                 {
-                    m_projectileDelay = FireRateIncreased[0];
+                    m_projectileDelay = OAFireRateIncreased[0];
                 }
-                if (healthcomparison <= AllyHealthChecks[1])
+                if (healthcomparison <= OAAllyHealthChecks[1])
                 {
-                    m_projectileDelay = FireRateIncreased[1];
+                    m_projectileDelay = OAFireRateIncreased[1];
                 }
-                if (healthcomparison <= AllyHealthChecks[2])
+                if (healthcomparison <= OAAllyHealthChecks[2])
                 {
-                    m_projectileDelay = FireRateIncreased[2];
+                    m_projectileDelay = OAFireRateIncreased[2];
                 }
-                if (healthcomparison <= AllyHealthChecks[3])
+                if (healthcomparison <= OAAllyHealthChecks[3])
                 {
-                    m_projectileDelay = FireRateIncreased[3];
+                    m_projectileDelay = OAFireRateIncreased[3];
                 }
             }          
         }
@@ -376,6 +374,19 @@ public class Thea : BaseCharacter
             m_AOEShapeModule.radius = m_AOERadius;
             m_AOEShapeModule_2.radius = m_AOERadius;
             m_skillActive = true;
+        }
+
+        if (m_isActive == true && m_skillUpgrades.Find(skill => skill.name == "Hydro Pressure"))
+        {
+            m_nearbyEnemies = new List<EnemyData>(FindObjectsOfType<EnemyData>());
+            foreach (EnemyData enemy in m_nearbyEnemies)
+            {
+                float sqrDistance = (this.transform.position - enemy.transform.position).sqrMagnitude;
+                if (sqrDistance <= m_AOERadius * m_AOERadius)
+                {
+                    enemy.GetComponent<EnemyPathfinding>().m_speed -= HPSpeedReduction;
+                }
+            }
         }
 
         // Checks if ability has been used.
@@ -481,6 +492,8 @@ public class Thea : BaseCharacter
                 GameManager.Instance.Kenron.SetHealth(GameManager.Instance.Kenron.m_currentHealth * m_healMultiplier);
                 GameManager.Instance.Kreiger.SetHealth(GameManager.Instance.Kreiger.m_currentHealth * m_healMultiplier);
                 SetHealth(m_currentHealth * m_healMultiplier);
+                isInvincible = true;
+                StartCoroutine(DamageImmunity());
                 m_skillActive = false;
             }
         }
@@ -529,6 +542,12 @@ public class Thea : BaseCharacter
             m_waterPrefab.SetActive(false);
             m_HealRadius_3.Stop();
         }
+    }
+
+    private IEnumerator DamageImmunity()
+    {
+        yield return new WaitForSeconds(SOWImmunity);
+        isInvincible = false;
     }
 
     public void Regenerate() {
