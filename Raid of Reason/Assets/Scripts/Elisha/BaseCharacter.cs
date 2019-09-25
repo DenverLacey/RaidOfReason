@@ -211,6 +211,12 @@ public abstract class BaseCharacter : MonoBehaviour
 			// make sure player direction override is relative to the direction of the cameras forward
 			Vector3 directionOverride = new Vector3(rightX, 0, rightY);
 
+			// make input vectors relative to camera's rotation
+			input = m_camera.transform.TransformDirection(input);
+			input.y = 0f;
+			directionOverride = m_camera.transform.TransformDirection(directionOverride);
+			directionOverride.y = 0f;
+
 			if (CanMove)
 			{
 				Vector3 movePosition = transform.position + input * m_movementSpeed * Time.deltaTime;

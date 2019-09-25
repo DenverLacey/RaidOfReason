@@ -16,7 +16,7 @@ public class MultiTargetCamera : MonoBehaviour
 {
 	[SerializeField]
 	[Tooltip("Maximum time it will take for camera to reach new position")]
-	private float m_lerpAmount = 0.1f;
+	private float m_lerpAmount = 0.5f;
 
 	[SerializeField]
 	[Tooltip("Lowest the camera can go")]
@@ -24,7 +24,7 @@ public class MultiTargetCamera : MonoBehaviour
 
 	[SerializeField]
 	[Tooltip("How sensitive the camera is to the size of the bounds")]
-	private float m_distanceScalar = 1.2f;
+	private float m_distanceScalar = 1f;
 
 	[SerializeField]
 	[Tooltip("Chages Y offset based on cameras Y position")]
@@ -32,37 +32,27 @@ public class MultiTargetCamera : MonoBehaviour
 
 	[SerializeField]
 	[Tooltip("Offset of the camera")]
-	private Vector2 m_offset;
+	private Vector2 m_offset = new Vector3(0, -30);
 
 	[SerializeField]
 	[Min(0.001f)]
-	private float m_paddiing = 4f;
-
-	[Tooltip("Every object the camera will attempt to encapsulate")]
-	public List<BaseCharacter> targets;
-	private float m_zoomVelocity;
+	private float m_paddiing = 0f;
 
 	/// <summary>
-	/// Physics update.
+	/// Calculates where the camera should go and lerps the camera to that position
 	/// </summary>
 	void LateUpdate()
     {
-        // If all players are dead from the array dont do anything.
-        if (targets.Count == 0 || targets.TrueForAll(p => p.playerState == BaseCharacter.PlayerState.DEAD))
-		{
-			return;
-		}
+		List<BaseCharacter> activePlayers = GameManager.Instance.Players;
+		activePlayers.RemoveAll(p => !p || p.playerState == BaseCharacter.PlayerState.DEAD);
 
-		List<Vector3> activePlayerPositions = new List<Vector3>();
-		foreach (var target in targets)
+		var activePlayerPositions = new List<Vector3>();
+		foreach (var target in activePlayers)
 		{
-			if (target.playerState == BaseCharacter.PlayerState.DEAD)
-				continue;
-
 			activePlayerPositions.Add(target.transform.position);
 		}
 
-		Bounds playerBounds = new Bounds(activePlayerPositions[0], Vector3.one * m_paddiing);
+		var playerBounds = new Bounds(activePlayerPositions[0], Vector3.one * m_paddiing);
 		for (int i = 1; i < activePlayerPositions.Count; i++)
 		{
 			playerBounds.Encapsulate(activePlayerPositions[i]);
