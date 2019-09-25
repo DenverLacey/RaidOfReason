@@ -329,8 +329,6 @@ public class Kreiger : BaseCharacter
             // Ability is active
             isTaunting = true;
 
-            Debug.Log(m_tauntRadius);
-
 			// taunt enemies
 			foreach (EnemyData enemy in GameObject.FindObjectsOfType<EnemyData>())
 			{

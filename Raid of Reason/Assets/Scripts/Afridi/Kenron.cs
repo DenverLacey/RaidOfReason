@@ -92,6 +92,8 @@ public class Kenron : BaseCharacter
     [Tooltip("How long it takes for the trail in Kenrons Ability To Go Away")]
     private float m_BTDegen;
 
+    public List<GameObject> dashDisplays = new List<GameObject>();
+
 
     [Header("--Particles And UI--")]
 
@@ -117,6 +119,7 @@ public class Kenron : BaseCharacter
     private float m_dashDistance;
     private bool m_dashDone;
     private bool m_InfiniteDash;
+    private int m_TempCharge;
 
     // Checks if Kenron is Dashing or Not
     private bool isDashing;
@@ -146,6 +149,7 @@ public class Kenron : BaseCharacter
         m_Enemy = FindObjectOfType<EnemyData>();
         m_statManager = FindObjectOfType<StatTrackingManager>();
         m_currentCharges = m_charges;
+        m_TempCharge = m_currentCharges - 1;
         isDashing = false;
         m_InfiniteDash = false;
 
@@ -234,7 +238,10 @@ public class Kenron : BaseCharacter
                 m_dashCollider.enabled = true;
                 m_dashDelayTimer = m_dashDelay;
                 m_dashStartPosition = transform.position;
+                dashDisplays[m_TempCharge].SetActive(false);
+                m_TempCharge--;
                 m_currentCharges--;
+                
 
                 // set animator's trigger
                 m_animator.SetBool("Attack", true);
@@ -401,6 +408,8 @@ public class Kenron : BaseCharacter
         if (m_currentCharges < m_charges)
         {
             m_currentCharges++;
+            m_TempCharge++;
+            dashDisplays[m_TempCharge].SetActive(true);
         }
     }
 }
