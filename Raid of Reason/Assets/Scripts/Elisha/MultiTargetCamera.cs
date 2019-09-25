@@ -46,6 +46,9 @@ public class MultiTargetCamera : MonoBehaviour
 		List<BaseCharacter> activePlayers = GameManager.Instance.Players;
 		activePlayers.RemoveAll(p => !p || p.playerState == BaseCharacter.PlayerState.DEAD);
 
+		if (activePlayers.Count == 0)
+			return;
+
 		var activePlayerPositions = new List<Vector3>();
 		foreach (var target in activePlayers)
 		{

@@ -220,10 +220,11 @@ public abstract class BaseCharacter : MonoBehaviour
 			Vector3 directionOverride = new Vector3(rightX, 0, rightY);
 
 			// make input vectors relative to camera's rotation
-			input = m_camera.transform.TransformVector(input);
-			input.y = 0f;
-			directionOverride = m_camera.transform.TransformVector(directionOverride);
-			directionOverride.y = 0f;
+			Vector3 camRotEuler = m_camera.transform.eulerAngles;
+			camRotEuler.x = 0.0f; camRotEuler.z = 0.0f;
+
+			input = Quaternion.LookRotation(camRotEuler) * input;
+			directionOverride = Quaternion.LookRotation(camRotEuler) * directionOverride;
 
 			if (CanMove)
 			{

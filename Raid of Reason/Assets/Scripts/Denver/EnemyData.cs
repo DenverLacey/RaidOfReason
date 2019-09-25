@@ -60,7 +60,9 @@ public class EnemyData : MonoBehaviour
     public EnemyAttackRange AttackRange { get; private set; }
     public float AttackCooldown { get; private set; }
     public float AttackTimer { get; set; }
-	public float AttackDamage { get; private set; }
+	public float BaseDamage { get; private set; }
+	public float AttackDamage { get => BaseDamage * Strength; }
+	public float Strength { get; set; }
     public bool Attacking { get; set; }
 
 	private bool m_taunted;
@@ -170,7 +172,7 @@ public class EnemyData : MonoBehaviour
         AttackRange = attackRange;
         AttackCooldown = attackCooldown;
         AttackTimer = 0.0f;
-		AttackDamage = attackDamage;
+		BaseDamage = attackDamage;
 		AttackPrefabs = attackPrefabs;
 		m_damageIndicator = damageIndicatorPrefab;
 

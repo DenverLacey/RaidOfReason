@@ -71,16 +71,13 @@ public class ProjectileMove : MonoBehaviour {
     /// <param name="other"></param>
     public void OnTriggerEnter(Collider other)
 	{
-        Physics.IgnoreCollision(GameManager.Instance.Thea.GetComponent<Collider>(), other);
-
         if (other.gameObject.tag == "Enemy")
         {
             EnemyData enemy = other.gameObject.GetComponent<EnemyData>();
            
             if (enemy)
             {
-                enemy.TakeDamage(GameManager.Instance.Thea.GetDamage(), GameManager.Instance.Thea);
-                             
+                enemy.TakeDamage(GameManager.Instance.Thea.GetDamage(), GameManager.Instance.Thea);     
             }
 		}
         else if ((other.gameObject.tag == "Kenron" && !m_hasHitKenron) || (other.gameObject.tag == "Kreiger" && !m_hasHitKreiger))
