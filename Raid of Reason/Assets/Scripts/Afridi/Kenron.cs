@@ -340,29 +340,29 @@ public class Kenron : BaseCharacter
 
     public void UnlockSkill()
     {
-        if (m_skillPopups != null)
-        {
-            if (m_skillUpgrades.Find(skill => skill.Name == "Vile Infusion"))
-            {
-                // Icon pops up
-                m_skillPopups[0].gameObject.SetActive(true);
-            }
-            if (m_skillUpgrades.Find(skill => skill.Name == "Bloodlust"))
-            {
-                // Icon pops up
-                m_skillPopups[1].gameObject.SetActive(true);
-            }
-            if (m_skillUpgrades.Find(skill => skill.Name == "Shuras Awakening"))
-            {
-                // Icon pops up
-                m_skillPopups[2].gameObject.SetActive(true);
-            }
-            if (m_skillUpgrades.Find(skill => skill.Name == "Malevolent Inferno"))
-            {
-                // Icon pops up
-                m_skillPopups[3].gameObject.SetActive(true);
-            }
-        }
+        //if (m_skillPopups != null)
+        //{
+        //    if (m_skillUpgrades.Find(skill => skill.Name == "Vile Infusion"))
+        //    {
+        //        // Icon pops up
+        //        m_skillPopups[0].gameObject.SetActive(true);
+        //    }
+        //    if (m_skillUpgrades.Find(skill => skill.Name == "Bloodlust"))
+        //    {
+        //        // Icon pops up
+        //        m_skillPopups[1].gameObject.SetActive(true);
+        //    }
+        //    if (m_skillUpgrades.Find(skill => skill.Name == "Shuras Awakening"))
+        //    {
+        //        // Icon pops up
+        //        m_skillPopups[2].gameObject.SetActive(true);
+        //    }
+        //    if (m_skillUpgrades.Find(skill => skill.Name == "Malevolent Inferno"))
+        //    {
+        //        // Icon pops up
+        //        m_skillPopups[3].gameObject.SetActive(true);
+        //    }
+        //}
     }
 
     /// <summary>

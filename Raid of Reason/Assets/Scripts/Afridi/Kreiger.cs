@@ -190,29 +190,29 @@ public class Kreiger : BaseCharacter
 
     public void UnlockSkill()
     {
-        if (m_skillPopups.Count > 1)
-        {
-            if (m_skillUpgrades.Find(skill => skill.Name == "Roaring Thunder"))
-            {
-                // Icon pops up
-                m_skillPopups[0].gameObject.SetActive(true);
-            }
-            if (m_skillUpgrades.Find(skill => skill.Name == "Kinetic Discharge"))
-            {
-                // Icon pops up
-                m_skillPopups[1].gameObject.SetActive(true);
-            }
-            if (m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
-            {
-                // Icon pops up
-                m_skillPopups[2].gameObject.SetActive(true);
-            }
-            if (m_skillUpgrades.Find(skill => skill.Name == "Macht Des Sturms"))
-            {
-                // Icon pops up
-                m_skillPopups[3].gameObject.SetActive(true);
-            }
-        }
+        //if (m_skillPopups.Count > 1)
+        //{
+        //    if (m_skillUpgrades.Find(skill => skill.Name == "Roaring Thunder"))
+        //    {
+        //        // Icon pops up
+        //        m_skillPopups[0].gameObject.SetActive(true);
+        //    }
+        //    if (m_skillUpgrades.Find(skill => skill.Name == "Kinetic Discharge"))
+        //    {
+        //        // Icon pops up
+        //        m_skillPopups[1].gameObject.SetActive(true);
+        //    }
+        //    if (m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
+        //    {
+        //        // Icon pops up
+        //        m_skillPopups[2].gameObject.SetActive(true);
+        //    }
+        //    if (m_skillUpgrades.Find(skill => skill.Name == "Macht Des Sturms"))
+        //    {
+        //        // Icon pops up
+        //        m_skillPopups[3].gameObject.SetActive(true);
+        //    }
+        //}
     }
 
     /// <summary>

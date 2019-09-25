@@ -83,8 +83,6 @@ public abstract class BaseCharacter : MonoBehaviour
     [Tooltip("The Skill Manager that manages the skills of the players")]
     public SkillManager skillManager;
 
-    public List<Image> m_skillPopups = new List<Image>();
-
     [Tooltip("A List of How Many Skill Upgrades the Players Have")]
     public List<SkillsAbilities> m_skillUpgrades = new List<SkillsAbilities>();
 
@@ -137,13 +135,13 @@ public abstract class BaseCharacter : MonoBehaviour
         skillManager = FindObjectOfType<SkillManager>();
         m_original = m_spriteRend.colorOverLifetime;
 
-        if (m_skillPopups.Count > 0)
-        {
-            foreach (Image display in m_skillPopups)
-            {
-                display.gameObject.SetActive(false);
-            }
-        }
+        //if (m_skillPopups.Count > 0)
+        //{
+        //    foreach (Image display in m_skillPopups)
+        //    {
+        //        display.gameObject.SetActive(false);
+        //    }
+        //}
     }
 
     /// <summary>
