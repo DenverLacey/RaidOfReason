@@ -1,4 +1,9 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Elisha
+ * Description: This script holds all the information about the buttons that are in the pause menu such as the hover mechanic and clicking.
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,7 +37,7 @@ public class PauseInformation : MonoBehaviour
 
     public void Pressed()
     {
-        m_images.color = Color.black;
+        m_images.color = Color.gray;
     }
 
     public void Unhover()

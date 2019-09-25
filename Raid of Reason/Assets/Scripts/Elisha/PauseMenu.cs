@@ -1,4 +1,10 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Elisha
+ * Description: This script checks on update if the player decides to pause or unpause the game at any moment.
+ *              Also handles what happens if the restart, quit or character select button gets pressed.
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;

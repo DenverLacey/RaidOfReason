@@ -1,4 +1,10 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Elisha
+ * Description: This script allows the text mesh pro object specifically blink back and fourth.
+ *              Also handles any controller start input to continue into the main menu.
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;

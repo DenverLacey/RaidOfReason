@@ -1,4 +1,10 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Elisha, Denver
+ * Description: This script managers all the level changes and makes sure the levels load in conjuction to what scene index they are in. 
+ *              This class is a singleton thats static which makes the userbility easier for us in other scripts if needed.
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;

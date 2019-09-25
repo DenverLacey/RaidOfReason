@@ -1,4 +1,10 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Elisha
+ * Description: Tis script handles the players cursor movement when the game is paused and button input such as when the player
+ *              hovers over a button and presses it.
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using XboxCtrlrInput;
