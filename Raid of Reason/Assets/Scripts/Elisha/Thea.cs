@@ -52,7 +52,7 @@ public class Thea : BaseCharacter
     [SerializeField]
     private float HPSpeedReduction;
 
-    [Tooltip("How much less damage the Enemy can do inisde GOP with Hydro Pressure")]
+    [Tooltip("How much less damage the Enemy can do inisde GOP with Hydro Pressure (0.5 is Half Damage, 0 is no Damage)")]
     [SerializeField]
     public float HPAttackWeakened;
 
@@ -113,8 +113,6 @@ public class Thea : BaseCharacter
     // Stat Tracker
     [HideInInspector]
     public StatTrackingManager m_statManager;
-
-    public bool isInvincible;
     
     [HideInInspector]
     public bool m_skillActive;
@@ -154,7 +152,6 @@ public class Thea : BaseCharacter
         CharacterType = CharacterType.THEA;
         m_isActive = false;
         m_isHealthRegen = false;
-        isInvincible = false;
         m_statManager = FindObjectOfType<StatTrackingManager>();
         m_waterPrefab.SetActive(false);
         m_AOETimer = 0f;
@@ -390,6 +387,7 @@ public class Thea : BaseCharacter
                 if (sqrDistance <= m_AOERadius * m_AOERadius)
                 {
                     enemy.GetComponent<EnemyPathfinding>().m_speed -= HPSpeedReduction;
+                    enemy.Strength = HPAttackWeakened;
                 }
             }
         }
@@ -467,14 +465,6 @@ public class Thea : BaseCharacter
                     if (player.tag == "Kreiger") { nashHealed = true; }
                     if (player.tag == "Kenron") { kenHealed = true; }
                     m_waterPrefab.SetActive(true);
-                    if (m_skillUpgrades.Find(skill => skill.Name == "Serenade Of Water"))
-                    {
-                        player.m_currentHealth += m_AOETimer * m_GOPEffect;
-                    }
-                    else
-                    {
-                        player.AddHealth(m_AOETimer * m_GOPEffect);
-                    }
                     m_waterPrefab.transform.position = player.transform.position;
                     GameObject m_temp = Instantiate(m_waterPrefab, player.transform.position + Vector3.down * (player.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), player.transform);
                     Destroy(m_temp, 0.5f);
@@ -496,9 +486,12 @@ public class Thea : BaseCharacter
             {
                 GameManager.Instance.Kenron.SetHealth(GameManager.Instance.Kenron.m_currentHealth * m_healMultiplier);
                 GameManager.Instance.Kreiger.SetHealth(GameManager.Instance.Kreiger.m_currentHealth * m_healMultiplier);
+                m_nearbyEnemies = new List<EnemyData>(FindObjectsOfType<EnemyData>());
+                foreach (EnemyData data in m_nearbyEnemies)
+                {
+                    data.Strength = 0;
+                }
                 SetHealth(m_currentHealth * m_healMultiplier);
-                isInvincible = true;
-                StartCoroutine(DamageImmunity());
                 m_skillActive = false;
             }
         }
@@ -552,7 +545,10 @@ public class Thea : BaseCharacter
     private IEnumerator DamageImmunity()
     {
         yield return new WaitForSeconds(SOWImmunity);
-        isInvincible = false;
+        foreach (EnemyData data in m_nearbyEnemies)
+        {
+            data.Strength = 1;
+        }
     }
 
     public void Regenerate() {

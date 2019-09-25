@@ -92,8 +92,6 @@ public class Kenron : BaseCharacter
     [Tooltip("How long it takes for the trail in Kenrons Ability To Go Away")]
     private float m_BTDegen;
 
-    public List<GameObject> dashDisplays = new List<GameObject>();
-
 
     [Header("--Particles And UI--")]
 
@@ -199,6 +197,11 @@ public class Kenron : BaseCharacter
                 // Sets the Skill to be Active
                 m_InfiniteDash = true;
                 isActive = true;
+                foreach (GameObject obj in m_statManager.dashDisplays)
+                {
+                    obj.SetActive(true);
+                    obj.GetComponent<Image>().color = Color.gray;
+                }
                 StartCoroutine(ChaosFlameVisual());
                 m_kenronParticle.Play();
                 // Halves his Health and sets a higher Damage/Speed
@@ -223,7 +226,9 @@ public class Kenron : BaseCharacter
     /// </summary>
     public void DashAttack()
     {
-        if (isActive && m_InfiniteDash) { m_dashDelay = 0.1f; }
+        if (isActive && m_InfiniteDash) {
+            m_dashDelay = 0.01f;           
+        }
 
         // dash attack
         if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1f && m_controllerOn && !m_triggerDown)
@@ -238,8 +243,11 @@ public class Kenron : BaseCharacter
                 m_dashCollider.enabled = true;
                 m_dashDelayTimer = m_dashDelay;
                 m_dashStartPosition = transform.position;
-                dashDisplays[m_TempCharge].SetActive(false);
-                m_TempCharge--;
+                if (!isActive && !m_InfiniteDash)
+                {
+                    m_statManager.dashDisplays[m_TempCharge].SetActive(false);
+                    m_TempCharge--;
+                }
                 m_currentCharges--;
                 
 
@@ -307,7 +315,10 @@ public class Kenron : BaseCharacter
             // if ready to dash again 
             if (m_dashDelayTimer <= 0.0f && gameObject.activeSelf)
             {
-                StartCoroutine(TimeTillRecharge());
+                if (!isActive && !m_InfiniteDash)
+                {
+                    StartCoroutine(TimeTillRecharge());
+                }
                 m_controllerOn = true;
                 isDashing = false;
             }
@@ -390,6 +401,11 @@ public class Kenron : BaseCharacter
                 SetSpeed(m_movementSpeed);
                 m_kenronParticle.Stop();
                 m_statManager.chaosFlameUsed++;
+                m_TempCharge = m_currentCharges - 1;
+                foreach (GameObject obj in m_statManager.dashDisplays)
+                {
+                    obj.GetComponent<Image>().color = Color.white;
+                }
             }
         }
     }
@@ -409,7 +425,7 @@ public class Kenron : BaseCharacter
         {
             m_currentCharges++;
             m_TempCharge++;
-            dashDisplays[m_TempCharge].SetActive(true);
+            m_statManager.dashDisplays[m_TempCharge].SetActive(true);
         }
     }
 }

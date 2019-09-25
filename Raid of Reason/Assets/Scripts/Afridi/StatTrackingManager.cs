@@ -20,6 +20,7 @@ public class StatTrackingManager : MonoBehaviour
     public TextMeshProUGUI T_Total_Number_Of_Heals_Count;
     public TextMeshProUGUI T_Fully_Charged_GOP_Count;
     public TextMeshProUGUI T_All_Three_Players_Healed_Count;
+    public List<GameObject> dashDisplays = new List<GameObject>();
 
     [HideInInspector]
     public int dashesUsed;
