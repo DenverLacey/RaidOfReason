@@ -125,6 +125,8 @@ public class EnemyData : MonoBehaviour
 		Rigidbody = GetComponent<Rigidbody>();
 		m_collider = GetComponent<Collider>();
 		Pathfinder = GetComponent<EnemyPathfinding>();
+
+        Strength = 1f;
     }
 
 	/// <summary>

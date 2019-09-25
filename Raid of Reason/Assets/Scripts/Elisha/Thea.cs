@@ -114,7 +114,6 @@ public class Thea : BaseCharacter
     [HideInInspector]
     public StatTrackingManager m_statManager;
 
-    [HideInInspector]
     public bool isInvincible;
     
     [HideInInspector]
@@ -211,6 +210,12 @@ public class Thea : BaseCharacter
 		// make input vectors
 		Vector3 movInput = new Vector3(leftX, 0, leftY);
 		Vector3 rotInput = new Vector3(rightX, 0, rightY);
+
+        Vector3 camRotEuler = m_camera.transform.eulerAngles;
+        camRotEuler.x = 0f; camRotEuler.z = 0f;
+
+        movInput = Quaternion.AngleAxis(camRotEuler.y, Vector3.up) * movInput;
+        rotInput = Quaternion.AngleAxis(camRotEuler.y, Vector3.up) * rotInput;
 
 		if (CanMove)
 		{

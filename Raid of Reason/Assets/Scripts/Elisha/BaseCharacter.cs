@@ -59,7 +59,6 @@ public abstract class BaseCharacter : MonoBehaviour
     [Tooltip("How much max shield can the player get?")]
     public float m_maxShield;
 
-    [HideInInspector]
     public float currentShield;
 
     [SerializeField]
@@ -221,10 +220,10 @@ public abstract class BaseCharacter : MonoBehaviour
 			Vector3 camRotEuler = m_camera.transform.eulerAngles;
 			camRotEuler.x = 0.0f; camRotEuler.z = 0.0f;
 
-			input = Quaternion.LookRotation(camRotEuler) * input;
-			directionOverride = Quaternion.LookRotation(camRotEuler) * directionOverride;
+            input = Quaternion.AngleAxis(camRotEuler.y, Vector3.up) * input;
+            directionOverride = Quaternion.AngleAxis(camRotEuler.y, Vector3.up) * directionOverride;
 
-			if (CanMove)
+            if (CanMove)
 			{
 				Vector3 movePosition = transform.position + input * m_movementSpeed * Time.deltaTime;
 				m_rigidbody.MovePosition(movePosition);
@@ -273,41 +272,20 @@ public abstract class BaseCharacter : MonoBehaviour
             GameManager.Instance.Kreiger.m_statManager.totalSheildsCharged += GameManager.Instance.Kreiger.currentShield;
         }
 
-        // If Thea exists and her Invincible is false
-        if (GameManager.Instance.Thea && GameManager.Instance.Thea.isInvincible == false)
+        if (currentShield > 0)
         {
-            if (currentShield > 0)
-            {
-                currentShield -= damage * m_vulnerability;
-                IndicateHit();
-            }
-
-            if (currentShield <= 0)
-            {
-                // Take an amount of damage from the players current health.
-                m_currentHealth -= damage * m_vulnerability;
-                // Player damage indicator.
-                IndicateHit();
-            }
+            currentShield -= damage * m_vulnerability;
+            IndicateHit();
         }
 
-        // If She Doesnt exist or She does exist without her skill
-        if (!GameManager.Instance.Thea || GameManager.Instance.Thea.isInvincible == false)
+        if (currentShield <= 0)
         {
-            if (currentShield > 0)
-            {
-                currentShield -= damage * m_vulnerability;
-                IndicateHit();
-            }
-
-            if (currentShield <= 0)
-            {
-                // Take an amount of damage from the players current health.
-                m_currentHealth -= damage * m_vulnerability;
-                // Player damage indicator.
-                IndicateHit();
-            }
+            // Take an amount of damage from the players current health.
+            m_currentHealth -= damage * m_vulnerability;
+            // Player damage indicator.
+            IndicateHit();
         }
+      
 
 
         // If player has no health.
