@@ -76,6 +76,8 @@ public class EnemyData : MonoBehaviour
 			if (m_taunted)
 			{
 				m_tauntedEffect.Play();
+				Target = GameManager.Instance.Kreiger.transform.position;
+				TargetPlayer = GameManager.Instance.Kreiger;
 			}
 			else
 			{

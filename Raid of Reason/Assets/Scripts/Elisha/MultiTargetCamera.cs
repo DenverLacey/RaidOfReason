@@ -23,6 +23,10 @@ public class MultiTargetCamera : MonoBehaviour
 	private float m_minYPosition = 20f;
 
 	[SerializeField]
+	[Tooltip("Highest the camera go")]
+	private float m_maxYPosition = 50f;
+
+	[SerializeField]
 	[Tooltip("How sensitive the camera is to the size of the bounds")]
 	private float m_distanceScalar = 1f;
 
@@ -63,6 +67,7 @@ public class MultiTargetCamera : MonoBehaviour
 
 		Vector3 averagePosition = playerBounds.center;
 		float desiredY = Mathf.Max(playerBounds.size.magnitude * m_distanceScalar, m_minYPosition);
+		desiredY = Mathf.Min(desiredY, m_maxYPosition);
 
 		Vector3 desiredPosition = new Vector3(
 			averagePosition.x + m_offset.x,

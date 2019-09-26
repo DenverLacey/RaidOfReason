@@ -20,9 +20,8 @@ public class RangeEnemyBehaviourTree : BehaviourTree
 	/// Builds Range Type Enemy Behaviour Tree
 	/// </summary>
     RangeEnemyBehaviourTree() 
-    {
-		// create components for behaviour tree
-		StunnedCondition stunned = new StunnedCondition();
+    {	
+		StunnedCondition stunnedCondition = new StunnedCondition();
 
 		Sequence withinRangeSequence = new Sequence();
 		withinRangeSequence.AddChild(new Not(new MinAttackRangeCondition()));
@@ -44,23 +43,17 @@ public class RangeEnemyBehaviourTree : BehaviourTree
 		calculateTargetSelector.AddChild(canSeePlayerSequence);
 
 		Sequence attackSequence = new Sequence();
-		attackSequence.AddChild(canSeePlayerSequence);
+		attackSequence.AddChild(calculateTargetSelector);
 		attackSequence.AddChild(new TurnManualSteeringOn());
 		attackSequence.AddChild(new GetIntoPosition());
 		attackSequence.AddChild(new RangeEnemyAttack());
 
-		Sequence middleSequence = new Sequence();
-		middleSequence.AddChild(calculateTargetSelector);
-		middleSequence.AddChild(attackSequence);
-
-		Sequence wanderSequence = new Sequence();
-		wanderSequence.AddChild(new TurnManualSteeringOff());
-		wanderSequence.AddChild(new Wander());
+		Wander wander = new Wander();
 
 		// add components to behaviour tree
-		m_behaviourTree.AddChild(stunned);
-		m_behaviourTree.AddChild(middleSequence);
-		m_behaviourTree.AddChild(wanderSequence);
+		m_behaviourTree.AddChild(stunnedCondition);
+		m_behaviourTree.AddChild(attackSequence);
+		m_behaviourTree.AddChild(wander);
 	}
 
     /// <summary>
