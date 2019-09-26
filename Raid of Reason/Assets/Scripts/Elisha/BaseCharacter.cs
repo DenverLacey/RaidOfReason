@@ -113,6 +113,7 @@ public abstract class BaseCharacter : MonoBehaviour
     protected Vector3 m_direction;
     private ParticleSystem.ColorOverLifetimeModule m_original;
     public ParticleSystem m_spriteRend;
+    private DeathMenu m_deathMenu;
 
 
     /// <summary>
@@ -124,6 +125,7 @@ public abstract class BaseCharacter : MonoBehaviour
         m_playerCollider = GetComponent<CapsuleCollider>();
         m_rigidbody = GetComponent<Rigidbody>();
         m_animator = GetComponentInChildren<Animator>();
+        m_deathMenu = FindObjectOfType<DeathMenu>();
         m_currentHealth = m_maxHealth;
         m_mincurrentDamage = m_minDamage;
         m_maxcurrentDamage = m_maxDamage;
@@ -285,13 +287,18 @@ public abstract class BaseCharacter : MonoBehaviour
             // Player damage indicator.
             IndicateHit();
         }
-      
 
 
         // If player has no health.
         if (m_currentHealth <= 0.0f)
         {
            playerState = PlayerState.DEAD;
+        }
+
+        // checks if all players are dead
+        if (GameManager.Instance.AlivePlayers.Count == 0)
+        {
+            m_deathMenu.DeathScreen();
         }
     } 
 

@@ -242,7 +242,7 @@ public class Thea : BaseCharacter
 	}
 
 	/// <summary>
-	/// Triggering the shootinf
+	/// Triggering the shooting
 	/// </summary>
 	public void Projectile()
     {
