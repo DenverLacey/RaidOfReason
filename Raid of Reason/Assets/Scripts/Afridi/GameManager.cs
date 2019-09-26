@@ -55,10 +55,17 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            return new List<BaseCharacter>()
-            {
-                Kenron, Kreiger, Thea
-            };
+			var players = new List<BaseCharacter>();
+			if (Kenron)
+				players.Add(Kenron);
+
+			if (Kreiger)
+				players.Add(Kreiger);
+
+			if (Thea)
+				players.Add(Thea);
+
+			return players;
         }
     }
 
