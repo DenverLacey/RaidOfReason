@@ -15,8 +15,12 @@ using UnityEngine;
 public class MultiTargetCamera : MonoBehaviour
 {
 	[SerializeField]
-	[Tooltip("Maximum time it will take for camera to reach new position")]
+	[Tooltip("How much the camera will move towards its destination per lerp step")]
 	private float m_lerpAmount = 0.5f;
+
+	[SerializeField]
+	[Tooltip("How much the camera will rotate towards its destination per lerp step")]
+	private float m_rotLerpAmont = 0.01f;
 
 	[SerializeField]
 	[Tooltip("Lowest the camera can go")]
@@ -81,6 +85,13 @@ public class MultiTargetCamera : MonoBehaviour
 
 		Quaternion lookRotation = Quaternion.LookRotation((playerBounds.center - transform.position).normalized, Vector3.up);
 		lookRotation *= Quaternion.Euler(centerOffset, 0, 0);
-		transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, m_lerpAmount);
+
+		lookRotation.eulerAngles = new Vector3(
+			lookRotation.eulerAngles.x,
+			0,
+			0
+		);
+
+		transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, m_rotLerpAmont);
 	}
 }
