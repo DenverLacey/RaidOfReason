@@ -21,8 +21,8 @@ public class PauseMenu : MonoBehaviour
     private int m_characterSceneIndex;
 
     [SerializeField]
-    [Tooltip("First Scene Index")]
-    private int m_FirstSceneIndex;
+    [Tooltip("Scene to restart")]
+    private int m_restartedScene;
 
     private Vector3 m_p1InactivePosition;
     private bool m_isPaused = false;
@@ -73,7 +73,7 @@ public class PauseMenu : MonoBehaviour
 
     public void RestartGame()
     {
-        SceneManager.LoadScene(m_FirstSceneIndex, LoadSceneMode.Single);
+        SceneManager.LoadScene(m_restartedScene, LoadSceneMode.Single);
     }
 
     public void Quit()

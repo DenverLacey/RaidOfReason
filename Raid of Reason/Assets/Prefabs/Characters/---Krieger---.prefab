@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1491709258243834921}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.71, y: 0, z: -5.98}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6217239470799233496}
@@ -94,11 +94,6 @@ MonoBehaviour:
   m_shieldDegenerateAmount: 5
   controller: 1
   skillManager: {fileID: 0}
-  m_skillPopups:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   m_skillUpgrades: []
   m_controllerOn: 0
   m_camera: {fileID: 0}
@@ -112,14 +107,14 @@ MonoBehaviour:
   shieldGain: 5
   m_tauntRadius: 12
   m_tauntVulnerability: 0.5
-  knockBackForce: 0
-  m_RTRadiusIncreased: 0
-  m_RTDurationIncreased: 0
-  KDForce: 0
-  KDStun: 0
-  KDKnockbackDamage: 0
-  m_SSShieldsGiven: 0
-  SSDamageTaken: 0
+  knockBackForce: 80
+  m_RTRadiusIncreased: 12
+  m_RTDurationIncreased: 10
+  KDForce: 120
+  KDStun: 1
+  KDKnockbackDamage: 12
+  m_SSShieldsGiven: 50
+  SSDamageTaken: 15
   isTaunting: 0
   isActive: 0
   m_tauntParticle: {fileID: 6346619828598100303}
@@ -196,7 +191,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4086268057125856014
 Transform:
   m_ObjectHideFlags: 0
