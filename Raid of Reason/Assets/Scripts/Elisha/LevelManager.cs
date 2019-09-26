@@ -64,6 +64,11 @@ public class LevelManager : MonoBehaviour
         m_instance.m_titleScreenVisited = true;
     }
 
+    public static void HaveNotVisitTitleScreen()
+    {
+        m_instance.m_titleScreenVisited = false;
+    }
+
     public static bool IsTitleScreenVisited()
     {
         return m_instance.m_titleScreenVisited;

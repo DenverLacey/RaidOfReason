@@ -138,7 +138,7 @@ public class PlayerCursor : MonoBehaviour
 			{
 				((CharacterSelection)temp).OnPressed();
 			}
-            else if (temp is BackButton)
+            else if (XCI.GetButtonDown(XboxButton.A, XboxController.First) && temp is BackButton)
             {
                 // load main menu scene
                 ((BackButton)temp).OnPressed();

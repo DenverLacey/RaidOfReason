@@ -43,7 +43,7 @@ public class BlinkingText : MonoBehaviour
 
     public void Update()
     {
-        if (XCI.GetButtonDown(XboxButton.Start, XboxController.Any))
+        if (XCI.GetButtonDown(XboxButton.Start, XboxController.First))
         {
             mainMenu.SetActive(true);
             titleScreen.SetActive(false);

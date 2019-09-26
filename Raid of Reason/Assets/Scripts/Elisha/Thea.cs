@@ -29,9 +29,6 @@ public class Thea : BaseCharacter
     [Tooltip("How much the Gift of Poseidon heals by?")]
     private float m_GOPEffect;
 
-
-
-
     [Header("--Skills--")]
 
     [Tooltip("How much health thea passively heals with her Settling Tide")]
