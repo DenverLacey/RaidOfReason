@@ -38,6 +38,8 @@ public class MultiTargetCamera : MonoBehaviour
 	[Tooltip("Offset of the camera")]
 	private Vector2 m_offset = new Vector3(0, -30);
 
+	public float centerOffset = 10f;
+
 	[SerializeField]
 	[Min(0.001f)]
 	private float m_paddiing = 0f;
@@ -76,5 +78,9 @@ public class MultiTargetCamera : MonoBehaviour
 		);
 
 		transform.position = Vector3.Lerp(transform.position, desiredPosition, m_lerpAmount);
+
+		Quaternion lookRotation = Quaternion.LookRotation((playerBounds.center - transform.position).normalized, Vector3.up);
+		lookRotation *= Quaternion.Euler(centerOffset, 0, 0);
+		transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, m_lerpAmount);
 	}
 }
