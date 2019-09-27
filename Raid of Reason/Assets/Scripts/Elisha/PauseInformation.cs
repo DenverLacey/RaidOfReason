@@ -9,20 +9,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System.Threading;
+using TMPro;
 
 public class PauseInformation : MonoBehaviour
 {
     [Tooltip("Function to call when button is clicked")]
     [SerializeField]
     private UnityEvent m_onClickEvent;
-    private Image m_images;
+    private TextMeshProUGUI m_text;
     private Color m_originalImage;
     int m_hoverers;
 
     private void Start()
     {
-        m_images = GetComponentInChildren<Image>();
-        m_originalImage = m_images.color;
+        m_text = GetComponentInChildren<TextMeshProUGUI>();
+        m_originalImage = m_text.color;
     }
 
     public void Click()
@@ -32,16 +33,16 @@ public class PauseInformation : MonoBehaviour
 
     public void Hover()
     {
-        m_images.color = Color.gray;
+        m_text.color = Color.gray;
     }
 
     public void Pressed()
     {
-        m_images.color = Color.gray;
+        m_text.color = Color.gray;
     }
 
     public void Unhover()
     {
-        m_images.color = m_originalImage;
+        m_text.color = m_originalImage;
     }
 }
