@@ -364,7 +364,7 @@ public class Thea : BaseCharacter
             // Start AOE timer.
             m_AOETimer += Time.deltaTime;
             // Disable player movement and rotation.
-            m_controllerOn = false;
+            CanMove = false;
 
             m_HealRadius.gameObject.SetActive(true);
             m_HealRadius_2.gameObject.SetActive(true);
@@ -503,7 +503,7 @@ public class Thea : BaseCharacter
         m_isActive = false;
         m_AOERadius = m_AOEMin;
         //m_AOEParticleCollider.enabled = false;
-        m_controllerOn = true;
+        CanMove = true;
         m_AOEShapeModule.radius = 1;
 
         m_HealRadius.gameObject.SetActive(false);
