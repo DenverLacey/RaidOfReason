@@ -224,13 +224,13 @@ public class PlayerCursor : MonoBehaviour
 		return m_characterSelected;
 	}
 
-	void DoRumble()
+	public void DoRumble()
 	{
 		GamePad.SetVibration(m_playerIndex, m_rumbleIntensity, m_rumbleIntensity);
 		StartCoroutine(StopRumble());
 	}
 
-	IEnumerator StopRumble()
+	public IEnumerator StopRumble()
 	{
 		yield return new WaitForSeconds(m_rumbleDuration);
 		GamePad.SetVibration(m_playerIndex, 0f, 0f);

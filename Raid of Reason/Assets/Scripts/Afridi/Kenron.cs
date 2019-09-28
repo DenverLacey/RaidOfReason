@@ -174,9 +174,6 @@ public class Kenron : BaseCharacter
         // Updates Player Movement
         base.Update();
 
-        if (m_pauseInfo.m_isPaused)
-            return;
-
         if (gameObject != null)
         {
             // Uses his Dash

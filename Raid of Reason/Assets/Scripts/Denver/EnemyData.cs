@@ -44,6 +44,9 @@ public class EnemyData : MonoBehaviour
     private ParticleSystem m_electricEffect;
 
     [SerializeField]
+    private ParticleSystem m_KnockBackEffect;
+
+    [SerializeField]
     private ParticleSystem m_bloodEffect;
 
     [SerializeField]
@@ -274,13 +277,14 @@ public class EnemyData : MonoBehaviour
                 break;
 
             case CharacterType.KREIGER:
-                if (m_electricEffect != null)
+                if (m_electricEffect && m_KnockBackEffect != null)
                 {
                     m_electricEffect.Play();
+                    m_KnockBackEffect.Play();
                 }
                 else
                 {
-                    Debug.LogFormat("{0} is null", m_electricEffect.name);
+                    Debug.LogFormat("{0} is null", m_KnockBackEffect.name);
                 }
                 break;
 
