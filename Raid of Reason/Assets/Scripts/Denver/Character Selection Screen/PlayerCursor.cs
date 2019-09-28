@@ -189,9 +189,9 @@ public class PlayerCursor : MonoBehaviour
 		m_collidedTransform = null;
 	}
 
-	public (XboxController controller, CharacterType selectedCharacter, bool characterSelected) GetSelectedCharacter()
+	public (XboxController controller, PlayerIndex playerIndex, CharacterType selectedCharacter, bool characterSelected) GetSelectedCharacter()
 	{
-		return (controller, selectedCharacter: m_selectedCharacter, characterSelected: m_characterSelected);
+		return (controller, m_playerIndex, m_selectedCharacter, m_characterSelected);
 	}
 
 	public void Activate()

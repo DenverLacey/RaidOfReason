@@ -1,7 +1,6 @@
 ﻿/*
  * Author: Denver
- * Description: This Script manages the game loop. Controlling the Enemy Spawn rates at thier 
- * specified spawn points. By clearing rooms the players gain points
+ * Description: Holds information that must be preserved across multiple scenes
  */
 
 using System;
@@ -9,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using XboxCtrlrInput;
+using XInputDotNetPure;
 using UnityEngine.SceneManagement;
 
 /// <summary>
@@ -73,15 +73,17 @@ public class GameManager : MonoBehaviour
 
 	public List<BaseCharacter> AlivePlayers
 	{
-		get
-		{
-			return Players.FindAll(player => player.playerState == BaseCharacter.PlayerState.ALIVE);
-		}
+		get => Players.FindAll(player => player.playerState == BaseCharacter.PlayerState.ALIVE);
 	}
 
 	private XboxController[] m_controllers = new XboxController[]
 	{
 		XboxController.Any, XboxController.Any, XboxController.Any
+	};
+
+	private PlayerIndex[] m_playerIndices = new PlayerIndex[]
+	{
+		PlayerIndex.Four, PlayerIndex.Four, PlayerIndex.Four
 	};
 
 	private void Awake()
@@ -122,6 +124,7 @@ public class GameManager : MonoBehaviour
 			if (m_controllers[0] != XboxController.Any)
 			{
 				Kenron.controller = m_controllers[0];
+				Kenron.playerIndex = m_playerIndices[0];
 			}
 		}
 		else if (character is Kreiger)
@@ -132,6 +135,7 @@ public class GameManager : MonoBehaviour
 			if (m_controllers[1] != XboxController.Any)
 			{
 				Kreiger.controller = m_controllers[1];
+				Kreiger.playerIndex = m_playerIndices[1];
 			}
 		}
 		else if (character is Thea)
@@ -142,6 +146,7 @@ public class GameManager : MonoBehaviour
 			if (m_controllers[2] != XboxController.Any)
 			{
 				Thea.controller = m_controllers[2];
+				Thea.playerIndex = m_playerIndices[2];
 			}
 		}
 	}
@@ -155,9 +160,10 @@ public class GameManager : MonoBehaviour
 	/// <param name="controller">
 	/// Controller that will control character
 	/// </param>
-	public void SetCharacterController(CharacterType character, XboxController controller)
+	public void SetCharacterController(CharacterType character, PlayerIndex playerIndex, XboxController controller)
 	{
 		m_controllers[(int)character] = controller;
+		m_playerIndices[(int)character] = playerIndex;
 	}
 }
 

@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using XboxCtrlrInput;
-using UnityEngine.SceneManagement;
+using XInputDotNetPure;
 
 /* 
  * Author: Elisha, Denver, Afridi
@@ -75,6 +74,9 @@ public abstract class BaseCharacter : MonoBehaviour
 
     [Tooltip("Pick what controller this player is.")]
     public XboxController controller;
+
+	[Tooltip("Pick the player index of this character")]
+	public PlayerIndex playerIndex;
 
     // Player Colliders
     private CapsuleCollider m_playerCollider;

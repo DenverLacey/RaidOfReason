@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using XboxCtrlrInput;
+using XInputDotNetPure;
 using DG.Tweening;
 
 public class CharacterSelection : InteractableUIElement
@@ -79,7 +79,7 @@ public class CharacterSelection : InteractableUIElement
 		var p2Info = m_p2Cursor.GetSelectedCharacter();
 		var p3Info = m_p3Cursor.GetSelectedCharacter();
 
-		List<(XboxController, CharacterType, bool)> playerInformation = new List<(XboxController, CharacterType, bool)>();
+		var playerInformation = new List<(XboxController, PlayerIndex, CharacterType, bool)>();
 		
 		// focus controllers that are plugged in
 		if (m_p1Cursor.gameObject.activeSelf)
@@ -96,16 +96,16 @@ public class CharacterSelection : InteractableUIElement
 		}
 
 		// if all players are ready
-		if (playerInformation.TrueForAll(info => info.Item3))
+		if (playerInformation.TrueForAll(info => info.Item4))
 		{
 			// send info to game manager
 			foreach (var info in playerInformation)
 			{
-				GameManager.Instance.SetCharacterController(info.Item2, info.Item1);
+				GameManager.Instance.SetCharacterController(info.Item3, info.Item2, info.Item1);
 			}
 
 			// load first level
-			SceneManager.LoadScene(m_firstLevelIndex, LoadSceneMode.Single);
+			LevelManager.LoadLevel(m_firstLevelIndex);
 		}
 		else
 		{
