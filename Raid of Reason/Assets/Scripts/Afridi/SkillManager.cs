@@ -61,8 +61,11 @@ public class SkillManager : MonoBehaviour {
     [Tooltip("A List of How Many Main Skills the Players Have")]
     public List<Skills> m_mainSkills;
 
+    private PauseMenu m_pauseInfo;
+
     protected void Awake()
     {
+        m_pauseInfo = FindObjectOfType<PauseMenu>();
         // Intialisation 
         foreach (var skill in m_mainSkills)
         {
@@ -78,6 +81,9 @@ public class SkillManager : MonoBehaviour {
     /// </summary>
     protected void Update()
     {
+        if (m_pauseInfo.m_isPaused)
+            return;
+
         // Empty Check
         if (GameManager.Instance.Kenron != null)
         {

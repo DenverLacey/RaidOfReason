@@ -24,12 +24,14 @@ public class PauseMenu : MonoBehaviour
     [Tooltip("Scene to restart")]
     private int m_restartedScene;
 
+    [HideInInspector]
+    public bool m_isPaused { get; set; }
     private Vector3 m_p1InactivePosition;
-    private bool m_isPaused = false;
     public GameObject m_pauseMenu;
 
     private void Start()
     {
+        m_isPaused = false;
         m_p1Cursor.SetController(1);
         m_p1InactivePosition = transform.position;
         m_pauseMenu.SetActive(false);

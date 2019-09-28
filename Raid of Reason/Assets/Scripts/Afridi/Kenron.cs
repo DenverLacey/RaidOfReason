@@ -132,11 +132,13 @@ public class Kenron : BaseCharacter
     // Stat Tracker
     [HideInInspector]
     public StatTrackingManager m_statManager;
+    private PauseMenu m_pauseInfo;
 
     private void Start()
     {
         GameManager.Instance.GiveCharacterReference(this);
         m_collider = GetComponent<CapsuleCollider>();
+        m_pauseInfo = FindObjectOfType<PauseMenu>();
     }
 
     protected override void Awake()
@@ -171,6 +173,9 @@ public class Kenron : BaseCharacter
     {
         // Updates Player Movement
         base.Update();
+
+        if (m_pauseInfo.m_isPaused)
+            return;
 
         if (gameObject != null)
         {

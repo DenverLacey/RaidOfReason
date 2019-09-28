@@ -106,14 +106,6 @@ public class GameManager : MonoBehaviour
         }
 	}
 
-    private void Update()
-    {
-        if (XCI.GetButtonDown(XboxButton.Back, XboxController.Any))
-        {
-            SceneManager.LoadScene(0);
-        }
-    }
-
     /// <summary>
     /// Lets characters give a reference to themselves to the GameManager
     /// </summary>

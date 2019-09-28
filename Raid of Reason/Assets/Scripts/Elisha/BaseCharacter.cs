@@ -114,6 +114,7 @@ public abstract class BaseCharacter : MonoBehaviour
     private ParticleSystem.ColorOverLifetimeModule m_original;
     public ParticleSystem m_spriteRend;
     private DeathMenu m_deathMenu;
+    private PauseMenu m_pauseInfo;
 
 
     /// <summary>
@@ -126,6 +127,7 @@ public abstract class BaseCharacter : MonoBehaviour
         m_rigidbody = GetComponent<Rigidbody>();
         m_animator = GetComponentInChildren<Animator>();
         m_deathMenu = FindObjectOfType<DeathMenu>();
+        m_pauseInfo = FindObjectOfType<PauseMenu>();
         m_currentHealth = m_maxHealth;
         m_mincurrentDamage = m_minDamage;
         m_maxcurrentDamage = m_maxDamage;
@@ -158,6 +160,9 @@ public abstract class BaseCharacter : MonoBehaviour
     /// </summary>
     protected virtual void Update()
     {
+        if (m_pauseInfo.m_isPaused)
+            return;
+
         // If player has shield
         if (currentShield > 0)
         {

@@ -182,6 +182,7 @@ public class Thea : BaseCharacter
     protected override void Update()
     {
         base.Update();
+        
         SkillChecker();
 
         if (GameManager.Instance.Thea.playerState == PlayerState.DEAD)
