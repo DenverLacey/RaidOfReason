@@ -7,7 +7,6 @@ using XInputDotNetPure;
 public class SmashDamage : MonoBehaviour
 { 
     private bool haveSkill = false;
-    private PlayerIndex m_playerIndex;
     private float m_rumbleDuration = 0.1f;
     private float m_rumbleIntensity = 1000f;
 
@@ -52,13 +51,13 @@ public class SmashDamage : MonoBehaviour
 
     public void DoRumble()
     {
-        GamePad.SetVibration(m_playerIndex, m_rumbleIntensity, m_rumbleIntensity);
+        GamePad.SetVibration(GameManager.Instance.Kreiger.playerIndex, m_rumbleIntensity, m_rumbleIntensity);
         StartCoroutine(StopRumble());
     }
 
     public IEnumerator StopRumble()
     {
         yield return new WaitForSeconds(m_rumbleDuration);
-        GamePad.SetVibration(m_playerIndex, 0f, 0f);
+        GamePad.SetVibration(GameManager.Instance.Kreiger.playerIndex, 0f, 0f);
     }
 }
