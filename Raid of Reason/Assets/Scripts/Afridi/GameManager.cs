@@ -76,6 +76,45 @@ public class GameManager : MonoBehaviour
 		get => Players.FindAll(player => player.playerState == BaseCharacter.PlayerState.ALIVE);
 	}
 
+	public BaseCharacter FirstPlayer
+	{
+		get
+		{
+			if (Kenron.playerIndex == PlayerIndex.One)
+				return Kenron;
+			else if (Kreiger.playerIndex == PlayerIndex.One)
+				return Kreiger;
+			else
+				return Thea;
+		}
+	}
+
+	public BaseCharacter SecondPlayer
+	{
+		get
+		{
+			if (Kenron.playerIndex == PlayerIndex.Two)
+				return Kenron;
+			else if (Kreiger.playerIndex == PlayerIndex.Two)
+				return Kreiger;
+			else
+				return Thea;
+		}
+	}
+
+	public BaseCharacter ThirdPlayer
+	{
+		get
+		{
+			if (Kenron.playerIndex == PlayerIndex.Three)
+				return Kenron;
+			else if (Kreiger.playerIndex == PlayerIndex.Three)
+				return Kreiger;
+			else
+				return Thea;
+		}
+	}
+
 	private XboxController[] m_controllers = new XboxController[]
 	{
 		XboxController.Any, XboxController.Any, XboxController.Any
