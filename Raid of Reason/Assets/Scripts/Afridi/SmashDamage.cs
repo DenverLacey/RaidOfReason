@@ -10,7 +10,6 @@ public class SmashDamage : MonoBehaviour
     private float m_rumbleDuration = 0.1f;
     private float m_rumbleIntensity = 1000f;
 
-
     public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Enemy")
@@ -19,8 +18,17 @@ public class SmashDamage : MonoBehaviour
             // Knock back enemies with every punch Kreiger lands.
             Rigidbody rb = other.GetComponent<Rigidbody>();
 
+            // Checks if the enemy is already in the list 
+            if (GameManager.Instance.Kreiger.m_hitEnemies.Contains(enemy))
+                return;
+            else
+                // Adds the enemy to the list when hit
+            GameManager.Instance.Kreiger.m_hitEnemies.Add(enemy);
+            // Gives shield
             GameManager.Instance.Kreiger.currentShield += GameManager.Instance.Kreiger.shieldGain;
+            // Controller vibration
             DoRumble();
+
 
             if (GameManager.Instance.Kreiger != null && GameManager.Instance.Kreiger.m_skillUpgrades.Find(skill => skill.Name == "Kinetic Discharge"))
             {

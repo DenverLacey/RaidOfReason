@@ -366,6 +366,7 @@ public class Thea : BaseCharacter
             m_AOETimer += Time.deltaTime;
             // Disable player movement and rotation.
             CanMove = false;
+            CanRotate = false;
 
             m_HealRadius.gameObject.SetActive(true);
             m_HealRadius_2.gameObject.SetActive(true);
@@ -503,8 +504,8 @@ public class Thea : BaseCharacter
         m_AOETimer = 0f;
         m_isActive = false;
         m_AOERadius = m_AOEMin;
-        //m_AOEParticleCollider.enabled = false;
         CanMove = true;
+        CanRotate = true;
         m_AOEShapeModule.radius = 1;
 
         m_HealRadius.gameObject.SetActive(false);

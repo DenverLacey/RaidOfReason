@@ -81,10 +81,11 @@ public class PauseCursor : MonoBehaviour
     /// </summary>
     void DoButtonInput()
     {
+        Vector3 offsetRay = new Vector3(-15, 20, 0);
         // Create ray cast from cursors forward position.
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.forward, 5);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + offsetRay, transform.forward, 2);
         // Debug purposes.
-        Debug.DrawRay(this.transform.position, transform.forward * 100, Color.green);
+        Debug.DrawRay(transform.position + offsetRay, transform.forward * 100, Color.green);
 
         // Checks if the ray cast has hit a pause menu button with the same tag.
         if (hit.collider && hit.collider.tag == "PauseMenuButton")

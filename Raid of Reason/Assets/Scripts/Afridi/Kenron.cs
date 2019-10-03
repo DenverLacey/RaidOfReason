@@ -257,19 +257,19 @@ public class Kenron : BaseCharacter
                 m_animator.SetBool("Attack", true);
 
 
-                if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, m_maxDashDistance, Utility.GetIgnoreMask("Enemy", "Player", "Ignore Raycast")))
-                {
-                    m_dashPosition = hit.point - transform.forward * m_dashBufferDistance;
-                }
-                else
-                {
-                    m_dashPosition = transform.position + transform.forward * m_maxDashDistance;
-                }
+                //if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, m_maxDashDistance, Utility.GetIgnoreMask("Enemy", "Player", "Ignore Raycast")))
+                //{
+                //    m_dashPosition = hit.point - transform.forward * m_dashBufferDistance;
+                //}
+                //else
+                //{
+                //    m_dashPosition = transform.position + transform.forward * m_maxDashDistance;
+                //}
 
-                m_dashDistance = (m_dashPosition - m_dashStartPosition).magnitude;
+                //m_dashDistance = (m_dashPosition - m_dashStartPosition).magnitude;
 
-                // calculate estimated time of dash
-                m_estimatedDashTime = m_maxDashDistance / m_dashSpeed;
+                //// calculate estimated time of dash
+                //m_estimatedDashTime = m_maxDashDistance / m_dashSpeed;
 
                 // size hit box
                 Vector3 hitBoxSize = new Vector3(m_dashCollider.size.x, m_dashCollider.size.y, m_dashDistance);

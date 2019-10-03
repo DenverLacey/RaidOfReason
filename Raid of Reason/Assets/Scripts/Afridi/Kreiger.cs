@@ -123,11 +123,14 @@ public class Kreiger : BaseCharacter
     private float totalAmountTaunted;
     private float amountTaunted;
 
+    public List<EnemyData> m_hitEnemies;
+
     private void Start()
 	{
 		GameManager.Instance.GiveCharacterReference(this);
         m_collider = GetComponent<CapsuleCollider>();
         InitialiseUpgrades();
+        m_hitEnemies = new List<EnemyData>();
     }
 
 
@@ -308,7 +311,13 @@ public class Kreiger : BaseCharacter
 		// Disable colliders
 		RightGauntlet.enabled = false;
 		LeftGauntlet.enabled = false;
+        OnDisable();
 	}
+
+    public void OnDisable()
+    {
+        m_hitEnemies.Clear();
+    }
 
     IEnumerator MachinasDareVisual()
     {
