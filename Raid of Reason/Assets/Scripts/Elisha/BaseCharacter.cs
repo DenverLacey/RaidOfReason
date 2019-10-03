@@ -36,6 +36,8 @@ public abstract class BaseCharacter : MonoBehaviour
     public PlayerState playerState;
     public float m_maxHealth;
     public float m_currentHealth;
+    [Tooltip("This variable indicates how much more health the player can recieve")]
+    public float m_maxOverheal;
     protected Rigidbody m_rigidbody;
     private float m_damage;
 

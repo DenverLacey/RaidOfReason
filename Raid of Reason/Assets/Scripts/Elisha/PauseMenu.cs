@@ -34,7 +34,7 @@ public class PauseMenu : MonoBehaviour
         m_isPaused = false;
         m_p1Cursor.SetController(1);
         m_p1InactivePosition = transform.position;
-        m_pauseMenu.SetActive(false);
+        m_pauseMenu.gameObject.SetActive(false);
     }
 
     public void Update()

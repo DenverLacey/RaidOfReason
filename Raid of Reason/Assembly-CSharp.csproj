@@ -110,7 +110,6 @@
     <Compile Include="Assets\Scripts\Afridi\KOTHObjective.cs" />
     <Compile Include="Assets\Scripts\Afridi\Kreiger.cs" />
     <Compile Include="Assets\Scripts\Afridi\ObjectiveManager.cs" />
-    <Compile Include="Assets\Scripts\Afridi\Respawn.cs" />
     <Compile Include="Assets\Scripts\Afridi\SkillManager.cs" />
     <Compile Include="Assets\Scripts\Afridi\SkillPopups.cs" />
     <Compile Include="Assets\Scripts\Afridi\SkillsAbilities.cs" />
@@ -163,6 +162,7 @@
     <Compile Include="Assets\Scripts\Elisha\BackButton.cs" />
     <Compile Include="Assets\Scripts\Elisha\BaseCharacter.cs" />
     <Compile Include="Assets\Scripts\Elisha\BlinkingText.cs" />
+    <Compile Include="Assets\Scripts\Elisha\DeathMenu.cs" />
     <Compile Include="Assets\Scripts\Elisha\HealthBarUI.cs" />
     <Compile Include="Assets\Scripts\Elisha\LevelManager.cs" />
     <Compile Include="Assets\Scripts\Elisha\MainMenu.cs" />
@@ -195,6 +195,7 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
     <None Include="Assets\3rd Party\Smash-CSS\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\3rd Party\DissolveEmissionShader\DissolveEmission.shader" />
+    <None Include="Assets\Scripts\Shaders\SplitScreenMask.shader" />
     <None Include="Assets\3rd Party\Particlecollection_Free samples\Plugins\Effect\Shader\effect_distortion_mask.shader" />
     <None Include="Assets\3rd Party\Particlecollection_Free samples\Material\JMO Assets\Cartoon FX Easy Editor\CartoonFX Easy Editor Readme.txt" />
     <None Include="Assets\3rd Party\Smash-CSS\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
@@ -212,6 +213,7 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\3rd Party\Smash-CSS\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\Scripts\Denver\Camera Effects\junk.txt" />
     <None Include="Assets\3rd Party\Smash-CSS\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\3rd Party\Smash-CSS\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
@@ -231,19 +233,19 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\3rd Party\Smash-CSS\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:/Users/s181330/Desktop/RaidOfReason/trunk/Raid of Reason/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>C:/Users/s181330/Desktop/Triumvirates/Raid of Reason/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>C:/Users/s181330/Desktop/RaidOfReason/trunk/Raid of Reason/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>C:/Users/s181330/Desktop/Triumvirates/Raid of Reason/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>C:/Users/s181330/Desktop/RaidOfReason/trunk/Raid of Reason/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>C:/Users/s181330/Desktop/Triumvirates/Raid of Reason/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:/Users/s181330/Desktop/RaidOfReason/trunk/Raid of Reason/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>C:/Users/s181330/Desktop/Triumvirates/Raid of Reason/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
-      <HintPath>C:/Users/s181330/Desktop/RaidOfReason/trunk/Raid of Reason/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+      <HintPath>C:/Users/s181330/Desktop/Triumvirates/Raid of Reason/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity 2018.3.8f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -447,19 +449,19 @@
       <HintPath>C:/Program Files/Unity 2018.3.8f1/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="DOTween">
-      <HintPath>C:/Users/s181330/Desktop/RaidOfReason/trunk/Raid of Reason/Assets/3rd Party/Smash-CSS/DOTween/DOTween.dll</HintPath>
+      <HintPath>C:/Users/s181330/Desktop/Triumvirates/Raid of Reason/Assets/3rd Party/Smash-CSS/DOTween/DOTween.dll</HintPath>
     </Reference>
     <Reference Include="XInputDotNetPure">
-      <HintPath>C:/Users/s181330/Desktop/RaidOfReason/trunk/Raid of Reason/Assets/3rd Party/Unity-XboxCtrlrInput-master/XboxCtrlrInput/Assets/Plugins/XInputDotNetPure.dll</HintPath>
+      <HintPath>C:/Users/s181330/Desktop/Triumvirates/Raid of Reason/Assets/3rd Party/Unity-XboxCtrlrInput-master/XboxCtrlrInput/Assets/Plugins/XInputDotNetPure.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
-      <HintPath>C:/Users/s181330/Desktop/RaidOfReason/trunk/Raid of Reason/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
+      <HintPath>C:/Users/s181330/Desktop/Triumvirates/Raid of Reason/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>C:/Users/s181330/Desktop/RaidOfReason/trunk/Raid of Reason/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
+      <HintPath>C:/Users/s181330/Desktop/Triumvirates/Raid of Reason/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
-      <HintPath>C:/Users/s181330/Desktop/RaidOfReason/trunk/Raid of Reason/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+      <HintPath>C:/Users/s181330/Desktop/Triumvirates/Raid of Reason/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity 2018.3.8f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

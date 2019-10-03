@@ -45,15 +45,6 @@ public class HealthBarUI : MonoBehaviour
                 m_healthBar.fillAmount = 0;
             }
 
-            if (m_character.m_currentHealth > m_character.m_maxHealth)
-            {
-                m_overhealBar.gameObject.SetActive(true);
-                m_overhealBar.fillAmount = m_character.m_currentHealth / m_character.m_maxHealth;
-            }
-            else
-            {
-                m_overhealBar.gameObject.SetActive(false);
-            }
 
             if (m_character.currentShield > 0)
             {
@@ -63,6 +54,11 @@ public class HealthBarUI : MonoBehaviour
             else
             {
                 m_shieldBar.gameObject.SetActive(false);
+            }
+
+            if (m_character.m_maxOverheal > 0)
+            {
+
             }
         }
     }

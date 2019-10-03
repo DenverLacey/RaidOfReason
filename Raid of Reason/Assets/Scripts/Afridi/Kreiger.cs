@@ -287,8 +287,6 @@ public class Kreiger : BaseCharacter
                     GameManager.Instance.Thea.currentShield = m_SSShieldsGiven;
                 }
             }
-
-
         }
     }
 
