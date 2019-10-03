@@ -72,12 +72,8 @@ public class OffscreenCameraController : MonoBehaviour
 			float angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
 			m_directionIndicator.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-			DebugTools.LogVariable("Angle", angle);
-
 			// move image to edge of screen
 			Vector3 position = transform.position;
-
-			DebugTools.LogVariable("X", null);
 
 			if (AngleIsInBetween(angle, 45, -45))
 			{
@@ -96,15 +92,11 @@ public class OffscreenCameraController : MonoBehaviour
 				if (angle > -180 && angle < 135)
 				{
 					position.x = Mathf.InverseLerp(-135, -180, angle) / 2f;
-					DebugTools.LogVariable("angle < -180", true);
 				}
 				else 
 				{
 					position.x = 1 - Mathf.InverseLerp(135, 180, angle) / 2f;
-					DebugTools.LogVariable("angle < -180", false);
 				}
-
-				DebugTools.LogVariable("X", position.x);
 			}
 			else
 			{

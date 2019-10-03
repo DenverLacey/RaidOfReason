@@ -245,34 +245,34 @@ public class Kenron : BaseCharacter
                 m_dashCollider.enabled = true;
                 m_dashDelayTimer = m_dashDelay;
                 m_dashStartPosition = transform.position;
-                if (!isActive && !m_InfiniteDash)
-                {
-                    m_statManager.dashDisplays[m_TempCharge].SetActive(false);
-                    m_TempCharge--;
-                }
-                m_currentCharges--;
-                
-
-                // set animator's trigger
-                m_animator.SetBool("Attack", true);
+				if (!isActive && !m_InfiniteDash)
+				{
+					m_statManager.dashDisplays[m_TempCharge].SetActive(false);
+					m_TempCharge--;
+				}
+				m_currentCharges--;
 
 
-                //if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, m_maxDashDistance, Utility.GetIgnoreMask("Enemy", "Player", "Ignore Raycast")))
-                //{
-                //    m_dashPosition = hit.point - transform.forward * m_dashBufferDistance;
-                //}
-                //else
-                //{
-                //    m_dashPosition = transform.position + transform.forward * m_maxDashDistance;
-                //}
+				// set animator's trigger
+				m_animator.SetBool("Attack", true);
 
-                //m_dashDistance = (m_dashPosition - m_dashStartPosition).magnitude;
 
-                //// calculate estimated time of dash
-                //m_estimatedDashTime = m_maxDashDistance / m_dashSpeed;
+				if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, m_maxDashDistance, LayerMask.GetMask("Environment")))
+				{
+					m_dashPosition = hit.point - transform.forward * m_dashBufferDistance;
+				}
+				else
+				{
+					m_dashPosition = transform.position + transform.forward * m_maxDashDistance;
+				}
 
-                // size hit box
-                Vector3 hitBoxSize = new Vector3(m_dashCollider.size.x, m_dashCollider.size.y, m_dashDistance);
+				m_dashDistance = (m_dashPosition - m_dashStartPosition).magnitude;
+
+				// calculate estimated time of dash
+				m_estimatedDashTime = m_maxDashDistance / m_dashSpeed;
+
+				// size hit box
+				Vector3 hitBoxSize = new Vector3(m_dashCollider.size.x, m_dashCollider.size.y, m_dashDistance);
                 m_dashCollider.size = hitBoxSize;
 
                 // rotate hit box
@@ -307,6 +307,8 @@ public class Kenron : BaseCharacter
 
                 // stop kenron
                 m_rigidbody.velocity = Vector3.zero;
+
+				transform.position = m_dashPosition;
 
                 // run delay timer
                 m_dashDelayTimer -= Time.deltaTime;

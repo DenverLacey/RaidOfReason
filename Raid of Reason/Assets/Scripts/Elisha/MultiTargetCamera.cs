@@ -19,78 +19,79 @@ public class MultiTargetCamera : MonoBehaviour
 	private float m_lerpAmount = 0.5f;
 
 	[SerializeField]
-	[Tooltip("Offset of camera")]
-	private Vector3 m_offset;
+	[Tooltip("How much the camera will rotate towards its destination per lerp step")]
+	private float m_rotLerpAmont = 0.01f;
 
-	//[SerializeField]
-	//[Tooltip("How much the camera will rotate towards its destination per lerp step")]
-	//private float m_rotLerpAmont = 0.01f;
+	[SerializeField]
+	[Tooltip("How sensitive the camera is to the size of the bounds")]
+	private float m_distanceScalar = 1f;
 
-	//[SerializeField]
-	//[Tooltip("How sensitive the camera is to the size of the bounds")]
-	//private float m_distanceScalar = 1f;
+	[SerializeField]
+	[Tooltip("Chages Y offset based on cameras Y position")]
+	private float m_yOffsetScalar = 0.025f;
 
-	//[SerializeField]
-	//[Tooltip("Chages Y offset based on cameras Y position")]
-	//private float m_yOffsetScalar = 0.025f;
+	[SerializeField]
+	[Tooltip("Minimum height of the camera")]
+	private float m_minYPosition = 20f;
 
-	//[SerializeField]
-	//[Tooltip("Offset of the camera")]
-	//private Vector2 m_offset = new Vector3(0, -30);
+	[SerializeField]
+	[Tooltip("Maximum height if the camera")]
+	private float m_maxYPosition = 35f;
 
-	//public float centerOffset = 10f;
+	[SerializeField]
+	[Tooltip("Offset of the camera")]
+	private Vector2 m_offset = new Vector3(0, -30);
 
-	//[SerializeField]
-	//[Min(0.001f)]
-	//private float m_paddiing = 0f;
+	public float centerOffset = 10f;
+
+	[SerializeField]
+	[Min(0.001f)]
+	private float m_paddiing = 0f;
 
 	/// <summary>
 	/// Calculates where the camera should go and lerps the camera to that position
 	/// </summary>
 	void FixedUpdate()
-    {
-		Vector3 desiredPosition = GameManager.Instance.FirstPlayer.transform.position + m_offset;
+	{
+		List<BaseCharacter> activePlayers = GameManager.Instance.Players;
+		activePlayers.RemoveAll(p => !p || p.playerState == BaseCharacter.PlayerState.DEAD);
+
+		if (activePlayers.Count == 0)
+			return;
+
+		var activePlayerPositions = new List<Vector3>();
+		foreach (var target in activePlayers)
+		{
+			activePlayerPositions.Add(target.transform.position);
+		}
+
+		var playerBounds = new Bounds(activePlayerPositions[0], Vector3.one * m_paddiing);
+		for (int i = 1; i < activePlayerPositions.Count; i++)
+		{
+			playerBounds.Encapsulate(activePlayerPositions[i]);
+		}
+
+		Vector3 averagePosition = playerBounds.center;
+		float desiredY = Mathf.Max(playerBounds.size.magnitude * m_distanceScalar, m_minYPosition);
+		desiredY = Mathf.Min(desiredY, m_maxYPosition);
+
+		Vector3 desiredPosition = new Vector3(
+			averagePosition.x + m_offset.x,
+			desiredY,
+			averagePosition.z + (m_offset.y * desiredY * m_yOffsetScalar)
+		);
+
 		transform.position = Vector3.Lerp(transform.position, desiredPosition, m_lerpAmount);
 
-		//List<BaseCharacter> activePlayers = GameManager.Instance.Players;
-		//activePlayers.RemoveAll(p => !p || p.playerState == BaseCharacter.PlayerState.DEAD);
+		Quaternion lookRotation = Quaternion.LookRotation((playerBounds.center - transform.position).normalized, Vector3.up);
+		lookRotation *= Quaternion.Euler(centerOffset, 0, 0);
 
-		//if (activePlayers.Count == 0)
-		//	return;
+		lookRotation.eulerAngles = new Vector3(
+			lookRotation.eulerAngles.x,
+			0,
+			0
+		);
 
-		//var activePlayerPositions = new List<Vector3>();
-		//foreach (var target in activePlayers)
-		//{
-		//	activePlayerPositions.Add(target.transform.position);
-		//}
-
-		//var playerBounds = new Bounds(activePlayerPositions[0], Vector3.one * m_paddiing);
-		//for (int i = 1; i < activePlayerPositions.Count; i++)
-		//{
-		//	playerBounds.Encapsulate(activePlayerPositions[i]);
-		//}
-
-		//Vector3 averagePosition = playerBounds.center;
-		//float desiredY = Mathf.Max(playerBounds.size.magnitude * m_distanceScalar, m_minYPosition);
-		//desiredY = Mathf.Min(desiredY, m_maxYPosition);
-
-		//Vector3 desiredPosition = new Vector3(
-		//	averagePosition.x + m_offset.x,
-		//	desiredY,
-		//	averagePosition.z + (m_offset.y * desiredY * m_yOffsetScalar)
-		//);
-
-		//transform.position = Vector3.Lerp(transform.position, desiredPosition, m_lerpAmount);
-
-		//Quaternion lookRotation = Quaternion.LookRotation((playerBounds.center - transform.position).normalized, Vector3.up);
-		//lookRotation *= Quaternion.Euler(centerOffset, 0, 0);
-
-		//lookRotation.eulerAngles = new Vector3(
-		//	lookRotation.eulerAngles.x,
-		//	0,
-		//	0
-		//);
-
-		//transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, m_rotLerpAmont);
+		transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, m_rotLerpAmont);
 	}
 }
