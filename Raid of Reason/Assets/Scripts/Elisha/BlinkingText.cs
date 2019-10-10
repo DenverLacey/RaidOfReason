@@ -10,6 +10,7 @@ using UnityEngine;
 using TMPro;
 using DG.Tweening;
 using XboxCtrlrInput;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class BlinkingText : MonoBehaviour
@@ -18,6 +19,7 @@ public class BlinkingText : MonoBehaviour
     public Color textColorNoAlpha;
     public GameObject mainMenu;
     public GameObject titleScreen;
+    
 
     public void Start()
     {
@@ -40,7 +42,6 @@ public class BlinkingText : MonoBehaviour
             titleScreen.SetActive(false);
         }
     }
-
     public void Update()
     {
         if (XCI.GetButtonDown(XboxButton.Start, XboxController.First))
