@@ -164,6 +164,7 @@ public abstract class BaseCharacter : MonoBehaviour
     /// </summary>
     protected virtual void Update()
     {
+
         if (m_pauseInfo.m_isPaused)
             return;
 
@@ -236,8 +237,8 @@ public abstract class BaseCharacter : MonoBehaviour
 
             if (CanMove)
 			{
-				Vector3 movePosition = transform.position + input * m_movementSpeed * Time.deltaTime;
-				m_rigidbody.MovePosition(movePosition);
+                Vector3 movePosition = transform.position + input * m_movementSpeed * Time.deltaTime;
+                m_rigidbody.MovePosition(movePosition);
 			}
 
 			if (CanRotate)
