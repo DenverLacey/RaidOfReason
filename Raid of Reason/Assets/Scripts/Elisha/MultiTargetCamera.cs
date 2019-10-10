@@ -23,8 +23,8 @@ public class MultiTargetCamera : MonoBehaviour
 	private float m_rotLerpAmont = 0.01f;
 
 	[SerializeField]
-	[Tooltip("How sensitive the camera is to the size of the bounds")]
-	private float m_distanceScalar = 1f;
+	[Tooltip("How close two players have to be to be considered a group")]
+	private float m_maxGroupDistance = 50f;
 
 	[SerializeField]
 	[Tooltip("Chages Y offset based on cameras Y position")]
@@ -53,8 +53,7 @@ public class MultiTargetCamera : MonoBehaviour
 	/// </summary>
 	void FixedUpdate()
 	{
-		List<BaseCharacter> activePlayers = GameManager.Instance.Players;
-		activePlayers.RemoveAll(p => !p || p.playerState == BaseCharacter.PlayerState.DEAD);
+		List<BaseCharacter> activePlayers = GameManager.Instance.AlivePlayers;
 
 		if (activePlayers.Count == 0)
 			return;
@@ -71,8 +70,35 @@ public class MultiTargetCamera : MonoBehaviour
 			playerBounds.Encapsulate(activePlayerPositions[i]);
 		}
 
-		Vector3 averagePosition = playerBounds.center;
-		float desiredY = Mathf.Max(playerBounds.size.magnitude * m_distanceScalar, m_minYPosition);
+		Vector3 averagePosition = activePlayerPositions[0];
+
+		// bias average towards players close to each other
+		foreach (var target in activePlayerPositions)
+		{
+			var closeTargets = new List<Vector3>();
+			foreach (var other in activePlayerPositions)
+			{
+				if (other == target)
+					continue;
+
+				float sqrDistance = (target - other).sqrMagnitude;
+
+				if (sqrDistance < m_maxGroupDistance * m_maxGroupDistance)
+				{
+					closeTargets.Add(other);
+				}
+			}
+
+			if (closeTargets.Count != 0)
+			{
+				averagePosition = target;
+				foreach (var close in closeTargets)
+					averagePosition += close;
+				averagePosition /= closeTargets.Count + 1;
+			}
+		}
+
+		float desiredY = Mathf.Max(playerBounds.size.magnitude * m_maxGroupDistance, m_minYPosition);
 		desiredY = Mathf.Min(desiredY, m_maxYPosition);
 
 		Vector3 desiredPosition = new Vector3(
@@ -83,7 +109,7 @@ public class MultiTargetCamera : MonoBehaviour
 
 		transform.position = Vector3.Lerp(transform.position, desiredPosition, m_lerpAmount);
 
-		Quaternion lookRotation = Quaternion.LookRotation((playerBounds.center - transform.position).normalized, Vector3.up);
+		Quaternion lookRotation = Quaternion.LookRotation((averagePosition - transform.position).normalized, Vector3.up);
 		lookRotation *= Quaternion.Euler(centerOffset, 0, 0);
 
 		lookRotation.eulerAngles = new Vector3(

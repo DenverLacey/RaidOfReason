@@ -87,7 +87,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField]
 	private List<EnemyTypeBehaviourTreePair> m_behaviourTrees;
 
-	private Dictionary<EnemyType, BehaviourTree> m_behaviourTreeDict = new Dictionary<EnemyType, BehaviourTree>();
+	public Dictionary<EnemyType, BehaviourTree> BehaviourTrees { get; private set; }
 
 	[SerializeField]
 	private List<EnemyTypeGameObjectsPair> m_attackPrefabs;
@@ -95,13 +95,13 @@ public class EnemyManager : MonoBehaviour
 	private Dictionary<EnemyType, GameObject[]> m_attackPrefabDict = new Dictionary<EnemyType, GameObject[]>();
 
 	[SerializeField]
-	private GameObject m_damageIndicatorPrefab; 
-
-	private List<EnemyData> m_enemies = new List<EnemyData>();
+	private GameObject m_damageIndicatorPrefab;
 
     // Start is called before the first frame update
     void Start() 
 	{
+		BehaviourTrees = new Dictionary<EnemyType, BehaviourTree>();
+
 		// move data from lists into dictionaries
         foreach (var range in m_viewRanges)				{ m_viewRangeDict.Add(range.key, range.value); }
 		foreach (var priority in m_characterPriorities) { m_characterPriorityDict.Add(priority.key, priority.value); }
@@ -110,10 +110,8 @@ public class EnemyManager : MonoBehaviour
         foreach (var cooldown in m_attackCooldowns)		{ m_attackCooldownDict.Add(cooldown.key, cooldown.value); }
         foreach (var health in m_maxHealths)			{ m_maxHealthDict.Add(health.key, health.value); }
         foreach (var damage in m_attackDamages)			{ m_attackDamageDict.Add(damage.key, damage.value); }
-        foreach (var tree in m_behaviourTrees)			{ m_behaviourTreeDict.Add(tree.key, tree.value); }
+        foreach (var tree in m_behaviourTrees)			{ BehaviourTrees.Add(tree.key, tree.value); }
 		foreach (var prefab in m_attackPrefabs)			{ m_attackPrefabDict.Add(prefab.key, prefab.value); }
-
-		ObjectPooling.CreateObjectPool("EnemyDeathParticle", 20);
     }
 
 	/// <summary>
@@ -122,28 +120,6 @@ public class EnemyManager : MonoBehaviour
 	/// </summary>
     void FixedUpdate() 
 	{
-		// remove all destroyed enemies from list
-		m_enemies.RemoveAll(enemy => !enemy);
-
-		// execute associated behaviour tree on each enemy
-		foreach (EnemyData enemy in m_enemies) 
-		{
-			if (enemy.PendingBehaviour)
-			{
-				Behaviour.Result result = enemy.ExecutePendingBehaviour();
-
-				if (result != Behaviour.Result.PENDING_ABORT &&
-					result != Behaviour.Result.PENDING_COMPOSITE &&
-					result != Behaviour.Result.PENDING_MONO)
-				{
-					enemy.PendingBehaviour = null;
-				}
-			}
-			else
-			{
-				m_behaviourTreeDict[enemy.Type].Execute(enemy);
-			}
-        }
     }
 
 	/// <summary>
@@ -152,7 +128,7 @@ public class EnemyManager : MonoBehaviour
 	/// <param name="enemy">
 	/// Enemy to initialise
 	/// </param>
-    private void InitEnemy(EnemyData enemy) 
+    public void InitEnemy(EnemyData enemy) 
 	{
 		enemy.Init(
 			m_viewRangeDict[enemy.Type], 
@@ -165,15 +141,5 @@ public class EnemyManager : MonoBehaviour
 			m_damageIndicatorPrefab, 
 			m_attackPrefabDict[enemy.Type]
 		);
-
-		m_enemies.Add(enemy);
     }
-
-	private void OnTriggerEnter(Collider other)
-	{
-		if (other.tag == "Enemy")
-		{
-			InitEnemy(other.GetComponent<EnemyData>());
-		}
-	}
 }

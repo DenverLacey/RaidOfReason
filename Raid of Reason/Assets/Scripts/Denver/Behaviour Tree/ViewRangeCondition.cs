@@ -49,7 +49,7 @@ public class ViewRangeCondition : Behaviour
 				shouldChange = true;
 			}
 
-			if (shouldChange)
+			if (shouldChange && agent.Zone.IsPointInZone(closestTar))
 			{
 				closestSqrDist = sqrDistance;
 				closestTar = player.transform.position;

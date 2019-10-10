@@ -22,6 +22,9 @@ public class BoxGizmo : MonoBehaviour
 	/// </summary>
 	private void OnDrawGizmos()
 	{
+		if (!m_collider)
+			return;
+
 		// draw fill colour cube
 		Gizmos.color = m_colour * m_alpha;
 		Gizmos.DrawCube(m_collider.transform.position, m_collider.size);

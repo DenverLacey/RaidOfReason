@@ -50,6 +50,12 @@ public class OffscreenCameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		if (!m_target)
+		{
+			m_activator.gameObject.SetActive(false);
+			return;
+		}
+
 		Vector3 viewportPosition = m_mainCamera.WorldToViewportPoint(m_target.position);
 		viewportPosition *= viewportPosition.z > 0 ? 1 : -1;
 

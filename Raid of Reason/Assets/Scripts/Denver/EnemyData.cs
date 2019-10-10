@@ -102,6 +102,8 @@ public class EnemyData : MonoBehaviour
 
 	public Rigidbody Rigidbody { get; private set; }
 
+	public EnemyZone Zone { get; set; }
+
 	[SerializeField]
 	[Tooltip("Renderer of Enemy's mesh")]
 	private Renderer m_renderer;
