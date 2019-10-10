@@ -13,8 +13,9 @@ using XboxCtrlrInput;
 using UnityEngine.Events;
 using Cinemachine;
 
+
 [RequireComponent(typeof(TextMeshProUGUI))]
-public class BlinkingText : MonoBehaviour
+public class TitleScreenMenu : MonoBehaviour
 {
     public CinemachineVirtualCamera VirtualCamera1;
     public CinemachineVirtualCamera VirtualCamera2;
