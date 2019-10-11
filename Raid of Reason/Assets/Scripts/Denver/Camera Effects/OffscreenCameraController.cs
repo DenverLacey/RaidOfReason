@@ -50,7 +50,7 @@ public class OffscreenCameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if (!m_target || m_target.gameObject.activeSelf)
+		if (!m_target || !m_target.gameObject.activeSelf)
 		{
 			m_activator.gameObject.SetActive(false);
 			return;
