@@ -26,14 +26,13 @@ public class Wander : Behaviour
 	public override Result Execute(EnemyData agent) 
 	{
 		// don't find new position if already wandering
-		if (!agent.Pathfinder.AtPosition(agent.Target)) 
+		if ((agent.Pathfinder.GetDestination() - agent.transform.position).sqrMagnitude >= agent.transform.lossyScale.y * agent.transform.lossyScale.y + 3f) 
 		{
 			return SUCCESS;
 		}
 
-		Vector3 lookAt = agent.Target;
 		agent.Target = agent.Zone.GetRandomPoint(agent.transform.position.y);
-		agent.Pathfinder.SetDestination(agent.Target, lookAt);
+		agent.Pathfinder.SetDestination(agent.Target);
 
 		return SUCCESS;
 	}

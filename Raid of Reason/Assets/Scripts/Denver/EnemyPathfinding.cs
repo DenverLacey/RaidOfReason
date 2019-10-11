@@ -122,11 +122,9 @@ public class EnemyPathfinding : MonoBehaviour
 	/// <param name="destination">
 	/// New destination
 	/// </param>
-	public void SetDestination(Vector3 destination, Vector3? lookAt = null)
+	public void SetDestination(Vector3 destination)
 	{
 		destination.y = 0f;
-
-		destination = m_enemy.Zone.ClampPoint(destination);
 
 		if (!AtPosition(destination))
 		{
@@ -137,13 +135,6 @@ public class EnemyPathfinding : MonoBehaviour
 		else
 		{
 			StopPathing();
-		}
-
-		if (lookAt != null)
-		{
-			Vector3 look = (Vector3)lookAt;
-			Vector3 forward = (look - transform.position).normalized;
-			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(forward), 1f / m_steeringSpeed);
 		}
 	}
 
