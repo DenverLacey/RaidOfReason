@@ -83,7 +83,7 @@ public class EnemyProjectile : MonoBehaviour
         }
 
 		// if hit some object
-		if (other.tag != "EnemyManager" && other.tag != "Enemy" && other.name != "projectile(Clone)" && other.name != "Wall Detector")
+		if (other.tag != "EnemyManager"&& other.tag != "EnemyZone" && other.tag != "Enemy" && other.name != "projectile(Clone)" && other.name != "Wall Detector")
 		{
 			KillProjectile();
 		}

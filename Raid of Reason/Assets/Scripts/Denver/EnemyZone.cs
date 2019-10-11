@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MeshRenderer))]
 public class EnemyZone : MonoBehaviour
 {
+	[Tooltip("distance from zone edge all players must be for zone to be culled")]
+	[SerializeField]
+	private Vector2 m_cullDistance;
+	private Vector3 m_cullDistanceV3;
+
 	private List<EnemyData> m_enemies;
 	private List<BaseCharacter> m_baseCharacters;
 
@@ -17,6 +21,8 @@ public class EnemyZone : MonoBehaviour
 
 	private BoxCollider[] m_colliders;
 
+	private List<Bounds> m_cullBoundaries;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,10 +31,36 @@ public class EnemyZone : MonoBehaviour
 		m_deathParticlePool = ObjectPooling.CreateObjectPool("EnemyDeathParticle", 20);
 		m_enemyManager = FindObjectOfType<EnemyManager>();
 		m_colliders = GetComponentsInChildren<BoxCollider>();
+
+		m_cullBoundaries = new List<Bounds>();
+		m_cullDistanceV3 = new Vector3(m_cullDistance.x, 0f, m_cullDistance.y);
+		foreach (var collider in m_colliders)
+		{
+			Bounds boundary = collider.bounds;
+			boundary.min -= m_cullDistanceV3;
+			boundary.max += m_cullDistanceV3;
+			m_cullBoundaries.Add(boundary);
+		}
     }
 	
     void FixedUpdate()
     {
+		m_active = false;
+		foreach (var player in GameManager.Instance.AlivePlayers)
+		{
+			foreach (var cullBoundary in m_cullBoundaries)
+			{
+				if (cullBoundary.min.x <= player.transform.position.x && player.transform.position.x <= cullBoundary.max.x &&
+					cullBoundary.min.z <= player.transform.position.z && player.transform.position.z <= cullBoundary.max.z)
+				{
+					m_active = true;
+					goto PlayerWithinCullDistance;
+				}
+			}
+		}
+
+		PlayerWithinCullDistance:
+
 		if (m_active)
 		{
 			// reactivate enemies
@@ -81,27 +113,13 @@ public class EnemyZone : MonoBehaviour
 		{
 			enemy = other.GetComponent<EnemyData>();
 		}
-		else if (other.tag == "EnemyEnemyCollision")
-		{
-			enemy = other.GetComponentInParent<EnemyData>();
-		}
 
-		if (enemy)
+		if (enemy && !m_enemies.Contains(enemy))
 		{
 			m_enemyManager.InitEnemy(enemy);
 			m_enemies.Add(enemy);
 			enemy.Zone = this;
 		}
-	}
-
-	private void OnBecameInvisible()
-	{
-		m_active = false;
-	}
-
-	private void OnBecameVisible()
-	{
-		m_active = true;
 	}
 
 	public Vector3 GetRandomPoint(float y)
@@ -123,7 +141,7 @@ public class EnemyZone : MonoBehaviour
 		return new Vector3(x, y, z);
 	}
 
-	public bool IsPointInZone(Vector3 point)
+	public bool ContainsPoint(Vector3 point)
 	{
 		foreach (var collider in m_colliders)
 		{
@@ -131,6 +149,34 @@ public class EnemyZone : MonoBehaviour
 				return true;
 		}
 		return false;
+	}
+
+	public Vector3 ClampPoint(Vector3 point)
+	{
+		point.y = 0f;
+		Vector3 closestClamped = point;
+		float closestSqrDistance = float.MaxValue;
+
+		foreach (var collider in m_colliders)
+		{
+			if (IsPointInCollider(point, collider))
+			{
+				return point;
+			}
+
+			Vector3 clamped = point;
+			clamped.x = Mathf.Clamp(clamped.x, collider.bounds.min.x, collider.bounds.max.x);
+			clamped.z = Mathf.Clamp(clamped.z, collider.bounds.min.z, collider.bounds.max.z);
+
+			float sqrDistance = (clamped - point).sqrMagnitude;
+			if (sqrDistance < closestSqrDistance)
+			{
+				closestSqrDistance = sqrDistance;
+				closestClamped = clamped;
+			}
+		}
+
+		return closestClamped;
 	}
 
 	private bool IsPointInCollider(Vector3 point, BoxCollider collider)

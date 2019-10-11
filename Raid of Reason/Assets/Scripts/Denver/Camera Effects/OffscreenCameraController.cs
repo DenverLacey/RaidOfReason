@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OffscreenCameraController : MonoBehaviour
 {
-	[Tooltip("Oject to Target")]
+	[Tooltip("Transform of the object to follow")]
 	[SerializeField]
 	private Transform m_target;
 
@@ -50,7 +50,7 @@ public class OffscreenCameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if (!m_target)
+		if (!m_target || m_target.gameObject.activeSelf)
 		{
 			m_activator.gameObject.SetActive(false);
 			return;
