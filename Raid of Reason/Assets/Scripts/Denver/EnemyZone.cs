@@ -6,14 +6,13 @@ public class EnemyZone : MonoBehaviour
 {
 	[Tooltip("distance from zone edge all players must be for zone to be culled")]
 	[SerializeField]
-	private Vector2 m_cullDistance;
+	private Vector2 m_cullDistance = new Vector2(30, 30);
 	private Vector3 m_cullDistanceV3;
 
 	private List<EnemyData> m_enemies;
 	private List<BaseCharacter> m_baseCharacters;
 
 	private bool m_active;
-	private bool m_enemiesDeactivated;
 
 	private List<GameObject> m_deathParticlePool;
 
@@ -63,12 +62,11 @@ public class EnemyZone : MonoBehaviour
 
 		if (m_active)
 		{
-			// reactivate enemies
-			m_enemies.ForEach(e => e.gameObject.SetActive(true));
-			m_enemiesDeactivated = false;
-
 			// remove all destroyed enemies from list
 			m_enemies.RemoveAll(enemy => !enemy);
+
+			// reactivate enemies
+			m_enemies.ForEach(e => e.gameObject.SetActive(true));
 
 			// execute associated behaviour tree for each enemy
 			foreach (EnemyData enemy in m_enemies)
@@ -92,15 +90,7 @@ public class EnemyZone : MonoBehaviour
 		}
 		else
 		{
-			if (m_enemies.Count == 0)
-			{
-				m_enemiesDeactivated = false;
-			}
-			else
-			{
-				m_enemies.ForEach(e => e.gameObject.SetActive(false));
-				m_enemiesDeactivated = true;
-			}
+			DeactivateReturnedEnemies();
 		}
 
     }
@@ -187,5 +177,19 @@ public class EnemyZone : MonoBehaviour
 			return true;
 		}
 		return false;
+	}
+
+	private void DeactivateReturnedEnemies()
+	{
+		foreach (var enemy in m_enemies)
+		{
+			if (!ContainsPoint(enemy.transform.position))
+			{
+				enemy.Pathfinder.SetDestination(enemy.Zone.transform.position);
+				continue;
+			}
+
+			enemy.gameObject.SetActive(false);
+		}
 	}
 }

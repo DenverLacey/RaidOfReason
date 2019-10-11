@@ -5,6 +5,10 @@ using UnityEngine;
 public class BoxGizmo : MonoBehaviour
 {
 	[SerializeField]
+	[Tooltip("Toggle Gizmo on and off")]
+	private bool m_drawGizmo = true;
+
+	[SerializeField]
 	[Tooltip("Colour of Gizmo")]
 	private Color m_colour = Color.red;
 
@@ -14,23 +18,29 @@ public class BoxGizmo : MonoBehaviour
 	private float m_alpha = 0.2f;
 
 	[SerializeField]
-	[Tooltip("Collider to use as Gizmo")]
-	private BoxCollider m_collider;
+	[Tooltip("Colliders to use as Gizmo")]
+	private BoxCollider[] m_colliders;
 
 	/// <summary>
 	/// Draws Box Collider as cube gizmo
 	/// </summary>
 	private void OnDrawGizmos()
 	{
-		if (!m_collider)
+		if (!m_drawGizmo)
 			return;
 
-		// draw fill colour cube
-		Gizmos.color = m_colour * m_alpha;
-		Gizmos.DrawCube(m_collider.transform.position, m_collider.size);
+		foreach (var collider in m_colliders)
+		{
+			if (!collider || !collider.enabled)
+				continue;
 
-		// draw wireframe
-		Gizmos.color = m_colour;
-		Gizmos.DrawWireCube(m_collider.transform.position, m_collider.size);
+			// draw fill colour cube
+			Gizmos.color = m_colour * m_alpha;
+			Gizmos.DrawCube(transform.position + collider.center, collider.size);
+
+			// draw wireframe
+			Gizmos.color = m_colour;
+			Gizmos.DrawWireCube(transform.position + collider.center, collider.size);
+		}
 	}
 }
