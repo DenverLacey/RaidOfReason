@@ -14,7 +14,7 @@ public class MainMenu : MonoBehaviour
 {
     public void StartGame()
     {
-        LevelManager.LoadNextLevel();
+        //LevelManager.LoadNextLevel();
     }
 
     public void Quit()

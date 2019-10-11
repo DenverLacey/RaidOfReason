@@ -13,8 +13,11 @@ public class HealthBarUI : MonoBehaviour
     [SerializeField]
     private BaseCharacter m_character;
 
-    [SerializeField]
-    private Image m_healthBar;
+    public Image m_healthBar;
+    public Image m_damagedHealth;
+
+    private float m_prevHealth;
+    public float lerpAmount = 0.2f;
 
     [SerializeField]
     private Image m_shieldBar;
@@ -27,6 +30,7 @@ public class HealthBarUI : MonoBehaviour
         m_healthBar.gameObject.SetActive(true);
         m_overhealBar.gameObject.SetActive(false);
         m_shieldBar.gameObject.SetActive(false);
+        m_prevHealth = m_character.m_currentHealth;
     }
 
     // Update is called once per frame
@@ -39,12 +43,15 @@ public class HealthBarUI : MonoBehaviour
             {
                 // This will output visually how much health the players have.
                 m_healthBar.fillAmount = m_character.m_currentHealth / m_character.m_maxHealth;
+                if(m_prevHealth != m_character.m_currentHealth)
+                {
+                    OnDelayDone();
+                }
             }
             else
             {
                 m_healthBar.fillAmount = 0;
             }
-
 
             if (m_character.currentShield > 0)
             {
@@ -60,6 +67,17 @@ public class HealthBarUI : MonoBehaviour
             {
 
             }
+        }
+    }
+
+    public void OnDelayDone()
+    {
+        m_damagedHealth.fillAmount = Mathf.Lerp(m_damagedHealth.fillAmount, m_healthBar.fillAmount, lerpAmount);
+
+        if (m_damagedHealth.fillAmount == m_healthBar.fillAmount)
+        {
+            m_damagedHealth.fillAmount = m_healthBar.fillAmount;
+            m_prevHealth = m_character.m_currentHealth;
         }
     }
 }

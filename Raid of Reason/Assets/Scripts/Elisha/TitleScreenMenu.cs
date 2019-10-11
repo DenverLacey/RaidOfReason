@@ -13,7 +13,6 @@ using XboxCtrlrInput;
 using UnityEngine.Events;
 using Cinemachine;
 
-
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class TitleScreenMenu : MonoBehaviour
 {

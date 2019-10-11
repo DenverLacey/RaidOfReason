@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using XboxCtrlrInput;
 using XInputDotNetPure;
+using UnityEngine.UI;
+using DG.Tweening;
 
 /* 
  * Author: Elisha, Denver, Afridi
@@ -88,7 +90,7 @@ public abstract class BaseCharacter : MonoBehaviour
 
     [Tooltip("A List of How Many Skill Upgrades the Players Have")]
     public List<SkillsAbilities> m_skillUpgrades = new List<SkillsAbilities>();
-
+    private HealthBarUI m_healthBarRef;
 
     [HideInInspector]
     public bool m_controllerOn;
@@ -141,6 +143,7 @@ public abstract class BaseCharacter : MonoBehaviour
         currentShield = 0;
         skillManager = FindObjectOfType<SkillManager>();
         m_original = m_spriteRend.colorOverLifetime;
+        m_healthBarRef = FindObjectOfType<HealthBarUI>();
 
         //if (m_skillPopups.Count > 0)
         //{
@@ -294,10 +297,14 @@ public abstract class BaseCharacter : MonoBehaviour
         {
             // Take an amount of damage from the players current health.
             m_currentHealth -= damage * m_vulnerability;
+
+            HealthBarUI health = FindObjectOfType<HealthBarUI>();
+
+            health.m_healthBar.transform.DOPunchPosition( Vector3.right * 3 * 3f, .3f, 10, 1);
+
             // Player damage indicator.
             IndicateHit();
         }
-
 
         // If player has no health.
         if (m_currentHealth <= 0.0f)
