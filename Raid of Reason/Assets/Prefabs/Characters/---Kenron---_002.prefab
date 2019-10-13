@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3449384978197968183
 Transform:
   m_ObjectHideFlags: 0
@@ -139,6 +139,7 @@ MonoBehaviour:
   playerState: 0
   m_maxHealth: 100
   m_currentHealth: 0
+  m_maxOverheal: 0
   m_movementSpeed: 15
   m_minDamage: 30
   m_maxDamage: 35
@@ -148,6 +149,7 @@ MonoBehaviour:
   m_shieldDegenerationTimer: 0
   m_shieldDegenerateAmount: 0
   controller: 1
+  playerIndex: 0
   skillManager: {fileID: 0}
   m_skillUpgrades: []
   m_controllerOn: 0
@@ -171,11 +173,6 @@ MonoBehaviour:
   m_maxSADamage: 100
   m_SAFlameSpeed: 35
   m_BTDegen: 3
-  dashDisplays:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   m_kenronParticle: {fileID: 2664020832024295565}
   m_startParticle: {fileID: 5776302706275310350}
   m_statManager: {fileID: 0}

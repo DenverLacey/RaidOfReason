@@ -5,19 +5,17 @@ using UnityEngine;
 using UnityEngine.UI;
 /*
  * Author: Afridi Rahim, Denver Lacey
-
+    
 */
 public class ObjectiveManager : MonoBehaviour
 {
     [SerializeField]
-    [Tooltip("Room's Objective")]
-    private BaseObjective m_objective;
-    [Tooltip("Scene Index To Switch to")]
-    public int sceneIndex;
-    [Tooltip("How long the current scene will wait until it loads the next scene")]
-    public float timeUntilSceneChange;
+    [Tooltip("Objectives should be added in order of progression")]
+    private List<BaseObjective> m_objective = new List<BaseObjective>();
+    private List<BaseObjective> m_currentObjective = new List<BaseObjective>();
 
     public bool ObjectiveCompleted;
+    public bool ObjectiveTriggered;
 
     public Text objectiveTimer;
     public Text objectiveDescription;
@@ -32,40 +30,53 @@ public class ObjectiveManager : MonoBehaviour
 
     private void Awake()
     {
-        if (m_objective)
+        m_currentObjective.Add(m_objective[0]);
+        if (m_currentObjective[0])
         {
-            m_objective.Awake();
+            #region Objective Init
+            m_currentObjective[0].Awake();
             objectiveComplete.SetActive(false);
             objectiveFailed.SetActive(false);
             skillTreeUnlock.SetActive(false);
-            objectiveTimer.text = m_objective.Timer().ToString("f0");
-            objectiveDescription.text = m_objective.GrabDescription();
-            showTitle.text = m_objective.GrabTitle();
+            objectiveTimer.gameObject.SetActive(false);
+            objectiveDescription.gameObject.SetActive(false);
+            showTitle.gameObject.SetActive(false);
+            #endregion
         }
         ObjectiveCompleted = false;
+        ObjectiveTriggered = false;
     }
 
     private void Update()
     {
-        if (m_objective)
+        if (m_currentObjective[0] && ObjectiveTriggered == true)
         {
-            m_isDone = m_objective.IsDone();
-            m_hasFailed = m_objective.HasFailed();
+            objectiveTimer.gameObject.SetActive(true);
+            objectiveDescription.gameObject.SetActive(true);
+            showTitle.gameObject.SetActive(true);
 
-            m_objective.Update();
+            #region Current Objective Init
+                m_isDone = m_currentObjective[0].IsDone();
+                m_hasFailed = m_currentObjective[0].HasFailed();
+                objectiveDescription.text = m_currentObjective[0].GrabDescription();
+                showTitle.text = m_currentObjective[0].GrabTitle();
+                objectiveTimer.text = m_currentObjective[0].Timer().ToString("f0");
+                #endregion
+
+            m_currentObjective[0].Update();
 
             if (m_isDone && !m_hasFailed)
             {
-                StartCoroutine(TimeTillChange());
+                StartCoroutine(ObjectiveLoop());
             }
             else if (m_hasFailed && !m_isDone)
             {
-                StartCoroutine(TimeTillChange());
+                StartCoroutine(ObjectiveLoop());
             }
 
-            if (m_objective.Timer() > 0)
+            if (m_currentObjective[0].Timer() > 0)
             {
-                objectiveTimer.text = m_objective.Timer().ToString("f0");
+                objectiveTimer.text = m_currentObjective[0].Timer().ToString("f0");
             }
             else
             {
@@ -74,24 +85,44 @@ public class ObjectiveManager : MonoBehaviour
         }
     }
 
-    IEnumerator TimeTillChange()
+    IEnumerator ObjectiveLoop()
     {
         if (m_isDone && !m_hasFailed)
-        {ObjectiveCompleted = true;
-            Debug.LogFormat("{0} is complete", m_objective);
-            objectiveComplete.SetActive(true);
-            yield return new WaitForSecondsRealtime(3);
-            Time.timeScale = 0.0f;
-            skillTreeUnlock.SetActive(true);
-            yield return new WaitForSecondsRealtime(timeUntilSceneChange);
-            SceneManager.LoadScene(sceneIndex);
-        }
+        {
+            m_objective.Remove(m_objective[0]);
+            m_currentObjective.Remove(m_currentObjective[0]);
 
+            ObjectiveCompleted = true;
+            // Reset Trigger
+            ObjectiveTriggered = false;
+
+            objectiveTimer.gameObject.SetActive(false);
+            objectiveDescription.gameObject.SetActive(false);
+            showTitle.gameObject.SetActive(false);
+
+            objectiveComplete.SetActive(true);
+
+            yield return new WaitForSecondsRealtime(5);
+
+            m_objective.Add(m_currentObjective[0]);
+
+            #region Objective Descriptions
+            // Replaces Old objective texts with new objective
+            objectiveDescription.text = objectiveDescription.text.Replace(m_currentObjective[0].GrabDescription(), m_currentObjective[0].GrabDescription());
+            showTitle.text = showTitle.text.Replace(m_currentObjective[0].GrabTitle(), m_currentObjective[0].GrabTitle());
+            objectiveTimer.text = objectiveTimer.text.Replace(m_currentObjective[0].Timer().ToString("f0"), m_currentObjective[0].Timer().ToString("f0"));
+            #endregion
+
+            objectiveComplete.SetActive(false);
+        }
         if (m_hasFailed && !m_isDone)
         {
-            Debug.LogFormat("{0} has been failed", m_objective);
+            objectiveTimer.gameObject.SetActive(false);
+            objectiveDescription.gameObject.SetActive(false);
+            showTitle.gameObject.SetActive(false);
+            ObjectiveTriggered = false;
             objectiveFailed.SetActive(true);
-            yield return new WaitForSecondsRealtime(timeUntilSceneChange);
+            yield return new WaitForSecondsRealtime(5);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
