@@ -299,8 +299,8 @@ public abstract class BaseCharacter : MonoBehaviour
             m_currentHealth -= damage * m_vulnerability;
 
             HealthBarUI health = FindObjectOfType<HealthBarUI>();
-
-            health.m_healthBar.transform.DOPunchPosition( Vector3.right * 3 * 3f, .3f, 10, 1);
+            // Health bar UI shake
+            health.m_healthUI.transform.DOPunchPosition(Vector3.right * 3 * 3f, .3f, 10, 1);
 
             // Player damage indicator.
             IndicateHit();

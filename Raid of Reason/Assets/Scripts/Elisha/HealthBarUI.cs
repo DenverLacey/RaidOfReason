@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 /* 
  * Author: Elisha Anagnostakis, Afridi Rahim
@@ -13,17 +14,24 @@ public class HealthBarUI : MonoBehaviour
     [SerializeField]
     private BaseCharacter m_character;
 
-    public Image m_healthBar;
-    public Image m_damagedHealth;
+    [SerializeField]
+    private Image m_healthBar;
 
-    private float m_prevHealth;
-    public float lerpAmount = 0.2f;
+    public Image m_healthUI;
+
+    [SerializeField]
+    private Image m_damagedHealth;
+
+    [SerializeField]
+    [Tooltip("How much the damaged health sprite will lerp when damaged.")]
+    private float m_lerpAmount = 0.2f;
 
     [SerializeField]
     private Image m_shieldBar;
 
     [SerializeField]
     private Image m_overhealBar;
+    private float m_prevHealth;
 
     void Awake()
     {
@@ -43,7 +51,7 @@ public class HealthBarUI : MonoBehaviour
             {
                 // This will output visually how much health the players have.
                 m_healthBar.fillAmount = m_character.m_currentHealth / m_character.m_maxHealth;
-                if(m_prevHealth != m_character.m_currentHealth)
+                if (m_prevHealth != m_character.m_currentHealth)
                 {
                     OnDelayDone();
                 }
@@ -51,6 +59,7 @@ public class HealthBarUI : MonoBehaviour
             else
             {
                 m_healthBar.fillAmount = 0;
+                m_damagedHealth.fillAmount = 0;
             }
 
             if (m_character.currentShield > 0)
@@ -70,9 +79,12 @@ public class HealthBarUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// When players health gets damaged, the damaged health sprite will slowly decrease fill amount.
+    /// </summary>
     public void OnDelayDone()
     {
-        m_damagedHealth.fillAmount = Mathf.Lerp(m_damagedHealth.fillAmount, m_healthBar.fillAmount, lerpAmount);
+        m_damagedHealth.fillAmount = Mathf.Lerp(m_damagedHealth.fillAmount, m_healthBar.fillAmount, m_lerpAmount);
 
         if (m_damagedHealth.fillAmount == m_healthBar.fillAmount)
         {
