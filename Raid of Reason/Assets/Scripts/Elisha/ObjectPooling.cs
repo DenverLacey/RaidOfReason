@@ -21,7 +21,7 @@ public class ObjectPooling : MonoBehaviour
     #region Object Pool Checks
 
     // determines if a pool for a certain prefab has been created
-    private static bool PoolExistsForPrefab(string prefabPath)
+    public static bool PoolExistsForPrefab(string prefabPath)
     {
         return objectPools.ContainsKey(prefabPath);
     }

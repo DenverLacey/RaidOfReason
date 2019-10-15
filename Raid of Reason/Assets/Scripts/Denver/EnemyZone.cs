@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class EnemyZone : MonoBehaviour
 {
-	[Tooltip("distance from zone edge all players must be for zone to be culled")]
+	[Tooltip("Distance from zone edge all players must be for zone to be culled")]
 	[SerializeField]
 	private Vector2 m_cullDistance = new Vector2(30, 30);
 	private Vector3 m_cullDistanceV3;
 
 	private List<EnemyData> m_enemies;
-	private List<BaseCharacter> m_baseCharacters;
 
 	private bool m_active;
 
@@ -26,8 +25,6 @@ public class EnemyZone : MonoBehaviour
     void Start()
     {
 		m_enemies = new List<EnemyData>();
-		m_baseCharacters = new List<BaseCharacter>();
-		m_deathParticlePool = ObjectPooling.CreateObjectPool("EnemyDeathParticle", 20);
 		m_enemyManager = FindObjectOfType<EnemyManager>();
 		m_colliders = GetComponentsInChildren<BoxCollider>();
 
@@ -39,6 +36,11 @@ public class EnemyZone : MonoBehaviour
 			boundary.min -= m_cullDistanceV3;
 			boundary.max += m_cullDistanceV3;
 			m_cullBoundaries.Add(boundary);
+		}
+
+		if (!ObjectPooling.PoolExistsForPrefab("EnemyDeathParticle"))
+		{
+			ObjectPooling.CreateObjectPool("EnemyDeathParticle", 20);
 		}
     }
 	
@@ -102,6 +104,10 @@ public class EnemyZone : MonoBehaviour
 		if (other.tag == "Enemy")
 		{
 			enemy = other.GetComponent<EnemyData>();
+		}
+		else if (other.tag == "EnemyEnemyCollision")
+		{
+			enemy = other.GetComponentInParent<EnemyData>();
 		}
 
 		if (enemy && !m_enemies.Contains(enemy))

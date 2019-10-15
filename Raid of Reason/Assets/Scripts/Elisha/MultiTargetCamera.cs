@@ -98,8 +98,8 @@ public class MultiTargetCamera : MonoBehaviour
 			}
 		}
 
-		float desiredY = Mathf.Max(playerBounds.size.magnitude * m_maxGroupDistance, m_minYPosition);
-		desiredY = Mathf.Min(desiredY, m_maxYPosition);
+		float desiredY = playerBounds.size.magnitude / m_maxGroupDistance;
+		desiredY = Mathf.Lerp(m_minYPosition, m_maxGroupDistance, desiredY);
 
 		Vector3 desiredPosition = new Vector3(
 			averagePosition.x + m_offset.x,
