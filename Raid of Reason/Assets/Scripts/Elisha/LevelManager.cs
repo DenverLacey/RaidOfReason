@@ -25,11 +25,18 @@ public class LevelManager : MonoBehaviour
     }
 
     private static LevelManager m_instance = null;
+    private static Animator animator;
+    public static int m_levelToLoad;
 
     private int m_sceneIndex;
     private int m_prevSceneIndex;
 
     private bool m_titleScreenVisited = false;
+
+    public void Start()
+    {
+        animator = FindObjectOfType<Animator>();
+    }
 
     public static void LoadNextLevel()
     {
@@ -72,5 +79,11 @@ public class LevelManager : MonoBehaviour
     public static bool IsTitleScreenVisited()
     {
         return m_instance.m_titleScreenVisited;
+    }
+
+    public static void FadeToLevel(int levelIndex)
+    {
+        m_levelToLoad = levelIndex;
+        animator.SetTrigger("FadeOut");
     }
 }
