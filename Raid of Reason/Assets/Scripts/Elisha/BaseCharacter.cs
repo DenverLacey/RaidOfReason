@@ -209,7 +209,7 @@ public abstract class BaseCharacter : MonoBehaviour
                 break;
 
             case PlayerState.DEAD:
-                Destroy(gameObject);
+                this.gameObject.SetActive(false);
                 break;
         }
     }
@@ -301,11 +301,6 @@ public abstract class BaseCharacter : MonoBehaviour
         {
             // Take an amount of damage from the players current health.
             m_currentHealth -= damage * m_vulnerability;
-
-            HealthBarUI health = FindObjectOfType<HealthBarUI>();
-            // Health bar UI shake
-            //health.m_healthUI.transform.DOKill(true);
-            //health.m_healthUI.transform.DOPunchPosition(Vector3.right * 3 * 3f, .3f, 10, 1);
 
             // Player damage indicator.
             IndicateHit();
