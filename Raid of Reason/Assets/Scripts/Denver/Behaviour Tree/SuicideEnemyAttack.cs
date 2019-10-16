@@ -24,6 +24,17 @@ public class SuicideEnemyAttack : Behaviour
 	/// </returns>
 	public override Result Execute(EnemyData agent) 
 	{
+		if (!agent.Attacking)
+		{
+			GameObject bombRadiusEffect = GameObject.Instantiate(agent.AttackPrefabs[1]);
+			bombRadiusEffect.transform.position = new Vector3(agent.transform.position.x, 0.001f, agent.transform.position.z);
+			bombRadiusEffect.transform.parent = agent.transform;
+			ParticleSystem system = bombRadiusEffect.GetComponent<ParticleSystem>();
+			ParticleSystem.MainModule main = system.main;
+			main.startSize = new ParticleSystem.MinMaxCurve(agent.AttackRange.max * bombRadiusEffect.transform.lossyScale.magnitude);
+			GameObject.Destroy(bombRadiusEffect, agent.AttackCooldown);
+		}
+
 		agent.Attacking = true;
 
 		agent.Pathfinder.StopPathing();
@@ -49,7 +60,8 @@ public class SuicideEnemyAttack : Behaviour
 				}
 			}
 
-			GameObject.Instantiate(agent.AttackPrefabs[0], agent.transform.position, Quaternion.identity);
+			var explosion = GameObject.Instantiate(agent.AttackPrefabs[0]);
+			explosion.transform.position = agent.transform.position;
 			agent.Die();
 
 			return SUCCESS;

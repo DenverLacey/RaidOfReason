@@ -255,7 +255,7 @@ public class Kenron : BaseCharacter
 				m_animator.SetBool("Attack", true);
 
 
-				if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, m_maxDashDistance, LayerMask.GetMask("Environment")))
+				if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, m_maxDashDistance, LayerMask.GetMask("Environment", "Barrier")))
 				{
 					m_dashPosition = hit.point - transform.forward * m_dashBufferDistance;
 				}

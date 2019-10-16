@@ -14,7 +14,7 @@ public class TriggerObjective : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.GetMask("Player"));
+        if (other.gameObject.layer == LayerMask.GetMask("Player"))
         {
             objectiveManager.ObjectiveTriggered = true;
         }    
