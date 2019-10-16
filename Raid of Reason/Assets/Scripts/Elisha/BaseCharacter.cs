@@ -33,6 +33,8 @@ public abstract class BaseCharacter : MonoBehaviour
         DEAD
     }
 
+    public delegate void OnTakeDamage(BaseCharacter player);
+
     [Header("--Player Stats--")]
 
     public PlayerState playerState;
@@ -95,6 +97,8 @@ public abstract class BaseCharacter : MonoBehaviour
     [HideInInspector]
     public bool m_controllerOn;
 	private int movementAxes = MovementAxis.Move | MovementAxis.Rotate;
+
+    public OnTakeDamage onTakeDamage;
 
 	public bool CanMove
 	{
@@ -300,7 +304,8 @@ public abstract class BaseCharacter : MonoBehaviour
 
             HealthBarUI health = FindObjectOfType<HealthBarUI>();
             // Health bar UI shake
-            health.m_healthUI.transform.DOPunchPosition(Vector3.right * 3 * 3f, .3f, 10, 1);
+            //health.m_healthUI.transform.DOKill(true);
+            //health.m_healthUI.transform.DOPunchPosition(Vector3.right * 3 * 3f, .3f, 10, 1);
 
             // Player damage indicator.
             IndicateHit();
@@ -317,6 +322,8 @@ public abstract class BaseCharacter : MonoBehaviour
         {
             m_deathMenu.DeathScreen();
         }
+
+        onTakeDamage(this);
     } 
 
     /// <summary>

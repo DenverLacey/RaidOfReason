@@ -39,6 +39,7 @@ public class HealthBarUI : MonoBehaviour
         m_overhealBar.gameObject.SetActive(false);
         m_shieldBar.gameObject.SetActive(false);
         m_prevHealth = m_character.m_currentHealth;
+        m_character.onTakeDamage += HealthBarShake;
     }
 
     // Update is called once per frame
@@ -91,5 +92,11 @@ public class HealthBarUI : MonoBehaviour
             m_damagedHealth.fillAmount = m_healthBar.fillAmount;
             m_prevHealth = m_character.m_currentHealth;
         }
+    }
+
+    private void HealthBarShake(BaseCharacter player)
+    {
+        transform.DOKill(true);
+        transform.DOPunchPosition(Vector3.right * 3 * 3f, .3f, 10, 1);
     }
 }

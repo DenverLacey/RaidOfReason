@@ -17,12 +17,14 @@ public class DeathMenu : MonoBehaviour
     private Vector3 m_p1InactivePosition;
     private bool m_isDeath = false;
     public GameObject m_DeathMenu;
+    private GameObject m_miniMap;
 
     private void Start()
     {
         m_p1Cursor.SetController(1);
         m_p1InactivePosition = transform.position;
         m_DeathMenu.SetActive(false);
+        m_miniMap = GameObject.Find("Minimap_Outline");
     }
 
     public void DeathScreen()
@@ -31,6 +33,7 @@ public class DeathMenu : MonoBehaviour
         m_isDeath = true;
         m_p1Cursor.gameObject.SetActive(true);
         m_DeathMenu.SetActive(true);
+        m_miniMap.SetActive(false);
     }
 
     public void RestartGame()
