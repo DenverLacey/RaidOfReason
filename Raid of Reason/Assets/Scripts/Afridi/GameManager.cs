@@ -76,7 +76,12 @@ public class GameManager : MonoBehaviour
 		get => Players.FindAll(player => player.playerState == BaseCharacter.PlayerState.ALIVE);
 	}
 
-	public BaseCharacter FirstPlayer
+    public List<BaseCharacter> DeadPlayers
+    {
+        get => Players.FindAll(player => player.playerState == BaseCharacter.PlayerState.DEAD);
+    }
+
+    public BaseCharacter FirstPlayer
 	{
 		get
 		{

@@ -126,6 +126,12 @@ public abstract class BaseCharacter : MonoBehaviour
     private DeathMenu m_deathMenu;
     private PauseMenu m_pauseInfo;
 
+    [Header("--Respawn Values--")]
+
+    [SerializeField]
+    [Tooltip("How long it takes for the player to respwn.")]
+    private float m_spawnDelay;
+
 
     /// <summary>
     /// This will be called first.
@@ -209,8 +215,13 @@ public abstract class BaseCharacter : MonoBehaviour
                 break;
 
             case PlayerState.DEAD:
-                this.gameObject.SetActive(false);
+                gameObject.SetActive(false);
                 break;
+        }
+
+        if (!this.gameObject.activeSelf)
+        {
+            Invoke("Respawn", m_spawnDelay);
         }
     }
 
@@ -294,7 +305,7 @@ public abstract class BaseCharacter : MonoBehaviour
         if (currentShield > 0)
         {
             currentShield -= damage * m_vulnerability;
-            IndicateHit();
+            //IndicateHit();
         }
 
         if (currentShield <= 0)
@@ -303,7 +314,7 @@ public abstract class BaseCharacter : MonoBehaviour
             m_currentHealth -= damage * m_vulnerability;
 
             // Player damage indicator.
-            IndicateHit();
+            //IndicateHit();
         }
 
         // If player has no health.
@@ -432,42 +443,42 @@ public abstract class BaseCharacter : MonoBehaviour
         m_vulnerability = 1.0f;
     }
 
-    /// <summary>
-    /// A corotine that resets the players mesh colour back to normal when called.
-    /// </summary>
-    /// <param name="player"></param>
-    /// <param name="delay"></param>
-    /// <returns> Gameobject and a float value. </returns>
-    IEnumerator ResetMaterialColour(GameObject player, float delay)
-    {
-        // Suspends the coroutine execution for the given amount of seconds.
-        yield return new WaitForSeconds(delay);
+    ///// <summary>
+    ///// A corotine that resets the players mesh colour back to normal when called.
+    ///// </summary>
+    ///// <param name="player"></param>
+    ///// <param name="delay"></param>
+    ///// <returns> Gameobject and a float value. </returns>
+    //IEnumerator ResetMaterialColour(GameObject player, float delay)
+    //{
+    //    // Suspends the coroutine execution for the given amount of seconds.
+    //    yield return new WaitForSeconds(delay);
 
-        // If player gets returned.
-        if (player)
-        {
-            // Change players mesh colour back to the original colour.
-            player.GetComponent<MeshRenderer>().material.color = Color.clear;
-        }
-    }
+    //    // If player gets returned.
+    //    if (player)
+    //    {
+    //        // Change players mesh colour back to the original colour.
+    //        player.GetComponent<MeshRenderer>().material.color = Color.clear;
+    //    }
+    //}
 
-    /// <summary>
-    /// Changes colour to red when player is hit.
-    /// </summary>
-    void IndicateHit()
-    {
-        m_original.color = Color.red;
+    ///// <summary>
+    ///// Changes colour to red when player is hit.
+    ///// </summary>
+    //void IndicateHit()
+    //{
+    //    m_original.color = Color.red;
 
-        if (gameObject.activeSelf)
-        {
-            StartCoroutine(ResetSpriteColour(.2f));
-        }
-    }
-    IEnumerator ResetSpriteColour(float duration)
-    {
-        yield return new WaitForSeconds(duration);
-        m_original.color = m_spriteRend.colorOverLifetime.color;
-    }
+    //    if (gameObject.activeSelf)
+    //    {
+    //        StartCoroutine(ResetSpriteColour(.2f));
+    //    }
+    //}
+    //IEnumerator ResetSpriteColour(float duration)
+    //{
+    //    yield return new WaitForSeconds(duration);
+    //    m_original.color = m_spriteRend.colorOverLifetime.color;
+    //}
 
     /// <summary>
     /// Buffer for shield before degeneration.
@@ -479,5 +490,12 @@ public abstract class BaseCharacter : MonoBehaviour
         yield return new WaitForSeconds(buffer);
         // Degenerate shield per second by the amount.
         currentShield -= m_shieldDegenerateAmount * Time.deltaTime;
+    }
+
+    public void Respawn()
+    {
+        gameObject.SetActive(true);
+        playerState = PlayerState.ALIVE;
+        m_currentHealth = m_maxHealth;
     }
 }

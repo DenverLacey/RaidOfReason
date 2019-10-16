@@ -110,6 +110,7 @@ public class LevelManager : MonoBehaviour
     /// <param name="loadSceneMode"></param>
     private void FadeFromBlack(Scene scene, LoadSceneMode loadSceneMode)
     {
+        if (animator != null)
         animator.SetBool("FadeOut", false);
     }
 }
