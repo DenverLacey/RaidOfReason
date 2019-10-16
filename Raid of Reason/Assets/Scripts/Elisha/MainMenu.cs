@@ -14,18 +14,11 @@ public class MainMenu : MonoBehaviour
 {
     public void StartGame()
     {
-        LevelManager.FadeToLevel(1);
-       // StartCoroutine(TimeToLoad(1));
+        LevelManager.FadeLoadLevel(1);
     }
 
     public void Quit()
     {
         Application.Quit();
-    }
-
-    IEnumerator TimeToLoad(int duration)
-    {
-        yield return new WaitForSeconds(duration);
-        LevelManager.LoadNextLevel();
     }
 }

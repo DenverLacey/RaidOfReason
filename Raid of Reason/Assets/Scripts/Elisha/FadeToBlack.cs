@@ -11,12 +11,17 @@ using UnityEngine;
 
 public class FadeToBlack : MonoBehaviour
 {
+
+    private void Start()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
     /// <summary>
     /// This function is for the 'Fade_Out' animation event in which this calls in the inspector.
     /// Applied it like this so it knows when to fade out in the next scene.
     /// </summary>
     public void FadeComplete()
     {
-        LevelManager.LoadLevel(LevelManager.m_levelToLoad);
+       // LevelManager.LoadLevel(LevelManager.m_levelToLoad);
     }
 }

@@ -26,16 +26,18 @@ public class LevelManager : MonoBehaviour
 
     private static LevelManager m_instance = null;
     private static Animator animator;
-    public static int m_levelToLoad;
 
     private int m_sceneIndex;
     private int m_prevSceneIndex;
+    private int m_sceneToLoad;
 
     private bool m_titleScreenVisited = false;
+    public static bool TitleScreenVisited { get => m_instance.m_titleScreenVisited; set => m_instance.m_titleScreenVisited = true; }
 
     public void Start()
     {
         animator = FindObjectOfType<Animator>();
+        SceneManager.sceneLoaded += FadeFromBlack;
     }
 
     public static void LoadNextLevel()
@@ -43,6 +45,11 @@ public class LevelManager : MonoBehaviour
         m_instance.m_prevSceneIndex = m_instance.m_sceneIndex;
         m_instance.m_sceneIndex++;
         SceneManager.LoadScene(m_instance.m_sceneIndex, LoadSceneMode.Single);
+    }
+
+    public static void FadeLoadNextLevel()
+    {
+        FadeToLevel(m_instance.m_sceneIndex++);
     }
 
     public static void LoadLastLevel()
@@ -53,11 +60,21 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(m_instance.m_sceneIndex, LoadSceneMode.Single);
     }
 
+    public static void FadeLoadLastLevel()
+    {
+        FadeToLevel(m_instance.m_prevSceneIndex);
+    }
+
     public static void LoadLevel(int levelIndex)
     {
         m_instance.m_prevSceneIndex = m_instance.m_sceneIndex;
         m_instance.m_sceneIndex = levelIndex;
         SceneManager.LoadScene(m_instance.m_sceneIndex, LoadSceneMode.Single);
+    }
+
+    public static void FadeLoadLevel(int levelIndex)
+    {
+        FadeToLevel(levelIndex);
     }
 
     public static void LoadLevelFromName(string levelName)
@@ -71,19 +88,28 @@ public class LevelManager : MonoBehaviour
         m_instance.m_titleScreenVisited = true;
     }
 
-    public static void HaveNotVisitTitleScreen()
+    private static void FadeToLevel(int levelIndex)
     {
-        m_instance.m_titleScreenVisited = false;
+        m_instance.m_sceneToLoad = levelIndex;
+        animator.SetBool("FadeOut", true);
     }
 
-    public static bool IsTitleScreenVisited()
+    /// <summary>
+    /// This function is for the 'Fade_Out' animation event in which this calls in the inspector.
+    /// Applied it like this so it knows when to fade out in the next scene.
+    /// </summary>
+    public void FadeComplete()
     {
-        return m_instance.m_titleScreenVisited;
+        LoadLevel(m_sceneToLoad);
     }
 
-    public static void FadeToLevel(int levelIndex)
+    /// <summary>
+    /// This function gets called when a new scene gets loaded.
+    /// </summary>
+    /// <param name="scene"></param>
+    /// <param name="loadSceneMode"></param>
+    private void FadeFromBlack(Scene scene, LoadSceneMode loadSceneMode)
     {
-        m_levelToLoad = levelIndex;
-        animator.SetTrigger("FadeOut");
+        animator.SetBool("FadeOut", false);
     }
 }

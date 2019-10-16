@@ -32,18 +32,6 @@ public class TitleScreenMenu : MonoBehaviour
 
         text.DOColor(textColorNoAlpha, 1).SetLoops(-1, LoopType.Yoyo);
 
-        if (!LevelManager.IsTitleScreenVisited())
-        {
-            mainMenu.SetActive(false);
-            titleScreen.SetActive(true);
-            LevelManager.VisitTitleScreen();
-        }
-        else
-        {
-            mainMenu.SetActive(true);
-            titleScreen.SetActive(false);
-        }
-
         VirtualCamera1.gameObject.SetActive(true);
         VirtualCamera2.gameObject.SetActive(false);
     }
