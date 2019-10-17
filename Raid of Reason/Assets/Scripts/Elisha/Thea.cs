@@ -375,6 +375,11 @@ public class Thea : BaseCharacter
             m_AOEShapeModule.radius = m_AOERadius;
             m_AOEShapeModule_2.radius = m_AOERadius;
             m_skillActive = true;
+
+			if (m_animator)
+			{
+				m_animator.SetBool("Casting", true);
+			}
         }
 
         if (m_isActive == true && m_skillUpgrades.Find(skill => skill.name == "Hydro Pressure"))
@@ -429,6 +434,20 @@ public class Thea : BaseCharacter
         //    }
         //}
     }
+
+	public void EndGIftOfPoseidon()
+	{
+		if (m_animator)
+		{
+			m_animator.SetBool("Casting", false);
+		}
+	}
+
+	public void GiftOfPoseidonHealAndReset()
+	{
+		GiveHealth();
+		ResetGiftOfPoseidon();
+	}
 
     /// <summary>
     /// checks the distance from both characters to thea and if they are within 

@@ -155,8 +155,9 @@ public class SkillManager : MonoBehaviour {
                     // Grants health and resets
                     if (GameManager.Instance.Thea.playerState == BaseCharacter.PlayerState.ALIVE)
                     {
-                        GameManager.Instance.Thea.GiveHealth();
-                        GameManager.Instance.Thea.ResetGiftOfPoseidon();
+						//GameManager.Instance.Thea.GiveHealth();
+						//GameManager.Instance.Thea.ResetGiftOfPoseidon();
+						GameManager.Instance.Thea.EndGIftOfPoseidon();
                     }
                 }
             }

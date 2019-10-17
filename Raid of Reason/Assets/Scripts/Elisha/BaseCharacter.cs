@@ -329,8 +329,8 @@ public abstract class BaseCharacter : MonoBehaviour
             m_deathMenu.DeathScreen();
         }
 
-        onTakeDamage(this);
-    } 
+		onTakeDamage?.Invoke(this);
+	} 
 
     /// <summary>
     /// Sets damage to a float value.
