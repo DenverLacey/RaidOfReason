@@ -46,7 +46,8 @@ public class Selector : Composite
 					return PENDING_ABORT;
 			}
         }
-        // propagate failure if all children fails
+        
+		// propagate failure if all children fails
         return FAILURE;
     }
 }

@@ -9,6 +9,42 @@ public class EnemyZone : MonoBehaviour
 	private Vector2 m_cullDistance = new Vector2(30, 30);
 	private Vector3 m_cullDistanceV3;
 
+	[SerializeField]
+	private List<EnemyTypeFloatPair> m_viewRangeOverrides;
+	Dictionary<string, float> m_viewRangeDict = new Dictionary<string, float>();
+
+	[SerializeField]
+	private List<EnemyTypeCharacterTypePair> m_characterPriorityOverrides = new List<EnemyTypeCharacterTypePair>();
+	Dictionary<string, CharacterType> m_characterPriorityDict = new Dictionary<string, CharacterType>();
+
+	[SerializeField]
+	private List<EnemyTypeFloatPair> m_priorityThresholdOverrides = new List<EnemyTypeFloatPair>();
+	Dictionary<string, float> m_priorityThresholdDict = new Dictionary<string, float>();
+
+	[SerializeField]
+	private List<EnemyTypeEnemyAttackRangePair> m_attackRangeOverrides;
+	private Dictionary<string, EnemyAttackRange> m_attackRangeDict = new Dictionary<string, EnemyAttackRange>();
+
+	[SerializeField]
+	private List<EnemyTypeFloatPair> m_attackCooldownOverrides;
+	private Dictionary<string, float> m_attackCooldownDict = new Dictionary<string, float>();
+
+	[SerializeField]
+	private List<EnemyTypeFloatPair> m_maxHealthOverrides;
+	private Dictionary<string, float> m_maxHealthDict = new Dictionary<string, float>();
+
+	[SerializeField]
+	private List<EnemyTypeFloatPair> m_attackDamageOverrides;
+	private Dictionary<string, float> m_attackDamageDict = new Dictionary<string, float>();
+
+	[SerializeField]
+	private List<EnemyTypeBehaviourTreePair> m_behaviourTreeOverrides;
+	public Dictionary<string, BehaviourTree> BehaviourTreeOverrides { get; private set; }
+
+	[SerializeField]
+	private List<EnemyTypeGameObjectsPair> m_attackPrefabOverrides;
+	private Dictionary<string, GameObject[]> m_attackPrefabDict = new Dictionary<string, GameObject[]>();
+
 	private List<EnemyData> m_enemies;
 
 	private bool m_active;
@@ -42,7 +78,18 @@ public class EnemyZone : MonoBehaviour
 		{
 			ObjectPooling.CreateObjectPool("EnemyDeathParticle", 20);
 		}
-    }
+
+		// move data from lists into dictionaries
+		foreach (var range in m_viewRangeOverrides) { m_viewRangeDict.Add(range.key, range.value); }
+		foreach (var priority in m_characterPriorityOverrides) { m_characterPriorityDict.Add(priority.key, priority.value); }
+		foreach (var threshold in m_priorityThresholdOverrides) { m_priorityThresholdDict.Add(threshold.key, threshold.value); }
+		foreach (var range in m_attackRangeOverrides) { m_attackRangeDict.Add(range.key, range.value); }
+		foreach (var cooldown in m_attackCooldownOverrides) { m_attackCooldownDict.Add(cooldown.key, cooldown.value); }
+		foreach (var health in m_maxHealthOverrides) { m_maxHealthDict.Add(health.key, health.value); }
+		foreach (var damage in m_attackDamageOverrides) { m_attackDamageDict.Add(damage.key, damage.value); }
+		foreach (var tree in m_behaviourTreeOverrides) { BehaviourTreeOverrides.Add(tree.key, tree.value); }
+		foreach (var prefab in m_attackPrefabOverrides) { m_attackPrefabDict.Add(prefab.key, prefab.value); }
+	}
 	
     void FixedUpdate()
     {
@@ -112,7 +159,32 @@ public class EnemyZone : MonoBehaviour
 
 		if (enemy && !m_enemies.Contains(enemy))
 		{
-			m_enemyManager.InitEnemy(enemy);
+			if (m_viewRangeDict.ContainsKey(enemy.Type))
+			{
+				try
+				{
+					enemy.Init(
+						m_viewRangeDict[enemy.Type],
+						m_maxHealthDict[enemy.Type],
+						m_attackRangeDict[enemy.Type],
+						m_attackCooldownDict[enemy.Type],
+						m_attackDamageDict[enemy.Type],
+						m_characterPriorityDict[enemy.Type],
+						m_priorityThresholdDict[enemy.Type],
+						m_enemyManager.DamageIndicatorPrefab,
+						m_attackPrefabDict[enemy.Type]
+					);
+				}
+				catch (System.Exception e)
+				{
+					Debug.LogErrorFormat("Unknown Enemy Type: {0}\n{1}", enemy.Type, e.Message);
+				}
+			}
+			else
+			{
+				m_enemyManager.InitEnemy(enemy);
+			}
+
 			m_enemies.Add(enemy);
 			enemy.Zone = this;
 		}

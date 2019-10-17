@@ -17,6 +17,7 @@ public abstract class Behaviour
     {
         FAILURE,
         SUCCESS,
+		CONTINUE,
         PENDING_COMPOSITE,
 		PENDING_MONO,
 		PENDING_ABORT

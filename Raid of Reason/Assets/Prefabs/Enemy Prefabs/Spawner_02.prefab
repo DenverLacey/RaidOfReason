@@ -4853,7 +4853,6 @@ GameObject:
   - component: {fileID: 1033110116055260544}
   - component: {fileID: 275341746}
   - component: {fileID: 563109259601913347}
-  - component: {fileID: 78001871}
   m_Layer: 10
   m_Name: Spawner_02
   m_TagString: Enemy
@@ -4899,7 +4898,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ee021b62536bfc4caecab557ba45f1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_type: 3
+  m_type: Spawner
   m_tauntedEffect: {fileID: 670288504584381933}
   m_electricEffect: {fileID: 5211134917988860584}
   m_KnockBackEffect: {fileID: 7703810954683297489}
@@ -4951,22 +4950,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &563109259601913347
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8457266304823864805}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57e978f948cd8ab4e85be8837061a16d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_speed: 3
-  m_steeringSpeed: 10
-  m_destBufferDist: 0.1
-  manualSteering: 0
---- !u!114 &78001871
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5232,6 +5215,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Taunted
       objectReference: {fileID: 0}
+    - target: {fileID: 2594324223704125970, guid: bb908d00121f942438126cdb93236180,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 9122184551371264894, guid: bb908d00121f942438126cdb93236180,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5286,11 +5274,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2594324223704125970, guid: bb908d00121f942438126cdb93236180,
-        type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb908d00121f942438126cdb93236180, type: 3}

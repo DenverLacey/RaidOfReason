@@ -25,6 +25,6 @@ public class SetDestination : Behaviour
 	public override Result Execute(EnemyData agent)
 	{
 		agent.Pathfinder.SetDestination(agent.Target);
-		return SUCCESS;
+		return CONTINUE;
 	}
 }

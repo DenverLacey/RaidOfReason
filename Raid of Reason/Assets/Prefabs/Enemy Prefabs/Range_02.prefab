@@ -70,7 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ee021b62536bfc4caecab557ba45f1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_type: 2
+  m_type: Range
   m_tauntedEffect: {fileID: 7666416985990670694}
   m_electricEffect: {fileID: 8849943438038676319}
   m_KnockBackEffect: {fileID: 5527311619559733479}
@@ -626,6 +626,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Taunted
       objectReference: {fileID: 0}
+    - target: {fileID: 2594324223704125970, guid: bb908d00121f942438126cdb93236180,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 9122184551371264894, guid: bb908d00121f942438126cdb93236180,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -680,11 +685,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2594324223704125970, guid: bb908d00121f942438126cdb93236180,
-        type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb908d00121f942438126cdb93236180, type: 3}

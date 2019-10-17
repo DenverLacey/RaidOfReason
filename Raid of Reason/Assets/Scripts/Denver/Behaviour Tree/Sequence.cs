@@ -46,6 +46,7 @@ public class Sequence : Composite
 					return PENDING_ABORT;
 			}
         }
+
         // propagate success if all children suceed
         return SUCCESS;
     }

@@ -11,15 +11,6 @@ using UnityEngine.UI;
 using TMPro;
 
 [System.Serializable]
-public enum EnemyType 
-{
-    SUICIDE,
-    MELEE,
-    RANGE,
-    SPAWNER
-}
-
-[System.Serializable]
 public struct EnemyAttackRange 
 {
     public float min;
@@ -35,7 +26,7 @@ public struct EnemyAttackRange
 public class EnemyData : MonoBehaviour 
 {
     [SerializeField] 
-	private EnemyType m_type;
+	private string m_type;
 
     [SerializeField]
     private ParticleSystem m_tauntedEffect;
@@ -55,7 +46,7 @@ public class EnemyData : MonoBehaviour
     [SerializeField]
     private ParticleSystem m_burningEffect;
 
-    public EnemyType Type { get => m_type; }
+    public string Type { get => m_type; }
     public float ViewRange { get; private set; }
 	public float SqrViewRange { get => ViewRange * ViewRange; }
     public float MaxHealth { get; private set; }
