@@ -31,7 +31,7 @@ public class LavaRun : BaseObjective
 
     public override string GrabDescription()
     {
-        return description
+        return description;
     }
 
     public override bool HasFailed()

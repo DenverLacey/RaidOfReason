@@ -17,6 +17,8 @@ public class TriggerObjective : MonoBehaviour
         if (other.gameObject.layer == LayerMask.GetMask("Player"))
         {
             objectiveManager.ObjectiveTriggered = true;
+            // This is to using the same trigger again
+            this.gameObject.SetActive(false);
         }    
     }
 }
