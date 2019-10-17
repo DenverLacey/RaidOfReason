@@ -6,7 +6,8 @@ using UnityEngine;
 public class TriggerObjective : MonoBehaviour
 {
     private ObjectiveManager objectiveManager;
-
+    public delegate void OnTriggerEvents(TriggerObjective trigger);
+    public OnTriggerEvents Triggers;
     private void Awake()
     {
         objectiveManager = FindObjectOfType<ObjectiveManager>();
@@ -17,6 +18,7 @@ public class TriggerObjective : MonoBehaviour
         if (other.gameObject.layer == LayerMask.GetMask("Player"))
         {
             objectiveManager.ObjectiveTriggered = true;
+            Triggers(this);
             // This is to using the same trigger again
             this.gameObject.SetActive(false);
         }    
