@@ -1,7 +1,15 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Denver
+ * Description:	Handles all Enemy Zone functionality
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Area where enemies operate
+/// </summary>
 public class EnemyZone : MonoBehaviour
 {
 	[Tooltip("Distance from zone edge all players must be for zone to be culled")]
@@ -96,6 +104,8 @@ public class EnemyZone : MonoBehaviour
     void FixedUpdate()
     {
 		m_active = false;
+
+		// check if any player is close by
 		foreach (var player in GameManager.Instance.AlivePlayers)
 		{
 			foreach (var cullBoundary in m_cullBoundaries)
@@ -146,6 +156,10 @@ public class EnemyZone : MonoBehaviour
 
     }
 
+	/// <summary>
+	/// Initialises all enemies that are apart of zone
+	/// </summary>
+	/// <param name="other"></param>
 	private void OnTriggerEnter(Collider other)
 	{
 		EnemyData enemy = null;
@@ -192,6 +206,15 @@ public class EnemyZone : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Generates a random Vector3 position within the zone
+	/// </summary>
+	/// <param name="y">
+	/// The desired Y level of the position
+	/// </param>
+	/// <returns>
+	/// A random position within the zone
+	/// </returns>
 	public Vector3 GetRandomPoint(float y)
 	{
 		// pick random collider in zone
@@ -211,6 +234,15 @@ public class EnemyZone : MonoBehaviour
 		return new Vector3(x, y, z);
 	}
 
+	/// <summary>
+	/// Determines if a given point is within the zone
+	/// </summary>
+	/// <param name="point">
+	/// The point to query
+	/// </param>
+	/// <returns>
+	/// True if point is within zone. False if otherwise
+	/// </returns>
 	public bool ContainsPoint(Vector3 point)
 	{
 		foreach (var collider in m_colliders)
@@ -221,6 +253,15 @@ public class EnemyZone : MonoBehaviour
 		return false;
 	}
 
+	/// <summary>
+	/// Calculates closest position within the zone from a given point
+	/// </summary>
+	/// <param name="point">
+	/// The point to query
+	/// </param>
+	/// <returns>
+	/// Closest position to given point
+	/// </returns>
 	public Vector3 ClampPoint(Vector3 point)
 	{
 		point.y = 0f;
@@ -249,23 +290,35 @@ public class EnemyZone : MonoBehaviour
 		return closestClamped;
 	}
 
+	/// <summary>
+	/// Determines if a given point is inside a given collider
+	/// </summary>
+	/// <param name="point">
+	/// The point to query
+	/// </param>
+	/// <param name="collider">
+	/// The collider to query
+	/// </param>
+	/// <returns>
+	/// True if point is inside collider. False if otherwise
+	/// </returns>
 	private bool IsPointInCollider(Vector3 point, BoxCollider collider)
 	{
-		if (collider.bounds.min.x <= point.x && point.x <= collider.bounds.max.x &&
-			collider.bounds.min.z <= point.z && point.z <= collider.bounds.max.z)
-		{
-			return true;
-		}
-		return false;
+		return	collider.bounds.min.x <= point.x && point.x <= collider.bounds.max.x &&
+				collider.bounds.min.z <= point.z && point.z <= collider.bounds.max.z;
 	}
 
+	/// <summary>
+	/// Deactivates all enemies inside zone. All other enemies are told
+	/// to path back to the zone
+	/// </summary>
 	private void DeactivateReturnedEnemies()
 	{
 		foreach (var enemy in m_enemies)
 		{
 			if (!ContainsPoint(enemy.transform.position))
 			{
-				enemy.Pathfinder.SetDestination(enemy.Zone.transform.position);
+				enemy.Pathfinder.SetDestination(transform.position);
 				continue;
 			}
 

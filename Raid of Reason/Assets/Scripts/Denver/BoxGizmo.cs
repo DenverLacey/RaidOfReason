@@ -1,7 +1,15 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Denver
+ * Description:	Makes a box gizmo for an object
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Makes a box gizmo for an object
+/// </summary>
 public class BoxGizmo : MonoBehaviour
 {
 	[SerializeField]

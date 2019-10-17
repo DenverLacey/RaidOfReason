@@ -39,8 +39,20 @@ public class Not : Behaviour
             case SUCCESS:
                 return FAILURE;
 
-            default:
-                return PENDING_COMPOSITE;
+            case CONTINUE:
+                return CONTINUE;
+
+			case PENDING_ABORT:
+				return PENDING_ABORT;
+
+			case PENDING_COMPOSITE:
+				return PENDING_COMPOSITE;
+
+			case PENDING_MONO:
+				return PENDING_MONO;
+
+			default:
+				throw new System.InvalidOperationException("Unknown Behaviour result");
         }
     }
 }

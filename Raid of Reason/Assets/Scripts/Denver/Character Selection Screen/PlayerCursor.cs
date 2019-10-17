@@ -1,4 +1,9 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Denver
+ * Description:	Handles all functionality for player cursor's in the Character Selection Screen
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,6 +12,9 @@ using DG.Tweening;
 using XboxCtrlrInput;
 using XInputDotNetPure;
 
+/// <summary>
+/// Handles all functionality for player cursor's in the Character Selection Screen
+/// </summary>
 public class PlayerCursor : MonoBehaviour
 {
 	[SerializeField]
@@ -165,6 +173,13 @@ public class PlayerCursor : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Sets current collided transform and calls Character Information's Hover function
+	/// if collision is a Character Information Object
+	/// </summary>
+	/// <param name="collision">
+	/// Collider of the object that has been collided with
+	/// </param>
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		m_collidedTransform = collision.transform;
@@ -177,6 +192,13 @@ public class PlayerCursor : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// nulls current collided transform and calls Character Information's Unhover function
+	/// if collision is a Character Information Object
+	/// </summary>
+	/// <param name="collision">
+	/// Collider of the object that has been collided with
+	/// </param>
 	private void OnTriggerExit2D(Collider2D collision)
 	{
 		var info = m_collidedTransform?.GetComponent<CharacterInformation>();
@@ -189,17 +211,30 @@ public class PlayerCursor : MonoBehaviour
 		m_collidedTransform = null;
 	}
 
+	/// <summary>
+	/// Gets all relavent information for character selection for a player
+	/// </summary>
+	/// <returns>
+	/// All relavent information for character selection for a player
+	/// </returns>
 	public (XboxController controller, PlayerIndex playerIndex, CharacterType selectedCharacter, bool characterSelected) GetSelectedCharacter()
 	{
 		return (controller, m_playerIndex, m_selectedCharacter, m_characterSelected);
 	}
 
+	/// <summary>
+	/// Activates a Cursor and its token
+	/// </summary>
 	public void Activate()
 	{
 		gameObject.SetActive(true);
 		token.gameObject.SetActive(true);
 	}
 
+	/// <summary>
+	/// Deactivates a Cursor and its token. Also moves cursor and token to their
+	/// inactive positions
+	/// </summary>
 	public void Deactivate()
 	{
 		// move to inactive position
@@ -219,23 +254,44 @@ public class PlayerCursor : MonoBehaviour
 		token.gameObject.SetActive(false);
 	}
 
+	/// <summary>
+	/// If player has selected a character
+	/// </summary>
+	/// <returns>
+	/// True if player has selected a character. False if otherwise
+	/// </returns>
 	public bool HasSelectedCharacter()
 	{
 		return m_characterSelected;
 	}
 
+	/// <summary>
+	/// Rubmles player's controller
+	/// </summary>
 	public void DoRumble()
 	{
 		GamePad.SetVibration(m_playerIndex, m_rumbleIntensity, m_rumbleIntensity);
 		StartCoroutine(StopRumble());
 	}
 
+	/// <summary>
+	///	Stops rumbling of player's controller
+	/// </summary>
+	/// <returns>
+	/// Wait for rumble duration
+	/// </returns>
 	public IEnumerator StopRumble()
 	{
 		yield return new WaitForSeconds(m_rumbleDuration);
 		GamePad.SetVibration(m_playerIndex, 0f, 0f);
 	}
 
+	/// <summary>
+	/// Assigns a controller and player index to a cursor
+	/// </summary>
+	/// <param name="index">
+	/// Represents which controller and player index to set to
+	/// </param>
 	public void SetController(int index)
 	{
 		switch (index)

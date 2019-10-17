@@ -1,8 +1,16 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Denver
+ * Description:	Handles Pathfinding functionality for enemies
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>
+/// Handles Pathfinding functionality for enemy
+/// </summary>
 public class EnemyPathfinding : MonoBehaviour
 {
     [Tooltip("How fast the enemy will move")]

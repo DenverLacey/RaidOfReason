@@ -43,6 +43,7 @@ public class CrystalSuicideBehaviourTree : BehaviourTree
 		attackSequence.AddChild(new MinAttackRangeCondition());
 		attackSequence.AddChild(new CrystalSuicideAttack());
 
+		// add components to behaviour tree
 		m_behaviourTree.AddChild(stunned);
 		m_behaviourTree.AddChild(setTarget);
 		m_behaviourTree.AddChild(setDestination);

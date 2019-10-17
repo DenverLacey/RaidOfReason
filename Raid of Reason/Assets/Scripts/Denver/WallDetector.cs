@@ -1,7 +1,15 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Denver
+ * Description:	Handles functionality for when a thea projectile hits a wall
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Destroys Thea Projectile when it hits the environment
+/// </summary>
 public class WallDetector : MonoBehaviour
 {
 	[SerializeField]
@@ -9,8 +17,6 @@ public class WallDetector : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		bool active = m_projectile.gameObject.activeSelf;
-
 		if (other.gameObject.layer == LayerMask.NameToLayer("Environment"))
 		{
 			m_projectile.Destroy();

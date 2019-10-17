@@ -1,10 +1,18 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Denver
+ * Description:	Handles controllers for Character Selection screen and loading level scene
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using XboxCtrlrInput;
 using XInputDotNetPure;
 using DG.Tweening;
 
+/// <summary>
+/// Handles controllers for Character Selection screen and loading level scene
+/// </summary>
 public class CharacterSelection : InteractableUIElement
 {
 	[SerializeField]
@@ -70,6 +78,10 @@ public class CharacterSelection : InteractableUIElement
 		}
 	}
 
+	/// <summary>
+	/// When start button is pressed, check that all players have selected a charater
+	/// and if so, load level scene
+	/// </summary>
 	public void OnPressed()
 	{
 		transform.DOKill(complete: true);
@@ -105,7 +117,7 @@ public class CharacterSelection : InteractableUIElement
 			}
 
 			// load first level
-			LevelManager.LoadLevel(m_firstLevelIndex);
+			LevelManager.FadeLoadLevel(m_firstLevelIndex);
 		}
 		else
 		{

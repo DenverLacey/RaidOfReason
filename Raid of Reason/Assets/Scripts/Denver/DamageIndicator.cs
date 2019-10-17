@@ -1,8 +1,16 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Denver
+ * Description:	Handles lifetime of Damage Indicator Objects
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Handles lifetime of Damage Indicator Objects
+/// </summary>
 [RequireComponent(typeof(TextMesh))]
 public class DamageIndicator : MonoBehaviour
 {
@@ -38,6 +46,12 @@ public class DamageIndicator : MonoBehaviour
 
 	private float m_lifetimeTimer;
 
+	/// <summary>
+	/// Initialises the Damage Indicator
+	/// </summary>
+	/// <param name="damageDealt">
+	/// How much damage to display was dealt
+	/// </param>
 	public void Init(float damageDealt)
 	{
 		m_textMesh = GetComponent<TextMesh>();

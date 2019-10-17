@@ -1,7 +1,15 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Denver
+ * Description:	Handles all functionality for Offscreen Player Tracker Effect
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Controls UI For the Offscreen Player Tracker Effect
+/// </summary>
 public class OffscreenCameraController : MonoBehaviour
 {
 	[Tooltip("Transform of the object to follow")]
@@ -50,6 +58,7 @@ public class OffscreenCameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		// if target object is turned off, turn off UI
 		if (!m_target || !m_target.gameObject.activeSelf)
 		{
 			m_activator.gameObject.SetActive(false);
@@ -115,22 +124,36 @@ public class OffscreenCameraController : MonoBehaviour
 
 			transform.position = position;
 		}
-
-		bool AngleIsInBetween(float value, float a, float b)
-		{
-			float rAngle = ((b - a) % 360 + 360) % 360;
-			if (rAngle >= 180)
-			{
-				float tAngle = a;
-				a = b;
-				b = tAngle;
-			}
-
-			if (a <= b)
-				return value >= a && value <= b;
-			else
-				return value >= a || value <= b;
-				
-		}
     }
+
+	/// <summary>
+	/// Determines if an angle is in between two other angles
+	/// </summary>
+	/// <param name="value">
+	/// The angle that may be in between two angles
+	/// </param>
+	/// <param name="a">
+	/// The first angle
+	/// </param>
+	/// <param name="b">
+	/// The second angle
+	/// </param>
+	/// <returns>
+	/// True if value is in between angles a and b. False if otherwise
+	/// </returns>
+	private bool AngleIsInBetween(float value, float a, float b)
+	{
+		float rAngle = ((b - a) % 360 + 360) % 360;
+		if (rAngle >= 180)
+		{
+			float tAngle = a;
+			a = b;
+			b = tAngle;
+		}
+
+		if (a <= b)
+			return value >= a && value <= b;
+		else
+			return value >= a || value <= b;
+	}
 }

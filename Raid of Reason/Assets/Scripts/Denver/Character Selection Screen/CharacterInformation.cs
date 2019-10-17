@@ -1,10 +1,18 @@
-﻿using System.Threading;
+﻿/*
+ * Author: Denver
+ * Description:	Handles all UI functionality for CharacterInformation UI Element
+ */
+
+using System.Threading;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
+/// <summary>
+/// Handles all UI functionality for CharacterInformation UI Element
+/// </summary>
 public class CharacterInformation : InteractableUIElement
 {
 	[SerializeField]
@@ -68,9 +76,13 @@ public class CharacterInformation : InteractableUIElement
 		}
 	}
 
+	/// <summary>
+	/// Incremenets number of hoverers. Resets all child image's colours
+	/// </summary>
 	public void Hover()
 	{
-		Interlocked.Increment(ref m_hoverers);
+		//Interlocked.Increment(ref m_hoverers);
+		m_hoverers++;
 
 		for (int i = 0; i < m_childImages.Length; i++)
 		{
@@ -78,9 +90,13 @@ public class CharacterInformation : InteractableUIElement
 		}
 	}
 
+	/// <summary>
+	/// Decrements number of hoverers. Grays out child images if no hoverers
+	/// </summary>
 	public void Unhover()
 	{
-		Interlocked.Decrement(ref m_hoverers);
+		//Interlocked.Decrement(ref m_hoverers);
+		m_hoverers--;
 
 		if (m_hoverers <= 0 && !m_selected)
 		{
@@ -92,6 +108,18 @@ public class CharacterInformation : InteractableUIElement
 		}
 	}
 
+	/// <summary>
+	/// Selects a character for a player and locks UI element
+	/// </summary>
+	/// <param name="character">
+	/// Character variable that is changed
+	/// </param>
+	/// <param name="tweenColour">
+	/// What colour the selected border should be
+	/// </param>
+	/// <returns>
+	/// If selection was successful
+	/// </returns>
 	public bool SelectCharacter(ref CharacterType character, Color tweenColour)
 	{
 		if (!m_selected)
@@ -121,6 +149,12 @@ public class CharacterInformation : InteractableUIElement
 		}
 	}
 
+	/// <summary>
+	/// Turns off selected border and unlocks UI Element
+	/// </summary>
+	/// <returns>
+	/// Returns true if deselect was successful
+	/// </returns>
 	public bool DeselectCharacter()
 	{
 		if (m_selected)
