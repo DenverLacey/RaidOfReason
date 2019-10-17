@@ -12,6 +12,7 @@ public class ObjectiveManager : MonoBehaviour
     [Tooltip("Objectives should be added in order of progression")]
     public List<BaseObjective> m_objectives = new List<BaseObjective>();
     public List<TriggerObjective> triggerObjectives = new List<TriggerObjective>();
+    public List<SkillUpgrade> skillUpgrades = new List<SkillUpgrade>();
     public BaseObjective m_currentObjective;
     public TriggerObjective m_triggerObjective;
 
@@ -109,6 +110,11 @@ public class ObjectiveManager : MonoBehaviour
             showTitle.gameObject.SetActive(false);
 
             objectiveComplete.SetActive(true);
+
+            foreach (SkillUpgrade skill in skillUpgrades)
+            {
+                skill.EnableSkill();
+            }
 
             yield return new WaitForSecondsRealtime(5);
 

@@ -20,27 +20,18 @@ public class CountdownObjective : BaseObjective
     [Tooltip("Name of the Objective")]
     public string name;
     public string spawnPointName;
+    public string enemyZoneName;
     private GameObject spawnPoint;
+    private GameObject Zone;
 
     // Current Timer
     private float currentTimer;
 
-    // Array to hold the number of enemies in game
-    private List<EnemyData> m_enemies = new List<EnemyData>();
-
     public override void Awake()
     {
         spawnPoint = GameObject.Find(spawnPointName);
-
-        // Finds all gameobjects within the scene
-        Reset();
-        m_enemies.AddRange(FindObjectsOfType<EnemyData>());
+        Zone = GameObject.Find(enemyZoneName);
         currentTimer = maxtimer;
-    }
-
-    public void Reset()
-    {
-        m_enemies.Clear();
     }
 
     public override GameObject SpawnPoints()
@@ -71,7 +62,7 @@ public class CountdownObjective : BaseObjective
 
     public override bool IsDone()
     {
-        return m_enemies.TrueForAll(e => !e);
+        return Zone.GetComponent<EnemyZone>().EnemyCount <= 0;
     }
 
     public override bool HasFailed()
