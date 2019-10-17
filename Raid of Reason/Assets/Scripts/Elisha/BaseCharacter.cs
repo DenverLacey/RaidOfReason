@@ -60,7 +60,6 @@ public abstract class BaseCharacter : MonoBehaviour
     [Tooltip("How much damage will the player deal?")]
     protected float m_maxDamage;
 
-
     [Tooltip("How much max shield can the player get?")]
     public float m_maxShield;
 
@@ -125,13 +124,6 @@ public abstract class BaseCharacter : MonoBehaviour
     public ParticleSystem m_spriteRend;
     private DeathMenu m_deathMenu;
     private PauseMenu m_pauseInfo;
-
-    [Header("--Respawn Values--")]
-
-    [SerializeField]
-    [Tooltip("How long it takes for the player to respwn.")]
-    private float m_spawnDelay;
-
 
     /// <summary>
     /// This will be called first.
@@ -219,9 +211,9 @@ public abstract class BaseCharacter : MonoBehaviour
                 break;
         }
 
-        if (!this.gameObject.activeSelf)
+        if (playerState == PlayerState.DEAD)
         {
-            Invoke("Respawn", m_spawnDelay);
+            CheckPointManager.Instance.InvokeRespawn();
         }
     }
 
@@ -443,43 +435,6 @@ public abstract class BaseCharacter : MonoBehaviour
         m_vulnerability = 1.0f;
     }
 
-    ///// <summary>
-    ///// A corotine that resets the players mesh colour back to normal when called.
-    ///// </summary>
-    ///// <param name="player"></param>
-    ///// <param name="delay"></param>
-    ///// <returns> Gameobject and a float value. </returns>
-    //IEnumerator ResetMaterialColour(GameObject player, float delay)
-    //{
-    //    // Suspends the coroutine execution for the given amount of seconds.
-    //    yield return new WaitForSeconds(delay);
-
-    //    // If player gets returned.
-    //    if (player)
-    //    {
-    //        // Change players mesh colour back to the original colour.
-    //        player.GetComponent<MeshRenderer>().material.color = Color.clear;
-    //    }
-    //}
-
-    ///// <summary>
-    ///// Changes colour to red when player is hit.
-    ///// </summary>
-    //void IndicateHit()
-    //{
-    //    m_original.color = Color.red;
-
-    //    if (gameObject.activeSelf)
-    //    {
-    //        StartCoroutine(ResetSpriteColour(.2f));
-    //    }
-    //}
-    //IEnumerator ResetSpriteColour(float duration)
-    //{
-    //    yield return new WaitForSeconds(duration);
-    //    m_original.color = m_spriteRend.colorOverLifetime.color;
-    //}
-
     /// <summary>
     /// Buffer for shield before degeneration.
     /// </summary>
@@ -490,12 +445,5 @@ public abstract class BaseCharacter : MonoBehaviour
         yield return new WaitForSeconds(buffer);
         // Degenerate shield per second by the amount.
         currentShield -= m_shieldDegenerateAmount * Time.deltaTime;
-    }
-
-    public void Respawn()
-    {
-        gameObject.SetActive(true);
-        playerState = PlayerState.ALIVE;
-        m_currentHealth = m_maxHealth;
     }
 }

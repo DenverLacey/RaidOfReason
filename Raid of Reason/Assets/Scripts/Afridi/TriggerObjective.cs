@@ -6,8 +6,8 @@ using UnityEngine;
 public class TriggerObjective : MonoBehaviour
 {
     private ObjectiveManager objectiveManager;
-    public delegate void OnTriggerEvents(TriggerObjective trigger);
-    public OnTriggerEvents Triggers;
+    public delegate void OnTriggerEvent(TriggerObjective trigger);
+    public OnTriggerEvent Triggers;
     private void Awake()
     {
         objectiveManager = FindObjectOfType<ObjectiveManager>();

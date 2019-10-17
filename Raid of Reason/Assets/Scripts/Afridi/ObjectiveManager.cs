@@ -10,8 +10,8 @@ public class ObjectiveManager : MonoBehaviour
 {
     [SerializeField]
     [Tooltip("Objectives should be added in order of progression")]
-    private List<BaseObjective> m_objectives = new List<BaseObjective>();
-	private BaseObjective m_currentObjective;
+    public List<BaseObjective> m_objectives = new List<BaseObjective>();
+    public BaseObjective m_currentObjective;
 
     public bool ObjectiveCompleted;
     public bool ObjectiveTriggered;
