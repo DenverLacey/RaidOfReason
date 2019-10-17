@@ -38,7 +38,7 @@ public class OffscreenCameraController : MonoBehaviour
 		// get child objects
 		m_activator = transform.Find("Activator");
 		m_directionIndicator = transform.FindChildByRecursive("DirectionIndicator");
-
+       
 		m_activator.gameObject.SetActive(false);
 
 		// get main camera
