@@ -17,7 +17,8 @@ public class ProtectionObjective : BaseObjective
     [Tooltip("Name of the Objective")]
     public string name;
 
-    public GameObject SpawnPoint;
+    public string spawnPointName;
+    private GameObject SpawnPoint;
     private float m_currentTimer;
     private float m_currentHealth;
 

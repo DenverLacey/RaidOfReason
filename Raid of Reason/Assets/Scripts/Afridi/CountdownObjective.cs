@@ -19,7 +19,8 @@ public class CountdownObjective : BaseObjective
 
     [Tooltip("Name of the Objective")]
     public string name;
-    public GameObject SpawnPoint;
+    public string spawnPointName;
+    private GameObject spawnPoint;
 
     // Current Timer
     private float currentTimer;
@@ -29,6 +30,8 @@ public class CountdownObjective : BaseObjective
 
     public override void Awake()
     {
+        spawnPoint = GameObject.Find(spawnPointName);
+
         // Finds all gameobjects within the scene
         Reset();
         m_enemies.AddRange(FindObjectsOfType<EnemyData>());
@@ -42,7 +45,7 @@ public class CountdownObjective : BaseObjective
 
     public override GameObject SpawnPoints()
     {
-        return SpawnPoint;
+        return spawnPoint;
     }
 
     public override float Timer()

@@ -3223,7 +3223,7 @@ GameObject:
   - component: {fileID: 3710402968275598959}
   - component: {fileID: 9068877247855434225}
   m_Layer: 5
-  m_Name: LevelObjective
+  m_Name: ObjectiveTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3699,7 +3699,7 @@ GameObject:
   - component: {fileID: 757025884637235005}
   - component: {fileID: 2856042446448126484}
   m_Layer: 5
-  m_Name: Kenron_CF_Skill_Image
+  m_Name: Thea_GOP_Skill_Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6021,13 +6021,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_objectives: []
+  m_currentObjective: {fileID: 0}
   ObjectiveCompleted: 0
   ObjectiveTriggered: 0
-  objectiveTimer: {fileID: 0}
-  objectiveDescription: {fileID: 0}
-  showTitle: {fileID: 0}
-  objectiveComplete: {fileID: 0}
-  objectiveFailed: {fileID: 0}
+  objectiveTimer: {fileID: 8594266309269709103}
+  objectiveDescription: {fileID: 4823527291062200124}
+  showTitle: {fileID: 9068877247855434225}
+  objectiveComplete: {fileID: 4359387389784712397}
+  objectiveFailed: {fileID: 894476901313761588}
   skillTreeUnlock: {fileID: 0}
 --- !u!1 &1270998315330471738
 GameObject:
@@ -15210,7 +15211,7 @@ GameObject:
   - component: {fileID: 2582038244088633323}
   - component: {fileID: 9001936560358127704}
   m_Layer: 5
-  m_Name: Kenron_CF_Skill_Image
+  m_Name: Nashorn_MD_Skill_Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19662,7 +19663,7 @@ GameObject:
   - component: {fileID: 5568581349402227280}
   - component: {fileID: 3797246689426606872}
   m_Layer: 5
-  m_Name: ChaosFlame
+  m_Name: Nashorn_MD_Portrait
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26371,11 +26372,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Thea Off Screen Effect
       objectReference: {fileID: 0}
-    - target: {fileID: 5300035086440270861, guid: 4a26dc0e6fe7b2645b3c499f94cbf33d,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a26dc0e6fe7b2645b3c499f94cbf33d, type: 3}
 --- !u!224 &3421351888221463808 stripped
@@ -26501,11 +26497,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kenron Off Screen Effect
       objectReference: {fileID: 0}
-    - target: {fileID: 8483304000459591029, guid: c327365182e700d4da4f199f966e2ebe,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c327365182e700d4da4f199f966e2ebe, type: 3}
 --- !u!224 &14035404033326536 stripped
@@ -26525,11 +26516,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Krieger Off Screen Effect
-      objectReference: {fileID: 0}
-    - target: {fileID: 685665179703121471, guid: c34470d0b57789f4c8eb3395fdf259a6,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 685665179703121470, guid: c34470d0b57789f4c8eb3395fdf259a6,
         type: 3}

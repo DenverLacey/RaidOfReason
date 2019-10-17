@@ -223,7 +223,6 @@ MonoBehaviour:
   m_controllerOn: 0
   m_camera: {fileID: 0}
   m_spriteRend: {fileID: 2383900723407418829}
-  m_spawnDelay: 0
   m_AOEMax: 10
   m_AOEMin: 1
   m_AOEGrowTime: 75
@@ -324,7 +323,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7506323965490325401
 Transform:
   m_ObjectHideFlags: 0
@@ -552,14 +551,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4820443638325163085}
     m_Modifications:
-    - target: {fileID: 1687118924408352, guid: 77c69ec12208c4c4380d15e30b6f8f68, type: 3}
-      propertyPath: m_Name
-      value: PlayerHealEffect
-      objectReference: {fileID: 0}
     - target: {fileID: 198039942544698878, guid: 77c69ec12208c4c4380d15e30b6f8f68,
         type: 3}
       propertyPath: playOnAwake
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1687118924408352, guid: 77c69ec12208c4c4380d15e30b6f8f68, type: 3}
+      propertyPath: m_Name
+      value: PlayerHealEffect
       objectReference: {fileID: 0}
     - target: {fileID: 4201597293143198, guid: 77c69ec12208c4c4380d15e30b6f8f68, type: 3}
       propertyPath: m_LocalPosition.x

@@ -17,11 +17,6 @@ public class CheckPointManager : MonoBehaviour
             Destroy(gameObject);
         }
         m_objectiveManager = FindObjectOfType<ObjectiveManager>();
-
-        //foreach (var trigger in FindObjectsOfType<TriggerObjective>())
-        //{
-        //    trigger.Triggers += OnTriggerObjective;
-        //}
     }
 
     public static CheckPointManager Instance { get; private set; }
@@ -31,10 +26,6 @@ public class CheckPointManager : MonoBehaviour
     [SerializeField]
     [Tooltip("How long it takes for the player to respwn.")]
     private float m_spawnDelay;
-
-    [SerializeField]
-    [Tooltip("All the spawn points in the level.")]
-    private GameObject[] m_spawnPoints;
 
     public void RespawnToCheckpoint()
     {
