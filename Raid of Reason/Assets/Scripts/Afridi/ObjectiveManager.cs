@@ -14,7 +14,7 @@ public class ObjectiveManager : MonoBehaviour
     public BaseObjective m_currentObjective;
 
     public bool ObjectiveCompleted;
-    public bool ObjectiveTriggered;
+    public bool ObjectiveTriggered = false;
 
     public Text objectiveTimer;
     public Text objectiveDescription;
@@ -29,15 +29,17 @@ public class ObjectiveManager : MonoBehaviour
 
     private void Awake()
     {
-        m_currentObjective = m_objectives[0];
-        if (m_currentObjective)
+        if (ObjectiveTriggered == true)
         {
-            #region Objective Init
-            m_currentObjective.Awake();
-            #endregion
+            m_currentObjective = m_objectives[0];
+            if (m_currentObjective)
+            {
+                #region Objective Init
+                m_currentObjective.Awake();
+                #endregion
+            }
+            ObjectiveCompleted = false;
         }
-        ObjectiveCompleted = false;
-        ObjectiveTriggered = false;
     }
 
     private void Update()

@@ -412,7 +412,6 @@ public class Kenron : BaseCharacter
         }
     }
 
-
     IEnumerator ChaosFlameVisual()
     {
         m_startParticle.Play();

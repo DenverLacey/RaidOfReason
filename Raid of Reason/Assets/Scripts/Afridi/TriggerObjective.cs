@@ -6,7 +6,7 @@ using UnityEngine;
 public class TriggerObjective : MonoBehaviour
 {
     private ObjectiveManager objectiveManager;
-
+    private BarrierManager Barriers;
     private void Awake()
     {
         objectiveManager = FindObjectOfType<ObjectiveManager>();
@@ -16,8 +16,8 @@ public class TriggerObjective : MonoBehaviour
     {
         if (Utility.TagIsPlayerTag(other.tag))
         {
+            Barriers.ManageBarriers();
             objectiveManager.ObjectiveTriggered = true;
-            // This is to using the same trigger again
             this.gameObject.SetActive(false);
         }    
     }
