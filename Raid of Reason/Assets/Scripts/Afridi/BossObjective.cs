@@ -16,6 +16,7 @@ public class BossObjective : BaseObjective
     public string name;
 
     private GameManager manager;
+    public GameObject SpawnPoint;
 
     public override void Awake()
     {
@@ -27,6 +28,10 @@ public class BossObjective : BaseObjective
         bosshealthBar.fillAmount = Boss.Health / Boss.MaxHealth;
     }
 
+    public override GameObject SpawnPoints()
+    {
+        return SpawnPoint;
+    }
     public override float Timer()
     {
         return 0f;

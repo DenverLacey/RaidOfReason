@@ -14,7 +14,7 @@ public class LavaRun : BaseObjective
     private LavaSafeZone SafeZone;
     private GameManager manager;
     private float m_currentTimer;
-
+    public GameObject SpawnPoint;
     public override void Awake()
     {
         lavaManager.m_timer = m_currentTimer;
@@ -49,5 +49,8 @@ public class LavaRun : BaseObjective
         return m_currentTimer;
     }
 
-
+    public override GameObject SpawnPoints()
+    {
+        return SpawnPoint;
+    }
 }

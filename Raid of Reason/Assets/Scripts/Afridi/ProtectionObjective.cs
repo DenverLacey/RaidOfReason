@@ -16,6 +16,7 @@ public class ProtectionObjective : BaseObjective
     [Tooltip("Name of the Objective")]
     public string name;
 
+    public GameObject SpawnPoint;
     private float m_currentTimer;
     private float m_currentHealth;
 
@@ -28,6 +29,11 @@ public class ProtectionObjective : BaseObjective
     public override float Timer()
     {
         return m_currentTimer;
+    }
+
+    public override GameObject SpawnPoints()
+    {
+        return SpawnPoint;
     }
 
     public override string GrabDescription()

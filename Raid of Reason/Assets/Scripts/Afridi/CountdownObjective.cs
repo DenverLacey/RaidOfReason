@@ -19,6 +19,7 @@ public class CountdownObjective : BaseObjective
 
     [Tooltip("Name of the Objective")]
     public string name;
+    public GameObject SpawnPoint;
 
     // Current Timer
     private float currentTimer;
@@ -37,6 +38,11 @@ public class CountdownObjective : BaseObjective
     public void Reset()
     {
         m_enemies.Clear();
+    }
+
+    public override GameObject SpawnPoints()
+    {
+        return SpawnPoint;
     }
 
     public override float Timer()

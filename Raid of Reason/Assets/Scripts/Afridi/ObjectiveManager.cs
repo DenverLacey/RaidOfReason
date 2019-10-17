@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.UI;
 /*
  * Author: Afridi Rahim, Denver Lacey
-    
 */
 public class ObjectiveManager : MonoBehaviour
 {
