@@ -13,8 +13,7 @@ public class Lava : MonoBehaviour
     private float m_damage = 2;
 
 	[Tooltip("Time it takes for lava to engulf level")]
-	[SerializeField]
-    private float m_timer = 30f;
+    public float m_timer = 30f;
 
 	private Kenron m_kenron;
 	private Kreiger m_nashorn;
