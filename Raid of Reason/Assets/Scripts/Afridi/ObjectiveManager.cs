@@ -11,7 +11,9 @@ public class ObjectiveManager : MonoBehaviour
     [SerializeField]
     [Tooltip("Objectives should be added in order of progression")]
     public List<BaseObjective> m_objectives = new List<BaseObjective>();
+    public List<TriggerObjective> triggerObjectives = new List<TriggerObjective>();
     public BaseObjective m_currentObjective;
+    public TriggerObjective m_triggerObjective;
 
     public bool ObjectiveCompleted;
     public bool ObjectiveTriggered = false;
@@ -29,23 +31,29 @@ public class ObjectiveManager : MonoBehaviour
 
     private void Awake()
     {
-        if (ObjectiveTriggered == true)
+        foreach (TriggerObjective obj in triggerObjectives)
         {
-            m_currentObjective = m_objectives[0];
-            if (m_currentObjective)
-            {
-                #region Objective Init
-                m_currentObjective.Awake();
-                #endregion
-            }
-            ObjectiveCompleted = false;
+            obj.gameObject.SetActive(false);
         }
+
+        m_currentObjective = m_objectives[0];
+        m_triggerObjective = triggerObjectives[0];
+        m_triggerObjective.gameObject.SetActive(true);
+
+        if (m_currentObjective)
+        {
+            #region Objective Init
+            m_currentObjective.Awake();
+            #endregion
+        }
+        ObjectiveCompleted = false;
     }
 
     private void Update()
     {
         if (m_currentObjective && ObjectiveTriggered == true)
         {
+            m_triggerObjective.gameObject.SetActive(false);
             objectiveTimer.gameObject.SetActive(true);
             objectiveDescription.gameObject.SetActive(true);
             showTitle.gameObject.SetActive(true);
@@ -87,6 +95,10 @@ public class ObjectiveManager : MonoBehaviour
         {
 			m_objectives.RemoveAt(0);
 			m_currentObjective = m_objectives[0];
+
+            triggerObjectives.RemoveAt(0);
+            m_triggerObjective = triggerObjectives[0];
+            m_triggerObjective.gameObject.SetActive(true);
 
             ObjectiveCompleted = true;
             // Reset Trigger

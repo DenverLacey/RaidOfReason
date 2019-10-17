@@ -9,15 +9,16 @@ public class BarrierManager : MonoBehaviour
 
     void Awake()
     {
+        m_ObjManager = FindObjectOfType<ObjectiveManager>();
         foreach (GameObject obj in Barriers)
         {
-            obj.SetActive(false);
+            obj.SetActive(true);
         }
     }
 
     public void ManageBarriers()
     {
-        if (m_ObjManager.m_currentObjective.name == "Countdown To Destruction_1" && m_ObjManager.objectiveComplete)
+        if (m_ObjManager.m_currentObjective.name == "Countdown To Destruction" && m_ObjManager.objectiveComplete)
         {
             Barriers[0].SetActive(false);
         }

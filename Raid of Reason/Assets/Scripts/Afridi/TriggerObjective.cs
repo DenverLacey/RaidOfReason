@@ -10,6 +10,7 @@ public class TriggerObjective : MonoBehaviour
     private void Awake()
     {
         objectiveManager = FindObjectOfType<ObjectiveManager>();
+        Barriers = FindObjectOfType<BarrierManager>();
     }
 
     void OnTriggerEnter(Collider other)
