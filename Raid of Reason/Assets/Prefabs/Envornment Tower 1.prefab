@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!65 &3012994163329895324
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6850512417408553810}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.2670497, y: 0.47694927, z: 0.23619507}
-  m_Center: {x: 0, y: 0.000000059604645, z: 0.000000029802322}
 --- !u!208 &1935979904627810316
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -29,6 +16,19 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!65 &3012994163329895324
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6850512417408553810}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2670497, y: 0.47694927, z: 0.23619507}
+  m_Center: {x: 0, y: 0.000000059604645, z: 0.000000029802322}
 --- !u!1 &9200172066617804670
 GameObject:
   m_ObjectHideFlags: 0
@@ -38,7 +38,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3404048651021199398}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Envornment Tower 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,6 +70,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 8431f5da4430ab345855524febf4b700, type: 3}
       propertyPath: m_Name
       value: building_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 8431f5da4430ab345855524febf4b700, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 8431f5da4430ab345855524febf4b700, type: 3}
       propertyPath: m_LocalPosition.x
@@ -115,6 +119,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 8431f5da4430ab345855524febf4b700, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 852fdde00f8711242bcd2415a2b90900, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8431f5da4430ab345855524febf4b700, type: 3}
 --- !u!1 &6850512417408553810 stripped
