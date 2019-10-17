@@ -9,6 +9,7 @@ public class ProtectionObjective : BaseObjective
     public GameObject ProtectObject;
     [Tooltip("Health of the Object in protection")]
     public float health;
+    public float damage;
     [Tooltip("Time of Protection")]
     public float timer;
     [Tooltip("The Objective Description")]
@@ -29,6 +30,11 @@ public class ProtectionObjective : BaseObjective
     public override float Timer()
     {
         return m_currentTimer;
+    }
+
+    public void TakeDamage()
+    {
+        m_currentHealth -= damage;
     }
 
     public override GameObject SpawnPoints()

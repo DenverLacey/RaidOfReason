@@ -11,10 +11,11 @@ public class ObjectiveManager : MonoBehaviour
     [SerializeField]
     [Tooltip("Objectives should be added in order of progression")]
     public List<BaseObjective> m_objectives = new List<BaseObjective>();
+    public List<GameObject> Barriers = new List<GameObject>();
     public BaseObjective m_currentObjective;
 
     public bool ObjectiveCompleted;
-    public bool ObjectiveTriggered;
+    public bool ObjectiveTriggered = false;
 
     public Text objectiveTimer;
     public Text objectiveDescription;
@@ -29,21 +30,27 @@ public class ObjectiveManager : MonoBehaviour
 
     private void Awake()
     {
-        m_currentObjective = m_objectives[0];
-        if (m_currentObjective)
+        if (ObjectiveTriggered)
         {
-            #region Objective Init
-            m_currentObjective.Awake();
-            objectiveComplete.SetActive(false);
-            objectiveFailed.SetActive(false);
-            skillTreeUnlock.SetActive(false);
-            objectiveTimer.gameObject.SetActive(false);
-            objectiveDescription.gameObject.SetActive(false);
-            showTitle.gameObject.SetActive(false);
-            #endregion
+            m_currentObjective = m_objectives[0];
+            if (m_currentObjective)
+            {
+                #region Objective Init
+                m_currentObjective.Awake();
+                objectiveComplete.SetActive(false);
+                objectiveFailed.SetActive(false);
+                skillTreeUnlock.SetActive(false);
+                objectiveTimer.gameObject.SetActive(false);
+                objectiveDescription.gameObject.SetActive(false);
+                showTitle.gameObject.SetActive(false);
+                #endregion
+
+                foreach (GameObject obj in Barriers) {
+                    obj.SetActive(false);
+                } 
+            }
+            ObjectiveCompleted = false;
         }
-        ObjectiveCompleted = false;
-        ObjectiveTriggered = false;
     }
 
     private void Update()
@@ -63,6 +70,30 @@ public class ObjectiveManager : MonoBehaviour
                 #endregion
 
             m_currentObjective.Update();
+
+            if (m_currentObjective.name == "Countdown To Destruction_1")
+            {
+                Barriers[0].SetActive(true);
+                Barriers[1].SetActive(true);
+                Barriers[2].SetActive(true);
+            }
+            if (m_currentObjective.name == "Countdown To Destruction_2")
+            {
+                Barriers[1].SetActive(true);
+                Barriers[1].SetActive(true);
+            }
+            if (m_currentObjective.name == "Protect The Crytal_1")
+            {
+                Barriers[0].SetActive(true);
+                Barriers[1].SetActive(true);
+                Barriers[2].SetActive(true);
+            }
+            if (m_currentObjective.name == "Protect The Crytal_2")
+            {
+                Barriers[0].SetActive(true);
+                Barriers[1].SetActive(true);
+                Barriers[2].SetActive(true);
+            }
 
             if (m_isDone && !m_hasFailed)
             {
@@ -101,6 +132,13 @@ public class ObjectiveManager : MonoBehaviour
             showTitle.gameObject.SetActive(false);
 
             objectiveComplete.SetActive(true);
+
+            if (m_currentObjective.name == m_objectives[0].name)
+            {
+                Barriers[0].SetActive(false);
+                Barriers[1].SetActive(false);
+                Barriers[2].SetActive(false);
+            }
 
             yield return new WaitForSecondsRealtime(5);
 
