@@ -103,5 +103,9 @@ public class ProjectileMove : MonoBehaviour {
 				}
             }
 		}
+		else if (other.gameObject.layer == LayerMask.NameToLayer("Barrier"))
+		{
+			Destroy();
+		}
     }
 }
