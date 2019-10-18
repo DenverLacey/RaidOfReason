@@ -30,7 +30,8 @@ public abstract class BaseCharacter : MonoBehaviour
 	public enum PlayerState
     {
         ALIVE,
-        DEAD
+        DEAD,
+		NP
     }
 
     public delegate void OnTakeDamage(BaseCharacter player);
@@ -443,4 +444,11 @@ public abstract class BaseCharacter : MonoBehaviour
         // Degenerate shield per second by the amount.
         currentShield -= m_shieldDegenerateAmount * Time.deltaTime;
     }
+
+	public void SetPlayerToNotPlaying()
+	{
+		playerState = PlayerState.NP;
+		transform.Find("Model").gameObject.SetActive(false);
+		transform.position = Vector3.up * 10000f;
+	}
 }

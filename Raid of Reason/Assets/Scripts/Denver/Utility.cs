@@ -56,6 +56,6 @@ public static class Utility
 			character.gameObject.activeSelf && 
 			(character.CanMove || character.CanRotate) && 
 			character.m_currentHealth > 0f && 
-			character.playerState != BaseCharacter.PlayerState.DEAD;
+			character.playerState == BaseCharacter.PlayerState.ALIVE;
 	}
 }

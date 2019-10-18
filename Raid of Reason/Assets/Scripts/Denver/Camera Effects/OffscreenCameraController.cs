@@ -40,6 +40,8 @@ public class OffscreenCameraController : MonoBehaviour
 
 	private Vector3 m_offset;
 
+	private BaseCharacter m_character;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,11 +55,20 @@ public class OffscreenCameraController : MonoBehaviour
 		m_mainCamera = FindObjectOfType<MultiTargetCamera>().GetComponent<Camera>();
 
 		m_offset = m_camera.position - m_target.position;
+
+		m_character = m_target.GetComponent<BaseCharacter>();
     }
 
     // Update is called once per frame
     void Update()
     {
+		// if character is not playing
+		if (m_character.playerState == BaseCharacter.PlayerState.NP)
+		{
+			gameObject.SetActive(false);
+			return;
+		}
+
 		// if target object is turned off, turn off UI
 		if (!m_target || !m_target.gameObject.activeSelf)
 		{

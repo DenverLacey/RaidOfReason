@@ -160,6 +160,12 @@ public class GameManager : MonoBehaviour
 				Kenron.controller = m_controllers[0];
 				Kenron.playerIndex = m_playerIndices[0];
 			}
+			else
+			{
+				Kenron.controller = XboxController.Fourth;
+				Kenron.playerIndex = PlayerIndex.Four;
+				Kenron.SetPlayerToNotPlaying();
+			}
 		}
 		else if (character is Kreiger)
 		{
@@ -170,6 +176,12 @@ public class GameManager : MonoBehaviour
 				Kreiger.controller = m_controllers[1];
 				Kreiger.playerIndex = m_playerIndices[1];
 			}
+			else
+			{
+				Kreiger.controller = XboxController.Fourth;
+				Kreiger.playerIndex = PlayerIndex.Four;
+				Kreiger.SetPlayerToNotPlaying();
+			}
 		}
 		else if (character is Thea)
 		{
@@ -179,6 +191,12 @@ public class GameManager : MonoBehaviour
 			{
 				Thea.controller = m_controllers[2];
 				Thea.playerIndex = m_playerIndices[2];
+			}
+			else
+			{
+				Thea.controller = XboxController.Fourth;
+				Thea.playerIndex = PlayerIndex.Four;
+				Thea.SetPlayerToNotPlaying();
 			}
 		}
 	}

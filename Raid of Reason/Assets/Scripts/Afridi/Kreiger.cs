@@ -182,7 +182,6 @@ public class Kreiger : BaseCharacter
         // if right trigger down and attack animation is not playing
         if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1f && !m_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack Left") && !m_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack Right") && !islunging)
         {
-            m_animator.SetBool("LeftGauntlet", !m_animator.GetBool("LeftGauntlet"));
             m_animator.SetBool("Attack", true);
 
 			CanMove = false;
@@ -236,6 +235,8 @@ public class Kreiger : BaseCharacter
 		islunging = true;
 
 		CanRotate = false;
+
+		m_animator.SetBool("LeftGauntlet", !m_animator.GetBool("LeftGauntlet"));
 
 		// enable colliders
 		RightGauntlet.enabled = true;
