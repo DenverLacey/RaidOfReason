@@ -132,9 +132,9 @@ public class EnemyPathfinding : MonoBehaviour
 	/// </param>
 	public void SetDestination(Vector3 destination)
 	{
-		destination.y = 0f;
+        destination.y = transform.position.y;
 
-		if (!AtPosition(destination))
+        if (!AtPosition(destination))
 		{
 			m_pathing = true;
 			NavMesh.CalculatePath(transform.position, destination, NavMesh.AllAreas, m_path);

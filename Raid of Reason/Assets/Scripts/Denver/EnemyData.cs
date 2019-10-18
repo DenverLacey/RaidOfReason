@@ -86,7 +86,15 @@ public class EnemyData : MonoBehaviour
 	public float PriorityThreshold { get; private set; }
 	public float SqrPriorityThreashold { get => PriorityThreshold * PriorityThreshold; }
 
-    public Vector3 Target { get; set; }
+    Vector3 m_target;
+    public Vector3 Target
+    {
+        get => m_target;
+        set
+        {
+            m_target = value;
+        }
+    }
 	public BaseCharacter TargetPlayer { get; set; }
 
 	public Behaviour PendingBehaviour { get; set; }

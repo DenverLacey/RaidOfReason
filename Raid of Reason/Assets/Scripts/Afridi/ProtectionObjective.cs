@@ -5,21 +5,25 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Objectives/Protect Me")]
 public class ProtectionObjective : BaseObjective
 {
-    [Tooltip("The Object that you are protecting")]
-    public GameObject ProtectObject;
+    [Tooltip("Name of the Objective")]
+    public string nameOfObject;
     [Tooltip("Health of the Object in protection")]
     public float health;
     [Tooltip("Time of Protection")]
     public float timer;
     [Tooltip("The Objective Description")]
     public string description;
-    [Tooltip("Name of the Objective")]
-    public string name;
 
+    public GameObject ProtectObject { get; private set; }
     public string spawnPointName;
     private GameObject SpawnPoint;
     private float m_currentTimer;
     private float m_currentHealth;
+
+    private void OnEnable()
+    {
+        ProtectObject = GameObject.Find(nameOfObject);
+    }
 
     public override void Awake()
     {
@@ -49,7 +53,7 @@ public class ProtectionObjective : BaseObjective
 
     public override string GrabTitle()
     {
-        return name;
+        return nameOfObject;
     }
 
     public override void Update()
@@ -63,11 +67,11 @@ public class ProtectionObjective : BaseObjective
 
     public override bool HasFailed()
     {
-        return m_currentTimer <= 0 || health <= 0;
+        return health <= 0;
     }
 
     public override bool IsDone()
     {
-        return health < 0;
+        return m_currentTimer <= 0 && health > 0;
     }
 }
