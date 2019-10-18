@@ -30,6 +30,7 @@ public class ObjectiveManager : MonoBehaviour
 
     private bool m_isDone;
     private bool m_hasFailed;
+    public int buildIndex;
 
     private void Awake()
     {
@@ -108,7 +109,10 @@ public class ObjectiveManager : MonoBehaviour
         {
 			m_objectives.RemoveAt(0);
             if (m_objectives.Count >= 1)
-			    m_currentObjective = m_objectives[0];
+            {
+                m_currentObjective = m_objectives[0];
+            }
+ 
 
             if (triggerObjectives.Count > 1)
             {
@@ -133,6 +137,11 @@ public class ObjectiveManager : MonoBehaviour
             }
 
             yield return new WaitForSecondsRealtime(5);
+
+            if (m_objectives.Count >= 1)
+            {
+                SceneManager.LoadScene(buildIndex);
+            }
 
             #region Objective Descriptions
             // Replaces Old objective texts with new objective
