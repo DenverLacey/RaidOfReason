@@ -28,13 +28,13 @@ public class MeleeEnemyAttack : Behaviour
 		{
 			m_targetPlayer.TakeDamage(agent.AttackDamage);
 
-			if (m_targetPlayer.tag == "Kreiger" && GameManager.Instance.Kreiger.m_skillUpgrades.Count > 1)
-			{
-                //if (GameManager.Instance.Kreiger.isActive && GameManager.Instance.Kreiger.m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
-                //{
-                //    agent.TakeDamage(GameManager.Instance.Kreiger.SSDamageTaken, GameManager.Instance.Kreiger);
-                //}
-            }
+			//if (m_targetPlayer.tag == "Kreiger" && GameManager.Instance.Kreiger.m_skillUpgrades.Count > 1)
+			//{
+   //             //if (GameManager.Instance.Kreiger.isActive && GameManager.Instance.Kreiger.m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
+   //             //{
+   //             //    agent.TakeDamage(GameManager.Instance.Kreiger.SSDamageTaken, GameManager.Instance.Kreiger);
+   //             //}
+   //         }
 		}
 	}
 
