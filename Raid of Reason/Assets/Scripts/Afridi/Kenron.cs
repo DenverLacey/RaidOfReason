@@ -116,8 +116,6 @@ public class Kenron : BaseCharacter
     private float m_estimatedDashTime;
     private float m_dashDistance;
     private bool m_dashDone;
-    private bool m_InfiniteDash;
-    private int m_TempCharge;
 
     // Checks if Kenron is Dashing or Not
     private bool isDashing;
@@ -142,9 +140,7 @@ public class Kenron : BaseCharacter
         CharacterType = CharacterType.KENRON;
         m_Enemy = FindObjectOfType<EnemyData>();
         m_currentCharges = m_charges;
-        m_TempCharge = m_currentCharges - 1;
         isDashing = false;
-        m_InfiniteDash = false;
 
         // set size of dash hit box
         Vector3 hitBoxSize = new Vector3(m_dashCollider.size.x, m_dashCollider.size.y, m_maxDashDistance);
@@ -171,7 +167,13 @@ public class Kenron : BaseCharacter
         {
             // Uses his Dash
             DashAttack();
-            SkillChecker();
+        }
+        if (isActive == true) {
+            if (m_Enemy.isDeadbByKenron)
+            {
+                this.m_currentHealth = m_currentHealth + m_healthGained;
+                skillManager.m_mainSkills[0].m_currentDuration -= m_RTDurationIncreased;
+            }
         }
 
         Vector3 position = transform.position;
@@ -189,24 +191,9 @@ public class Kenron : BaseCharacter
         {
             if (skillDuration >= skillManager.m_mainSkills[0].m_duration)
             {
-                // Sets the Skill to be Active
-                m_InfiniteDash = true;
                 isActive = true;
                 StartCoroutine(ChaosFlameVisual());
-                m_kenronParticle.Play();
-                // Halves his Health and sets a higher Damage/Speed
-                //if (isActive == true && m_skillUpgrades.Find(skill => skill.Name == "Ronin Mastery"))
-                //{
-                //    SetHealth(m_currentHealth / 3);
-                //    SetDamage(m_minSADamage, m_maxSADamage);
-                //    SetSpeed(m_SAFlameSpeed);
-                //}
-                //else
-                //{
-                //    SetHealth(m_currentHealth / 2);
-                //    SetDamage(m_minCFDamage, m_maxCFDamage);
-                //    SetSpeed(m_chaosFlameSpeed);
-                //}
+                m_kenronParticle.Play();              
             }
         }
     }
@@ -216,14 +203,10 @@ public class Kenron : BaseCharacter
     /// </summary>
     public void DashAttack()
     {
-        if (isActive && m_InfiniteDash) {
-            m_dashDelay = 0.01f;           
-        }
-
         // dash attack
         if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1f && m_controllerOn && !m_triggerDown)
         {
-            if (m_currentCharges > 0 || m_InfiniteDash)
+            if (m_currentCharges > 0)
             {
                 // set boolean flags
                 m_triggerDown = true;
@@ -233,10 +216,6 @@ public class Kenron : BaseCharacter
                 m_dashCollider.enabled = true;
                 m_dashDelayTimer = m_dashDelay;
                 m_dashStartPosition = transform.position;
-				if (!isActive && !m_InfiniteDash)
-				{
-					m_TempCharge--;
-				}
 				m_currentCharges--;
 
 
@@ -302,72 +281,11 @@ public class Kenron : BaseCharacter
             // if ready to dash again 
             if (m_dashDelayTimer <= 0.0f && gameObject.activeSelf)
             {
-                if (!isActive && !m_InfiniteDash)
-                {
-                    StartCoroutine(TimeTillRecharge());
-                }
+                StartCoroutine(TimeTillRecharge());
                 m_controllerOn = true;
                 isDashing = false;
             }
         }
-    }
-
-    /// <summary>
-    /// Checks how many skills Kenron has obtained from his skill tree
-    /// - Vile Infusion: Kenron Gains Health Back for each kill (Passive)
-    /// - Blood Lust: Kenrons Cooldown is reduced
-    /// - Shuras Reckoning: AOE Cleave with a boost in speed
-    /// - Curse of Amaterasu: Spawns A Demon Kenron after Main Kenron Dies (Passive)
-    /// </summary>
-    public void SkillChecker()
-    {
-        // Empty Check
-        if (gameObject != null && m_Enemy != null)
-        {
-            // Sets the image to true if the skills are found
-            UnlockSkill();
-
-            //// If Kenron has the skill specified and is killed by Kenron
-            //if (m_skillUpgrades.Find(skill => skill.Name == "Vile Infusion") && m_Enemy.isDeadbByKenron)
-            //{
-            //    // Return a bit of health to Kenrons current health
-            //    this.m_currentHealth = m_currentHealth + m_healthGained;
-            //}
-
-            //// If Kenron has the skill specified and is killed by Kenron
-            //if (isActive == true && m_skillUpgrades.Find(skill => skill.Name == "Bloodlust") && m_Enemy.isDeadbByKenron)
-            //{
-            //    // Reduces the cooldown from Kenrons Cooldown 
-            //    skillManager.m_mainSkills[0].m_currentDuration -= m_RTDurationIncreased;
-            //}
-        }
-    }
-
-    public void UnlockSkill()
-    {
-        //if (m_skillPopups != null)
-        //{
-        //    if (m_skillUpgrades.Find(skill => skill.Name == "Vile Infusion"))
-        //    {
-        //        // Icon pops up
-        //        m_skillPopups[0].gameObject.SetActive(true);
-        //    }
-        //    if (m_skillUpgrades.Find(skill => skill.Name == "Bloodlust"))
-        //    {
-        //        // Icon pops up
-        //        m_skillPopups[1].gameObject.SetActive(true);
-        //    }
-        //    if (m_skillUpgrades.Find(skill => skill.Name == "Shuras Awakening"))
-        //    {
-        //        // Icon pops up
-        //        m_skillPopups[2].gameObject.SetActive(true);
-        //    }
-        //    if (m_skillUpgrades.Find(skill => skill.Name == "Malevolent Inferno"))
-        //    {
-        //        // Icon pops up
-        //        m_skillPopups[3].gameObject.SetActive(true);
-        //    }
-        //}
     }
 
     /// <summary>
@@ -382,12 +300,10 @@ public class Kenron : BaseCharacter
             {
                 // Resets Stats and Skill
                 isActive = false;
-                m_InfiniteDash = false;
                 m_currentCharges = m_charges;
                 SetDamage(m_minDamage, m_maxDamage);
                 SetSpeed(m_movementSpeed);
                 m_kenronParticle.Stop();
-                m_TempCharge = m_currentCharges - 1;
             }
         }
     }
@@ -405,7 +321,6 @@ public class Kenron : BaseCharacter
         if (m_currentCharges < m_charges)
         {
             m_currentCharges++;
-            m_TempCharge++;
         }
     }
 }

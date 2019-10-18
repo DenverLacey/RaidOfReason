@@ -125,30 +125,7 @@ public class Kreiger : BaseCharacter
 	{
 		GameManager.Instance.GiveCharacterReference(this);
         m_collider = GetComponent<CapsuleCollider>();
-        InitialiseUpgrades();
         m_hitEnemies = new List<EnemyData>();
-    }
-
-
-    /// <summary>
-    /// Checks how many skills Kreiger has obtained from his skill tree
-    /// - Roaring Thunder: More Range for his Taunt and Cooldown is Halved
-    /// - Shock Wave: Melee now knocksback and has a chance to stun (Passive)
-    /// - Kinetic Discharge: Enemies now take damage when attacking Taunted Kreiger
-    /// - Macht Des Sturms: Chain Lightning attack that damages and stuns + team mates are granted electric damage (Stun Buff)
-    /// </summary>
-
-    void InitialiseUpgrades()
-    {
-        UnlockSkill();
-        //if (m_skillUpgrades.Find(skill => skill.Name == "Roaring Thunder"))
-        //{
-        //    // Returns increased Radius
-        //    this.m_tauntRadius += m_RTRadiusIncreased;
-
-        //    // Cooldown is halved
-        //    skillManager.m_mainSkills[1].m_duration += m_RTDurationIncreased;
-        //}
     }
 
 	protected override void Awake()
@@ -164,7 +141,7 @@ public class Kreiger : BaseCharacter
         triggerIsDown = false;
         islunging = false;
         runOnce = true;
-
+        skillManager.m_mainSkills[1].m_duration += m_RTDurationIncreased;
         m_Thea = FindObjectOfType<Thea>();
         m_Kenron = FindObjectOfType<Kenron>();
     }
@@ -184,33 +161,17 @@ public class Kreiger : BaseCharacter
         // Allows Kreiger to perform Melee Punches 
         base.Update();
         Punch();
-    }
-
-    public void UnlockSkill()
-    {
-        //if (m_skillPopups.Count > 1)
-        //{
-        //    if (m_skillUpgrades.Find(skill => skill.Name == "Roaring Thunder"))
-        //    {
-        //        // Icon pops up
-        //        m_skillPopups[0].gameObject.SetActive(true);
-        //    }
-        //    if (m_skillUpgrades.Find(skill => skill.Name == "Kinetic Discharge"))
-        //    {
-        //        // Icon pops up
-        //        m_skillPopups[1].gameObject.SetActive(true);
-        //    }
-        //    if (m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
-        //    {
-        //        // Icon pops up
-        //        m_skillPopups[2].gameObject.SetActive(true);
-        //    }
-        //    if (m_skillUpgrades.Find(skill => skill.Name == "Macht Des Sturms"))
-        //    {
-        //        // Icon pops up
-        //        m_skillPopups[3].gameObject.SetActive(true);
-        //    }
-        //}
+        if (isActive == true)
+        {
+            if (GameManager.Instance.Kenron.playerState != PlayerState.DEAD && !GameManager.Instance.Kenron)
+            {
+                GameManager.Instance.Kenron.currentShield = m_SSShieldsGiven;
+            }
+            if (GameManager.Instance.Thea.playerState != PlayerState.DEAD && !GameManager.Instance.Thea)
+            {
+                GameManager.Instance.Thea.currentShield = m_SSShieldsGiven;
+            }
+        }
     }
 
     /// <summary>
@@ -270,24 +231,6 @@ public class Kreiger : BaseCharacter
         }
     }
 
-    public void SkillChecker()
-    {
-        if (gameObject != null)
-        {
-            //if (isActive = true && m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
-            //{
-            //    if (GameManager.Instance.Kenron.playerState != PlayerState.DEAD && !GameManager.Instance.Kenron)
-            //    {
-            //        GameManager.Instance.Kenron.currentShield = m_SSShieldsGiven;
-            //    }
-            //    if (GameManager.Instance.Thea.playerState != PlayerState.DEAD && !GameManager.Instance.Thea)
-            //    {
-            //        GameManager.Instance.Thea.currentShield = m_SSShieldsGiven;
-            //    }
-            //}
-        }
-    }
-
 	void StartLunge()
 	{
 		islunging = true;
@@ -328,6 +271,7 @@ public class Kreiger : BaseCharacter
     {
         if (skillDuration >= skillManager.m_mainSkills[1].m_duration)
         {
+
             // Ability is active
             isTaunting = true;
 
@@ -339,11 +283,9 @@ public class Kreiger : BaseCharacter
 				{
                     enemy.Taunted = true;
                     totalAmountTaunted++;
-
                 }
 			}
 
-            // Set active
             isActive = true;
 
             m_tauntParticle.Play();
@@ -371,12 +313,9 @@ public class Kreiger : BaseCharacter
 
     public void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Enemy" && isActive == true) { 
-        //{
-        //    if (m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
-        //    {
-        //        collision.gameObject.GetComponent<EnemyData>().TakeDamage(SSDamageTaken, GameManager.Instance.Kreiger);             
-        //    }
+        if (collision.gameObject.tag == "Enemy" && isActive == true)
+        {
+             collision.gameObject.GetComponent<EnemyData>().TakeDamage(SSDamageTaken, GameManager.Instance.Kreiger);
         }
     }
 }

@@ -177,7 +177,10 @@ public class Thea : BaseCharacter
     protected override void Update()
     {
         base.Update();
-        
+        if (m_currentHealth != m_maxHealth && !m_isHealthRegen)
+        {
+            StartCoroutine(HealthOverTime());
+        }
         SkillChecker();
 
         if (GameManager.Instance.Thea.playerState == PlayerState.DEAD)
@@ -402,32 +405,6 @@ public class Thea : BaseCharacter
             m_HealRadius.gameObject.SetActive(false);
             m_HealRadius_2.gameObject.SetActive(false);
         }
-    }
-    public void UnlockSkill()
-    {
-        //if (m_skillPopups.Count > 1)
-        //{
-        //    if (m_skillUpgrades.Find(skill => skill.Name == "Settling Tide"))
-        //    {
-        //        // Icon pops up
-        //        m_skillPopups[0].gameObject.SetActive(true);
-        //    }
-        //    if (m_skillUpgrades.Find(skill => skill.Name == "Oceans Ally"))
-        //    {
-        //        // Icon pops up
-        //        m_skillPopups[1].gameObject.SetActive(true);
-        //    }
-        //    if (m_skillUpgrades.Find(skill => skill.Name == "Hydro Pressure"))
-        //    {
-        //        // Icon pops up
-        //        m_skillPopups[2].gameObject.SetActive(true);
-        //    }
-        //    if (m_skillUpgrades.Find(skill => skill.Name == "Serenade of Water"))
-        //    {
-        //        // Icon pops up
-        //        m_skillPopups[3].gameObject.SetActive(true);
-        //    }
-        //}
     }
 
 	public void EndGIftOfPoseidon()
