@@ -29,22 +29,22 @@ public class SmashDamage : MonoBehaviour
             // Controller vibration
             DoRumble();
 
-
-            if (GameManager.Instance.Kreiger != null && GameManager.Instance.Kreiger.m_skillUpgrades.Find(skill => skill.Name == "Kinetic Discharge"))
-            {
-                haveSkill = true;
-                // TODO: Knockback enemies deal damage to other enemies 
-
-                if (rb != null && haveSkill == true)
+            if (GameManager.Instance.Kreiger.m_skillUpgrades.Count > 1) {
+                if (GameManager.Instance.Kreiger != null && GameManager.Instance.Kreiger.m_skillUpgrades.Find(skill => skill.Name == "Kinetic Discharge"))
                 {
-                    Vector3 direction = other.transform.position - GameManager.Instance.Kreiger.transform.position;
-                    direction.y = 0;
+                    haveSkill = true;
+                    // TODO: Knockback enemies deal damage to other enemies 
 
-                    rb.AddForce(direction.normalized * GameManager.Instance.Kreiger.KDForce, ForceMode.Impulse);
-                    enemy.KnockBack(GameManager.Instance.Kreiger.KDStun);
+                    if (rb != null && haveSkill == true)
+                    {
+                        Vector3 direction = other.transform.position - GameManager.Instance.Kreiger.transform.position;
+                        direction.y = 0;
+
+                        rb.AddForce(direction.normalized * GameManager.Instance.Kreiger.KDForce, ForceMode.Impulse);
+                        enemy.KnockBack(GameManager.Instance.Kreiger.KDStun);
+                    }
                 }
             }
-           
             if (rb != null && haveSkill == false)
             {
                 Vector3 direction = other.transform.position - GameManager.Instance.Kreiger.transform.position;
