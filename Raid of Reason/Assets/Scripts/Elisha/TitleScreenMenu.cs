@@ -12,20 +12,20 @@ using DG.Tweening;
 using XboxCtrlrInput;
 using UnityEngine.Events;
 using Cinemachine;
+using UnityEngine.UI;
 
-[RequireComponent(typeof(TextMeshProUGUI))]
 public class TitleScreenMenu : MonoBehaviour
 {
     public CinemachineVirtualCamera VirtualCamera1;
     public CinemachineVirtualCamera VirtualCamera2;
-    public TextMeshProUGUI text;
+    public Text text;
     public Color textColorNoAlpha;
     public GameObject mainMenu;
     public GameObject titleScreen;
 
     public void Start()
     {
-        text.GetComponent<TextMeshProUGUI>();
+        text.GetComponent<Text>();
 
         textColorNoAlpha = text.color;
         textColorNoAlpha.a = 0.0f;
