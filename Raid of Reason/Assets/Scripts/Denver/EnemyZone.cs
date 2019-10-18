@@ -89,6 +89,8 @@ public class EnemyZone : MonoBehaviour
 			ObjectPooling.CreateObjectPool("EnemyDeathParticle", 20);
 		}
 
+        BehaviourTreeOverrides = new Dictionary<string, BehaviourTree>();
+
 		// move data from lists into dictionaries
 		foreach (var range in m_viewRangeOverrides) { m_viewRangeDict.Add(range.key, range.value); }
 		foreach (var priority in m_characterPriorityOverrides) { m_characterPriorityDict.Add(priority.key, priority.value); }
@@ -143,8 +145,13 @@ public class EnemyZone : MonoBehaviour
 						enemy.PendingBehaviour = null;
 					}
 				}
+                else if (BehaviourTreeOverrides.ContainsKey(enemy.Type))
+                {
+                    BehaviourTreeOverrides[enemy.Type].Execute(enemy);
+                }
 				else
 				{
+
 					m_enemyManager.BehaviourTrees[enemy.Type].Execute(enemy);
 				}
 			}
