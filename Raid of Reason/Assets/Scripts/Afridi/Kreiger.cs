@@ -116,10 +116,6 @@ public class Kreiger : BaseCharacter
     private GameObject temp;
     private bool runOnce;
 
-    // Stat Tracker
-    [HideInInspector]
-    public StatTrackingManager m_statManager;
-
     private float totalAmountTaunted;
     private float amountTaunted;
 
@@ -145,17 +141,14 @@ public class Kreiger : BaseCharacter
     void InitialiseUpgrades()
     {
         UnlockSkill();
-        if (m_skillUpgrades.Count > 1)
-        {
-            if (m_skillUpgrades.Find(skill => skill.Name == "Roaring Thunder"))
-            {
-                // Returns increased Radius
-                this.m_tauntRadius += m_RTRadiusIncreased;
+        //if (m_skillUpgrades.Find(skill => skill.Name == "Roaring Thunder"))
+        //{
+        //    // Returns increased Radius
+        //    this.m_tauntRadius += m_RTRadiusIncreased;
 
-                // Cooldown is halved
-                skillManager.m_mainSkills[1].m_duration += m_RTDurationIncreased;
-            }
-        }
+        //    // Cooldown is halved
+        //    skillManager.m_mainSkills[1].m_duration += m_RTDurationIncreased;
+        //}
     }
 
 	protected override void Awake()
@@ -164,7 +157,6 @@ public class Kreiger : BaseCharacter
         base.Awake();
         CharacterType = CharacterType.KREIGER;
         m_tauntParticle.GetComponentInChildren<ParticleSystem>();
-        m_statManager = FindObjectOfType<StatTrackingManager>();
         LeftGauntlet.enabled = false;
         RightGauntlet.enabled = false;
         isTaunting = false;
@@ -282,17 +274,17 @@ public class Kreiger : BaseCharacter
     {
         if (gameObject != null)
         {
-            if (isActive = true && m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
-            {
-                if (GameManager.Instance.Kenron.playerState != PlayerState.DEAD && !GameManager.Instance.Kenron)
-                {
-                    GameManager.Instance.Kenron.currentShield = m_SSShieldsGiven;
-                }
-                if (GameManager.Instance.Thea.playerState != PlayerState.DEAD && !GameManager.Instance.Thea)
-                {
-                    GameManager.Instance.Thea.currentShield = m_SSShieldsGiven;
-                }
-            }
+            //if (isActive = true && m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
+            //{
+            //    if (GameManager.Instance.Kenron.playerState != PlayerState.DEAD && !GameManager.Instance.Kenron)
+            //    {
+            //        GameManager.Instance.Kenron.currentShield = m_SSShieldsGiven;
+            //    }
+            //    if (GameManager.Instance.Thea.playerState != PlayerState.DEAD && !GameManager.Instance.Thea)
+            //    {
+            //        GameManager.Instance.Thea.currentShield = m_SSShieldsGiven;
+            //    }
+            //}
         }
     }
 
@@ -346,7 +338,6 @@ public class Kreiger : BaseCharacter
 				if (sqrDist <= m_tauntRadius * m_tauntRadius)
 				{
                     enemy.Taunted = true;
-                    GameManager.Instance.Kreiger.m_statManager.enemiesTaunted++;
                     totalAmountTaunted++;
 
                 }
@@ -375,25 +366,17 @@ public class Kreiger : BaseCharacter
 
             // Skill no longer active
             isTaunting = false;
-
-            MostTaunted();
         }
     }
 
-    public void MostTaunted()
-    {
-        GameManager.Instance.Kreiger.m_statManager.highestTaunted = Mathf.Max(totalAmountTaunted, GameManager.Instance.Kreiger.m_statManager.highestTaunted);
-        totalAmountTaunted = 0.0f;
-    }
-    
     public void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Enemy" && isActive == true)
-        {
-            if (m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
-            {
-                collision.gameObject.GetComponent<EnemyData>().TakeDamage(SSDamageTaken, GameManager.Instance.Kreiger);             
-            }
+        if (collision.gameObject.tag == "Enemy" && isActive == true) { 
+        //{
+        //    if (m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
+        //    {
+        //        collision.gameObject.GetComponent<EnemyData>().TakeDamage(SSDamageTaken, GameManager.Instance.Kreiger);             
+        //    }
         }
     }
 }

@@ -69,17 +69,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public Dictionary<CharacterType, List<SkillsAbilities>> CharacterSkillUpgrades { get; private set; }
-
-	public List<BaseCharacter> AlivePlayers
-	{
-		get => Players.FindAll(player => player.playerState == BaseCharacter.PlayerState.ALIVE);
-	}
-
     public List<BaseCharacter> DeadPlayers
     {
         get => Players.FindAll(player => player.playerState == BaseCharacter.PlayerState.DEAD);
     }
+    public List<BaseCharacter> AlivePlayers
+    {
+        get => Players.FindAll(player => player.playerState == BaseCharacter.PlayerState.ALIVE);
+    }
+
 
     public BaseCharacter FirstPlayer
 	{
@@ -134,13 +132,6 @@ public class GameManager : MonoBehaviour
 	{
         if (m_isInstance)
         {
-			CharacterSkillUpgrades = new Dictionary<CharacterType, List<SkillsAbilities>>
-			{
-				{ CharacterType.KENRON, new List<SkillsAbilities>() },
-				{ CharacterType.KREIGER, new List<SkillsAbilities>() },
-				{ CharacterType.THEA, new List<SkillsAbilities>() }
-			};
-
             // unfreeze scene
             SceneManager.sceneLoaded += (scene, sceneMode) => Time.timeScale = 1.0f;
 
@@ -163,7 +154,6 @@ public class GameManager : MonoBehaviour
 		if (character is Kenron)
 		{
 			Kenron = character as Kenron;
-            Kenron.m_skillUpgrades.AddRange(Kenron.GetSkillUpgrades());
 
 			if (m_controllers[0] != XboxController.Any)
 			{
@@ -174,7 +164,6 @@ public class GameManager : MonoBehaviour
 		else if (character is Kreiger)
 		{
 			Kreiger = character as Kreiger;
-            Kreiger.m_skillUpgrades.AddRange(Kreiger.GetSkillUpgrades());
 
 			if (m_controllers[1] != XboxController.Any)
 			{
@@ -185,7 +174,6 @@ public class GameManager : MonoBehaviour
 		else if (character is Thea)
 		{
 			Thea = character as Thea;
-            Thea.m_skillUpgrades.AddRange(Thea.GetSkillUpgrades());
 
 			if (m_controllers[2] != XboxController.Any)
 			{
@@ -209,39 +197,4 @@ public class GameManager : MonoBehaviour
 		m_controllers[(int)character] = controller;
 		m_playerIndices[(int)character] = playerIndex;
 	}
-}
-
-public static class BaseCharacterExtension
-{
-    public static List<SkillsAbilities> GetSkillUpgrades(this BaseCharacter character)
-    {
-        if (character is Kenron)
-        {
-            return GameManager.Instance.CharacterSkillUpgrades[CharacterType.KENRON];
-        }
-        else if (character is Kreiger)
-        {
-            return GameManager.Instance.CharacterSkillUpgrades[CharacterType.KREIGER];
-        }
-        else
-        {
-            return GameManager.Instance.CharacterSkillUpgrades[CharacterType.THEA];
-        }
-    }
-
-    public static void AddSkillUpgrade(this BaseCharacter character, SkillsAbilities ability)
-    {
-        if (character is Kenron)
-        {
-            GameManager.Instance.CharacterSkillUpgrades[CharacterType.KENRON].Add(ability);
-        }
-        else if (character is Kreiger)
-        {
-            GameManager.Instance.CharacterSkillUpgrades[CharacterType.KREIGER].Add(ability);
-        }
-        else
-        {
-            GameManager.Instance.CharacterSkillUpgrades[CharacterType.THEA].Add(ability);
-        }
-    }
 }

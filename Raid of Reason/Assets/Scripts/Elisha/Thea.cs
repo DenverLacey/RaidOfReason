@@ -106,10 +106,6 @@ public class Thea : BaseCharacter
     [SerializeField]
     [Tooltip("The Final particle used for visual effect.")]
     private ParticleSystem m_HealRadius_3;
-
-    // Stat Tracker
-    [HideInInspector]
-    public StatTrackingManager m_statManager;
     
     [HideInInspector]
     public bool m_skillActive;
@@ -149,7 +145,6 @@ public class Thea : BaseCharacter
         CharacterType = CharacterType.THEA;
         m_isActive = false;
         m_isHealthRegen = false;
-        m_statManager = FindObjectOfType<StatTrackingManager>();
         m_waterPrefab.SetActive(false);
         m_AOETimer = 0f;
         m_HealRadius.gameObject.SetActive(false);
@@ -161,11 +156,11 @@ public class Thea : BaseCharacter
 
     void IntialiseUpgrades()
     {
-        if (m_skillUpgrades.Find(skill => skill.name == "Settling Tide"))
-        {
-            skillManager.m_mainSkills[2].m_coolDown /= STReductionRate;
-            m_AOEGrowTime /= STChargeRate;
-        }
+        //if (m_skillUpgrades.Find(skill => skill.name == "Settling Tide"))
+        //{
+        //    skillManager.m_mainSkills[2].m_coolDown /= STReductionRate;
+        //    m_AOEGrowTime /= STChargeRate;
+        //}
     }
 
     // Update is called once per frame
@@ -318,34 +313,34 @@ public class Thea : BaseCharacter
         {
             // Sets the image to true if the skills are found
             UnlockSkill();
-            if (m_skillUpgrades.Find(skill => skill.name == "Settling Tide"))
-            {
-                if (m_currentHealth != m_maxHealth && !m_isHealthRegen)
-                {
-                    StartCoroutine(HealthOverTime());
-                }
-            }
-            if (m_skillUpgrades.Find(skill => skill.name == "Oceans Ally"))
-            {
-                float healthcomparison = GameManager.Instance.Kenron.m_currentHealth + GameManager.Instance.Kreiger.m_currentHealth;
+            //if (m_skillUpgrades.Find(skill => skill.name == "Settling Tide"))
+            //{
+            //    if (m_currentHealth != m_maxHealth && !m_isHealthRegen)
+            //    {
+            //        StartCoroutine(HealthOverTime());
+            //    }
+            //}
+            //if (m_skillUpgrades.Find(skill => skill.name == "Oceans Ally"))
+            //{
+            //    float healthcomparison = GameManager.Instance.Kenron.m_currentHealth + GameManager.Instance.Kreiger.m_currentHealth;
 
-                if (healthcomparison <= OAAllyHealthChecks[0])
-                {
-                    m_projectileDelay = OAFireRateIncreased[0];
-                }
-                if (healthcomparison <= OAAllyHealthChecks[1])
-                {
-                    m_projectileDelay = OAFireRateIncreased[1];
-                }
-                if (healthcomparison <= OAAllyHealthChecks[2])
-                {
-                    m_projectileDelay = OAFireRateIncreased[2];
-                }
-                if (healthcomparison <= OAAllyHealthChecks[3])
-                {
-                    m_projectileDelay = OAFireRateIncreased[3];
-                }
-            }          
+            //    if (healthcomparison <= OAAllyHealthChecks[0])
+            //    {
+            //        m_projectileDelay = OAFireRateIncreased[0];
+            //    }
+            //    if (healthcomparison <= OAAllyHealthChecks[1])
+            //    {
+            //        m_projectileDelay = OAFireRateIncreased[1];
+            //    }
+            //    if (healthcomparison <= OAAllyHealthChecks[2])
+            //    {
+            //        m_projectileDelay = OAFireRateIncreased[2];
+            //    }
+            //    if (healthcomparison <= OAAllyHealthChecks[3])
+            //    {
+            //        m_projectileDelay = OAFireRateIncreased[3];
+            //    }
+            //}          
         }
     }
 
@@ -382,19 +377,19 @@ public class Thea : BaseCharacter
 			}
         }
 
-        if (m_isActive == true && m_skillUpgrades.Find(skill => skill.name == "Hydro Pressure"))
-        {
-            m_nearbyEnemies = new List<EnemyData>(FindObjectsOfType<EnemyData>());
-            foreach (EnemyData enemy in m_nearbyEnemies)
-            {
-                float sqrDistance = (this.transform.position - enemy.transform.position).sqrMagnitude;
-                if (sqrDistance <= m_AOERadius * m_AOERadius)
-                {
-                    enemy.GetComponent<EnemyPathfinding>().m_speed -= HPSpeedReduction;
-                    enemy.Strength = HPAttackWeakened;
-                }
-            }
-        }
+        //if (m_isActive == true && m_skillUpgrades.Find(skill => skill.name == "Hydro Pressure"))
+        //{
+        //    m_nearbyEnemies = new List<EnemyData>(FindObjectsOfType<EnemyData>());
+        //    foreach (EnemyData enemy in m_nearbyEnemies)
+        //    {
+        //        float sqrDistance = (this.transform.position - enemy.transform.position).sqrMagnitude;
+        //        if (sqrDistance <= m_AOERadius * m_AOERadius)
+        //        {
+        //            enemy.GetComponent<EnemyPathfinding>().m_speed -= HPSpeedReduction;
+        //            enemy.Strength = HPAttackWeakened;
+        //        }
+        //    }
+        //}
 
         // Checks if ability has been used.
         if (m_isActive == false)
@@ -456,10 +451,10 @@ public class Thea : BaseCharacter
     /// </summary>
     public void GiveHealth()
     {
-        if (m_skillUpgrades.Find(skill => skill.Name == "Hydro Pressure"))
-        {
-            m_AOERadius += HPGrowthSize;
-        }
+        //if (m_skillUpgrades.Find(skill => skill.Name == "Hydro Pressure"))
+        //{
+        //    m_AOERadius += HPGrowthSize;
+        //}
 
         if (GameManager.Instance.Thea.gameObject.activeSelf)
         {
@@ -491,27 +486,20 @@ public class Thea : BaseCharacter
             }
 
             // Heal Thea.
-            AddHealth(m_AOETimer * m_GOPEffect);
-            GameManager.Instance.Thea.m_statManager.damageHealed += m_currentHealth;
+            AddHealth(m_AOETimer * m_GOPEffect);      
 
-            // Stat Tracking
-            if (kenHealed && nashHealed) { GameManager.Instance.Thea.m_statManager.gopHitThree++; kenHealed = false; nashHealed = false; }
-            if (kenHealed) { GameManager.Instance.Thea.m_statManager.damageHealed += GameManager.Instance.Kenron.m_currentHealth; }
-            if (nashHealed) { GameManager.Instance.Thea.m_statManager.damageHealed += GameManager.Instance.Kreiger.m_currentHealth; }
-            if (m_AOERadius > 9.95f) { GameManager.Instance.Thea.m_statManager.gopFullCharged++; }
-
-            if (m_skillActive = true & m_skillUpgrades.Find(skill => skill.name == "Serenade Of Water"))
-            {
-                GameManager.Instance.Kenron.SetHealth(GameManager.Instance.Kenron.m_currentHealth * m_healMultiplier);
-                GameManager.Instance.Kreiger.SetHealth(GameManager.Instance.Kreiger.m_currentHealth * m_healMultiplier);
-                m_nearbyEnemies = new List<EnemyData>(FindObjectsOfType<EnemyData>());
-                foreach (EnemyData data in m_nearbyEnemies)
-                {
-                    data.Strength = 0;
-                }
-                SetHealth(m_currentHealth * m_healMultiplier);
-                m_skillActive = false;
-            }
+            //if (m_skillActive = true & m_skillUpgrades.Find(skill => skill.name == "Serenade Of Water"))
+            //{
+            //    GameManager.Instance.Kenron.SetHealth(GameManager.Instance.Kenron.m_currentHealth * m_healMultiplier);
+            //    GameManager.Instance.Kreiger.SetHealth(GameManager.Instance.Kreiger.m_currentHealth * m_healMultiplier);
+            //    m_nearbyEnemies = new List<EnemyData>(FindObjectsOfType<EnemyData>());
+            //    foreach (EnemyData data in m_nearbyEnemies)
+            //    {
+            //        data.Strength = 0;
+            //    }
+            //    SetHealth(m_currentHealth * m_healMultiplier);
+            //    m_skillActive = false;
+            //}
         }
     }
 
@@ -532,12 +520,6 @@ public class Thea : BaseCharacter
 
         m_HealRadius_2.gameObject.SetActive(false);
         m_HealRadius_2.Stop();
-
-        GameManager.Instance.Thea.m_statManager.gopUsed++;
-        if (GameManager.Instance.Kenron && GameManager.Instance.Kreiger)
-        {
-            GameManager.Instance.Thea.m_statManager.damageHealed += GameManager.Instance.Kreiger.m_currentHealth + GameManager.Instance.Kenron.m_currentHealth + m_currentHealth;
-        }
     }
 
     private IEnumerator HealthOverTime() {

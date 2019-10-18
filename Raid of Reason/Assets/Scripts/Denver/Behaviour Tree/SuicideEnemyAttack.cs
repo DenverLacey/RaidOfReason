@@ -52,10 +52,10 @@ public class SuicideEnemyAttack : Behaviour
 					p.TakeDamage(agent.AttackDamage);
 					if (p.tag == "Kreiger")
 					{
-                        if (GameManager.Instance.Kreiger.isActive && GameManager.Instance.Kreiger.m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
-                        {
-                            agent.TakeDamage(GameManager.Instance.Kreiger.SSDamageTaken, GameManager.Instance.Kreiger);
-                        }
+                        //if (GameManager.Instance.Kreiger.isActive && GameManager.Instance.Kreiger.m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
+                        //{
+                        //    agent.TakeDamage(GameManager.Instance.Kreiger.SSDamageTaken, GameManager.Instance.Kreiger);
+                        //}
                     }
 				}
 			}

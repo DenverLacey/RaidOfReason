@@ -89,8 +89,6 @@ public abstract class BaseCharacter : MonoBehaviour
     [Tooltip("The Skill Manager that manages the skills of the players")]
     public SkillManager skillManager;
 
-    [Tooltip("A List of How Many Skill Upgrades the Players Have")]
-    public List<SkillsAbilities> m_skillUpgrades = new List<SkillsAbilities>();
     private HealthBarUI m_healthBarRef;
 
     [HideInInspector]
@@ -293,12 +291,6 @@ public abstract class BaseCharacter : MonoBehaviour
     /// <param name="damage"></param>
     public virtual void TakeDamage(float damage)
     {
-        if (this.gameObject.tag == "Kreiger")
-        {
-            GameManager.Instance.Kreiger.m_statManager.damageTaken += damage;
-            GameManager.Instance.Kreiger.m_statManager.totalSheildsCharged += GameManager.Instance.Kreiger.currentShield;
-        }
-
         if (currentShield > 0)
         {
             currentShield -= damage * m_vulnerability;

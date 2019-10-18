@@ -48,11 +48,11 @@ public class CrystalSuicideAttack : Behaviour
 				{
 					p.TakeDamage(agent.AttackDamage);
 
-					if (p.tag == "Kreiger" && p.m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
-					{
-						Kreiger krieger = p as Kreiger;
-						agent.TakeDamage(krieger.SSDamageTaken, krieger);
-					}
+					//if (p.tag == "Kreiger" && p.m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
+					//{
+					//	Kreiger krieger = p as Kreiger;
+					//	agent.TakeDamage(krieger.SSDamageTaken, krieger);
+					//}
 				}
 			}
 

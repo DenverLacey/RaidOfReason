@@ -8,12 +8,7 @@ public class SwordDamage : MonoBehaviour
 	private Collider m_collider;
     public float damageDealtInDash;
 
-    public void CalculateNewMostDamageDealt()
-    {
-        GameManager.Instance.Kenron.m_statManager.mostDamageInASingleDash = Mathf.Max(damageDealtInDash, GameManager.Instance.Kenron.m_statManager.mostDamageInASingleDash);
-        damageDealtInDash = 0.0f;
-    }
-
+  
 	private void Start()
 	{
         m_collider = GetComponent<Collider>();
@@ -27,8 +22,6 @@ public class SwordDamage : MonoBehaviour
 
 			EnemyData enemy = other.gameObject.GetComponent<EnemyData>();
             enemy.TakeDamage(GameManager.Instance.Kenron.GetDamage(), GameManager.Instance.Kenron);
-
-            GameManager.Instance.Kenron.m_statManager.damageInTotal += GameManager.Instance.Kenron.GetDamage();
 
             enemy.IndicateHit(GameManager.Instance.Kenron);
 
