@@ -33,14 +33,17 @@ public class ObjectiveManager : MonoBehaviour
 
     private void Awake()
     {
-        foreach (TriggerObjective obj in triggerObjectives)
+        if (triggerObjectives.Count > 1)
         {
-            obj.gameObject.SetActive(false);
+            foreach (TriggerObjective obj in triggerObjectives)
+            {
+                obj.gameObject.SetActive(false);
+            }
+            m_triggerObjective = triggerObjectives[0];
+            m_triggerObjective.gameObject.SetActive(true);
         }
 
         m_currentObjective = m_objectives[0];
-        m_triggerObjective = triggerObjectives[0];
-        m_triggerObjective.gameObject.SetActive(true);
 
         if (m_currentObjective)
         {
@@ -55,8 +58,15 @@ public class ObjectiveManager : MonoBehaviour
     {
         if (m_currentObjective && ObjectiveTriggered == true)
         {
-            barriers.ManageBarriers();
-            m_triggerObjective.gameObject.SetActive(false);
+            if (barriers != null)
+            {
+                barriers.ManageBarriers();
+            }
+
+            if (triggerObjectives.Count > 1)
+            {
+                m_triggerObjective.gameObject.SetActive(false);
+            }
             objectiveTimer.gameObject.SetActive(true);
             objectiveDescription.gameObject.SetActive(true);
             showTitle.gameObject.SetActive(true);
@@ -97,11 +107,15 @@ public class ObjectiveManager : MonoBehaviour
         if (m_isDone && !m_hasFailed)
         {
 			m_objectives.RemoveAt(0);
-			m_currentObjective = m_objectives[0];
+            if (m_objectives.Count >= 1)
+			    m_currentObjective = m_objectives[0];
 
-            triggerObjectives.RemoveAt(0);
-            m_triggerObjective = triggerObjectives[0];
-            m_triggerObjective.gameObject.SetActive(true);
+            if (triggerObjectives.Count > 1)
+            {
+                triggerObjectives.RemoveAt(0);
+                m_triggerObjective = triggerObjectives[0];
+                m_triggerObjective.gameObject.SetActive(true);
+            }
 
             ObjectiveCompleted = true;
             // Reset Trigger

@@ -7,13 +7,14 @@ using UnityEngine.UI;
 public class BossObjective : BaseObjective
 {
     [Tooltip("The Boss That The Players have to Slay")]
-    public EnemyData Boss;
+    public GameObject Boss;
     [Tooltip("The Boss Health Bar that is displayed")]
-    public Image bosshealthBar;
+    public  GameObject bosshealthBar;
     [Tooltip("The Objective Description")]
     public string description;
     [Tooltip("Name of the Objective")]
     public string name;
+    public string spawnPointName;
 
     private GameManager manager;
     public GameObject SpawnPoint;
@@ -21,11 +22,15 @@ public class BossObjective : BaseObjective
     public override void Awake()
     {
         manager = FindObjectOfType<GameManager>();
+        Boss = GameObject.Find("Boss");
+        bosshealthBar = GameObject.Find("Boss_Health");
+        SpawnPoint = GameObject.Find(spawnPointName);
     }
 
     public override void Update()
     {
-        bosshealthBar.fillAmount = Boss.Health / Boss.MaxHealth;
+        if (Boss != null )
+            bosshealthBar.GetComponent<Image>().fillAmount = Boss.GetComponent<EnemyData>().Health / Boss.GetComponent<EnemyData>().MaxHealth;
     }
 
     public override GameObject SpawnPoints()
@@ -54,6 +59,7 @@ public class BossObjective : BaseObjective
 
     public override bool IsDone()
     {
-        return Boss.Health <= 0;
+        //return Boss.GetComponent<EnemyData>().Health <= 0;
+        return Boss == null;
     }
 }

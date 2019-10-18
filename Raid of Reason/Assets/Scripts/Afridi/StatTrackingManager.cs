@@ -68,25 +68,25 @@ public class StatTrackingManager : MonoBehaviour
         damageHealed = 0;
     }
 
-    public void Update()
+    public void StatFunct()
     {
         if (m_gameManager)
         {
-            if (m_gameManager.Kenron)
+            if (m_gameManager.Kenron && K_HellFire_Dash_Count.gameObject != null)
             {
                 K_HellFire_Dash_Count.text = dashesUsed.ToString("f0");
                 K_Chaos_Flame_Count.text = chaosFlameUsed.ToString("f0");
                 K_Damage_Dealt_Count.text = damageInTotal.ToString("f0");
                 K_Damage_In_A_Single_Dash_Count.text = mostDamageInASingleDash.ToString("f0");
             }
-            if (m_gameManager.Kreiger)
+            if (m_gameManager.Kreiger && N_Damage_Taken_Count.gameObject != null)
             {               
                 N_Damage_Taken_Count.text = damageTaken.ToString("f0");
                 N_Sheilds_Charged_Count.text = totalSheildsCharged.ToString("f0");
                 N_Enemies_Taunted_Count.text = enemiesTaunted.ToString("f0");
                 N_Enemies_Taunted_At_Once_Count.text = highestTaunted.ToString("f0");
             }
-            if (m_gameManager.Thea)
+            if (m_gameManager.Thea && T_Total_Number_Of_Heals_Count.gameObject != null)
             {
                 T_Total_Number_Of_Heals_Count.text = gopUsed.ToString("f0");
                 T_All_Three_Players_Healed_Count.text = gopHitThree.ToString("f0");

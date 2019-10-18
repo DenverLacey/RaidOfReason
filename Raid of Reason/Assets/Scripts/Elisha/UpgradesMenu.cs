@@ -39,7 +39,10 @@ public class UpgradesMenu : MonoBehaviour
         {
             m_isPressed = true;
             Time.timeScale = 0f;
-            m_miniMap.SetActive(false);
+            if (m_miniMap != null)
+            {
+                m_miniMap.SetActive(false);
+            }
 
             foreach (GameObject objects in m_InvalidGameObjects)
             {
@@ -66,7 +69,10 @@ public class UpgradesMenu : MonoBehaviour
         }
         else
         {
-            m_miniMap.SetActive(true);
+            if (m_miniMap != null)
+            {
+                m_miniMap.SetActive(true);
+            }
             m_isPressed = false;
             Time.timeScale = 1;
             m_KenronUpgrades.SetActive(false);

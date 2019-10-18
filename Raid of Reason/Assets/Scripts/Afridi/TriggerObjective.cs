@@ -25,7 +25,7 @@ public class TriggerObjective : MonoBehaviour
         {
             KenronPass = true;
         }
-        if (other.tag == "Nashorn")
+        if (other.tag == "Kreiger")
         {
             NashornPass = true;
         }

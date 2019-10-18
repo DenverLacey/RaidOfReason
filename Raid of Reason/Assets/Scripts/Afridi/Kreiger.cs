@@ -145,13 +145,16 @@ public class Kreiger : BaseCharacter
     void InitialiseUpgrades()
     {
         UnlockSkill();
-        if (m_skillUpgrades.Find(skill => skill.Name == "Roaring Thunder"))
+        if (m_skillUpgrades.Count > 1)
         {
-            // Returns increased Radius
-            this.m_tauntRadius += m_RTRadiusIncreased;
+            if (m_skillUpgrades.Find(skill => skill.Name == "Roaring Thunder"))
+            {
+                // Returns increased Radius
+                this.m_tauntRadius += m_RTRadiusIncreased;
 
-            // Cooldown is halved
-            skillManager.m_mainSkills[1].m_duration += m_RTDurationIncreased;
+                // Cooldown is halved
+                skillManager.m_mainSkills[1].m_duration += m_RTDurationIncreased;
+            }
         }
     }
 
