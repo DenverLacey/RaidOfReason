@@ -18,17 +18,36 @@ public class BarrierManager : MonoBehaviour
 
     public void ManageBarriers()
     {
-        if (m_ObjManager.m_currentObjective.name == "Countdown To Destruction" && m_ObjManager.objectiveComplete)
+        if (m_ObjManager.m_currentObjective.name == "Countdown To Destruction_1" && m_ObjManager.objectiveComplete)
         {
             Barriers[0].SetActive(false);
-        }
-        if (m_ObjManager.m_currentObjective.name == "Protect The Crystal_1" && m_ObjManager.objectiveComplete)
-        {
             Barriers[1].SetActive(false);
         }
-        if (m_ObjManager.m_currentObjective.name == "Countdown To Destruction_2" && m_ObjManager.objectiveComplete)
+        if (m_ObjManager.m_currentObjective.name == "Protect The Crystal_1")
         {
-            Barriers[2].SetActive(false);
+            Barriers[1].SetActive(true);
+            if (m_ObjManager.objectiveComplete)
+            {
+                Barriers[1].SetActive(false);
+                Barriers[2].SetActive(false);
+            }
+        }
+        if (m_ObjManager.m_currentObjective.name == "Countdown To Destruction_2")
+        {
+            Barriers[2].SetActive(true);
+            if (m_ObjManager.objectiveComplete)
+            {
+                Barriers[2].SetActive(false);
+                Barriers[3].SetActive(false);
+            }
+        }
+        if (m_ObjManager.m_currentObjective.name == "Protect The Crystal_2")
+        {
+            Barriers[4].SetActive(true);
+            if (m_ObjManager.objectiveComplete)
+            {
+                Barriers[4].SetActive(false);
+            }
         }
     }
 

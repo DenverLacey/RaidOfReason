@@ -15,6 +15,7 @@ public class ObjectiveManager : MonoBehaviour
     public List<SkillUpgrade> skillUpgrades = new List<SkillUpgrade>();
     public BaseObjective m_currentObjective;
     public TriggerObjective m_triggerObjective;
+    public BarrierManager barriers;
 
     public bool ObjectiveCompleted;
     public bool ObjectiveTriggered = false;
@@ -54,6 +55,7 @@ public class ObjectiveManager : MonoBehaviour
     {
         if (m_currentObjective && ObjectiveTriggered == true)
         {
+            barriers.ManageBarriers();
             m_triggerObjective.gameObject.SetActive(false);
             objectiveTimer.gameObject.SetActive(true);
             objectiveDescription.gameObject.SetActive(true);
