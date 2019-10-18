@@ -181,7 +181,25 @@ public class Thea : BaseCharacter
         {
             StartCoroutine(HealthOverTime());
         }
-        SkillChecker();
+
+        float healthcomparison = GameManager.Instance.Kenron.m_currentHealth + GameManager.Instance.Kreiger.m_currentHealth;
+
+        if (healthcomparison <= OAAllyHealthChecks[0])
+        {
+            m_projectileDelay = OAFireRateIncreased[0];
+        }
+        if (healthcomparison <= OAAllyHealthChecks[1])
+        {
+            m_projectileDelay = OAFireRateIncreased[1];
+        }
+        if (healthcomparison <= OAAllyHealthChecks[2])
+        {
+            m_projectileDelay = OAFireRateIncreased[2];
+        }
+        if (healthcomparison <= OAAllyHealthChecks[3])
+        {
+            m_projectileDelay = OAFireRateIncreased[3];
+        }
 
         if (GameManager.Instance.Thea.playerState == PlayerState.DEAD)
         {
@@ -310,43 +328,6 @@ public class Thea : BaseCharacter
         projectile.SetActive(true);
     }
 
-    void SkillChecker()
-    {
-        if (this.gameObject != null)
-        {
-            // Sets the image to true if the skills are found
-            UnlockSkill();
-            //if (m_skillUpgrades.Find(skill => skill.name == "Settling Tide"))
-            //{
-            //    if (m_currentHealth != m_maxHealth && !m_isHealthRegen)
-            //    {
-            //        StartCoroutine(HealthOverTime());
-            //    }
-            //}
-            //if (m_skillUpgrades.Find(skill => skill.name == "Oceans Ally"))
-            //{
-            //    float healthcomparison = GameManager.Instance.Kenron.m_currentHealth + GameManager.Instance.Kreiger.m_currentHealth;
-
-            //    if (healthcomparison <= OAAllyHealthChecks[0])
-            //    {
-            //        m_projectileDelay = OAFireRateIncreased[0];
-            //    }
-            //    if (healthcomparison <= OAAllyHealthChecks[1])
-            //    {
-            //        m_projectileDelay = OAFireRateIncreased[1];
-            //    }
-            //    if (healthcomparison <= OAAllyHealthChecks[2])
-            //    {
-            //        m_projectileDelay = OAFireRateIncreased[2];
-            //    }
-            //    if (healthcomparison <= OAAllyHealthChecks[3])
-            //    {
-            //        m_projectileDelay = OAFireRateIncreased[3];
-            //    }
-            //}          
-        }
-    }
-
     /// <summary>
     /// Thea has the ability to do a charge up time attack with scaling AOE and heal.
     /// The longer you hold the charge up, the bigger the AOE is which means 
@@ -380,19 +361,16 @@ public class Thea : BaseCharacter
 			}
         }
 
-        //if (m_isActive == true && m_skillUpgrades.Find(skill => skill.name == "Hydro Pressure"))
-        //{
-        //    m_nearbyEnemies = new List<EnemyData>(FindObjectsOfType<EnemyData>());
-        //    foreach (EnemyData enemy in m_nearbyEnemies)
-        //    {
-        //        float sqrDistance = (this.transform.position - enemy.transform.position).sqrMagnitude;
-        //        if (sqrDistance <= m_AOERadius * m_AOERadius)
-        //        {
-        //            enemy.GetComponent<EnemyPathfinding>().m_speed -= HPSpeedReduction;
-        //            enemy.Strength = HPAttackWeakened;
-        //        }
-        //    }
-        //}
+        m_nearbyEnemies = new List<EnemyData>(FindObjectsOfType<EnemyData>());
+        foreach (EnemyData enemy in m_nearbyEnemies)
+        {
+            float sqrDistance = (this.transform.position - enemy.transform.position).sqrMagnitude;
+            if (sqrDistance <= m_AOERadius * m_AOERadius)
+            {
+                enemy.GetComponent<EnemyPathfinding>().m_speed -= HPSpeedReduction;
+                enemy.Strength = HPAttackWeakened;
+            }
+        }
 
         // Checks if ability has been used.
         if (m_isActive == false)
@@ -428,10 +406,6 @@ public class Thea : BaseCharacter
     /// </summary>
     public void GiveHealth()
     {
-        //if (m_skillUpgrades.Find(skill => skill.Name == "Hydro Pressure"))
-        //{
-        //    m_AOERadius += HPGrowthSize;
-        //}
 
         if (GameManager.Instance.Thea.gameObject.activeSelf)
         {

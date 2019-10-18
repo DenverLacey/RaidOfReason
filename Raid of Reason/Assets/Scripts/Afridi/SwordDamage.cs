@@ -27,7 +27,6 @@ public class SwordDamage : MonoBehaviour
 
             if (enemy.Health <= 0) {
                 enemy.isDeadbByKenron = true;
-                GameManager.Instance.Kenron.SkillChecker();
                 enemy.isDeadbByKenron = false;
             }
 		}
