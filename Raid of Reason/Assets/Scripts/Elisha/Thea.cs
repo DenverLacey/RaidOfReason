@@ -264,7 +264,7 @@ public class Thea : BaseCharacter
 	public void Projectile()
     {
         m_counter += Time.deltaTime;
-        if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1f)
+        if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1f && !m_isActive)
         {
             m_shotCounter += Time.deltaTime;
 
@@ -276,7 +276,7 @@ public class Thea : BaseCharacter
                 m_counter = 0;
             }
         }
-        else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) < 0.1f)
+        else
         {
             m_shotCounter = 0;
         }
