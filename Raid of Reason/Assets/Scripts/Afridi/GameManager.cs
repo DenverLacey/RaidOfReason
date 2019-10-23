@@ -28,6 +28,10 @@ public class GameManager : MonoBehaviour
 {
     readonly bool m_isInstance;
 
+	[Tooltip("Turns on and off character selection functionality for debug purposes")]
+	[SerializeField]
+	private bool m_doCharacterSelection = true;
+
 	private GameManager()
 	{
 		if (ms_instance == null)
@@ -151,21 +155,68 @@ public class GameManager : MonoBehaviour
     /// </param>
     public void GiveCharacterReference(BaseCharacter character)
 	{
+		//if (character is Kenron)
+		//{
+		//	Kenron = character as Kenron;
+
+		//	if (m_controllers[0] != XboxController.Any)
+		//	{
+		//		Kenron.controller = m_controllers[0];
+		//		Kenron.playerIndex = m_playerIndices[0];
+		//	}
+		//	else
+		//	{
+		//		Kenron.controller = XboxController.Fourth;
+		//		Kenron.playerIndex = PlayerIndex.Four;
+		//		Kenron.SetPlayerToNotPlaying();
+		//	}
+		//}
+		//else if (character is Kreiger)
+		//{
+		//	Kreiger = character as Kreiger;
+
+		//	if (m_controllers[1] != XboxController.Any)
+		//	{
+		//		Kreiger.controller = m_controllers[1];
+		//		Kreiger.playerIndex = m_playerIndices[1];
+		//	}
+		//	else
+		//	{
+		//		Kreiger.controller = XboxController.Fourth;
+		//		Kreiger.playerIndex = PlayerIndex.Four;
+		//		Kreiger.SetPlayerToNotPlaying();
+		//	}
+		//}
+		//else if (character is Thea)
+		//{
+		//	Thea = character as Thea;
+
+		//	if (m_controllers[2] != XboxController.Any)
+		//	{
+		//		Thea.controller = m_controllers[2];
+		//		Thea.playerIndex = m_playerIndices[2];
+		//	}
+		//	else
+		//	{
+		//		Thea.controller = XboxController.Fourth;
+		//		Thea.playerIndex = PlayerIndex.Four;
+		//		Thea.SetPlayerToNotPlaying();
+		//	}
+		//}
+
+		XboxController controller = XboxController.Any;
+		PlayerIndex playerIndex = PlayerIndex.Four;
+
 		if (character is Kenron)
 		{
 			Kenron = character as Kenron;
 
 			if (m_controllers[0] != XboxController.Any)
 			{
-				Kenron.controller = m_controllers[0];
-				Kenron.playerIndex = m_playerIndices[0];
+				controller = m_controllers[0];
+				playerIndex = m_playerIndices[0];
 			}
-			else
-			{
-				Kenron.controller = XboxController.Fourth;
-				Kenron.playerIndex = PlayerIndex.Four;
-				Kenron.SetPlayerToNotPlaying();
-			}
+
 		}
 		else if (character is Kreiger)
 		{
@@ -173,14 +224,8 @@ public class GameManager : MonoBehaviour
 
 			if (m_controllers[1] != XboxController.Any)
 			{
-				Kreiger.controller = m_controllers[1];
-				Kreiger.playerIndex = m_playerIndices[1];
-			}
-			else
-			{
-				Kreiger.controller = XboxController.Fourth;
-				Kreiger.playerIndex = PlayerIndex.Four;
-				Kreiger.SetPlayerToNotPlaying();
+				controller = m_controllers[1];
+				playerIndex = m_playerIndices[1];
 			}
 		}
 		else if (character is Thea)
@@ -189,14 +234,16 @@ public class GameManager : MonoBehaviour
 
 			if (m_controllers[2] != XboxController.Any)
 			{
-				Thea.controller = m_controllers[2];
-				Thea.playerIndex = m_playerIndices[2];
+				controller = m_controllers[2];
+				playerIndex = m_playerIndices[2];
 			}
-			else
+		}
+
+		if (m_doCharacterSelection)
+		{
+			if (controller == XboxController.Any)
 			{
-				Thea.controller = XboxController.Fourth;
-				Thea.playerIndex = PlayerIndex.Four;
-				Thea.SetPlayerToNotPlaying();
+				character.SetPlayerToNotPlaying();
 			}
 		}
 	}
