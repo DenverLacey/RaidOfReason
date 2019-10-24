@@ -57,6 +57,8 @@ public class EnemyZone : MonoBehaviour
 
 	public int EnemyCount { get => m_enemies.Count; }
 
+    public List<EnemyData> Enemies { get => m_enemies; }
+
 	private bool m_active;
 
 	private List<GameObject> m_deathParticlePool;
