@@ -44,6 +44,7 @@ public class CharacterSelection : InteractableUIElement
 		m_p1Cursor.SetController(1);
 		m_p2Cursor.SetController(2);
 		m_p3Cursor.SetController(3);
+		GameManager.Instance.ResetCharacterSelectionSettings();
 	}
 
 	// Update is called once per frame

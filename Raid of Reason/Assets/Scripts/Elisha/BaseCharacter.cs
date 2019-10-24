@@ -450,5 +450,6 @@ public abstract class BaseCharacter : MonoBehaviour
 		playerState = PlayerState.NP;
 		transform.Find("Model").gameObject.SetActive(false);
 		transform.position = Vector3.up * 10000f;
+		enabled = false;
 	}
 }
