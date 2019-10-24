@@ -123,7 +123,6 @@ public abstract class BaseCharacter : MonoBehaviour
     public ParticleSystem m_spriteRend;
     private DeathMenu m_deathMenu;
     private PauseMenu m_pauseInfo;
-    private UpgradesMenu m_upgradeInfo;
 
     /// <summary>
     /// This will be called first.
@@ -136,7 +135,6 @@ public abstract class BaseCharacter : MonoBehaviour
         m_animator = GetComponentInChildren<Animator>();
         m_deathMenu = FindObjectOfType<DeathMenu>();
         m_pauseInfo = FindObjectOfType<PauseMenu>();
-        m_upgradeInfo = FindObjectOfType<UpgradesMenu>();
         m_currentHealth = m_maxHealth;
         m_mincurrentDamage = m_minDamage;
         m_maxcurrentDamage = m_maxDamage;
@@ -172,9 +170,6 @@ public abstract class BaseCharacter : MonoBehaviour
     {
 
         if (m_pauseInfo.m_isPaused)
-            return;
-
-        if (m_upgradeInfo.m_isPressed)
             return;
 
         // If player has shield
