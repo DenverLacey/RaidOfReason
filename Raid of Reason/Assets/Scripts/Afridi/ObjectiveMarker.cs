@@ -7,6 +7,7 @@ public class ObjectiveMarker : MonoBehaviour
 {
     public Transform MinimapCam;
     public float MinimapSize;
+    public float centet;
     Vector3 TempPos;
 
     void Update()
@@ -19,7 +20,7 @@ public class ObjectiveMarker : MonoBehaviour
     void LateUpdate()
     {
         Vector3 centerPosition = MinimapCam.transform.position;
-        centerPosition.y -= 0.5f;
+        centerPosition.y -= centet;
         float Distance = Vector3.Distance(transform.position, centerPosition);
 
         if (Distance > MinimapSize)
