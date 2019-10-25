@@ -45,12 +45,7 @@ public class ObjectiveManager : MonoBehaviour
 
         m_currentObjective = m_objectives[0];
 
-        if (m_currentObjective)
-        {
-            #region Objective Init
-            m_currentObjective.Awake();
-            #endregion
-        }
+        m_currentObjective.Awake();
         ObjectiveCompleted = false;
     }
 
@@ -102,14 +97,17 @@ public class ObjectiveManager : MonoBehaviour
         if (m_isDone && !m_hasFailed)
         {
             ObjectiveCompleted = true;
+
             if (barriers != null)
             {
                 barriers.ManageBarriers();
             }
 
-			    m_objectives.RemoveAt(0);
             if (m_objectives.Count >= 1)
-			    m_currentObjective = m_objectives[0];
+            {
+			    m_objectives.RemoveAt(0);
+                m_currentObjective = m_objectives[0];
+            }
 
             if (triggerObjectives.Count > 1)
             {
@@ -118,6 +116,7 @@ public class ObjectiveManager : MonoBehaviour
                 m_triggerObjective.gameObject.SetActive(true);
             }
 
+            ObjectiveCompleted = false;
 
             // Reset Trigger
             ObjectiveTriggered = false;
@@ -127,8 +126,6 @@ public class ObjectiveManager : MonoBehaviour
             showTitle.gameObject.SetActive(false);
 
             objectiveComplete.SetActive(true);
-
-            yield return new WaitForSecondsRealtime(5);
 
             if (m_objectives.Count <= 0)
             {
@@ -141,6 +138,8 @@ public class ObjectiveManager : MonoBehaviour
             showTitle.text = showTitle.text.Replace(m_currentObjective.GrabTitle(), m_currentObjective.GrabTitle());
             objectiveTimer.text = objectiveTimer.text.Replace(m_currentObjective.Timer().ToString("f0"), m_currentObjective.Timer().ToString("f0"));
             #endregion
+
+            yield return new WaitForSeconds(5);
 
             objectiveComplete.SetActive(false);
         }
