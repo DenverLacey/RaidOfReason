@@ -159,7 +159,7 @@ MonoBehaviour:
   m_maxHealth: 250
   m_currentHealth: 0
   m_maxOverheal: 0
-  m_movementSpeed: 10
+  m_movementSpeed: 15
   m_minDamage: 22
   m_maxDamage: 28
   m_maxShield: 100
@@ -261,7 +261,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6127792140877364389}
   - component: {fileID: 6238484958799708599}
-  - component: {fileID: 1366486050685840266}
+  - component: {fileID: 1228272890}
   m_Layer: 13
   m_Name: Minimap_Icon
   m_TagString: Untagged
@@ -331,7 +331,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1366486050685840266
+--- !u!114 &1228272890
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -340,10 +340,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3662699461349470218}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cc3cbfc664bce244b7d4627ea2b009d, type: 3}
+  m_Script: {fileID: 11500000, guid: 8406a792da3c089499f934885e0ce0c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 9177747288968116300}
+  MinimapCam: {fileID: 0}
+  MinimapSize: 17
+  centet: 6.8
 --- !u!1 &4086268057125856013
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,7 +18,7 @@ public class ProtectionObjective : BaseObjective
     public string spawnPointName;
     private GameObject SpawnPoint;
     private float m_currentTimer;
-    private float m_currentHealth;
+    public float m_currentHealth;
 
     private void OnEnable()
     {

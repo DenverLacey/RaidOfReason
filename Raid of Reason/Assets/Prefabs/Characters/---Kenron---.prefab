@@ -115,8 +115,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 428746107563107281}
-  - component: {fileID: 6283573257789353341}
   - component: {fileID: 7469135918929106328}
+  - component: {fileID: 887363056}
   m_Layer: 13
   m_Name: Minimap_Icon
   m_TagString: Untagged
@@ -138,19 +138,6 @@ Transform:
   m_Father: {fileID: 5877011709370991675}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &6283573257789353341
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4071413851835518297}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cc3cbfc664bce244b7d4627ea2b009d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 5343003624369889655}
 --- !u!212 &7469135918929106328
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -199,6 +186,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &887363056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4071413851835518297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8406a792da3c089499f934885e0ce0c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MinimapCam: {fileID: 0}
+  MinimapSize: 17
+  centet: 6.8
 --- !u!1 &5877011709370636315
 GameObject:
   m_ObjectHideFlags: 0
