@@ -14,7 +14,9 @@ using UnityEngine.AI;
 public class EnemyPathfinding : MonoBehaviour
 {
     [Tooltip("How fast the enemy will move")]
-    public float m_speed;
+	[SerializeField]
+    private float m_speed;
+	private float m_speedReductionMultiplier = 1f;
 
 	[SerializeField]
 	[Tooltip("How fast the enemy will turn")]
@@ -22,7 +24,7 @@ public class EnemyPathfinding : MonoBehaviour
 
 	[SerializeField]
 	[Tooltip("How close enemy needs to be to target destination before it finds new target")]
-	private float m_destBufferDist = 0.1f;
+	private float m_destBufferDist = 0.2f;
 
 	private NavMeshPath m_path;
 	private bool m_pathing;
@@ -97,7 +99,7 @@ public class EnemyPathfinding : MonoBehaviour
 			Vector3 movementVector = (currentTarget - transform.position).normalized;
 
 			// calculate desiredPosition
-			Vector3 desiredPosition = transform.position + movementVector * m_speed * Time.deltaTime;
+			Vector3 desiredPosition = transform.position + movementVector * m_speed * m_speedReductionMultiplier * Time.deltaTime;
 			desiredPosition.y = m_yLevel;
 			m_enemy.Rigidbody.MovePosition(desiredPosition);
 
@@ -196,5 +198,15 @@ public class EnemyPathfinding : MonoBehaviour
 		difference.y = Mathf.Abs(difference.y);
 
 		return difference.magnitude < m_destBufferDist;
+	}
+
+	public void SetSpeedReduction(float reduction)
+	{
+		m_speedReductionMultiplier = reduction;
+	}
+
+	public void ResetSpeedReduction()
+	{
+		m_speedReductionMultiplier = 1f;
 	}
 }

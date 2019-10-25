@@ -20,14 +20,12 @@ public class BoxGizmo : MonoBehaviour
 	[Tooltip("Colour of Gizmo")]
 	private Color m_colour = Color.red;
 
-	[SerializeField]
-	[Range(0, 1)]
-	[Tooltip("Alpha of gizmo's colour")]
-	private float m_alpha = 0.2f;
-
-	[SerializeField]
-	[Tooltip("Colliders to use as Gizmo")]
 	private BoxCollider[] m_colliders;
+
+	private void Start()
+	{
+		m_colliders = GetComponentsInChildren<BoxCollider>();
+	}
 
 	/// <summary>
 	/// Draws Box Collider as cube gizmo
@@ -42,13 +40,51 @@ public class BoxGizmo : MonoBehaviour
 			if (!collider || !collider.enabled)
 				continue;
 
-			// draw fill colour cube
-			Gizmos.color = m_colour * m_alpha;
-			Gizmos.DrawCube(transform.position + collider.center, collider.size);
-
-			// draw wireframe
 			Gizmos.color = m_colour;
-			Gizmos.DrawWireCube(transform.position + collider.center, collider.size);
+
+			// calculate min and max
+			Vector3 min = transform.position - collider.size / 2f;
+			Vector3 max = transform.position + collider.size / 2f;
+
+			// bottom face
+			Vector3 backBottomLeft = min;
+			Vector3 frontBottomLeft = new Vector3(min.x, min.y, max.z);
+			Vector3 frontBottonRight = new Vector3(max.x, min.y, max.z);
+			Vector3 backBottomRight = new Vector3(max.x, min.y, min.z);
+
+			// top face
+			Vector3 backTopLeft = new Vector3(min.x, max.y, min.z);
+			Vector3 frontTopLeft = new Vector3(min.x, max.y, max.z);
+			Vector3 frontTopRight = max;
+			Vector3 backTopRight = new Vector3(max.x, max.y, min.z);
+
+			// rotate faces
+			backBottomLeft		= transform.rotation * backBottomLeft;
+			frontBottomLeft		= transform.rotation * frontBottomLeft;
+			frontBottonRight	= transform.rotation * frontBottonRight;
+			backBottomRight		= transform.rotation * backBottomRight;
+			backTopLeft			= transform.rotation * backTopLeft;
+			frontTopLeft		= transform.rotation * frontTopLeft;
+			frontTopRight		= transform.rotation * frontTopRight;
+			backTopRight		= transform.rotation * backTopRight;
+
+			// draw bottom lines
+			Gizmos.DrawLine(backBottomLeft, frontBottomLeft);
+			Gizmos.DrawLine(frontBottomLeft, frontBottonRight);
+			Gizmos.DrawLine(frontBottonRight, backBottomRight);
+			Gizmos.DrawLine(backBottomRight, backBottomLeft);
+
+			// draw top lines
+			Gizmos.DrawLine(backTopLeft, frontTopLeft);
+			Gizmos.DrawLine(frontTopLeft, frontTopRight);
+			Gizmos.DrawLine(frontTopRight, backTopRight);
+			Gizmos.DrawLine(backTopRight, backTopLeft);
+
+			// connector lines
+			Gizmos.DrawLine(backBottomLeft, backTopLeft);
+			Gizmos.DrawLine(frontBottomLeft, frontTopLeft);
+			Gizmos.DrawLine(frontBottonRight, frontTopRight);
+			Gizmos.DrawLine(backBottomRight, backTopRight);
 		}
 	}
 }

@@ -47,7 +47,7 @@ public class Thea : BaseCharacter
 
     [Tooltip("How much slower the Enemy can move inisde GOP with Hydro Pressure")]
     [SerializeField]
-    private float HPSpeedReduction;
+    private float HPSpeedReductionMultiplier;
 
     [Tooltip("How much less damage the Enemy can do inisde GOP with Hydro Pressure (0.5 is Half Damage, 0 is no Damage)")]
     [SerializeField]
@@ -145,7 +145,6 @@ public class Thea : BaseCharacter
         CharacterType = CharacterType.THEA;
         m_isActive = false;
         m_isHealthRegen = false;
-        m_waterPrefab.SetActive(false);
         m_AOETimer = 0f;
         m_HealRadius.gameObject.SetActive(false);
         m_HealRadius_2.gameObject.SetActive(false);
@@ -367,7 +366,7 @@ public class Thea : BaseCharacter
             float sqrDistance = (this.transform.position - enemy.transform.position).sqrMagnitude;
             if (sqrDistance <= m_AOERadius * m_AOERadius)
             {
-                enemy.GetComponent<EnemyPathfinding>().m_speed -= HPSpeedReduction;
+				enemy.Pathfinder.SetSpeedReduction(HPSpeedReductionMultiplier);
                 enemy.Strength = HPAttackWeakened;
             }
         }
@@ -387,6 +386,11 @@ public class Thea : BaseCharacter
 
 	public void EndGIftOfPoseidon()
 	{
+		foreach (var pathfinder in FindObjectsOfType<EnemyPathfinding>())
+		{
+			pathfinder.ResetSpeedReduction();
+		}
+
 		if (m_animator)
 		{
 			m_animator.SetBool("Casting", false);
@@ -409,14 +413,9 @@ public class Thea : BaseCharacter
 
         if (GameManager.Instance.Thea.gameObject.activeSelf)
         {
-            // Stat Tracking Stuff
-            bool kenHealed = false;
-            bool nashHealed = false;
-
             foreach (BaseCharacter player in GameManager.Instance.Players)
-
             {
-                if (!player || player == this)
+                if (player == this)
                 {
                     continue;
                 }
@@ -426,13 +425,11 @@ public class Thea : BaseCharacter
                 // check if inside radius
                 if (sqrDistance <= m_AOERadius * m_AOERadius && player.m_controllerOn)
                 {
-                    if (player.tag == "Kreiger") { nashHealed = true; }
-                    if (player.tag == "Kenron") { kenHealed = true; }
-                    m_waterPrefab.SetActive(true);
-                    m_waterPrefab.transform.position = player.transform.position;
-                    GameObject m_temp = Instantiate(m_waterPrefab, player.transform.position + Vector3.down * (player.transform.localScale.y / 2), Quaternion.Euler(90, 0, 0), player.transform);
-                    Destroy(m_temp, 0.5f);
-                    StartCoroutine(GOPVisual());
+					GameObject waterObj = Instantiate(m_waterPrefab, player.transform.position + Vector3.down, m_waterPrefab.transform.rotation);
+					waterObj.SetActive(true);
+					waterObj.transform.parent = player.transform;
+					Destroy(waterObj, 2f);
+					StartCoroutine(GOPVisual());
                 }
             }
 
@@ -488,7 +485,6 @@ public class Thea : BaseCharacter
         {
             m_HealRadius_3.Play();
             yield return new WaitForSeconds(0.5f);
-            m_waterPrefab.SetActive(false);
             m_HealRadius_3.Stop();
         }
     }
