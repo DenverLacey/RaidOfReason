@@ -21,11 +21,7 @@ public class BoxGizmo : MonoBehaviour
 	private Color m_colour = Color.red;
 
 	private BoxCollider[] m_colliders;
-
-	private void Start()
-	{
-		m_colliders = GetComponentsInChildren<BoxCollider>();
-	}
+	private bool m_collidersFound = false;
 
 	/// <summary>
 	/// Draws Box Collider as cube gizmo
@@ -34,6 +30,12 @@ public class BoxGizmo : MonoBehaviour
 	{
 		if (!m_drawGizmo)
 			return;
+
+		if (!m_collidersFound)
+		{
+			m_colliders = GetComponents<BoxCollider>();
+			m_collidersFound = true;
+		}
 
 		foreach (var collider in m_colliders)
 		{

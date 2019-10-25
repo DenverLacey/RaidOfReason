@@ -189,7 +189,7 @@ public class Kreiger : BaseCharacter
             m_lungeDelayTimer = m_lungeDelay;
 
 			// calculate desired dash position
-			int layerMask = LayerMask.GetMask("Environment");
+			int layerMask = LayerMask.GetMask("Environment", "Barrier");
             RaycastHit hit = new RaycastHit();
             if (Physics.Raycast(transform.position, transform.forward, out hit, m_maxLungeDistance + m_lungeBufferDistance, layerMask))
             {

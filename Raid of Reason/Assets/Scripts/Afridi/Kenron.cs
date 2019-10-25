@@ -246,10 +246,6 @@ public class Kenron : BaseCharacter
 
                 // position hit box
                 m_dashCollider.transform.position = transform.position + transform.forward * (m_dashDistance / 2f);
-
-
-                // apply force
-                m_rigidbody.AddForce(transform.forward * m_dashSpeed * m_dashDistance / m_maxDashDistance, ForceMode.VelocityChange);
             }
         }
         else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) < 0.1f && !isDashing)
@@ -260,7 +256,7 @@ public class Kenron : BaseCharacter
         if (isDashing)
         {
             m_estimatedDashTime -= Time.deltaTime;
-            if ((m_dashStartPosition - transform.position).sqrMagnitude >= m_dashDistance * m_dashDistance || m_estimatedDashTime <= 0.0f)
+            if ((m_dashPosition - transform.position).sqrMagnitude <= 0.1f || m_estimatedDashTime <= 0.0f)
             {
 
                 // reset boolean flags
@@ -277,6 +273,11 @@ public class Kenron : BaseCharacter
                 // run delay timer
                 m_dashDelayTimer -= Time.deltaTime;
             }
+			else
+			{
+				Vector3 lerpPosition = Vector3.Lerp(transform.position, m_dashPosition, m_dashSpeed * Time.deltaTime);
+				m_rigidbody.MovePosition(lerpPosition);
+			}
 
             // if ready to dash again 
             if (m_dashDelayTimer <= 0.0f && gameObject.activeSelf)
