@@ -53,71 +53,140 @@ public class MultiTargetCamera : MonoBehaviour
 	/// </summary>
 	void FixedUpdate()
 	{
-		List<BaseCharacter> activePlayers = GameManager.Instance.AlivePlayers;
+		//List<BaseCharacter> activePlayers = GameManager.Instance.AlivePlayers;
 
-		if (activePlayers.Count == 0)
+		//if (activePlayers.Count == 0)
+		//	return;
+
+		//var activePlayerPositions = new List<Vector3>();
+		//foreach (var target in activePlayers)
+		//{
+		//	activePlayerPositions.Add(target.transform.position);
+		//}
+
+		//var playerBounds = new Bounds(activePlayerPositions[0], Vector3.one * m_paddiing);
+		//for (int i = 1; i < activePlayerPositions.Count; i++)
+		//{
+		//	playerBounds.Encapsulate(activePlayerPositions[i]);
+		//}
+
+		//Vector3 averagePosition = activePlayerPositions[0];
+
+		//// bias average towards players close to each other
+		//foreach (var target in activePlayerPositions)
+		//{
+		//	var closeTargets = new List<Vector3>();
+		//	foreach (var other in activePlayerPositions)
+		//	{
+		//		if (other == target)
+		//			continue;
+
+		//		float sqrDistance = (target - other).sqrMagnitude;
+
+		//		if (sqrDistance < m_maxGroupDistance * m_maxGroupDistance)
+		//		{
+		//			closeTargets.Add(other);
+		//		}
+		//	}
+
+		//	if (closeTargets.Count != 0)
+		//	{
+		//		averagePosition = target;
+		//		foreach (var close in closeTargets)
+		//			averagePosition += close;
+		//		averagePosition /= closeTargets.Count + 1;
+		//	}
+		//}
+
+		//float desiredY = playerBounds.size.magnitude / m_maxGroupDistance;
+		//desiredY = Mathf.Lerp(m_minYPosition, m_maxGroupDistance, desiredY);
+
+		//desiredY = Mathf.Clamp(desiredY, m_minYPosition, m_maxYPosition);
+
+		//Vector3 desiredPosition = new Vector3(
+		//	averagePosition.x + m_offset.x,
+		//	desiredY,
+		//	averagePosition.z + (m_offset.y * desiredY * m_yOffsetScalar)
+		//);
+
+		//transform.position = Vector3.Lerp(transform.position, desiredPosition, m_lerpAmount);
+
+		//Quaternion lookRotation = Quaternion.LookRotation((averagePosition - transform.position).normalized, Vector3.up);
+		//lookRotation *= Quaternion.Euler(centerOffset, 0, 0);
+
+		//lookRotation.eulerAngles = new Vector3(
+		//	lookRotation.eulerAngles.x,
+		//	0,
+		//	0
+		//);
+
+		//transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, m_rotLerpAmont);
+
+		// check if all three players are within max group distance
+		var alivePlayers = GameManager.Instance.AlivePlayers;
+		Bounds allPlayersBounds = new Bounds(alivePlayers[0].transform.position, Vector3.one * m_paddiing);
+		for (int i = 1; i < alivePlayers.Count; i++)
+		{
+			allPlayersBounds.Encapsulate(alivePlayers[i].transform.position);
+		}
+
+		if (allPlayersBounds.size.sqrMagnitude <= m_maxGroupDistance * m_maxGroupDistance)
+		{
+			MoveAndRotateCameraByBounds(allPlayersBounds);
 			return;
-
-		var activePlayerPositions = new List<Vector3>();
-		foreach (var target in activePlayers)
-		{
-			activePlayerPositions.Add(target.transform.position);
 		}
 
-		var playerBounds = new Bounds(activePlayerPositions[0], Vector3.one * m_paddiing);
-		for (int i = 1; i < activePlayerPositions.Count; i++)
+		Bounds twoPlayerBounds = new Bounds();
+		bool groupFound = false;
+		float closestSqrDistance = float.MaxValue;
+
+		for (int i = 0; i < alivePlayers.Count; i++)
 		{
-			playerBounds.Encapsulate(activePlayerPositions[i]);
-		}
+			var p1 = alivePlayers[i];
+			var p2 = alivePlayers[(i + 1) % alivePlayers.Count];
 
-		Vector3 averagePosition = activePlayerPositions[0];
+			float sqrDistance = (p1.transform.position - p2.transform.position).sqrMagnitude;
 
-		// bias average towards players close to each other
-		foreach (var target in activePlayerPositions)
-		{
-			var closeTargets = new List<Vector3>();
-			foreach (var other in activePlayerPositions)
+			if (sqrDistance <= m_maxGroupDistance * m_maxGroupDistance && sqrDistance < closestSqrDistance)
 			{
-				if (other == target)
-					continue;
-
-				float sqrDistance = (target - other).sqrMagnitude;
-
-				if (sqrDistance < m_maxGroupDistance * m_maxGroupDistance)
-				{
-					closeTargets.Add(other);
-				}
-			}
-
-			if (closeTargets.Count != 0)
-			{
-				averagePosition = target;
-				foreach (var close in closeTargets)
-					averagePosition += close;
-				averagePosition /= closeTargets.Count + 1;
+				closestSqrDistance = sqrDistance;
+				twoPlayerBounds = new Bounds(p1.transform.position, Vector3.one * m_paddiing);
+				twoPlayerBounds.Encapsulate(p2.transform.position);
+				groupFound = true;
 			}
 		}
 
-		float desiredY = playerBounds.size.magnitude / m_maxGroupDistance;
+		if (groupFound)
+		{
+			MoveAndRotateCameraByBounds(twoPlayerBounds);
+		}
+		else
+		{
+			MoveAndRotateCameraByBounds(new Bounds(alivePlayers[0].transform.position, Vector3.one * m_paddiing));
+		}
+	}
+
+	public void MoveAndRotateCameraByBounds(Bounds bounds)
+	{
+		float desiredY = bounds.size.magnitude / m_maxGroupDistance;
 		desiredY = Mathf.Lerp(m_minYPosition, m_maxGroupDistance, desiredY);
-
 		desiredY = Mathf.Clamp(desiredY, m_minYPosition, m_maxYPosition);
 
 		Vector3 desiredPosition = new Vector3(
-			averagePosition.x + m_offset.x,
+			bounds.center.x + m_offset.x,
 			desiredY,
-			averagePosition.z + (m_offset.y * desiredY * m_yOffsetScalar)
+			bounds.center.z + (m_offset.y * desiredY * m_yOffsetScalar)
 		);
 
 		transform.position = Vector3.Lerp(transform.position, desiredPosition, m_lerpAmount);
 
-		Quaternion lookRotation = Quaternion.LookRotation((averagePosition - transform.position).normalized, Vector3.up);
+		Quaternion lookRotation = Quaternion.LookRotation((bounds.center - transform.position).normalized, Vector3.up);
 		lookRotation *= Quaternion.Euler(centerOffset, 0, 0);
 
 		lookRotation.eulerAngles = new Vector3(
 			lookRotation.eulerAngles.x,
-			0,
-			0
+			0f,
+			0f
 		);
 
 		transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, m_rotLerpAmont);
