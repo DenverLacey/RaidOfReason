@@ -26,7 +26,7 @@ public class Wander : Behaviour
 	public override Result Execute(EnemyData agent) 
 	{
 		// don't find new position if already wandering
-		if ((agent.Pathfinder.GetDestination() - agent.transform.position).sqrMagnitude >= agent.transform.lossyScale.y * agent.transform.lossyScale.y + 3f) 
+		if (!agent.Pathfinder.AtPosition(agent.Pathfinder.GetDestination()))
 		{
 			return SUCCESS;
 		}

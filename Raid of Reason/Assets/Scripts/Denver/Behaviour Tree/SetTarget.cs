@@ -13,16 +13,16 @@ using static Behaviour.Result;
 /// </summary>
 public class SetTarget : Behaviour
 {
-	GameObject m_object;
+	Vector3 m_position;
 
-	public SetTarget(GameObject a_object)
+	public SetTarget(Vector3 position)
 	{
-		m_object = a_object;
+		m_position = position;
 	}
 
 	public override Result Execute(EnemyData agent)
 	{
-		agent.Target = m_object.transform.position;
+		agent.Target = m_position;
 		return CONTINUE;
 	}
 }
