@@ -37642,6 +37642,7 @@ GameObject:
   - component: {fileID: 3724175175397661456}
   - component: {fileID: 1090653853393994129}
   - component: {fileID: 8391121300513893016}
+  - component: {fileID: 4505017398870863491}
   m_Layer: 10
   m_Name: Melee_03
   m_TagString: Enemy
@@ -37758,6 +37759,44 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!108 &4505017398870863491
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6885195386614659254}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 2
+  m_Color: {r: 1, g: 0, b: 0.76114655, a: 1}
+  m_Intensity: 1
+  m_Range: 10
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
 --- !u!1 &8128921566490614483
 GameObject:
   m_ObjectHideFlags: 0
@@ -47053,14 +47092,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hit_06
       objectReference: {fileID: 0}
-    - target: {fileID: 19896884, guid: f2a398acbf213024aa23b14c390770bf, type: 3}
-      propertyPath: looping
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 19896884, guid: f2a398acbf213024aa23b14c390770bf, type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 464624, guid: f2a398acbf213024aa23b14c390770bf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -47103,6 +47134,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 464624, guid: f2a398acbf213024aa23b14c390770bf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19896884, guid: f2a398acbf213024aa23b14c390770bf, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19896884, guid: f2a398acbf213024aa23b14c390770bf, type: 3}
+      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 153590, guid: f2a398acbf213024aa23b14c390770bf, type: 3}
@@ -47154,11 +47193,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Taunted
-      objectReference: {fileID: 0}
-    - target: {fileID: 2594324223704125970, guid: bb908d00121f942438126cdb93236180,
-        type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 9122184551371264894, guid: bb908d00121f942438126cdb93236180,
         type: 3}
@@ -47229,6 +47263,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2594324223704125970, guid: bb908d00121f942438126cdb93236180,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb908d00121f942438126cdb93236180, type: 3}

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 678422783500613814}
   - component: {fileID: 8208870122069599090}
   - component: {fileID: 1305339219}
+  - component: {fileID: 1224054424141449039}
   m_Layer: 10
   m_Name: Suicide_02
   m_TagString: Enemy
@@ -111,6 +112,44 @@ MonoBehaviour:
   m_steeringSpeed: 10
   m_destBufferDist: 0.2
   manualSteering: 0
+--- !u!108 &1224054424141449039
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678422783500613815}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 2
+  m_Color: {r: 1, g: 0, b: 0.661335, a: 1}
+  m_Intensity: 1
+  m_Range: 10
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
 --- !u!1 &2460780797096173860
 GameObject:
   m_ObjectHideFlags: 0
@@ -4961,10 +5000,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hollows_Screecher_Base_002
       objectReference: {fileID: 0}
-    - target: {fileID: 2300000, guid: 05859ed4907a6fd45931597f385bf2d4, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 179555ab8bd66734b8c1ac67e84c7cbc, type: 2}
     - target: {fileID: 400000, guid: 05859ed4907a6fd45931597f385bf2d4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5009,6 +5044,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 05859ed4907a6fd45931597f385bf2d4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 179555ab8bd66734b8c1ac67e84c7cbc, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05859ed4907a6fd45931597f385bf2d4, type: 3}
 --- !u!4 &38830749318168609 stripped
@@ -5033,14 +5072,6 @@ PrefabInstance:
     - target: {fileID: 180950, guid: f2a398acbf213024aa23b14c390770bf, type: 3}
       propertyPath: m_Name
       value: Hit_06
-      objectReference: {fileID: 0}
-    - target: {fileID: 19896884, guid: f2a398acbf213024aa23b14c390770bf, type: 3}
-      propertyPath: looping
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 19896884, guid: f2a398acbf213024aa23b14c390770bf, type: 3}
-      propertyPath: playOnAwake
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 464624, guid: f2a398acbf213024aa23b14c390770bf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5084,6 +5115,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 464624, guid: f2a398acbf213024aa23b14c390770bf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19896884, guid: f2a398acbf213024aa23b14c390770bf, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19896884, guid: f2a398acbf213024aa23b14c390770bf, type: 3}
+      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 19831708, guid: f2a398acbf213024aa23b14c390770bf, type: 3}
@@ -5183,7 +5222,7 @@ PrefabInstance:
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 19800000, guid: b4160dd0a48b65c4d8f5c8f01715ca1b, type: 3}
+    - target: {fileID: 19800004, guid: b4160dd0a48b65c4d8f5c8f01715ca1b, type: 3}
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
@@ -5191,7 +5230,7 @@ PrefabInstance:
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 19800004, guid: b4160dd0a48b65c4d8f5c8f01715ca1b, type: 3}
+    - target: {fileID: 19800000, guid: b4160dd0a48b65c4d8f5c8f01715ca1b, type: 3}
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
@@ -5338,12 +5377,12 @@ PrefabInstance:
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 198000012351162682, guid: 3228a22491941734bb83ad691d17fcb9,
+    - target: {fileID: 198000013621194436, guid: 3228a22491941734bb83ad691d17fcb9,
         type: 3}
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 198000013621194436, guid: 3228a22491941734bb83ad691d17fcb9,
+    - target: {fileID: 198000012351162682, guid: 3228a22491941734bb83ad691d17fcb9,
         type: 3}
       propertyPath: playOnAwake
       value: 0
@@ -5373,11 +5412,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Taunted
-      objectReference: {fileID: 0}
-    - target: {fileID: 2594324223704125970, guid: bb908d00121f942438126cdb93236180,
-        type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 9122184551371264894, guid: bb908d00121f942438126cdb93236180,
         type: 3}
@@ -5449,6 +5483,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2594324223704125970, guid: bb908d00121f942438126cdb93236180,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb908d00121f942438126cdb93236180, type: 3}
 --- !u!4 &6493793444922758904 stripped
@@ -5473,16 +5512,6 @@ PrefabInstance:
     - target: {fileID: 1000012909287652, guid: abb9f519b142e304d9c45b56afa768bc, type: 3}
       propertyPath: m_Name
       value: BloodSprayEffect
-      objectReference: {fileID: 0}
-    - target: {fileID: 198000011254678926, guid: abb9f519b142e304d9c45b56afa768bc,
-        type: 3}
-      propertyPath: looping
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 198000011254678926, guid: abb9f519b142e304d9c45b56afa768bc,
-        type: 3}
-      propertyPath: playOnAwake
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4000013488956786, guid: abb9f519b142e304d9c45b56afa768bc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5526,6 +5555,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000013488956786, guid: abb9f519b142e304d9c45b56afa768bc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198000011254678926, guid: abb9f519b142e304d9c45b56afa768bc,
+        type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198000011254678926, guid: abb9f519b142e304d9c45b56afa768bc,
+        type: 3}
+      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 198000013980960414, guid: abb9f519b142e304d9c45b56afa768bc,
