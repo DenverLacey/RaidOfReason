@@ -4723,8 +4723,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2859401585780727824}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_LocalPosition: {x: 0, y: 2.93, z: 1.2}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children: []
   m_Father: {fileID: 4269507381942666822}
   m_RootOrder: 11
@@ -4766,7 +4766,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d3266f6c39b7727469cd1f412f41dba5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 569c6de118d88ed48b99792c80d011e0, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5047,10 +5047,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hollows_Mother_Base_001
       objectReference: {fileID: 0}
-    - target: {fileID: 2300000, guid: fb34b4f35b540ad48827e25a57bab976, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 179555ab8bd66734b8c1ac67e84c7cbc, type: 2}
     - target: {fileID: 400000, guid: fb34b4f35b540ad48827e25a57bab976, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
@@ -5107,6 +5103,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: fb34b4f35b540ad48827e25a57bab976, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 179555ab8bd66734b8c1ac67e84c7cbc, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb34b4f35b540ad48827e25a57bab976, type: 3}
 --- !u!4 &934801341807481380 stripped
@@ -5197,16 +5197,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4269507381942666822}
     m_Modifications:
-    - target: {fileID: 3019009823645771759, guid: bb908d00121f942438126cdb93236180,
-        type: 3}
-      propertyPath: m_Name
-      value: Taunted
-      objectReference: {fileID: 0}
-    - target: {fileID: 2594324223704125970, guid: bb908d00121f942438126cdb93236180,
-        type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 1.5
-      objectReference: {fileID: 0}
     - target: {fileID: 9122184551371264894, guid: bb908d00121f942438126cdb93236180,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5262,6 +5252,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3019009823645771759, guid: bb908d00121f942438126cdb93236180,
+        type: 3}
+      propertyPath: m_Name
+      value: Taunted
+      objectReference: {fileID: 0}
+    - target: {fileID: 2594324223704125970, guid: bb908d00121f942438126cdb93236180,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb908d00121f942438126cdb93236180, type: 3}
 --- !u!4 &6040788838985409665 stripped
@@ -5283,10 +5283,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4269507381942666822}
     m_Modifications:
-    - target: {fileID: 1000010823978654, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
-      propertyPath: m_Name
-      value: FlamesParticleEffect
-      objectReference: {fileID: 0}
     - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5331,6 +5327,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1000010823978654, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_Name
+      value: FlamesParticleEffect
+      objectReference: {fileID: 0}
     - target: {fileID: 198000013227194214, guid: 3228a22491941734bb83ad691d17fcb9,
         type: 3}
       propertyPath: playOnAwake
@@ -5367,16 +5367,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4269507381942666822}
     m_Modifications:
-    - target: {fileID: 7045711017231392191, guid: 97136926d5db8af4484c32058ebb08c3,
-        type: 3}
-      propertyPath: m_Name
-      value: Hollows_taunt_icon_001
-      objectReference: {fileID: 0}
-    - target: {fileID: 7045711017231392191, guid: 97136926d5db8af4484c32058ebb08c3,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2822496821825301628, guid: 97136926d5db8af4484c32058ebb08c3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5432,6 +5422,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7045711017231392191, guid: 97136926d5db8af4484c32058ebb08c3,
+        type: 3}
+      propertyPath: m_Name
+      value: Hollows_taunt_icon_001
+      objectReference: {fileID: 0}
+    - target: {fileID: 7045711017231392191, guid: 97136926d5db8af4484c32058ebb08c3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97136926d5db8af4484c32058ebb08c3, type: 3}
 --- !u!4 &585646288092183649 stripped
@@ -5447,10 +5447,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4269507381942666822}
     m_Modifications:
-    - target: {fileID: 119818, guid: 01f1e1f1177f76d499251acb5b14b63a, type: 3}
-      propertyPath: m_Name
-      value: magic_ring_06
-      objectReference: {fileID: 0}
     - target: {fileID: 407420, guid: 01f1e1f1177f76d499251acb5b14b63a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5494,6 +5490,10 @@ PrefabInstance:
     - target: {fileID: 407420, guid: 01f1e1f1177f76d499251acb5b14b63a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 119818, guid: 01f1e1f1177f76d499251acb5b14b63a, type: 3}
+      propertyPath: m_Name
+      value: magic_ring_06
       objectReference: {fileID: 0}
     - target: {fileID: 417116, guid: 01f1e1f1177f76d499251acb5b14b63a, type: 3}
       propertyPath: m_LocalScale.x
@@ -5594,9 +5594,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4269507381942666822}
     m_Modifications:
-    - target: {fileID: 100008, guid: b4160dd0a48b65c4d8f5c8f01715ca1b, type: 3}
-      propertyPath: m_Name
-      value: GauntletParticle
+    - target: {fileID: 19800002, guid: b4160dd0a48b65c4d8f5c8f01715ca1b, type: 3}
+      propertyPath: playOnAwake
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: b4160dd0a48b65c4d8f5c8f01715ca1b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5642,18 +5642,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 19800002, guid: b4160dd0a48b65c4d8f5c8f01715ca1b, type: 3}
-      propertyPath: playOnAwake
-      value: 0
+    - target: {fileID: 100008, guid: b4160dd0a48b65c4d8f5c8f01715ca1b, type: 3}
+      propertyPath: m_Name
+      value: GauntletParticle
       objectReference: {fileID: 0}
-    - target: {fileID: 19900002, guid: b4160dd0a48b65c4d8f5c8f01715ca1b, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 179555ab8bd66734b8c1ac67e84c7cbc, type: 2}
-    - target: {fileID: 19900002, guid: b4160dd0a48b65c4d8f5c8f01715ca1b, type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 2100000, guid: 179555ab8bd66734b8c1ac67e84c7cbc, type: 2}
     - target: {fileID: 19800008, guid: b4160dd0a48b65c4d8f5c8f01715ca1b, type: 3}
       propertyPath: playOnAwake
       value: 0
@@ -5670,6 +5662,14 @@ PrefabInstance:
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 19900002, guid: b4160dd0a48b65c4d8f5c8f01715ca1b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 179555ab8bd66734b8c1ac67e84c7cbc, type: 2}
+    - target: {fileID: 19900002, guid: b4160dd0a48b65c4d8f5c8f01715ca1b, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 179555ab8bd66734b8c1ac67e84c7cbc, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b4160dd0a48b65c4d8f5c8f01715ca1b, type: 3}
 --- !u!198 &5211134917988860584 stripped
@@ -5691,10 +5691,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4269507381942666822}
     m_Modifications:
-    - target: {fileID: 180950, guid: f2a398acbf213024aa23b14c390770bf, type: 3}
-      propertyPath: m_Name
-      value: Hit_06
-      objectReference: {fileID: 0}
     - target: {fileID: 19896884, guid: f2a398acbf213024aa23b14c390770bf, type: 3}
       propertyPath: looping
       value: 0
@@ -5702,6 +5698,10 @@ PrefabInstance:
     - target: {fileID: 19896884, guid: f2a398acbf213024aa23b14c390770bf, type: 3}
       propertyPath: playOnAwake
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 180950, guid: f2a398acbf213024aa23b14c390770bf, type: 3}
+      propertyPath: m_Name
+      value: Hit_06
       objectReference: {fileID: 0}
     - target: {fileID: 464624, guid: f2a398acbf213024aa23b14c390770bf, type: 3}
       propertyPath: m_LocalPosition.x
