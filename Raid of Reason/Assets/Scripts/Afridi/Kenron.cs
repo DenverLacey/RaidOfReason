@@ -195,6 +195,7 @@ public class Kenron : BaseCharacter
                 StartCoroutine(ChaosFlameVisual());
                 m_kenronParticle.Play();
                 SetDamage(m_minCFDamage, m_maxCFDamage);
+                SetHealth(m_currentHealth / 2);
             }
         }
     }

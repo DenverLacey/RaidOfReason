@@ -270,31 +270,27 @@ public class Kreiger : BaseCharacter
 	/// </summary>
     public void Spott(float skillDuration)
     {
-        if (skillDuration >= skillManager.m_mainSkills[1].m_duration)
-        {
+        // Ability is active
+        isTaunting = true;
 
-            // Ability is active
-            isTaunting = true;
-
-			// taunt enemies
-			foreach (EnemyData enemy in GameObject.FindObjectsOfType<EnemyData>())
+		// taunt enemies
+		foreach (EnemyData enemy in GameObject.FindObjectsOfType<EnemyData>())
+		{
+			float sqrDist = (enemy.transform.position - transform.position).sqrMagnitude;
+			if (sqrDist <= m_tauntRadius * m_tauntRadius)
 			{
-				float sqrDist = (enemy.transform.position - transform.position).sqrMagnitude;
-				if (sqrDist <= m_tauntRadius * m_tauntRadius)
-				{
-                    enemy.Taunted = true;
-                    totalAmountTaunted++;
-                }
-			}
+                   enemy.Taunted = true;
+                   totalAmountTaunted++;
+            }
+		}
 
-            isActive = true;
+        isActive = true;
 
-            m_tauntParticle.Play();
-            StartCoroutine(MachinasDareVisual());
+        m_tauntParticle.Play();
+        StartCoroutine(MachinasDareVisual());
 
-            // set vulnerability
-            m_vulnerability = m_tauntVulnerability;
-        }
+        // set vulnerability
+        m_vulnerability = m_tauntVulnerability;
     }
 
     /// <summary>
