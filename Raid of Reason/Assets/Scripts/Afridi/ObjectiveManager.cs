@@ -44,13 +44,13 @@ public class ObjectiveManager : MonoBehaviour
         }
 
         m_currentObjective = m_objectives[0];
-
-        m_currentObjective.Awake();
+               m_currentObjective.Awake();
         ObjectiveCompleted = false;
     }
 
     private void Update()
     {
+
         if (m_currentObjective && ObjectiveTriggered == true)
         {           
             if (triggerObjectives.Count > 1)
@@ -107,6 +107,7 @@ public class ObjectiveManager : MonoBehaviour
             {
 			    m_objectives.RemoveAt(0);
                 m_currentObjective = m_objectives[0];
+                m_currentObjective.Awake();
             }
 
             if (triggerObjectives.Count > 1)

@@ -22,15 +22,13 @@ public class CountdownObjective : BaseObjective
     public string spawnPointName;
     public string enemyZoneName;
     private GameObject spawnPoint;
-    private EnemyZone Zone;
+    private GameObject Zone;
 
     // Current Timer
     private float currentTimer;
 
     public override void Awake()
     {
-        spawnPoint = GameObject.Find(spawnPointName);
-        Zone = GameObject.Find(enemyZoneName).GetComponent<EnemyZone>();
         currentTimer = maxtimer;
     }
 
@@ -56,13 +54,15 @@ public class CountdownObjective : BaseObjective
 
     public override void Update()
     {
+        spawnPoint = GameObject.Find(spawnPointName);
+        Zone = GameObject.Find(enemyZoneName);
         // Timer starts going down
         currentTimer -= Time.deltaTime;
     }
 
     public override bool IsDone()
     {
-        bool spawnerExists = Zone.Enemies.Exists(e => e.Type == "Spawner");
+        bool spawnerExists = Zone.GetComponent<EnemyZone>().Enemies.Exists(e => e.Type == "Spawner");
         return !spawnerExists;
     }
 
