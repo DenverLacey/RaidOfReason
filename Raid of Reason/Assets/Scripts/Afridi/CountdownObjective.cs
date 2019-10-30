@@ -30,6 +30,8 @@ public class CountdownObjective : BaseObjective
     public override void Awake()
     {
         currentTimer = maxtimer;
+        spawnPoint = GameObject.Find(spawnPointName);
+        Zone = GameObject.Find(enemyZoneName);
     }
 
     public override GameObject SpawnPoints()

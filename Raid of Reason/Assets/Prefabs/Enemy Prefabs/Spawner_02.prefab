@@ -4767,7 +4767,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 569c6de118d88ed48b99792c80d011e0, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -4853,6 +4853,7 @@ GameObject:
   - component: {fileID: 1033110116055260544}
   - component: {fileID: 563109259601913347}
   - component: {fileID: 4998105662069768613}
+  - component: {fileID: 1077831522}
   m_Layer: 10
   m_Name: Spawner_02
   m_TagString: Enemy
@@ -4991,6 +4992,21 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &1077831522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8457266304823864805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0368efaf695668041935771d7bb641da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 0}
+  Objects: []
+  upAmount: 80.5
 --- !u!1001 &822256282256947331
 PrefabInstance:
   m_ObjectHideFlags: 0

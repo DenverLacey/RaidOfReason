@@ -19,14 +19,17 @@ public class CrystalHealth : MonoBehaviour
         screenPoint.y += upAmount;
         healthBar.transform.position = screenPoint;
 
-        if (manager.m_currentObjective == Objects[0] && !manager.m_currentObjective.IsDone())
+        if (Objects.Count > 2)
         {
-            healthBar.fillAmount = Objects[0].m_currentHealth / Objects[0].health;
-        }
-        else if (manager.m_currentObjective == Objects[0] && manager.m_currentObjective.IsDone())
-        {
-            healthBar.fillAmount = 0;
-            Objects.RemoveAt(0);
+            if (manager.m_currentObjective == Objects[0] && !manager.m_currentObjective.IsDone())
+            {
+                healthBar.fillAmount = Objects[0].m_currentHealth / Objects[0].health;
+            }
+            else if (manager.m_currentObjective == Objects[0] && manager.m_currentObjective.IsDone())
+            {
+                healthBar.fillAmount = 0;
+                Objects.RemoveAt(0);
+            }
         }
     }
 }
