@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using XboxCtrlrInput;
+using XInputDotNetPure;
 
 /*
   * Author: Afridi Rahim
@@ -65,28 +66,12 @@ public class Kenron : BaseCharacter
     private float m_maxCFDamage;
 
     [SerializeField]
-    [Tooltip("Kenrons Speed Boost whilst in Chaos Flame")]
-    private float m_chaosFlameSpeed;
-
-    [SerializeField]
     [Tooltip("Health Gained Back from Kenrons Vile Infusion Skill")]
     private float m_healthGained;
 
     [SerializeField]
     [Tooltip("Ability Duration Increase from Kenrons Blood Lust Skill")]
     private float m_RTDurationIncreased;
-
-    [SerializeField]
-    [Tooltip("Kenrons Minimum Damage Boost whilst in Chaos Flame with Ronin Mastery")]
-    private float m_minSADamage;
-
-    [SerializeField]
-    [Tooltip("Kenrons Maximum Damage Boost whilst in Chaos Flame with Ronin Mastery")]
-    private float m_maxSADamage;
-
-    [SerializeField]
-    [Tooltip("Kenrons Speed Boost whilst in Chaos Flame with Ronin Mastery")]
-    private float m_SAFlameSpeed;
 
     [SerializeField]
     [Tooltip("How long it takes for the trail in Kenrons Ability To Go Away")]
@@ -120,6 +105,8 @@ public class Kenron : BaseCharacter
     private float m_estimatedDashTime;
     private float m_dashDistance;
     private bool m_dashDone;
+    private float m_rumbleDuration = 0.1f;
+    private float m_rumbleIntensity = 1000f;
 
     // Checks if Kenron is Dashing or Not
     private bool isDashing;
@@ -173,6 +160,7 @@ public class Kenron : BaseCharacter
             // Uses his Dash
             DashAttack();
         }
+
         if (isActive == true) {
             if (m_Enemy.isDeadbByKenron)
             {
@@ -199,6 +187,7 @@ public class Kenron : BaseCharacter
                 isActive = true;
                 StartCoroutine(ChaosFlameVisual());
                 m_kenronParticle.Play();
+                DoRumble();
                 SetDamage(m_minCFDamage, m_maxCFDamage);
                 SetHealth(m_currentHealth / 2);
             }
@@ -224,7 +213,7 @@ public class Kenron : BaseCharacter
                 m_dashDelayTimer = m_dashDelay;
                 m_dashStartPosition = transform.position;
 				m_currentCharges--;
-
+                DoRumble();
 
 				// set animator's trigger
 				m_animator.SetBool("Attack", true);
@@ -333,5 +322,17 @@ public class Kenron : BaseCharacter
         {
             m_currentCharges++;
         }
+    }
+
+    public void DoRumble()
+    {
+        GamePad.SetVibration(GameManager.Instance.Kreiger.playerIndex, m_rumbleIntensity, m_rumbleIntensity);
+        StartCoroutine(StopRumble());
+    }
+
+    public IEnumerator StopRumble()
+    {
+        yield return new WaitForSeconds(m_rumbleDuration);
+        GamePad.SetVibration(GameManager.Instance.Kreiger.playerIndex, 0f, 0f);
     }
 }

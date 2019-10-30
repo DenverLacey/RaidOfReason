@@ -66,6 +66,9 @@ public abstract class BaseCharacter : MonoBehaviour
 
     public float currentShield;
 
+    [Tooltip("The delay between the materials switching")]
+    public float feedbackAmount;
+
     [SerializeField]
     [Tooltip("How long will it take for the shield to start degenerating?")]
     private float m_shieldBuffer;
@@ -109,9 +112,9 @@ public abstract class BaseCharacter : MonoBehaviour
 		set => movementAxes = value ? movementAxes | MovementAxis.Rotate : movementAxes & ~MovementAxis.Rotate;
 	}
 
-    public List<SkinnedMeshRenderer> damageFeedback = new List<SkinnedMeshRenderer>();
-    private List<SkinnedMeshRenderer> matChange = new List<SkinnedMeshRenderer>();
-    public Material damageMaterial;
+    public Material damageFeedback;
+    private Material originalMaterial;
+    public SkinnedMeshRenderer playerMaterial;
 
     [HideInInspector]
     public MultiTargetCamera m_camera;
@@ -148,11 +151,7 @@ public abstract class BaseCharacter : MonoBehaviour
         skillManager = FindObjectOfType<SkillManager>();
         m_original = m_spriteRend.colorOverLifetime;
         m_healthBarRef = FindObjectOfType<HealthBarUI>();
-
-        foreach (SkinnedMeshRenderer mat in damageFeedback)
-        {
-            matChange.Add(mat);
-        }
+        originalMaterial = playerMaterial.material;
     }
 
     /// <summary>
@@ -297,13 +296,8 @@ public abstract class BaseCharacter : MonoBehaviour
         {
             // Take an amount of damage from the players current health.
             m_currentHealth -= damage * m_vulnerability;
-
-            foreach (SkinnedMeshRenderer mesh in damageFeedback)
-            {
-                mesh.material = damageMaterial;
-                StartCoroutine(DamageBuffer(0.1f));
-            }
-
+            playerMaterial.material = damageFeedback;
+            StartCoroutine(DamageBuffer(feedbackAmount));
         }
 
         // If player has no health.
@@ -451,10 +445,7 @@ public abstract class BaseCharacter : MonoBehaviour
     IEnumerator DamageBuffer(float buffer)
     {
         yield return new WaitForSeconds(buffer);
-        foreach (SkinnedMeshRenderer mesh in damageFeedback)
-        {
-            mesh.material = matChange[0].material;
-        }
+        playerMaterial.material = originalMaterial;
     }
 	public void SetPlayerToNotPlaying()
 	{
