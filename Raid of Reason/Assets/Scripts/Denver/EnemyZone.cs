@@ -94,15 +94,39 @@ public class EnemyZone : MonoBehaviour
         BehaviourTreeOverrides = new Dictionary<string, BehaviourTree>();
 
 		// move data from lists into dictionaries
-		foreach (var range in m_viewRangeOverrides) { m_viewRangeDict.Add(range.key, range.value); }
-		foreach (var priority in m_characterPriorityOverrides) { m_characterPriorityDict.Add(priority.key, priority.value); }
-		foreach (var threshold in m_priorityThresholdOverrides) { m_priorityThresholdDict.Add(threshold.key, threshold.value); }
-		foreach (var range in m_attackRangeOverrides) { m_attackRangeDict.Add(range.key, range.value); }
-		foreach (var cooldown in m_attackCooldownOverrides) { m_attackCooldownDict.Add(cooldown.key, cooldown.value); }
-		foreach (var health in m_maxHealthOverrides) { m_maxHealthDict.Add(health.key, health.value); }
-		foreach (var damage in m_attackDamageOverrides) { m_attackDamageDict.Add(damage.key, damage.value); }
-		foreach (var tree in m_behaviourTreeOverrides) { BehaviourTreeOverrides.Add(tree.key, tree.value); }
-		foreach (var prefab in m_attackPrefabOverrides) { m_attackPrefabDict.Add(prefab.key, prefab.value); }
+		foreach (var range in m_viewRangeOverrides)
+		{
+			m_viewRangeDict.Add(range.key, range.value);
+		}
+		foreach (var priority in m_characterPriorityOverrides)
+		{
+			m_characterPriorityDict.Add(priority.key, priority.value);
+		}
+		foreach (var threshold in m_priorityThresholdOverrides)
+		{
+			m_priorityThresholdDict.Add(threshold.key, threshold.value);
+		}
+		foreach (var range in m_attackRangeOverrides)
+		{
+			m_attackRangeDict.Add(range.key, range.value);
+		}
+		foreach (var cooldown in m_attackCooldownOverrides)
+		{
+			m_attackCooldownDict.Add(cooldown.key, cooldown.value); }
+		foreach (var health in m_maxHealthOverrides) { m_maxHealthDict.Add(health.key, health.value);
+		}
+		foreach (var damage in m_attackDamageOverrides)
+		{
+			m_attackDamageDict.Add(damage.key, damage.value);
+		}
+		foreach (var tree in m_behaviourTreeOverrides)
+		{
+			BehaviourTreeOverrides.Add(tree.key, tree.value);
+		}
+		foreach (var prefab in m_attackPrefabOverrides)
+		{
+			m_attackPrefabDict.Add(prefab.key, prefab.value);
+		}
 	}
 	
     void FixedUpdate()

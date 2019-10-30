@@ -103,6 +103,10 @@ public class Kenron : BaseCharacter
     [Tooltip("Particle Effect That Indicates Chaos Flame is Active")]
     private ParticleSystem m_startParticle;
 
+	[SerializeField]
+	[Tooltip("Trail Renderer for Dash Trail Effect")]
+	private GameObject m_dashTrail;
+
 
     // Enemy reference used for skill checking
     private EnemyData m_Enemy;
@@ -146,6 +150,7 @@ public class Kenron : BaseCharacter
         Vector3 hitBoxSize = new Vector3(m_dashCollider.size.x, m_dashCollider.size.y, m_maxDashDistance);
         m_dashCollider.size = hitBoxSize;
         m_dashCollider.enabled = false;
+		m_dashTrail.SetActive(false);
     }
 
     protected override void FixedUpdate()
@@ -224,6 +229,8 @@ public class Kenron : BaseCharacter
 				// set animator's trigger
 				m_animator.SetBool("Attack", true);
 
+				// activate trail effect
+				m_dashTrail.SetActive(true);
 
 				if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, m_maxDashDistance, LayerMask.GetMask("Environment", "Barrier")))
 				{
@@ -287,7 +294,8 @@ public class Kenron : BaseCharacter
                 StartCoroutine(TimeTillRecharge());
                 m_controllerOn = true;
                 isDashing = false;
-            }
+				m_dashTrail.SetActive(false);
+			}
         }
     }
 

@@ -95,17 +95,28 @@ public class Thea : BaseCharacter
     [SerializeField]
     private GameObject m_waterPrefab;
 
-    [SerializeField]
-    [Tooltip("The AOE particle used for visual effect.")]
-    private ParticleSystem m_HealRadius;
+	[SerializeField]
+	[Tooltip("Gift of Poseidon Particle Object")]
+	private GameObject m_GOPParticle;
+	private GameObject m_GOPCircle;
+	private List<ParticleSystem.MainModule> m_GOPWaves = new List<ParticleSystem.MainModule>();
+	private List<ParticleSystem> m_GOPParticleSystems;
 
-    [SerializeField]
-    [Tooltip("The Second AOE particle used for visual effect.")]
-    private ParticleSystem m_HealRadius_2;
+	[SerializeField]
+	[Tooltip("Initial Effect when activating GIft of Poseidon")]
+	private ParticleSystem m_healEffect;
 
-    [SerializeField]
-    [Tooltip("The Final particle used for visual effect.")]
-    private ParticleSystem m_HealRadius_3;
+    //[SerializeField]
+    //[Tooltip("The AOE particle used for visual effect.")]
+    //private ParticleSystem m_HealRadius;
+
+    //[SerializeField]
+    //[Tooltip("The Second AOE particle used for visual effect.")]
+    //private ParticleSystem m_HealRadius_2;
+
+    //[SerializeField]
+    //[Tooltip("The Final particle used for visual effect.")]
+    //private ParticleSystem m_HealRadius_3;
     
     [HideInInspector]
     public bool m_skillActive;
@@ -123,8 +134,9 @@ public class Thea : BaseCharacter
     private float m_particleRadius;
 
     private List<EnemyData> m_nearbyEnemies = new List<EnemyData>();
-    private ParticleSystem.ShapeModule m_AOEShapeModule;
-    private ParticleSystem.ShapeModule m_AOEShapeModule_2;
+    
+	//private ParticleSystem.ShapeModule m_AOEShapeModule;
+    //private ParticleSystem.ShapeModule m_AOEShapeModule_2;
 
     private CapsuleCollider m_collider;
 
@@ -146,10 +158,25 @@ public class Thea : BaseCharacter
         m_isActive = false;
         m_isHealthRegen = false;
         m_AOETimer = 0f;
-        m_HealRadius.gameObject.SetActive(false);
-        m_HealRadius_2.gameObject.SetActive(false);
-        m_AOEShapeModule = m_HealRadius.shape;
-        m_AOEShapeModule_2 = m_HealRadius_2.shape;
+		//m_HealRadius.gameObject.SetActive(false);
+		//m_HealRadius_2.gameObject.SetActive(false);
+		//m_AOEShapeModule = m_HealRadius.shape;
+		//m_AOEShapeModule_2 = m_HealRadius_2.shape;
+
+		m_GOPCircle = m_GOPParticle.transform.Find("circle").gameObject;
+		m_GOPWaves = new List<ParticleSystem.MainModule>
+		{
+			m_GOPParticle.transform.GetChild(1).GetComponent<ParticleSystem>().main,
+			m_GOPParticle.transform.GetChild(2).GetComponent<ParticleSystem>().main,
+			m_GOPParticle.transform.GetChild(3).GetComponent<ParticleSystem>().main,
+			m_GOPParticle.transform.GetChild(4).GetComponent<ParticleSystem>().main,
+			m_GOPParticle.transform.GetChild(5).GetComponent<ParticleSystem>().main
+		};
+
+		m_GOPParticleSystems = new List<ParticleSystem>(m_GOPParticle.GetComponentsInChildren<ParticleSystem>());
+
+		m_GOPParticle.SetActive(false);
+
         IntialiseUpgrades();
     }
 
@@ -202,9 +229,11 @@ public class Thea : BaseCharacter
 
         if (GameManager.Instance.Thea.playerState == PlayerState.DEAD)
         {
-            m_HealRadius.gameObject.SetActive(false);
-            m_HealRadius_2.gameObject.SetActive(false);
-            m_HealRadius_3.gameObject.SetActive(false);
+			//m_HealRadius.gameObject.SetActive(false);
+			//m_HealRadius_2.gameObject.SetActive(false);
+			//m_HealRadius_3.gameObject.SetActive(false);
+			m_GOPParticle.SetActive(false);
+			m_healEffect.gameObject.SetActive(false);
         }
     }
 
@@ -346,12 +375,19 @@ public class Thea : BaseCharacter
             CanMove = false;
             CanRotate = false;
 
-            m_HealRadius.gameObject.SetActive(true);
-            m_HealRadius_2.gameObject.SetActive(true);
-            
-            m_AOERadius = Mathf.Lerp(m_AOERadius, m_AOEMax, m_AOETimer / m_AOEGrowTime);
-            m_AOEShapeModule.radius = m_AOERadius;
-            m_AOEShapeModule_2.radius = m_AOERadius;
+			//m_HealRadius.gameObject.SetActive(true);
+			//m_HealRadius_2.gameObject.SetActive(true);
+
+			//m_AOERadius = Mathf.Lerp(m_AOERadius, m_AOEMax, m_AOETimer / m_AOEGrowTime);
+			//m_AOEShapeModule.radius = m_AOERadius;
+			//m_AOEShapeModule_2.radius = m_AOERadius;
+
+			m_GOPParticle.SetActive(true);
+
+			m_AOERadius = Mathf.Lerp(m_AOERadius, m_AOEMax, m_AOETimer / m_AOEGrowTime);
+			m_GOPCircle.transform.localScale = new Vector3(m_AOERadius, 1, m_AOERadius);
+			m_GOPWaves.ForEach(w => w.startSize = m_AOERadius);
+
             m_skillActive = true;
 
 			if (m_animator)
@@ -379,8 +415,9 @@ public class Thea : BaseCharacter
 
         if (!GameManager.Instance.Thea.gameObject.activeSelf)
         {
-            m_HealRadius.gameObject.SetActive(false);
-            m_HealRadius_2.gameObject.SetActive(false);
+			//m_HealRadius.gameObject.SetActive(false);
+			//m_HealRadius_2.gameObject.SetActive(false);
+			m_GOPParticle.SetActive(false);
         }
     }
 
@@ -462,13 +499,18 @@ public class Thea : BaseCharacter
         m_AOERadius = m_AOEMin;
         CanMove = true;
         CanRotate = true;
-        m_AOEShapeModule.radius = 1;
+		//m_AOEShapeModule.radius = 1;
 
-        m_HealRadius.gameObject.SetActive(false);
-        m_HealRadius.Stop();
+		//m_HealRadius.gameObject.SetActive(false);
+		//m_HealRadius.Stop();
 
-        m_HealRadius_2.gameObject.SetActive(false);
-        m_HealRadius_2.Stop();
+		//m_HealRadius_2.gameObject.SetActive(false);
+		//m_HealRadius_2.Stop();
+
+		//m_GOPParticleSystems.ForEach(ps => ps.Stop());
+		m_GOPWaves.ForEach(w => w.startSize = 1);
+		m_GOPCircle.transform.localScale = new Vector3(1, 1, 1);
+		m_GOPParticle.SetActive(false);
     }
 
     private IEnumerator HealthOverTime() {
@@ -484,9 +526,9 @@ public class Thea : BaseCharacter
     {
         if (GameManager.Instance.Thea.gameObject.activeSelf)
         {
-            m_HealRadius_3.Play();
+            m_healEffect.Play();
             yield return new WaitForSeconds(0.5f);
-            m_HealRadius_3.Stop();
+            m_healEffect.Stop();
         }
     }
 

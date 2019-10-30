@@ -13,35 +13,45 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Crystal Suicide Enemy Behaviour Tree", menuName = "Behaviour Trees/Behaviour Tree - Crystal Suicide")]
 public class CrystalSuicideBehaviourTree : BehaviourTree
 {
-	[Tooltip("Position of the crystal")]
+	[Tooltip("Name of Crystal Object")]
 	[SerializeField]
-	private Vector3 m_crystalPosition;
+	private string m_objectName;
+	private Vector3 m_objectPosition;
 
 	private Selector m_behaviourTree = new Selector();
 
 	private void OnEnable()
 	{
+		m_objectPosition = GameObject.Find(m_objectName).transform.position;
+
 		// create components for behaviour tree
 		StunnedCondition stunned = new StunnedCondition();
 
-		Selector setTarget = new Selector();
-		setTarget.AddChild(new TauntEvent());
-		setTarget.AddChild(new SetTarget(m_crystalPosition));
+		Sequence tauntSequence = new Sequence();
+		tauntSequence.AddChild(new TauntEvent());
+		tauntSequence.AddChild(new SetDestination());
 
-		SetDestination setDestination = new SetDestination();
+		Sequence targetSequence = new Sequence();
+		targetSequence.AddChild(new SetTarget(m_objectPosition));
+		targetSequence.AddChild(new SetDestinationToNearestEdge());
+
+		Selector pathfindingSelector = new Selector();
+		pathfindingSelector.AddChild(tauntSequence);
+		pathfindingSelector.AddChild(targetSequence);
 
 		Sequence attackSequence = new Sequence();
 		attackSequence.AddChild(new MinAttackRangeCondition());
 		attackSequence.AddChild(new CrystalSuicideAttack());
 
+		Sequence doStuffSequence = new Sequence();
+		doStuffSequence.AddChild(pathfindingSelector);
+		doStuffSequence.AddChild(attackSequence);
+
 		Wander wander = new Wander();
 
 		// add components to behaviour tree
 		m_behaviourTree.AddChild(stunned);
-		m_behaviourTree.AddChild(setTarget);
-		m_behaviourTree.AddChild(setDestination);
-		m_behaviourTree.AddChild(attackSequence);
-		m_behaviourTree.AddChild(wander);
+		m_behaviourTree.AddChild(doStuffSequence);
 	}
 
 	public override void Execute(EnemyData agent)
