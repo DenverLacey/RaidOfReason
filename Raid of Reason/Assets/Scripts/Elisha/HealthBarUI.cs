@@ -29,14 +29,11 @@ public class HealthBarUI : MonoBehaviour
     [SerializeField]
     private Image m_shieldBar;
 
-    [SerializeField]
-    private Image m_overhealBar;
     private float m_prevHealth;
 
     void Awake()
     {
         m_healthBar.gameObject.SetActive(true);
-        m_overhealBar.gameObject.SetActive(false);
         m_shieldBar.gameObject.SetActive(false);
         m_prevHealth = m_character.m_currentHealth;
         m_character.onTakeDamage += HealthBarShake;
