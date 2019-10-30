@@ -193,7 +193,8 @@ public class Kenron : BaseCharacter
             {
                 isActive = true;
                 StartCoroutine(ChaosFlameVisual());
-                m_kenronParticle.Play();              
+                m_kenronParticle.Play();
+                SetDamage(m_minCFDamage, m_maxCFDamage);
             }
         }
     }
