@@ -95,7 +95,7 @@ public class ProjectileMove : MonoBehaviour {
 
 			if (hitPlayer.playerState == BaseCharacter.PlayerState.ALIVE)
 			{
-				hitPlayer.m_currentHealth += m_healAmount;
+                hitPlayer.AddHealth(m_healAmount);
             }
 		}
 		else if (other.gameObject.layer == LayerMask.NameToLayer("Barrier"))

@@ -181,24 +181,24 @@ public class Thea : BaseCharacter
             StartCoroutine(HealthOverTime());
         }
 
-        float healthcomparison = GameManager.Instance.Kenron.m_currentHealth + GameManager.Instance.Kreiger.m_currentHealth;
+        //float healthcomparison = GameManager.Instance.Kenron.m_currentHealth + GameManager.Instance.Kreiger.m_currentHealth;
 
-        if (healthcomparison <= OAAllyHealthChecks[0])
-        {
-            m_projectileDelay = OAFireRateIncreased[0];
-        }
-        if (healthcomparison <= OAAllyHealthChecks[1])
-        {
-            m_projectileDelay = OAFireRateIncreased[1];
-        }
-        if (healthcomparison <= OAAllyHealthChecks[2])
-        {
-            m_projectileDelay = OAFireRateIncreased[2];
-        }
-        if (healthcomparison <= OAAllyHealthChecks[3])
-        {
-            m_projectileDelay = OAFireRateIncreased[3];
-        }
+        //if (healthcomparison <= OAAllyHealthChecks[0])
+        //{
+        //    m_projectileDelay = OAFireRateIncreased[0];
+        //}
+        //if (healthcomparison <= OAAllyHealthChecks[1])
+        //{
+        //    m_projectileDelay = OAFireRateIncreased[1];
+        //}
+        //if (healthcomparison <= OAAllyHealthChecks[2])
+        //{
+        //    m_projectileDelay = OAFireRateIncreased[2];
+        //}
+        //if (healthcomparison <= OAAllyHealthChecks[3])
+        //{
+        //    m_projectileDelay = OAFireRateIncreased[3];
+        //}
 
         if (GameManager.Instance.Thea.playerState == PlayerState.DEAD)
         {

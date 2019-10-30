@@ -89,7 +89,6 @@ public abstract class BaseCharacter : MonoBehaviour
 
     [Tooltip("The Skill Manager that manages the skills of the players")]
     public SkillManager skillManager;
-
     private HealthBarUI m_healthBarRef;
 
     [HideInInspector]
@@ -110,7 +109,11 @@ public abstract class BaseCharacter : MonoBehaviour
 		set => movementAxes = value ? movementAxes | MovementAxis.Rotate : movementAxes & ~MovementAxis.Rotate;
 	}
 
-	[HideInInspector]
+    public List<SkinnedMeshRenderer> damageFeedback = new List<SkinnedMeshRenderer>();
+    private List<SkinnedMeshRenderer> matChange = new List<SkinnedMeshRenderer>();
+    public Material damageMaterial;
+
+    [HideInInspector]
     public MultiTargetCamera m_camera;
 
     protected Animator m_animator;
@@ -146,13 +149,10 @@ public abstract class BaseCharacter : MonoBehaviour
         m_original = m_spriteRend.colorOverLifetime;
         m_healthBarRef = FindObjectOfType<HealthBarUI>();
 
-        //if (m_skillPopups.Count > 0)
-        //{
-        //    foreach (Image display in m_skillPopups)
-        //    {
-        //        display.gameObject.SetActive(false);
-        //    }
-        //}
+        foreach (SkinnedMeshRenderer mat in damageFeedback)
+        {
+            matChange.Add(mat);
+        }
     }
 
     /// <summary>
@@ -298,8 +298,12 @@ public abstract class BaseCharacter : MonoBehaviour
             // Take an amount of damage from the players current health.
             m_currentHealth -= damage * m_vulnerability;
 
-            // Player damage indicator.
-            //IndicateHit();
+            foreach (SkinnedMeshRenderer mesh in damageFeedback)
+            {
+                mesh.material = damageMaterial;
+                StartCoroutine(damageBuffer(0.1f));
+            }
+
         }
 
         // If player has no health.
@@ -440,6 +444,14 @@ public abstract class BaseCharacter : MonoBehaviour
         currentShield -= m_shieldDegenerateAmount * Time.deltaTime;
     }
 
+    IEnumerator damageBuffer(float buffer)
+    {
+        yield return new WaitForSeconds(buffer);
+        foreach (SkinnedMeshRenderer mesh in damageFeedback)
+        {
+            mesh.material = matChange[0].material;
+        }
+    }
 	public void SetPlayerToNotPlaying()
 	{
 		playerState = PlayerState.NP;
