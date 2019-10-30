@@ -98,9 +98,10 @@ public class Thea : BaseCharacter
 	[SerializeField]
 	[Tooltip("Gift of Poseidon Particle Object")]
 	private GameObject m_GOPParticle;
-	private GameObject m_GOPCircle;
-	private List<ParticleSystem.MainModule> m_GOPWaves = new List<ParticleSystem.MainModule>();
+	private Vector3 m_GOPCircleInitialScale;
+	private List<ParticleSystem.MainModule> m_GOPWaves;
 	private List<ParticleSystem> m_GOPParticleSystems;
+	private GameObject m_GOPCircle;
 
 	[SerializeField]
 	[Tooltip("Initial Effect when activating GIft of Poseidon")]
@@ -164,16 +165,18 @@ public class Thea : BaseCharacter
 		//m_AOEShapeModule_2 = m_HealRadius_2.shape;
 
 		m_GOPCircle = m_GOPParticle.transform.Find("circle").gameObject;
+		m_GOPCircleInitialScale = m_GOPCircle.transform.localScale;
+
+		m_GOPParticleSystems = new List<ParticleSystem>(m_GOPParticle.GetComponentsInChildren<ParticleSystem>());
+
 		m_GOPWaves = new List<ParticleSystem.MainModule>
 		{
 			m_GOPParticle.transform.GetChild(1).GetComponent<ParticleSystem>().main,
 			m_GOPParticle.transform.GetChild(2).GetComponent<ParticleSystem>().main,
 			m_GOPParticle.transform.GetChild(3).GetComponent<ParticleSystem>().main,
 			m_GOPParticle.transform.GetChild(4).GetComponent<ParticleSystem>().main,
-			m_GOPParticle.transform.GetChild(5).GetComponent<ParticleSystem>().main
+			m_GOPParticle.transform.GetChild(5).GetComponent<ParticleSystem>().main,
 		};
-
-		m_GOPParticleSystems = new List<ParticleSystem>(m_GOPParticle.GetComponentsInChildren<ParticleSystem>());
 
 		m_GOPParticle.SetActive(false);
 
@@ -382,11 +385,10 @@ public class Thea : BaseCharacter
 			//m_AOEShapeModule.radius = m_AOERadius;
 			//m_AOEShapeModule_2.radius = m_AOERadius;
 
-			m_GOPParticle.SetActive(true);
-
 			m_AOERadius = Mathf.Lerp(m_AOERadius, m_AOEMax, m_AOETimer / m_AOEGrowTime);
-			m_GOPCircle.transform.localScale = new Vector3(m_AOERadius, 1, m_AOERadius);
-			m_GOPWaves.ForEach(w => w.startSize = m_AOERadius);
+			m_GOPWaves.ForEach(p => p.startSize = m_AOERadius);
+			m_GOPCircle.transform.localScale = new Vector3(m_AOERadius * m_GOPCircleInitialScale.x, m_GOPCircleInitialScale.y, m_AOERadius * m_GOPCircleInitialScale.z);
+			m_GOPParticle.SetActive(true);
 
             m_skillActive = true;
 
@@ -507,9 +509,10 @@ public class Thea : BaseCharacter
 		//m_HealRadius_2.gameObject.SetActive(false);
 		//m_HealRadius_2.Stop();
 
-		//m_GOPParticleSystems.ForEach(ps => ps.Stop());
-		m_GOPWaves.ForEach(w => w.startSize = 1);
-		m_GOPCircle.transform.localScale = new Vector3(1, 1, 1);
+		m_GOPWaves.ForEach(ps => ps.startSize = 1f);
+		m_GOPCircle.transform.localScale = m_GOPCircleInitialScale;
+		m_GOPParticleSystems.ForEach(ps => ps.Stop());
+		
 		m_GOPParticle.SetActive(false);
     }
 

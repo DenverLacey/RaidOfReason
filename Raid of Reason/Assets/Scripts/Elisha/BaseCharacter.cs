@@ -205,6 +205,7 @@ public abstract class BaseCharacter : MonoBehaviour
                 break;
 
             case PlayerState.DEAD:
+				StopRumbleController();
                 gameObject.SetActive(false);
                 break;
         }
@@ -460,10 +461,15 @@ public abstract class BaseCharacter : MonoBehaviour
 		StartCoroutine(RumbleControllerCoroutine(duration, leftIntensity, rightIntensity));
 	}
 
+	private void StopRumbleController()
+	{
+		GamePad.SetVibration(playerIndex, 0f, 0f);
+	}
+
 	private IEnumerator RumbleControllerCoroutine(float duration, float leftIntensity = 1f, float rightIntensity = 1f)
 	{
 		GamePad.SetVibration(playerIndex, leftIntensity, rightIntensity);
 		yield return new WaitForSecondsRealtime(duration);
-		GamePad.SetVibration(playerIndex, 0f, 0f);
+		StopRumbleController();
 	}
 }
