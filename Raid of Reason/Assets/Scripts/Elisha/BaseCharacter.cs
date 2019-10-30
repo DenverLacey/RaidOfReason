@@ -301,7 +301,7 @@ public abstract class BaseCharacter : MonoBehaviour
             foreach (SkinnedMeshRenderer mesh in damageFeedback)
             {
                 mesh.material = damageMaterial;
-                StartCoroutine(damageBuffer(0.1f));
+                StartCoroutine(DamageBuffer(0.1f));
             }
 
         }
@@ -311,6 +311,10 @@ public abstract class BaseCharacter : MonoBehaviour
         {
            playerState = PlayerState.DEAD;
         }
+		else
+		{
+			RumbleController(.1f);
+		}
 
         // checks if all players are dead
         if (GameManager.Instance.AlivePlayers.Count == 0)
@@ -444,7 +448,7 @@ public abstract class BaseCharacter : MonoBehaviour
         currentShield -= m_shieldDegenerateAmount * Time.deltaTime;
     }
 
-    IEnumerator damageBuffer(float buffer)
+    IEnumerator DamageBuffer(float buffer)
     {
         yield return new WaitForSeconds(buffer);
         foreach (SkinnedMeshRenderer mesh in damageFeedback)
@@ -458,5 +462,17 @@ public abstract class BaseCharacter : MonoBehaviour
 		transform.Find("Model").gameObject.SetActive(false);
 		transform.position = Vector3.up * 10000f;
 		enabled = false;
+	}
+
+	public void RumbleController(float duration, float leftIntensity = 1f, float rightIntensity = 1f)
+	{
+		StartCoroutine(RumbleControllerCoroutine(duration, leftIntensity, rightIntensity));
+	}
+
+	private IEnumerator RumbleControllerCoroutine(float duration, float leftIntensity = 1f, float rightIntensity = 1f)
+	{
+		GamePad.SetVibration(playerIndex, leftIntensity, rightIntensity);
+		yield return new WaitForSecondsRealtime(duration);
+		GamePad.SetVibration(playerIndex, 0f, 0f);
 	}
 }
