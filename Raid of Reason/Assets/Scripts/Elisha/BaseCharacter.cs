@@ -257,12 +257,6 @@ public abstract class BaseCharacter : MonoBehaviour
             input = Quaternion.AngleAxis(camRotEuler.y, Vector3.up) * input;
             directionOverride = Quaternion.AngleAxis(camRotEuler.y, Vector3.up) * directionOverride;
 
-            if (CanMove)
-			{
-                Vector3 movePosition = transform.position + input * m_movementSpeed * Time.deltaTime;
-                m_rigidbody.MovePosition(movePosition);
-			}
-
 			if (CanRotate)
 			{
 				// determine which direction vector to rotate to
@@ -277,6 +271,16 @@ public abstract class BaseCharacter : MonoBehaviour
 
 				// rotate player
 				transform.localRotation = Quaternion.LookRotation(m_direction);
+			}
+
+			if (CanMove)
+			{
+				Vector3 movePosition = transform.position + input * m_movementSpeed * Time.deltaTime;
+				m_rigidbody.MovePosition(movePosition);
+			}
+			else
+			{
+				input = Vector3.zero;
 			}
 
 			if (m_animator)

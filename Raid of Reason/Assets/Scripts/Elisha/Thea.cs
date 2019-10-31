@@ -38,10 +38,12 @@ public class Thea : BaseCharacter
     private float m_GOPRumbleIntensity;
 
     [SerializeField]
-    [Tooltip("Movement multiplier")]
+    [Tooltip("Movement Speed while casting Gift of Poseidon")]
     private float m_GOPMovement;
 
     public GameObject GOPMaxCharge;
+	private Vector3 m_GOPMaxChargeInitialScale;
+
     private GameObject GOPChargeMeter;
     private GameObject GOPChargeMeterBar;
 
@@ -203,7 +205,9 @@ public class Thea : BaseCharacter
         GOPChargeMeterBar = GameObject.Find("ChargeMeterBar");
         GOPChargeMeter.transform.localScale = new Vector3(0, 1, 0);
         GOPMaxCharge.SetActive(false);
-        GOPChargeMeter.SetActive(false);
+		m_GOPMaxChargeInitialScale = GOPMaxCharge.transform.localScale;
+		GOPMaxCharge.transform.localScale = new Vector3(m_AOEMax * m_GOPMaxChargeInitialScale.x, m_AOEMax * m_GOPMaxChargeInitialScale.y, 0);
+		GOPChargeMeter.SetActive(false);
         GOPChargeMeterBar.SetActive(false);
     }
 
@@ -408,11 +412,10 @@ public class Thea : BaseCharacter
     /// </summary>
     public void GiftOfPoseidon(float skillDuration)
     {
-        // Shows the max the charge can go to.
-        GOPMaxCharge.transform.localScale = new Vector3(m_AOEMax, m_AOEMax, 0);
         // Resets the charge meter to 0.
         GOPChargeMeter.transform.localScale = new Vector3(0, 1, 0);
         GOPMaxCharge.SetActive(true);
+
         GOPChargeMeter.SetActive(true);
         GOPChargeMeterBar.SetActive(true);
         m_isActive = true;
