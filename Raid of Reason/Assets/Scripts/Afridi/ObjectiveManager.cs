@@ -103,7 +103,7 @@ public class ObjectiveManager : MonoBehaviour
                 barriers.ManageBarriers();
             }
 
-            if (m_objectives.Count >= 1)
+            if (m_objectives.Count > 1)
             {
 			    m_objectives.RemoveAt(0);
                 m_currentObjective = m_objectives[0];

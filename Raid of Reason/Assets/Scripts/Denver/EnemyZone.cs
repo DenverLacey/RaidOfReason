@@ -133,8 +133,11 @@ public class EnemyZone : MonoBehaviour
     {
 		m_active = false;
 
-		// check if any player is close by
-		foreach (var player in GameManager.Instance.AlivePlayers)
+        // remove all destroyed enemies from list
+        m_enemies.RemoveAll(enemy => !enemy);
+
+        // check if any player is close by
+        foreach (var player in GameManager.Instance.AlivePlayers)
 		{
 			foreach (var cullBoundary in m_cullBoundaries)
 			{
@@ -150,9 +153,7 @@ public class EnemyZone : MonoBehaviour
 		PlayerWithinCullDistance:
 
 		if (m_active)
-		{
-			// remove all destroyed enemies from list
-			m_enemies.RemoveAll(enemy => !enemy);
+        {
 
 			// reactivate enemies
 			m_enemies.ForEach(e => e.gameObject.SetActive(true));

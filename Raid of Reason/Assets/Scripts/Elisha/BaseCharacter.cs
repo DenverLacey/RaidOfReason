@@ -512,8 +512,12 @@ public abstract class BaseCharacter : MonoBehaviour
 
 	private IEnumerator ResetMovementAxis(float duration, int movementAxis, int original)
 	{
-		m_movementAxes = ~movementAxis;
+        if (gameObject.activeSelf)
+		    m_movementAxes = ~movementAxis;
 		yield return new WaitForSeconds(duration);
-		m_movementAxes = original;
+        do
+        {
+            m_movementAxes = original;
+        } while (!gameObject.activeSelf);
 	}
 }

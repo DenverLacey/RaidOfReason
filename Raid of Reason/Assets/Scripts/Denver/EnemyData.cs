@@ -340,7 +340,8 @@ public class EnemyData : MonoBehaviour
 	/// </summary>
 	public void Die()
 	{
-        StartCoroutine(DissolveLerp(1));
+        //StartCoroutine(DissolveLerp(1));
+        Destroy(gameObject);
 	}
 
 	/// <summary>
