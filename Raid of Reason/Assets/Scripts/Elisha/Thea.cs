@@ -225,7 +225,7 @@ public class Thea : BaseCharacter
         }
 
 
-        if (!m_isActive)
+        if (!m_isActive && abilityUI.gameObject != null)
         {
             abilityUI.Play();
         }

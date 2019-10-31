@@ -165,7 +165,7 @@ public class Kreiger : BaseCharacter
         // Allows Kreiger to perform Melee Punches 
         base.Update();
         Punch();
-        if (!isActive)
+        if (!isActive && abilityUI.gameObject != null)
         {
             abilityUI.Play();
         }
@@ -173,6 +173,7 @@ public class Kreiger : BaseCharacter
         {
             abilityUI.Stop();
         }
+
         if (isActive == true)
         {
             if (GameManager.Instance.Kenron.playerState != PlayerState.DEAD && !GameManager.Instance.Kenron)

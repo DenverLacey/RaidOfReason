@@ -167,7 +167,7 @@ public class Kenron : BaseCharacter
             DashAttack();
         }
 
-        if (!isActive)
+        if (!isActive && abilityUI.gameObject != null)
         {
             abilityUI.Play();
         }
