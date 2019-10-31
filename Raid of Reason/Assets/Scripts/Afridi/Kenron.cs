@@ -111,8 +111,8 @@ public class Kenron : BaseCharacter
     private float m_estimatedDashTime;
     private float m_dashDistance;
     private bool m_dashDone;
-    private float m_rumbleDuration = 0.1f;
-    private float m_rumbleIntensity = 1000f;
+    //private float m_rumbleDuration = 0.1f;
+    //private float m_rumbleIntensity = 1000f;
     private int m_TempCharge;
     // Checks if Kenron is Dashing or Not
     private bool isDashing;
@@ -195,7 +195,7 @@ public class Kenron : BaseCharacter
                 isActive = true;
                 StartCoroutine(ChaosFlameVisual());
                 m_kenronParticle.Play();
-                DoRumble();
+                // DoRumble();
                 SetDamage(m_minCFDamage, m_maxCFDamage);
                 SetHealth(m_currentHealth / 2);
             }
@@ -220,7 +220,7 @@ public class Kenron : BaseCharacter
                 m_dashCollider.enabled = true;
                 m_dashDelayTimer = m_dashDelay;
                 m_dashStartPosition = transform.position;
-                DoRumble();
+                // DoRumble();
                 dashDisplays[m_TempCharge].SetActive(false);
                 m_TempCharge--;
                 m_currentCharges--;
@@ -335,17 +335,5 @@ public class Kenron : BaseCharacter
             m_TempCharge++;
             dashDisplays[m_TempCharge].SetActive(true);
         }
-    }
-
-    public void DoRumble()
-    {
-        GamePad.SetVibration(GameManager.Instance.Kreiger.playerIndex, m_rumbleIntensity, m_rumbleIntensity);
-        StartCoroutine(StopRumble());
-    }
-
-    public IEnumerator StopRumble()
-    {
-        yield return new WaitForSeconds(m_rumbleDuration);
-        GamePad.SetVibration(GameManager.Instance.Kreiger.playerIndex, 0f, 0f);
     }
 }
