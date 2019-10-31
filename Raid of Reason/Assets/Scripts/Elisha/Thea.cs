@@ -225,14 +225,14 @@ public class Thea : BaseCharacter
         }
 
 
-        if (!m_isActive && abilityUI.gameObject != null)
-        {
-            abilityUI.Play();
-        }
-        else
-        {
-            abilityUI.Stop();
-        }
+        //if (!m_isActive && abilityUI.gameObject != null)
+        //{
+        //    abilityUI.Play();
+        //}
+        //else
+        //{
+        //    abilityUI.Stop();
+        //}
 
         //float healthcomparison = GameManager.Instance.Kenron.m_currentHealth + GameManager.Instance.Kreiger.m_currentHealth;
 
@@ -408,6 +408,8 @@ public class Thea : BaseCharacter
             //m_AOEShapeModule_2.radius = m_AOERadius;
 
             m_AOERadius = Mathf.Lerp(m_AOERadius, m_AOEMax, m_AOETimer / m_AOEGrowTime);
+
+
             m_GOPWaves.ForEach(p => p.startSize = m_AOERadius);
             m_GOPCircle.transform.localScale = new Vector3(m_AOERadius * m_GOPCircleInitialScale.x, m_GOPCircleInitialScale.y, m_AOERadius * m_GOPCircleInitialScale.z);
             m_GOPParticle.SetActive(true);

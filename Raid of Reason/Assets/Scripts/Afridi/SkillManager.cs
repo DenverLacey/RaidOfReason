@@ -130,36 +130,22 @@ public class SkillManager : MonoBehaviour {
         if (GameManager.Instance.Thea != null)
         {
             // If the third players left trigger is pressed
-            if (XCI.GetAxis(XboxAxis.LeftTrigger, GameManager.Instance.Thea.controller) > 0.1f && GameManager.Instance.Thea.playerState == BaseCharacter.PlayerState.ALIVE && !m_mainSkills[2].active && !m_mainSkills[2].onCooldown)
+            if (XCI.GetAxis(XboxAxis.LeftTrigger, GameManager.Instance.Thea.controller) > 0.1f && GameManager.Instance.Thea.playerState == BaseCharacter.PlayerState.ALIVE)
             {
-                //// if the current cooldown is greater than the main
-                //if (m_mainSkills[2].m_currentCoolDown >= m_mainSkills[2].m_coolDown)
-                //{
-
-                //}
-
-                m_mainSkills[2].m_currentDuration = 0f;
-                m_mainSkills[2].active = true;
+                if(m_mainSkills[2].m_currentCoolDown >= m_mainSkills[2].m_coolDown)
+                {
+                    // Activate Ability
+                    GameManager.Instance.Thea.GiftOfPoseidon(m_mainSkills[2].m_currentDuration);
+                    m_mainSkills[2].active = true;
+                } 
             }
-            else if (m_mainSkills[2].active)
+            else if(XCI.GetAxis(XboxAxis.LeftTrigger,GameManager.Instance.Thea.controller) < 0.1)
             {
-                // Activate Ability
-                GameManager.Instance.Thea.GiftOfPoseidon(m_mainSkills[2].m_currentDuration);
-
-                //if (!m_mainSkills[2].active)
-                //{
-                //      m_mainSkills[2].m_currentDuration = 0f;
-                //}
-
-                // Skill is Active
-                //m_mainSkills[2].active = true;
-
-                m_mainSkills[2].m_currentDuration += Time.deltaTime;
-
-                if (m_mainSkills[2].m_currentDuration >= m_mainSkills[2].m_duration)
+                if (m_mainSkills[2].active)
                 {
                     // Skill is Reset and has been Deactivated
                     m_mainSkills[2].m_currentCoolDown = 0;
+                    m_mainSkills[2].m_currentDuration = 0;
                     m_mainSkills[2].active = false;
                     m_mainSkills[2].onCooldown = true;
                     GameManager.Instance.Thea.EndGIftOfPoseidon();

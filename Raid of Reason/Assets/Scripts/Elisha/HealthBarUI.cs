@@ -29,14 +29,25 @@ public class HealthBarUI : MonoBehaviour
     [SerializeField]
     private Image m_shieldBar;
 
+    [SerializeField]
+    private Image m_criticalHealthImage;
+    [SerializeField]
+    private float m_duration;
+    private Color imageColorNoAlpha;
+
     private float m_prevHealth;
 
     void Awake()
     {
+
         m_healthBar.gameObject.SetActive(true);
         m_shieldBar.gameObject.SetActive(false);
         m_prevHealth = m_character.m_currentHealth;
         m_character.onTakeDamage += HealthBarShake;
+
+        m_criticalHealthImage.GetComponent<Image>();
+        imageColorNoAlpha = m_criticalHealthImage.color;
+        imageColorNoAlpha.a = 0;
     }
 
     // Update is called once per frame
@@ -70,9 +81,9 @@ public class HealthBarUI : MonoBehaviour
                 m_shieldBar.gameObject.SetActive(false);
             }
 
-            if (m_character.m_maxOverheal > 0)
+            if (m_healthBar.fillAmount <= 0.3f)
             {
-
+                m_criticalHealthImage.DOColor(imageColorNoAlpha, m_duration).SetLoops(-1, LoopType.Yoyo);
             }
         }
     }

@@ -165,14 +165,14 @@ public class Kreiger : BaseCharacter
         // Allows Kreiger to perform Melee Punches 
         base.Update();
         Punch();
-        if (!isActive && abilityUI.gameObject != null)
-        {
-            abilityUI.Play();
-        }
-        else
-        {
-            abilityUI.Stop();
-        }
+        //if (!isActive && abilityUI.gameObject != null)
+        //{
+        //    abilityUI.Play();
+        //}
+        //else
+        //{
+        //    abilityUI.Stop();
+        //}
 
         if (isActive == true)
         {

@@ -91,7 +91,7 @@ public abstract class BaseCharacter : MonoBehaviour
     [Tooltip("The Skill Manager that manages the skills of the players")]
     public SkillManager skillManager;
     private HealthBarUI m_healthBarRef;
-    public ParticleSystem abilityUI;
+    //public ParticleSystem abilityUI;
 
     [HideInInspector]
     public bool m_controllerOn;
