@@ -29,6 +29,18 @@ public class Thea : BaseCharacter
     [Tooltip("How much the Gift of Poseidon heals by?")]
     private float m_GOPEffect;
 
+    [SerializeField]
+    [Tooltip("How long controller will rumble on Gift of Poseidon")]
+    private float m_GOPRumbleDuration;
+
+    [SerializeField]
+    [Tooltip("How intense rumble will be on Gift of Poseidon")]
+    private float m_GOPRumbleIntensity;
+
+    [SerializeField]
+    [Tooltip("Movement multiplier")]
+    private float m_GOPMovement;
+
     [Header("--Skills--")]
 
     [Tooltip("How much health thea passively heals with her Settling Tide")]
@@ -118,7 +130,7 @@ public class Thea : BaseCharacter
     //[SerializeField]
     //[Tooltip("The Final particle used for visual effect.")]
     //private ParticleSystem m_HealRadius_3;
-    
+
     [HideInInspector]
     public bool m_skillActive;
 
@@ -181,6 +193,7 @@ public class Thea : BaseCharacter
 		m_GOPParticle.SetActive(false);
 
         IntialiseUpgrades();
+        skillManager = FindObjectOfType<SkillManager>();
     }
 
     void IntialiseUpgrades()
@@ -375,8 +388,8 @@ public class Thea : BaseCharacter
     /// the more health is healed when released. If players are in the AOE when 
     /// the charge up is released the players will be healed the right amount.
     /// </summary>
-    public void GiftOfPoseidon()
-    { 
+    public void GiftOfPoseidon(float skillDuration)
+    {
         m_isActive = true;
 
         // Checks if player can use the ability.
@@ -384,53 +397,53 @@ public class Thea : BaseCharacter
         {
             // Start AOE timer.
             m_AOETimer += Time.deltaTime;
-            // Disable player movement and rotation.
-            CanMove = false;
-            CanRotate = false;
 
-			//m_HealRadius.gameObject.SetActive(true);
-			//m_HealRadius_2.gameObject.SetActive(true);
+            m_movementSpeed = m_GOPMovement;
 
-			//m_AOERadius = Mathf.Lerp(m_AOERadius, m_AOEMax, m_AOETimer / m_AOEGrowTime);
-			//m_AOEShapeModule.radius = m_AOERadius;
-			//m_AOEShapeModule_2.radius = m_AOERadius;
+            //m_HealRadius.gameObject.SetActive(true);
+            //m_HealRadius_2.gameObject.SetActive(true);
 
-			m_AOERadius = Mathf.Lerp(m_AOERadius, m_AOEMax, m_AOETimer / m_AOEGrowTime);
-			m_GOPWaves.ForEach(p => p.startSize = m_AOERadius);
-			m_GOPCircle.transform.localScale = new Vector3(m_AOERadius * m_GOPCircleInitialScale.x, m_GOPCircleInitialScale.y, m_AOERadius * m_GOPCircleInitialScale.z);
-			m_GOPParticle.SetActive(true);
+            //m_AOERadius = Mathf.Lerp(m_AOERadius, m_AOEMax, m_AOETimer / m_AOEGrowTime);
+            //m_AOEShapeModule.radius = m_AOERadius;
+            //m_AOEShapeModule_2.radius = m_AOERadius;
+
+            m_AOERadius = Mathf.Lerp(m_AOERadius, m_AOEMax, m_AOETimer / m_AOEGrowTime);
+            m_GOPWaves.ForEach(p => p.startSize = m_AOERadius);
+            m_GOPCircle.transform.localScale = new Vector3(m_AOERadius * m_GOPCircleInitialScale.x, m_GOPCircleInitialScale.y, m_AOERadius * m_GOPCircleInitialScale.z);
+            m_GOPParticle.SetActive(true);
 
             m_skillActive = true;
 
-			if (m_animator)
-			{
-				m_animator.SetBool("Casting", true);
-			}
-        }
-
-        m_nearbyEnemies = new List<EnemyData>(FindObjectsOfType<EnemyData>());
-        foreach (EnemyData enemy in m_nearbyEnemies)
-        {
-            float sqrDistance = (this.transform.position - enemy.transform.position).sqrMagnitude;
-            if (sqrDistance <= m_AOERadius * m_AOERadius)
+            if (m_animator)
             {
-				enemy.Pathfinder.SetSpeedReduction(HPSpeedReductionMultiplier);
-                enemy.Strength = HPAttackWeakened;
+                m_animator.SetBool("Casting", true);
+            }
+
+            m_nearbyEnemies = new List<EnemyData>(FindObjectsOfType<EnemyData>());
+            foreach (EnemyData enemy in m_nearbyEnemies)
+            {
+                float sqrDistance = (this.transform.position - enemy.transform.position).sqrMagnitude;
+                if (sqrDistance <= m_AOERadius * m_AOERadius)
+                {
+                    enemy.Pathfinder.SetSpeedReduction(HPSpeedReductionMultiplier);
+                    enemy.Strength = HPAttackWeakened;
+                }
+            }
+
+            // Checks if ability has been used.
+            if (m_isActive == false)
+            {
+                return;
+            }
+
+            if (!GameManager.Instance.Thea.gameObject.activeSelf)
+            {
+                //m_HealRadius.gameObject.SetActive(false);
+                //m_HealRadius_2.gameObject.SetActive(false);
+                m_GOPParticle.SetActive(false);
             }
         }
-
-        // Checks if ability has been used.
-        if (m_isActive == false)
-        {
-            return;
-        }
-
-        if (!GameManager.Instance.Thea.gameObject.activeSelf)
-        {
-			//m_HealRadius.gameObject.SetActive(false);
-			//m_HealRadius_2.gameObject.SetActive(false);
-			m_GOPParticle.SetActive(false);
-        }
+    
     }
 
 	public void EndGIftOfPoseidon()
@@ -450,6 +463,7 @@ public class Thea : BaseCharacter
 	{
 		GiveHealth();
 		ResetGiftOfPoseidon();
+        RumbleController(m_GOPRumbleDuration, m_GOPRumbleIntensity, m_GOPRumbleIntensity);
 	}
 
     /// <summary>
@@ -484,7 +498,7 @@ public class Thea : BaseCharacter
             }
 
             // Heal Thea.
-            AddHealth(m_AOETimer * m_GOPEffect);      
+            AddHealth(m_GOPEffect);      
 
             //if (m_skillActive = true & m_skillUpgrades.Find(skill => skill.name == "Serenade Of Water"))
             //{
@@ -509,8 +523,7 @@ public class Thea : BaseCharacter
         m_AOETimer = 0f;
         m_isActive = false;
         m_AOERadius = m_AOEMin;
-        CanMove = true;
-        CanRotate = true;
+        m_movementSpeed = m_currentMovement;
 		//m_AOEShapeModule.radius = 1;
 
 		//m_HealRadius.gameObject.SetActive(false);

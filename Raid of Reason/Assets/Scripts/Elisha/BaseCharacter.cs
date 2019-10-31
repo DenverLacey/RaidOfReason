@@ -50,6 +50,8 @@ public abstract class BaseCharacter : MonoBehaviour
     [Tooltip("How fast will the player move?")]
     protected float m_movementSpeed;
 
+    protected float m_currentMovement;
+
     [SerializeField]
     [Tooltip("How much damage will the player deal?")]
     protected float m_minDamage;
@@ -153,6 +155,7 @@ public abstract class BaseCharacter : MonoBehaviour
         m_original = m_spriteRend.colorOverLifetime;
         m_healthBarRef = FindObjectOfType<HealthBarUI>();
         originalMaterial = playerMaterial.material;
+        m_currentMovement = m_movementSpeed;
     }
 
     /// <summary>
