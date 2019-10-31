@@ -76,10 +76,6 @@ public abstract class BaseCharacter : MonoBehaviour
     private float m_shieldBuffer;
 
     [SerializeField]
-    [Tooltip("How long will it take to degenerate shield?")]
-    private float m_shieldDegenerationTimer;
-
-    [SerializeField]
     [Tooltip("How much shield degenerates?")]
     private float m_shieldDegenerateAmount;
 
@@ -115,9 +111,15 @@ public abstract class BaseCharacter : MonoBehaviour
 		set => m_movementAxes = value ? m_movementAxes | MovementAxis.Rotate : m_movementAxes & ~MovementAxis.Rotate;
 	}
 
-    public Material damageFeedback;
-    private Material originalMaterial;
-    public SkinnedMeshRenderer playerMaterial;
+    //public Material damageFeedback;
+    //private Material originalMaterial;
+    //public Material[] playerMaterial;
+
+    [SerializeField]
+    [Tooltip("Material to show daamge")]
+    private Material m_damageMaterial;
+    private List<SkinnedMeshRenderer> m_playerRenderers;
+    private List<Material> m_originalMaterials = new List<Material>();
 
     [HideInInspector]
     public MultiTargetCamera m_camera;
@@ -154,7 +156,13 @@ public abstract class BaseCharacter : MonoBehaviour
         skillManager = FindObjectOfType<SkillManager>();
         m_original = m_spriteRend.colorOverLifetime;
         m_healthBarRef = FindObjectOfType<HealthBarUI>();
-        originalMaterial = playerMaterial.material;
+        //originalMaterials = playerRenderers.material;
+
+        m_playerRenderers = new List<SkinnedMeshRenderer>(GetComponentsInChildren<SkinnedMeshRenderer>());
+        foreach (var rend in m_playerRenderers)
+        {
+            m_originalMaterials.Add(rend.material);
+        }
         m_currentMovement = m_movementSpeed;
     }
 
@@ -210,6 +218,7 @@ public abstract class BaseCharacter : MonoBehaviour
 
             case PlayerState.DEAD:
 				StopRumbleController();
+                ResetMaterials();
                 gameObject.SetActive(false);
                 break;
         }
@@ -301,8 +310,14 @@ public abstract class BaseCharacter : MonoBehaviour
         {
             // Take an amount of damage from the players current health.
             m_currentHealth -= damage * m_vulnerability;
-            playerMaterial.material = damageFeedback;
-            StartCoroutine(DamageBuffer(feedbackAmount));
+            if (this.gameObject.activeSelf == true)
+            {
+                for (int i = 0; i < m_playerRenderers.Count; i++)
+                {
+                    m_playerRenderers[i].material = m_damageMaterial;
+                }
+                StartCoroutine(ResetMaterialsCoroutine(feedbackAmount));
+            }
         }
 
         // If player has no health.
@@ -447,11 +462,19 @@ public abstract class BaseCharacter : MonoBehaviour
         currentShield -= m_shieldDegenerateAmount * Time.deltaTime;
     }
 
-    IEnumerator DamageBuffer(float buffer)
+    IEnumerator ResetMaterialsCoroutine(float duration)
     {
-        yield return new WaitForSeconds(buffer);
-        playerMaterial.material = originalMaterial;
+        yield return new WaitForSeconds(duration);
+        ResetMaterials();
     }
+    void ResetMaterials()
+    {
+        for (int i = 0; i < m_playerRenderers.Count; i++)
+        {
+            m_playerRenderers[i].material = m_originalMaterials[i];
+        }
+    }
+
 	public void SetPlayerToNotPlaying()
 	{
 		playerState = PlayerState.NP;
