@@ -77,6 +77,8 @@ public class Kenron : BaseCharacter
     [Tooltip("How long it takes for the trail in Kenrons Ability To Go Away")]
     private float m_BTDegen;
 
+    public List<GameObject> dashDisplays = new List<GameObject>();
+
 
     [Header("--Particles And UI--")]
 
@@ -107,7 +109,7 @@ public class Kenron : BaseCharacter
     private bool m_dashDone;
     private float m_rumbleDuration = 0.1f;
     private float m_rumbleIntensity = 1000f;
-
+    private int m_TempCharge;
     // Checks if Kenron is Dashing or Not
     private bool isDashing;
 
@@ -132,7 +134,7 @@ public class Kenron : BaseCharacter
         m_Enemy = FindObjectOfType<EnemyData>();
         m_currentCharges = m_charges;
         isDashing = false;
-
+        m_TempCharge = m_currentCharges - 1;
         // set size of dash hit box
         Vector3 hitBoxSize = new Vector3(m_dashCollider.size.x, m_dashCollider.size.y, m_maxDashDistance);
         m_dashCollider.size = hitBoxSize;
@@ -212,8 +214,10 @@ public class Kenron : BaseCharacter
                 m_dashCollider.enabled = true;
                 m_dashDelayTimer = m_dashDelay;
                 m_dashStartPosition = transform.position;
-				m_currentCharges--;
                 DoRumble();
+                dashDisplays[m_TempCharge].SetActive(false);
+                m_TempCharge--;
+                m_currentCharges--;
 
 				// set animator's trigger
 				m_animator.SetBool("Attack", true);
@@ -303,6 +307,7 @@ public class Kenron : BaseCharacter
                 m_currentCharges = m_charges;
                 SetDamage(m_minDamage, m_maxDamage);
                 SetSpeed(m_movementSpeed);
+                m_TempCharge = m_currentCharges - 1;
                 m_kenronParticle.Stop();
             }
         }
@@ -321,6 +326,8 @@ public class Kenron : BaseCharacter
         if (m_currentCharges < m_charges)
         {
             m_currentCharges++;
+            m_TempCharge++;
+            dashDisplays[m_TempCharge].SetActive(true);
         }
     }
 
