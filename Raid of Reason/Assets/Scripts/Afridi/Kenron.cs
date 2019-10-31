@@ -167,6 +167,15 @@ public class Kenron : BaseCharacter
             DashAttack();
         }
 
+        if (!isActive)
+        {
+            abilityUI.Play();
+        }
+        else
+        {
+            abilityUI.Stop();
+        }
+
         if (isActive == true) {
             if (m_Enemy.isDeadbByKenron)
             {

@@ -211,6 +211,16 @@ public class Thea : BaseCharacter
             StartCoroutine(HealthOverTime());
         }
 
+
+        if (!m_isActive)
+        {
+            abilityUI.Play();
+        }
+        else
+        {
+            abilityUI.Stop();
+        }
+
         //float healthcomparison = GameManager.Instance.Kenron.m_currentHealth + GameManager.Instance.Kreiger.m_currentHealth;
 
         //if (healthcomparison <= OAAllyHealthChecks[0])

@@ -46,7 +46,7 @@ public class Skills
 
         if (m_currentCoolDown >= m_coolDown)
         {
-            onCooldown = false;
+            onCooldown = false;          
         }
         if (m_currentDuration >= m_duration && active)
         {
@@ -108,7 +108,6 @@ public class SkillManager : MonoBehaviour {
         // Empty Check
         if (GameManager.Instance.Kreiger != null)
         {
-
             // If the second players left trigger is pressed
             if (XCI.GetAxis(XboxAxis.LeftTrigger, GameManager.Instance.Kreiger.controller) > 0.1f)
             {
