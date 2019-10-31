@@ -52,6 +52,10 @@ public class Kreiger : BaseCharacter
     [Tooltip("How vulnerable Kreiger is while taunting (1.0 is default)")]
     private float m_tauntVulnerability;
 
+	[SerializeField]
+	[Tooltip("How long, in seconds, Nashorn will be stationary when casting taunt")]
+	private float m_tauntMovementDelay = 1.0f;
+
     [SerializeField]
     [Tooltip("How much knockback is applied to Kreigers Hydraulic Pummel")]
     public float knockBackForce;
@@ -270,6 +274,8 @@ public class Kreiger : BaseCharacter
 	/// </summary>
     public void Spott(float skillDuration)
     {
+		RestrictControlsForSeconds(m_tauntMovementDelay, MovementAxis.All);
+
         // Ability is active
         isTaunting = true;
 

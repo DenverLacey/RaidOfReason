@@ -96,20 +96,20 @@ public abstract class BaseCharacter : MonoBehaviour
 
     [HideInInspector]
     public bool m_controllerOn;
-	private int movementAxes = MovementAxis.Move | MovementAxis.Rotate;
+	private int m_movementAxes = MovementAxis.Move | MovementAxis.Rotate;
 
     public OnTakeDamage onTakeDamage;
 
 	public bool CanMove
 	{
-		get => (movementAxes & MovementAxis.Move) == MovementAxis.Move;
-		set => movementAxes = value ? movementAxes | MovementAxis.Move : movementAxes & ~MovementAxis.Move;
+		get => (m_movementAxes & MovementAxis.Move) == MovementAxis.Move;
+		set => m_movementAxes = value ? m_movementAxes | MovementAxis.Move : m_movementAxes & ~MovementAxis.Move;
 	}
 
 	public bool CanRotate
 	{
-		get => (movementAxes & MovementAxis.Rotate) == MovementAxis.Rotate;
-		set => movementAxes = value ? movementAxes | MovementAxis.Rotate : movementAxes & ~MovementAxis.Rotate;
+		get => (m_movementAxes & MovementAxis.Rotate) == MovementAxis.Rotate;
+		set => m_movementAxes = value ? m_movementAxes | MovementAxis.Rotate : m_movementAxes & ~MovementAxis.Rotate;
 	}
 
     public Material damageFeedback;
@@ -471,5 +471,22 @@ public abstract class BaseCharacter : MonoBehaviour
 		GamePad.SetVibration(playerIndex, leftIntensity, rightIntensity);
 		yield return new WaitForSecondsRealtime(duration);
 		StopRumbleController();
+	}
+
+	/// <summary>
+	/// Turns off given movement axes
+	/// </summary>
+	/// <param name="duration"> How long controls will be restricted </param>
+	/// <param name="movementAxis"> MovementAxis to restrict </param>
+	public void RestrictControlsForSeconds(float duration, int movementAxis)
+	{
+		StartCoroutine(ResetMovementAxis(duration, movementAxis, m_movementAxes));
+	}
+
+	private IEnumerator ResetMovementAxis(float duration, int movementAxis, int original)
+	{
+		m_movementAxes = ~movementAxis;
+		yield return new WaitForSeconds(duration);
+		m_movementAxes = original;
 	}
 }

@@ -69,6 +69,10 @@ public class Kenron : BaseCharacter
     [Tooltip("Health Gained Back from Kenrons Vile Infusion Skill")]
     private float m_healthGained;
 
+	[SerializeField]
+	[Tooltip("How long, in seconds, Kenron will be stationary when casting Chaos Flame")]
+	private float m_CFMovementDelay = 0.5f;
+
     [SerializeField]
     [Tooltip("Ability Duration Increase from Kenrons Blood Lust Skill")]
     private float m_RTDurationIncreased;
@@ -184,6 +188,8 @@ public class Kenron : BaseCharacter
         // Empty Check
         if (this.gameObject != null)
         {
+			RestrictControlsForSeconds(m_CFMovementDelay, MovementAxis.All);
+
             if (skillDuration >= skillManager.m_mainSkills[0].m_duration)
             {
                 isActive = true;
