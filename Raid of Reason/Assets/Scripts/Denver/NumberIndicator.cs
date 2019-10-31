@@ -1,6 +1,6 @@
 ﻿/*
  * Author: Denver
- * Description:	Handles lifetime of Damage Indicator Objects
+ * Description:	Handles lifetime of Number Indicator Objects
  */
 
 using System.Collections;
@@ -9,10 +9,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Handles lifetime of Damage Indicator Objects
+/// Handles lifetime of Number Indicator Objects
 /// </summary>
 [RequireComponent(typeof(TextMesh))]
-public class DamageIndicator : MonoBehaviour
+public class NumberIndicator : MonoBehaviour
 {
 	[SerializeField]
 	[Tooltip("How long text will be displayed")]
@@ -36,11 +36,11 @@ public class DamageIndicator : MonoBehaviour
 
 	[SerializeField]
 	[Tooltip("Gradient of colours")]
-	private Gradient m_damageGradient;
+	private Gradient m_colourGradient;
 
 	[SerializeField]
 	[Tooltip("Maximum amount of damage that can be dealt to an enemy")]
-	private float m_maxDamage;
+	private float m_maxValue;
 	
 	private TextMesh m_textMesh;
 
@@ -49,20 +49,20 @@ public class DamageIndicator : MonoBehaviour
 	/// <summary>
 	/// Initialises the Damage Indicator
 	/// </summary>
-	/// <param name="damageDealt">
-	/// How much damage to display was dealt
+	/// <param name="valueDealt">
+	/// How much value to display was dealt
 	/// </param>
-	public void Init(float damageDealt)
+	public void Init(float valueDealt)
 	{
 		m_textMesh = GetComponent<TextMesh>();
 		m_lifetimeTimer = 0.0f;
 
 		// set text
-		m_textMesh.text = Mathf.RoundToInt(damageDealt).ToString();
+		m_textMesh.text = Mathf.RoundToInt(valueDealt).ToString();
 
 		// set colour
-		float percentage = damageDealt / m_maxDamage;
-		m_textMesh.color = m_damageGradient.Evaluate(percentage);
+		float percentage = valueDealt / m_maxValue;
+		m_textMesh.color = m_colourGradient.Evaluate(percentage);
 	}
 
 	// Update is called once per frame

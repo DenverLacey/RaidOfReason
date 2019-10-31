@@ -33,8 +33,8 @@ public class CheckPointManager : MonoBehaviour
         {
             if (m_objectiveManager.m_currentObjective.name == m_objectiveManager.m_objectives[0].name)
             {
+                player.SoftActivate();
                 player.gameObject.transform.position = m_objectiveManager.m_currentObjective.SpawnPoints().transform.position;
-                player.gameObject.SetActive(true);
                 player.playerState = BaseCharacter.PlayerState.ALIVE;
                 player.m_currentHealth = player.m_maxHealth;
             }

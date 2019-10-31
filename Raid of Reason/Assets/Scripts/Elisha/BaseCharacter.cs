@@ -219,7 +219,7 @@ public abstract class BaseCharacter : MonoBehaviour
             case PlayerState.DEAD:
 				StopRumbleController();
                 ResetMaterials();
-                gameObject.SetActive(false);
+				SoftDeactivate();
                 break;
         }
 
@@ -482,9 +482,21 @@ public abstract class BaseCharacter : MonoBehaviour
 	public void SetPlayerToNotPlaying()
 	{
 		playerState = PlayerState.NP;
+		SoftDeactivate();
+	}
+
+	public void SoftActivate()
+	{
+		transform.Find("Model").gameObject.SetActive(true);
+		transform.localPosition = new Vector3(transform.localPosition.x, 0, transform.localPosition.z);
+		// enabled = true;
+	}
+
+	public void SoftDeactivate()
+	{
 		transform.Find("Model").gameObject.SetActive(false);
-		transform.position = Vector3.up * 10000f;
-		enabled = false;
+		transform.position = transform.position + Vector3.up * 1000f;
+		// enabled = false;
 	}
 
 	public void RumbleController(float duration, float leftIntensity = 1f, float rightIntensity = 1f)

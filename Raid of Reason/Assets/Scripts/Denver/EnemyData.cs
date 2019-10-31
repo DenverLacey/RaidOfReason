@@ -318,7 +318,7 @@ public class EnemyData : MonoBehaviour
 	void DisplayDamage(float damage)
 	{
 		// spawn new damage indicator
-		DamageIndicator damageIndicator = Instantiate(m_damageIndicator, transform.position, Quaternion.identity).GetComponent<DamageIndicator>();
+		NumberIndicator damageIndicator = Instantiate(m_damageIndicator, transform.position, Quaternion.identity).GetComponent<NumberIndicator>();
 		damageIndicator.Init(damage);
 	}
 

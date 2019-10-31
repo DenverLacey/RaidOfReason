@@ -165,7 +165,6 @@ public class GameManager : MonoBehaviour
 			{
 				character.SetPlayerToNotPlaying();
 			}
-
 		}
 		else if (character is Kreiger)
 		{
