@@ -174,17 +174,6 @@ public class Kreiger : BaseCharacter
         //    abilityUI.Stop();
         //}
 
-        if (isActive == true)
-        {
-            if (GameManager.Instance.Kenron.playerState != PlayerState.DEAD && !GameManager.Instance.Kenron)
-            {
-                GameManager.Instance.Kenron.currentShield = m_SSShieldsGiven;
-            }
-            if (GameManager.Instance.Thea.playerState != PlayerState.DEAD && !GameManager.Instance.Thea)
-            {
-                GameManager.Instance.Thea.currentShield = m_SSShieldsGiven;
-            }
-        }
     }
 
     /// <summary>
@@ -288,8 +277,17 @@ public class Kreiger : BaseCharacter
         // Ability is active
         isTaunting = true;
 
-		// taunt enemies
-		foreach (EnemyData enemy in GameObject.FindObjectsOfType<EnemyData>())
+        if (GameManager.Instance.Kenron.playerState != PlayerState.DEAD)
+        {
+            GameManager.Instance.Kenron.currentShield = m_SSShieldsGiven;
+        }
+        if (GameManager.Instance.Thea.playerState != PlayerState.DEAD)
+        {
+            GameManager.Instance.Thea.currentShield = m_SSShieldsGiven;
+        }
+
+        // taunt enemies
+        foreach (EnemyData enemy in GameObject.FindObjectsOfType<EnemyData>())
 		{
 			float sqrDist = (enemy.transform.position - transform.position).sqrMagnitude;
 			if (sqrDist <= m_tauntRadius * m_tauntRadius)
