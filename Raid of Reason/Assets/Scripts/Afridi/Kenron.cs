@@ -65,17 +65,15 @@ public class Kenron : BaseCharacter
     [Tooltip("Kenrons Maximum Damage Boost whilst in Chaos Flame")]
     private float m_maxCFDamage;
 
-    [SerializeField]
     [Tooltip("Health Gained Back from Kenrons Vile Infusion Skill")]
-    private float m_healthGained;
+    public float m_healthGained;
 
 	[SerializeField]
 	[Tooltip("How long, in seconds, Kenron will be stationary when casting Chaos Flame")]
 	private float m_CFMovementDelay = 0.5f;
 
-    [SerializeField]
     [Tooltip("Ability Duration Increase from Kenrons Blood Lust Skill")]
-    private float m_RTDurationIncreased;
+    public float m_RTDurationIncreased;
 
     [SerializeField]
     [Tooltip("How long it takes for the trail in Kenrons Ability To Go Away")]
@@ -165,23 +163,6 @@ public class Kenron : BaseCharacter
         {
             // Uses his Dash
             DashAttack();
-        }
-
-        //if (!isActive && abilityUI.gameObject != null)
-        //{
-        //    abilityUI.Play();
-        //}
-        //else
-        //{
-        //    abilityUI.Stop();
-        //}
-
-        if (isActive == true) {
-            if (m_Enemy.isDeadbByKenron)
-            {
-                this.m_currentHealth = m_currentHealth + m_healthGained;
-                skillManager.m_mainSkills[0].m_currentDuration -= m_RTDurationIncreased;
-            }
         }
 
         Vector3 position = transform.position;
