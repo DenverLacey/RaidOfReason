@@ -230,6 +230,11 @@ public class EnemyPathfinding : MonoBehaviour
 		m_speedReductionMultiplier = 1f;
 	}
 
+	public float GetSpeedReduction()
+	{
+		return m_speedReductionMultiplier;
+	}
+
 	private Vector3 FindClosestVertex(Vector3 sourcePosition)
 	{
 		NavMeshTriangulation triangluation = NavMesh.CalculateTriangulation();

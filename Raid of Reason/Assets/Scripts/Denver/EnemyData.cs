@@ -25,9 +25,11 @@ public struct EnemyAttackRange
 [RequireComponent(typeof(EnemyPathfinding))]
 public class EnemyData : MonoBehaviour 
 {
+	[Header("--Enemy Settings--")]
     [SerializeField] 
 	private string m_type;
 
+	[Header("--Particle Effect Prefabs--")]
     [SerializeField]
     private ParticleSystem m_tauntedEffect;
 
@@ -45,6 +47,25 @@ public class EnemyData : MonoBehaviour
 
     [SerializeField]
     private ParticleSystem m_burningEffect;
+
+	[Tooltip("Offset to find position for first active debuff")]
+	[SerializeField]
+	private Vector3 m_debuffOffset;
+
+	[Tooltip("Padding in between each active debuff")]
+	[SerializeField]
+	private float m_debuffPadding;
+
+	[Tooltip("Particle Effect prefab to communicate Attack Debuff")]
+	[SerializeField]
+	private GameObject m_attackDebuff;
+
+	[Tooltip("Particle Effect prefab to communicate Speed Debuff")]
+	[SerializeField]
+	private GameObject m_speedDebuff;
+
+	private List<GameObject> m_inactiveDebuffs = new List<GameObject>();
+	private List<GameObject> m_activeDebuffs = new List<GameObject>();
 
     public string Type { get => m_type; }
     public float ViewRange { get; private set; }
@@ -86,15 +107,7 @@ public class EnemyData : MonoBehaviour
 	public float PriorityThreshold { get; private set; }
 	public float SqrPriorityThreashold { get => PriorityThreshold * PriorityThreshold; }
 
-    Vector3 m_target;
-    public Vector3 Target
-    {
-        get => m_target;
-        set
-        {
-            m_target = value;
-        }
-    }
+    public Vector3 Target { get; set; }
 	public BaseCharacter TargetPlayer { get; set; }
 
 	public Behaviour PendingBehaviour { get; set; }
@@ -131,6 +144,17 @@ public class EnemyData : MonoBehaviour
 		Rigidbody = GetComponent<Rigidbody>();
 		m_collider = GetComponent<Collider>();
 		Pathfinder = GetComponent<EnemyPathfinding>();
+
+		m_attackDebuff = Instantiate(m_attackDebuff);
+		m_attackDebuff.transform.parent = transform;
+		m_attackDebuff.SetActive(false);
+
+		m_speedDebuff = Instantiate(m_speedDebuff);
+		m_speedDebuff.transform.parent = transform;
+		m_speedDebuff.SetActive(false);
+
+		m_inactiveDebuffs.Add(m_attackDebuff);
+		m_inactiveDebuffs.Add(m_speedDebuff);
 
         Strength = 1f;
     }
@@ -190,6 +214,45 @@ public class EnemyData : MonoBehaviour
 		PriorityThreshold = priorityThreshold;
     }
 
+	private void Update()
+	{
+		// update debuff lists
+		if (Strength < 1f && !m_activeDebuffs.Contains(m_attackDebuff))
+		{
+			m_activeDebuffs.Add(m_attackDebuff);
+			m_inactiveDebuffs.Remove(m_attackDebuff);
+		}
+		else if (Strength >= 1f && !m_inactiveDebuffs.Contains(m_attackDebuff))
+		{
+			m_inactiveDebuffs.Add(m_attackDebuff);
+			m_activeDebuffs.Remove(m_attackDebuff);
+		}
+
+		if (Pathfinder.GetSpeedReduction() < 1 && !m_activeDebuffs.Contains(m_speedDebuff))
+		{
+			m_activeDebuffs.Add(m_speedDebuff);
+			m_inactiveDebuffs.Remove(m_speedDebuff);
+		}
+		else if (Pathfinder.GetSpeedReduction() >= 1 && !m_inactiveDebuffs.Contains(m_speedDebuff))
+		{
+			m_inactiveDebuffs.Add(m_speedDebuff);
+			m_activeDebuffs.Remove(m_speedDebuff);
+		}
+
+		// activate all active debuffs
+		m_activeDebuffs.ForEach(obj => obj.SetActive(true));
+		m_inactiveDebuffs.ForEach(obj => obj.SetActive(false));
+
+		// calculate enemy position in screen space
+		Vector3 screenPosition = Camera.main.WorldToScreenPoint(transform.position);
+
+		// place active debuffs on screen
+		for (int i = 0; i < m_activeDebuffs.Count; i++)
+		{
+			m_activeDebuffs[i].transform.position = Camera.main.ScreenToWorldPoint(screenPosition + m_debuffOffset + Vector3.right * m_debuffPadding * i);
+		}
+	}
+
 	/// <summary>
 	/// Stuns enemy for a given amount of seconds
 	/// </summary>
@@ -199,9 +262,6 @@ public class EnemyData : MonoBehaviour
 	public void Stun(float duration) 
 	{
 		Stunned = true;
-
-		DebugTools.LogVariable("Stunned", Stunned);
-
 		StartCoroutine(ResetStun(duration));
 	}
 
