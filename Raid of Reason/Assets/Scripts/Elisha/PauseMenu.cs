@@ -87,7 +87,7 @@ public class PauseMenu : MonoBehaviour
         m_isPaused = true;
         m_p1Cursor.gameObject.SetActive(true);
         m_pauseMenu.SetActive(true);
-        m_miniMap.SetActive(false);
+        //m_miniMap.SetActive(false);
     }
 
     public void ContinueGame()
@@ -96,7 +96,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1;
         m_p1Cursor.gameObject.SetActive(false);
         m_pauseMenu.SetActive(false);
-        m_miniMap.SetActive(true);
+        //m_miniMap.SetActive(true);
     }
 
     public void RestartGame()

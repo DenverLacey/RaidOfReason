@@ -10,10 +10,6 @@ using UnityEngine.SceneManagement;
 
 public class BackButton : InteractableUIElement
 {
-    [SerializeField]
-    [Tooltip("Scene Index of level")]
-    private int m_LevelIndex;
-
     public void OnPressed()
     {
         Application.Quit();

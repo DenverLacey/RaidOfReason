@@ -11,23 +11,30 @@ using DG.Tweening;
 
 public class HealthBarUI : MonoBehaviour
 {
+    [Header("--Health Bar UI--")]
+
     [SerializeField]
     private BaseCharacter m_character;
 
     [SerializeField]
     private Image m_healthBar;
 
-    public Image m_healthUI;
+    [SerializeField]
+    private Image m_healthUI;
 
     [SerializeField]
     private Image m_damagedHealth;
 
     [SerializeField]
+    private Image m_shieldBar;
+
+    [SerializeField]
+    private GameObject[] m_playerUI;
+
+    [SerializeField]
     [Tooltip("How much the damaged health sprite will lerp when damaged.")]
     private float m_lerpAmount = 0.2f;
 
-    [SerializeField]
-    private Image m_shieldBar;
 
     [Header("--Critical Health Image Settings--")]
 
@@ -48,7 +55,6 @@ public class HealthBarUI : MonoBehaviour
         m_shieldBar.gameObject.SetActive(false);
         m_prevHealth = m_character.m_currentHealth;
         m_character.onTakeDamage += HealthBarShake;
-
         imageWithAlpha = m_criticalHealthImage.color;
         m_criticalHealthImage.color = new Color(m_criticalHealthImage.color.r, m_criticalHealthImage.color.g, m_criticalHealthImage.color.b, 0f);
     }
@@ -86,16 +92,19 @@ public class HealthBarUI : MonoBehaviour
 
             if (m_healthBar.fillAmount <= m_criticalPercentageThreshold)
             {
+                m_criticalHealthImage.enabled = true;
+                //PlayerUIShake(m_character);
                 if (!m_isCritical)
                 {
                     m_isCritical = true;
                     m_criticalHealthImage.DOColor(imageWithAlpha, m_duration).SetLoops(-1, LoopType.Yoyo);
                 }
-            }
-            else
-            {
-                m_isCritical = false;
-                m_criticalHealthImage.DOKill(true);
+                
+                if (m_healthBar.fillAmount <= 0)
+                {
+                    m_criticalHealthImage.enabled = false;
+                    m_criticalHealthImage.DOKill(true);
+                }
             }
         }
     }
@@ -118,5 +127,15 @@ public class HealthBarUI : MonoBehaviour
     {
         transform.DOKill(true);
         transform.DOPunchPosition(Vector3.right * 3 * 3f, .3f, 10, 1);
+    }
+
+    private void PlayerUIShake(BaseCharacter player)
+    {
+        // checks for every object that exists in the players UI.
+        foreach(GameObject i in m_playerUI)
+        {
+            i.transform.DOKill(true);
+            i.transform.DOPunchPosition(Vector3.down * 3 * 3f, .3f, 10, 1);
+        }
     }
 }

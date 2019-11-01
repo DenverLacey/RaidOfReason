@@ -35,6 +35,7 @@ public abstract class BaseCharacter : MonoBehaviour
     }
 
     public delegate void OnTakeDamage(BaseCharacter player);
+    public delegate void OnCriticalDamage(BaseCharacter player);
 
     [Header("--Player Stats--")]
 

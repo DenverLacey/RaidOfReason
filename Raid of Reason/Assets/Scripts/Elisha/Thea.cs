@@ -116,14 +116,6 @@ public class Thea : BaseCharacter
 
     public GameObject Ability_UI;
 
-	//[SerializeField]
-	//[Tooltip("Gift of Poseidon Particle Object")]
-	//private GameObject m_GOPParticle;
-	//private Vector3 m_GOPCircleInitialScale;
-	//private List<ParticleSystem.MainModule> m_GOPWaves;
-	//private List<ParticleSystem> m_GOPParticleSystems;
-	//private GameObject m_GOPCircle;
-
 	[SerializeField]
 	[Tooltip("Initial Effect when activating GIft of Poseidon")]
 	private ParticleSystem m_healEffect;
