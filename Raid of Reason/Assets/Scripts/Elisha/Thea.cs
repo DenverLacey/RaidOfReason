@@ -526,7 +526,8 @@ public class Thea : BaseCharacter
 					waterObj.transform.parent = player.transform;
 					Destroy(waterObj, 2f);
 					StartCoroutine(GOPVisual());
-                    player.AddHealth(m_GOPEffect * m_AOEGrowTime);
+                    player.AddHealth(m_GOPEffect);
+					m_projectile.GetComponent<ProjectileMove>().InstantiateHealIndicator(player.transform.position, m_GOPEffect);
                 }
             }
 

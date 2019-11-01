@@ -18,6 +18,8 @@ public class ProjectileMove : MonoBehaviour {
     private float m_healAmount;
     [SerializeField]
     private AnimationCurve m_speedGradient;
+	[SerializeField]
+	private GameObject m_healIndicator;
 
 	private bool m_hasHitKenron;
 	private bool m_hasHitKreiger;
@@ -96,6 +98,7 @@ public class ProjectileMove : MonoBehaviour {
 			if (hitPlayer.playerState == BaseCharacter.PlayerState.ALIVE)
 			{
                 hitPlayer.AddHealth(m_healAmount);
+				InstantiateHealIndicator(hitPlayer.transform.position, m_healAmount);
             }
 		}
 		else if (other.gameObject.layer == LayerMask.NameToLayer("Barrier"))
@@ -103,4 +106,10 @@ public class ProjectileMove : MonoBehaviour {
 			Destroy();
 		}
     }
+
+	public void InstantiateHealIndicator(Vector3 position, float healingDealt)
+	{
+		var hi = Instantiate(m_healIndicator, position, Quaternion.identity).GetComponent<NumberIndicator>();
+		hi.Init(healingDealt);
+	}
 }

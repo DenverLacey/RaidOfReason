@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2218921240981191979
+--- !u!1 &2806781028890107494
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,24 +8,24 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6555352458985914037}
-  - component: {fileID: 2364988567450515526}
-  - component: {fileID: 8359865561956847180}
-  - component: {fileID: 1698697773738679132}
+  - component: {fileID: 7116192298263305720}
+  - component: {fileID: 1795425484372384523}
+  - component: {fileID: 5493463604461694209}
+  - component: {fileID: 3434695952034478097}
   m_Layer: 0
-  m_Name: Damage Indicator
+  m_Name: Heal Indicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6555352458985914037
+--- !u!4 &7116192298263305720
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2218921240981191979}
+  m_GameObject: {fileID: 2806781028890107494}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
@@ -33,13 +33,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &2364988567450515526
+--- !u!23 &1795425484372384523
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2218921240981191979}
+  m_GameObject: {fileID: 2806781028890107494}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -70,15 +70,15 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!102 &8359865561956847180
+--- !u!102 &5493463604461694209
 TextMesh:
   serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2218921240981191979}
-  m_Text: 7
+  m_GameObject: {fileID: 2806781028890107494}
+  m_Text: 4
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
@@ -92,13 +92,13 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
---- !u!114 &1698697773738679132
+--- !u!114 &3434695952034478097
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2218921240981191979}
+  m_GameObject: {fileID: 2806781028890107494}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bdb1d3e478f34cd4eb5a10ed66f0ece5, type: 3}
@@ -166,19 +166,19 @@ MonoBehaviour:
     m_RotationOrder: 4
   m_colourGradient:
     serializedVersion: 2
-    key0: {r: 0, g: 0.6669483, b: 1, a: 1}
-    key1: {r: 0, g: 0.67422676, b: 1, a: 1}
-    key2: {r: 1, g: 0.5836086, b: 0, a: 0}
-    key3: {r: 1, g: 0.019000685, b: 0, a: 0}
-    key4: {r: 1, g: 0, b: 0.38202333, a: 0}
+    key0: {r: 0, g: 1, b: 0.15586257, a: 1}
+    key1: {r: 0, g: 1, b: 0.15686275, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
-    ctime1: 6746
-    ctime2: 23130
-    ctime3: 42983
-    ctime4: 65535
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
     ctime5: 0
     ctime6: 0
     ctime7: 0
@@ -191,6 +191,6 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
-    m_NumColorKeys: 5
+    m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   m_maxValue: 100
