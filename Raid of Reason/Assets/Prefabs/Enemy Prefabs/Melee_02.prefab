@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 222786056}
   m_LocalRotation: {x: -0.00000013240823, y: 0.7071068, z: -0.7071068, w: -0.00000013240823}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_Children: []
   m_Father: {fileID: 7498502567545903290}
   m_RootOrder: 8
@@ -37737,6 +37737,10 @@ MonoBehaviour:
   m_bloodEffect: {fileID: 5238710237899019940}
   m_waterEffect: {fileID: 426157972083445010}
   m_burningEffect: {fileID: 1531612155318418693}
+  m_debuffOffset: {x: 0, y: 0, z: 0}
+  m_debuffPadding: 0
+  m_attackDebuff: {fileID: 0}
+  m_speedDebuff: {fileID: 0}
   m_renderer: {fileID: 541819215752356372}
   m_animator: {fileID: 8391121300513893016}
   isDeadbByKenron: 0
@@ -47092,6 +47096,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hit_06
       objectReference: {fileID: 0}
+    - target: {fileID: 19896884, guid: f2a398acbf213024aa23b14c390770bf, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19896884, guid: f2a398acbf213024aa23b14c390770bf, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 464624, guid: f2a398acbf213024aa23b14c390770bf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -47134,14 +47146,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 464624, guid: f2a398acbf213024aa23b14c390770bf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 19896884, guid: f2a398acbf213024aa23b14c390770bf, type: 3}
-      propertyPath: looping
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 19896884, guid: f2a398acbf213024aa23b14c390770bf, type: 3}
-      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 153590, guid: f2a398acbf213024aa23b14c390770bf, type: 3}
@@ -47193,6 +47197,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Taunted
+      objectReference: {fileID: 0}
+    - target: {fileID: 2594324223704125970, guid: bb908d00121f942438126cdb93236180,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 9122184551371264894, guid: bb908d00121f942438126cdb93236180,
         type: 3}
@@ -47248,11 +47257,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2594324223704125970, guid: bb908d00121f942438126cdb93236180,
-        type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb908d00121f942438126cdb93236180, type: 3}
