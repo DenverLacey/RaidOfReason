@@ -44,7 +44,7 @@ public class ObjectiveManager : MonoBehaviour
         }
 
         m_currentObjective = m_objectives[0];
-               m_currentObjective.Awake();
+        m_currentObjective.Awake();
         ObjectiveCompleted = false;
     }
 
