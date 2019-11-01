@@ -123,9 +123,7 @@ public abstract class BaseCharacter : MonoBehaviour
 
     [HideInInspector]
     public MultiTargetCamera m_camera;
-
     protected Animator m_animator;
-   
     protected float m_vulnerability;
     protected bool m_bActive;
     protected float m_rotationSpeed = 250.0f;

@@ -29,25 +29,28 @@ public class HealthBarUI : MonoBehaviour
     [SerializeField]
     private Image m_shieldBar;
 
+    [Header("--Critical Health Image Settings--")]
+
     [SerializeField]
     private Image m_criticalHealthImage;
     [SerializeField]
     private float m_duration;
-    private Color imageColorNoAlpha;
-
+    [SerializeField]
+    [Range(0f, 1f)]
+    private float m_criticalPercentageThreshold = 0.5f;
+    private Color imageWithAlpha;
     private float m_prevHealth;
+    private bool m_isCritical = false;
 
     void Awake()
     {
-
         m_healthBar.gameObject.SetActive(true);
         m_shieldBar.gameObject.SetActive(false);
         m_prevHealth = m_character.m_currentHealth;
         m_character.onTakeDamage += HealthBarShake;
 
-        m_criticalHealthImage.GetComponent<Image>();
-        imageColorNoAlpha = m_criticalHealthImage.color;
-        imageColorNoAlpha.a = 0;
+        imageWithAlpha = m_criticalHealthImage.color;
+        m_criticalHealthImage.color = new Color(m_criticalHealthImage.color.r, m_criticalHealthImage.color.g, m_criticalHealthImage.color.b, 0f);
     }
 
     // Update is called once per frame
@@ -81,9 +84,18 @@ public class HealthBarUI : MonoBehaviour
                 m_shieldBar.gameObject.SetActive(false);
             }
 
-            if (m_healthBar.fillAmount <= 0.3f)
+            if (m_healthBar.fillAmount <= m_criticalPercentageThreshold)
             {
-                m_criticalHealthImage.DOColor(imageColorNoAlpha, m_duration).SetLoops(-1, LoopType.Yoyo);
+                if (!m_isCritical)
+                {
+                    m_isCritical = true;
+                    m_criticalHealthImage.DOColor(imageWithAlpha, m_duration).SetLoops(-1, LoopType.Yoyo);
+                }
+            }
+            else
+            {
+                m_isCritical = false;
+                m_criticalHealthImage.DOKill(true);
             }
         }
     }
@@ -95,9 +107,9 @@ public class HealthBarUI : MonoBehaviour
     {
         m_damagedHealth.fillAmount = Mathf.Lerp(m_damagedHealth.fillAmount, m_healthBar.fillAmount, m_lerpAmount);
 
-        if (m_damagedHealth.fillAmount == m_healthBar.fillAmount)
+        if (Mathf.Abs(m_damagedHealth.fillAmount - m_healthBar.fillAmount) <= 0.01f)
         {
-            m_damagedHealth.fillAmount = m_healthBar.fillAmount;
+            m_damagedHealth.fillAmount = m_healthBar.fillAmount - 0.1f;
             m_prevHealth = m_character.m_currentHealth;
         }
     }

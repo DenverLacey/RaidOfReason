@@ -43,7 +43,8 @@ public class Thea : BaseCharacter
 
     public GameObject GOPMaxCharge;
 	private Vector3 m_GOPMaxChargeInitialScale;
-
+    public GameObject GOPRadiusIndicator;
+    private Vector3 m_GOPRadiusIndicatorInitialScale;
     private GameObject GOPChargeMeter;
     private GameObject GOPChargeMeterBar;
 
@@ -113,14 +114,6 @@ public class Thea : BaseCharacter
     [SerializeField]
     private GameObject m_waterPrefab;
 
-	//[SerializeField]
-	//[Tooltip("Gift of Poseidon Particle Object")]
-	//private GameObject m_GOPParticle;
-	//private Vector3 m_GOPCircleInitialScale;
-	//private List<ParticleSystem.MainModule> m_GOPWaves;
-	//private List<ParticleSystem> m_GOPParticleSystems;
-	//private GameObject m_GOPCircle;
-
 	[SerializeField]
 	[Tooltip("Initial Effect when activating GIft of Poseidon")]
 	private ParticleSystem m_healEffect;
@@ -129,19 +122,9 @@ public class Thea : BaseCharacter
     [Tooltip("The AOE particle used for visual effect.")]
     private ParticleSystem m_HealRadius;
 
-    //[SerializeField]
-    //[Tooltip("The Second AOE particle used for visual effect.")]
-    //private ParticleSystem m_HealRadius_2;
-
-    //[SerializeField]
-    //[Tooltip("The Final particle used for visual effect.")]
-    //private ParticleSystem m_HealRadius_3;
-
     [HideInInspector]
     public bool m_skillActive;
-
     private Vector3 newLocation;
-
     private bool m_isHealthRegen;
     private Vector3 m_hitLocation;
     private LayerMask m_layerMask;
@@ -180,27 +163,8 @@ public class Thea : BaseCharacter
         m_isHealthRegen = false;
         m_AOETimer = 0f;
         m_HealRadius.gameObject.SetActive(false);
-        //m_HealRadius_2.gameObject.SetActive(false);
         m_AOEShapeModule = m_HealRadius.shape;
-        //m_AOEShapeModule_2 = m_HealRadius_2.shape;
-
-        //m_GOPCircle = m_GOPParticle.transform.Find("circle").gameObject;
-        //m_GOPCircleInitialScale = m_GOPCircle.transform.localScale;
-
-        //m_GOPParticleSystems = new List<ParticleSystem>(m_GOPParticle.GetComponentsInChildren<ParticleSystem>());
-
-        //m_GOPWaves = new List<ParticleSystem.MainModule>
-        //{
-        //	m_GOPParticle.transform.GetChild(1).GetComponent<ParticleSystem>().main,
-        //	m_GOPParticle.transform.GetChild(2).GetComponent<ParticleSystem>().main,
-        //	m_GOPParticle.transform.GetChild(3).GetComponent<ParticleSystem>().main,
-        //	m_GOPParticle.transform.GetChild(4).GetComponent<ParticleSystem>().main,
-        //	m_GOPParticle.transform.GetChild(5).GetComponent<ParticleSystem>().main,
-        //};
-
-        //m_GOPParticle.SetActive(false);
-
-        //      IntialiseUpgrades();
+        IntialiseUpgrades();
         GOPChargeMeter = GameObject.Find("ChargeMeter");
         GOPChargeMeterBar = GameObject.Find("ChargeMeterBar");
         GOPChargeMeter.transform.localScale = new Vector3(0, 1, 0);
@@ -209,6 +173,8 @@ public class Thea : BaseCharacter
 		GOPMaxCharge.transform.localScale = new Vector3(m_AOEMax * m_GOPMaxChargeInitialScale.x, m_AOEMax * m_GOPMaxChargeInitialScale.y, 0);
 		GOPChargeMeter.SetActive(false);
         GOPChargeMeterBar.SetActive(false);
+        GOPRadiusIndicator.SetActive(false);
+        m_GOPRadiusIndicatorInitialScale = GOPRadiusIndicator.transform.localScale;
     }
 
     void IntialiseUpgrades()
@@ -244,9 +210,6 @@ public class Thea : BaseCharacter
             GOPChargeMeterBar.transform.LookAt(camera);
         }
 
-        
-
-
         //if (!m_isActive && abilityUI.gameObject != null)
         //{
         //    abilityUI.Play();
@@ -279,9 +242,6 @@ public class Thea : BaseCharacter
         {
 			m_healEffect.gameObject.SetActive(false);
             m_HealRadius.gameObject.SetActive(false);
-            //m_HealRadius_2.gameObject.SetActive(false);
-            //m_HealRadius_3.gameObject.SetActive(false);
-            //m_GOPParticle.SetActive(false);
         }
     }
 
@@ -415,34 +375,34 @@ public class Thea : BaseCharacter
         // Resets the charge meter to 0.
         GOPChargeMeter.transform.localScale = new Vector3(0, 1, 0);
         GOPMaxCharge.SetActive(true);
+        GOPRadiusIndicator.SetActive(true);
+
+        Debug.DrawLine(transform.position, transform.position + Vector3.forward * m_AOEMax);
 
         GOPChargeMeter.SetActive(true);
         GOPChargeMeterBar.SetActive(true);
+
+        //if (!m_isActive)
+        //{
+        //    m_HealRadius.gameObject.SetActive(true);
+        //    m_HealRadius.Play();
+        //}
+
         m_isActive = true;
 
         // Checks if player can use the ability.
-        if (m_isActive == true && GameManager.Instance.Thea.gameObject.activeSelf && GOPChargeMeter)
+        if (GameManager.Instance.Thea.gameObject.activeSelf && GOPChargeMeter)
         {
             // Start AOE timer.
             m_AOETimer += Time.deltaTime;
-
             m_movementSpeed = m_GOPMovement;
-
-            m_HealRadius.gameObject.SetActive(true);
-            m_HealRadius.Play();
-            //m_HealRadius_2.gameObject.SetActive(true);
-
             // Lerping the AOE
             m_AOERadius = Mathf.Lerp(m_AOERadius, m_AOEMax, m_AOETimer / m_AOEGrowTime);
             // Charge meter charges up based on the radius of the AOE.
             GOPChargeMeter.transform.localScale = new Vector3(m_AOERadius / m_AOEMax, 1);
-            m_AOEShapeModule.radius = m_AOERadius;
-            //m_AOEShapeModule_2.radius = m_AOERadius;
-           
-            //m_GOPWaves.ForEach(p => p.startSize = m_AOERadius);
-            //m_GOPCircle.transform.localScale = new Vector3(m_AOERadius * m_GOPCircleInitialScale.x, m_GOPCircleInitialScale.y, m_AOERadius * m_GOPCircleInitialScale.z);
-            //m_GOPParticle.SetActive(true);
-
+            GOPRadiusIndicator.transform.localScale = new Vector3(m_AOERadius * m_GOPRadiusIndicatorInitialScale.x, m_AOERadius * m_GOPRadiusIndicatorInitialScale.y, 0);
+            //m_AOEShapeModule.radius = m_AOEMax;
+  
             m_skillActive = true;
 
             if (m_animator)
@@ -471,8 +431,6 @@ public class Thea : BaseCharacter
             {
                 m_HealRadius.gameObject.SetActive(false);
                 m_HealRadius.Stop();
-                //m_HealRadius_2.gameObject.SetActive(false);
-                //m_GOPParticle.SetActive(false);
             }
         }
     
@@ -497,6 +455,7 @@ public class Thea : BaseCharacter
 		ResetGiftOfPoseidon();
         RumbleController(m_GOPRumbleDuration, m_GOPRumbleIntensity, m_GOPRumbleIntensity);
         m_healEffect.Play();
+        m_HealRadius.Play();
 	}
 
     /// <summary>
@@ -525,27 +484,13 @@ public class Thea : BaseCharacter
 					waterObj.SetActive(true);
 					waterObj.transform.parent = player.transform;
 					Destroy(waterObj, 2f);
-					StartCoroutine(GOPVisual());
+					//StartCoroutine(GOPVisual());
                     player.AddHealth(m_GOPEffect);
 					m_projectile.GetComponent<ProjectileMove>().InstantiateHealIndicator(player.transform.position, m_GOPEffect);
                 }
             }
-
             // Heal Thea.
             AddHealth(m_GOPEffect * m_AOEGrowTime);      
-
-            //if (m_skillActive = true & m_skillUpgrades.Find(skill => skill.name == "Serenade Of Water"))
-            //{
-            //    GameManager.Instance.Kenron.SetHealth(GameManager.Instance.Kenron.m_currentHealth * m_healMultiplier);
-            //    GameManager.Instance.Kreiger.SetHealth(GameManager.Instance.Kreiger.m_currentHealth * m_healMultiplier);
-            //    m_nearbyEnemies = new List<EnemyData>(FindObjectsOfType<EnemyData>());
-            //    foreach (EnemyData data in m_nearbyEnemies)
-            //    {
-            //        data.Strength = 0;
-            //    }
-            //    SetHealth(m_currentHealth * m_healMultiplier);
-            //    m_skillActive = false;
-            //}
         }
     }
 
@@ -561,19 +506,10 @@ public class Thea : BaseCharacter
         GOPMaxCharge.SetActive(false);
         GOPChargeMeter.SetActive(false);
         GOPChargeMeterBar.SetActive(false);
+        GOPRadiusIndicator.SetActive(false);
         m_AOEShapeModule.radius = 0;
-
         m_HealRadius.gameObject.SetActive(false);
         m_HealRadius.Stop();
-
-        //m_HealRadius_2.gameObject.SetActive(false);
-        //m_HealRadius_2.Stop();
-
-        //      m_GOPWaves.ForEach(ps => ps.startSize = 1f);
-        //m_GOPCircle.transform.localScale = m_GOPCircleInitialScale;
-        //m_GOPParticleSystems.ForEach(ps => ps.Stop());
-
-        //m_GOPParticle.SetActive(false);
     }
 
     private IEnumerator HealthOverTime() {
