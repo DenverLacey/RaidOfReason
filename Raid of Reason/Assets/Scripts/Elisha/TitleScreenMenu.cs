@@ -20,10 +20,8 @@ public class TitleScreenMenu : MonoBehaviour
     public CinemachineVirtualCamera VirtualCamera1;
     public CinemachineVirtualCamera VirtualCamera2;
     public Text text;
-    public Color textColorNoAlpha;
-    public GameObject mainMenu;
     public GameObject titleScreen;
-    public GameObject m_startButton;
+    private Color textColorNoAlpha;
 
     public void Start()
     {
@@ -33,15 +31,28 @@ public class TitleScreenMenu : MonoBehaviour
         text.DOColor(textColorNoAlpha, 1).SetLoops(-1, LoopType.Yoyo);
         VirtualCamera1.gameObject.SetActive(true);
         VirtualCamera2.gameObject.SetActive(false);
-        m_startButton.SetActive(false);
     }
     public void Update()
     {
-        if (XCI.GetButtonDown(XboxButton.Start, XboxController.Any))
+        if (XCI.GetButtonDown(XboxButton.Start, XboxController.First))
         {
             VirtualCamera2.gameObject.SetActive(true);
-            mainMenu.SetActive(true);
-            m_startButton.SetActive(true);
+            StartGame();
         }
+        else if (XCI.GetButtonDown(XboxButton.Start, XboxController.Second))
+        {
+            VirtualCamera2.gameObject.SetActive(true);
+            StartGame();
+        }
+        else if (XCI.GetButtonDown(XboxButton.Start, XboxController.Third))
+        {
+            VirtualCamera2.gameObject.SetActive(true);
+            StartGame();
+        }
+    }
+
+    public void StartGame()
+    {
+        LevelManager.FadeLoadLevel(1);
     }
 }

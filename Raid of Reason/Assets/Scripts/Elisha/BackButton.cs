@@ -16,6 +16,6 @@ public class BackButton : InteractableUIElement
 
     public void OnPressed()
     {
-        LevelManager.FadeLoadLastLevel();
+        Application.Quit();
     }
 }

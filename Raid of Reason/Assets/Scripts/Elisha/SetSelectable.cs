@@ -12,10 +12,16 @@ using UnityEngine.Events;
 public class SetSelectable : MonoBehaviour
 {
     public float timer;
-    public void SetCurrentSelectable(GameObject gameObject)
-    {
-        EventSystem.current.SetSelectedGameObject(gameObject);
-    }
+     static public void StaticSetCurrentSelectable(GameObject selectable)
+     {
+         EventSystem.current.SetSelectedGameObject(selectable);
+         //selectable.GetComponent<UnityEngine.UI.Selectable>().Select();
+     }
+     public void SetCurrentSelectable(GameObject selectable)
+     {
+         EventSystem.current.SetSelectedGameObject(selectable);
+         //selectable.GetComponent<UnityEngine.UI.Selectable>().Select();
+     }
 
     public IEnumerator Timer(GameObject Object, float duration)
     {

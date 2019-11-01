@@ -41,7 +41,29 @@ public class PauseMenu : MonoBehaviour
 
     public void Update()
     {
-        if (XCI.GetButtonDown(XboxButton.Start, XboxController.Any))
+        if (XCI.GetButtonDown(XboxButton.Start, XboxController.First))
+        {
+            if (!m_pauseMenu.activeInHierarchy && m_isPaused == false)
+            {
+                Paused();
+            }
+            else if (m_pauseMenu.activeInHierarchy && m_isPaused == true)
+            {
+                ContinueGame();
+            }
+        }
+        else if (XCI.GetButtonDown(XboxButton.Start, XboxController.Second))
+        {
+            if (!m_pauseMenu.activeInHierarchy && m_isPaused == false)
+            {
+                Paused();
+            }
+            else if (m_pauseMenu.activeInHierarchy && m_isPaused == true)
+            {
+                ContinueGame();
+            }
+        }
+        else if (XCI.GetButtonDown(XboxButton.Start, XboxController.Third))
         {
             if (!m_pauseMenu.activeInHierarchy && m_isPaused == false)
             {
