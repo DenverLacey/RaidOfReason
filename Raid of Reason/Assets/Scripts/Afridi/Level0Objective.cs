@@ -23,7 +23,10 @@ public class Level0Objective : BaseObjective
     public override void Awake()
     {
         portal = GameObject.Find(portalName);
-        portal.SetActive(false);
+        if (portal != null)
+        {
+            portal.SetActive(false);
+        }
         spawnPoint = GameObject.Find(spawnPointName);
         Zone = GameObject.Find(enemyZoneName);
     }

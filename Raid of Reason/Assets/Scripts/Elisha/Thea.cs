@@ -114,6 +114,16 @@ public class Thea : BaseCharacter
     [SerializeField]
     private GameObject m_waterPrefab;
 
+    public GameObject Ability_UI;
+
+	//[SerializeField]
+	//[Tooltip("Gift of Poseidon Particle Object")]
+	//private GameObject m_GOPParticle;
+	//private Vector3 m_GOPCircleInitialScale;
+	//private List<ParticleSystem.MainModule> m_GOPWaves;
+	//private List<ParticleSystem> m_GOPParticleSystems;
+	//private GameObject m_GOPCircle;
+
 	[SerializeField]
 	[Tooltip("Initial Effect when activating GIft of Poseidon")]
 	private ParticleSystem m_healEffect;
@@ -389,7 +399,7 @@ public class Thea : BaseCharacter
         //}
 
         m_isActive = true;
-
+        Ability_UI.SetActive(false);
         // Checks if player can use the ability.
         if (GameManager.Instance.Thea.gameObject.activeSelf && GOPChargeMeter)
         {

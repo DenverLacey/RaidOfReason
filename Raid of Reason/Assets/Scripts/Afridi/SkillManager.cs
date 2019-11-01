@@ -24,6 +24,7 @@ public class Skills
     public float m_duration;
 
     [HideInInspector]
+    public bool readyToDisplay;
 
     public float m_currentCoolDown;
     [HideInInspector]
@@ -44,9 +45,10 @@ public class Skills
         m_currentDuration += Time.deltaTime;
 		m_skillIcon.fillAmount = m_currentCoolDown / m_coolDown;
 
+
         if (m_currentCoolDown >= m_coolDown)
         {
-            onCooldown = false;          
+            onCooldown = false;
         }
         if (m_currentDuration >= m_duration && active)
         {
@@ -60,7 +62,6 @@ public class SkillManager : MonoBehaviour {
 
     [Tooltip("A List of How Many Main Skills the Players Have")]
     public List<Skills> m_mainSkills;
-
     private PauseMenu m_pauseInfo;
 
     protected void Awake()
@@ -93,6 +94,7 @@ public class SkillManager : MonoBehaviour {
                 // if the current cooldown is greater than the main
                 if (m_mainSkills[0].m_currentCoolDown >= m_mainSkills[0].m_coolDown)
                 {
+                    m_mainSkills[0].readyToDisplay = false;
                     // Activate Ability
                     GameManager.Instance.Kenron.ChaosFlame(m_mainSkills[0].m_currentDuration);
 
@@ -114,6 +116,7 @@ public class SkillManager : MonoBehaviour {
                 // if the current cooldown is greater than the main
                 if (m_mainSkills[1].m_currentCoolDown >= m_mainSkills[1].m_coolDown)
                 {
+                    m_mainSkills[1].readyToDisplay = false;
                     // Activate Ability
                     GameManager.Instance.Kreiger.Spott(m_mainSkills[1].m_currentDuration);
 
@@ -135,6 +138,7 @@ public class SkillManager : MonoBehaviour {
                 if(m_mainSkills[2].m_currentCoolDown >= m_mainSkills[2].m_coolDown)
                 {
                     // Activate Ability
+                    m_mainSkills[2].readyToDisplay = false;
                     GameManager.Instance.Thea.GiftOfPoseidon(m_mainSkills[2].m_currentDuration);
                     m_mainSkills[2].active = true;
                 } 
@@ -150,6 +154,10 @@ public class SkillManager : MonoBehaviour {
                     m_mainSkills[2].onCooldown = true;
                     GameManager.Instance.Thea.EndGIftOfPoseidon();
                 }
+                if (m_mainSkills[2].readyToDisplay && !m_mainSkills[2].onCooldown)
+                {
+                    GameManager.Instance.Thea.Ability_UI.SetActive(true);
+                }
             }
         }
 
@@ -160,6 +168,10 @@ public class SkillManager : MonoBehaviour {
             {
                 // Run the cooldown for that skill
                 skill.RunTimer();
+            }
+            if (skill.m_skillIcon.fillAmount == 1)
+            {
+                skill.readyToDisplay = true;
             }
         }
     }
