@@ -2,34 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/*
- * Author: Afridi Rahim
- * 
- * Summary:
- * This Script creates a Countdown Objective 
- */
-[CreateAssetMenu(menuName = "Objectives/Countdown To Destruction")]
-public class CountdownObjective : BaseObjective
+[CreateAssetMenu(menuName = "Objectives/Tutorial Objective")]
+public class Level0Objective : BaseObjective
 {
-    [Tooltip("Amount of time players have till Cave in")]
-    public float maxtimer;
+    [Tooltip("Scene to transport to once on the portal")]
+    public int buildIndex;
 
     [Tooltip("The Objective Description")]
     public string description;
 
     [Tooltip("Name of the Objective")]
     public string name;
-    public string spawnPointName;
+    public string portalName;
     public string enemyZoneName;
+    public string spawnPointName;
     private GameObject spawnPoint;
+    private GameObject portal;
     private GameObject Zone;
-
-    // Current Timer
-    private float currentTimer;
 
     public override void Awake()
     {
-        currentTimer = maxtimer;
+        portal = GameObject.Find(portalName);
+        portal.SetActive(false);
         spawnPoint = GameObject.Find(spawnPointName);
         Zone = GameObject.Find(enemyZoneName);
     }
@@ -39,14 +33,9 @@ public class CountdownObjective : BaseObjective
         return spawnPoint;
     }
 
-    public override GameObject ActivatePortal()
-    {
-        return null;
-    }
-
     public override float Timer()
     {
-        return currentTimer;
+        return 0f;
     }
 
     public override string GrabDescription()
@@ -61,10 +50,12 @@ public class CountdownObjective : BaseObjective
 
     public override void Update()
     {
-        spawnPoint = GameObject.Find(spawnPointName);
-        Zone = GameObject.Find(enemyZoneName);
-        // Timer starts going down
-        currentTimer -= Time.deltaTime;
+       
+    }
+
+    public override GameObject ActivatePortal()
+    {
+        return portal;
     }
 
     public override bool IsDone()
@@ -75,6 +66,6 @@ public class CountdownObjective : BaseObjective
 
     public override bool HasFailed()
     {
-        return currentTimer <= 0;
+        return false;
     }
 }

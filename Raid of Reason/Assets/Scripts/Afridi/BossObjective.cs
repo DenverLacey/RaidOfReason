@@ -33,6 +33,10 @@ public class BossObjective : BaseObjective
             bosshealthBar.GetComponent<Image>().fillAmount = Boss.GetComponent<EnemyData>().Health / Boss.GetComponent<EnemyData>().MaxHealth;
     }
 
+    public override GameObject ActivatePortal()
+    {
+        return null;
+    }
     public override GameObject SpawnPoints()
     {
         return SpawnPoint;

@@ -12,4 +12,6 @@ public abstract class BaseObjective : ScriptableObject
     public abstract string GrabDescription();
     public abstract string GrabTitle();
     public abstract GameObject SpawnPoints();
+
+    public abstract GameObject ActivatePortal();
 }

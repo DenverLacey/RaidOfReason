@@ -25,6 +25,11 @@ public class ProtectionObjective : BaseObjective
         ProtectObject = GameObject.Find(nameOfObject);
     }
 
+    public override GameObject ActivatePortal()
+    {
+        return null;
+    }
+
     public override void Awake()
     {
         m_currentHealth = health;

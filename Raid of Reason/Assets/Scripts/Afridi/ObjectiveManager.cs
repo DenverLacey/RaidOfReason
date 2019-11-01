@@ -103,6 +103,11 @@ public class ObjectiveManager : MonoBehaviour
                 barriers.ManageBarriers();
             }
 
+            if (m_currentObjective.GrabTitle() == "Level 0" && m_currentObjective.ActivatePortal() != null)
+            {
+                m_currentObjective.ActivatePortal().SetActive(true);
+            }
+
             if (m_objectives.Count > 1)
             {
 			    m_objectives.RemoveAt(0);
