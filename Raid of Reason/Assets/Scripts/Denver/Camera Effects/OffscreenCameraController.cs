@@ -63,16 +63,9 @@ public class OffscreenCameraController : MonoBehaviour
     void Update()
     {
 		// if character is not playing
-		if (m_character.playerState == BaseCharacter.PlayerState.NP)
+		if (m_character.playerState != BaseCharacter.PlayerState.ALIVE)
 		{
 			gameObject.SetActive(false);
-			return;
-		}
-
-		// if target object is turned off, turn off UI
-		if (!m_target || !m_target.gameObject.activeSelf)
-		{
-			m_activator.gameObject.SetActive(false);
 			return;
 		}
 
