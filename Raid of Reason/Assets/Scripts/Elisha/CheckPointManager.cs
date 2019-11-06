@@ -51,6 +51,6 @@ public class CheckPointManager : MonoBehaviour
     public void InvokeRespawn()
     {
         Invoke("RespawnToCheckpoint", m_spawnDelay);
-        Invo
+		//Invo
     }
 }
