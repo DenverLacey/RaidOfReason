@@ -328,4 +328,11 @@ public class Kreiger : BaseCharacter
              collision.gameObject.GetComponent<EnemyData>().TakeDamage(SSDamageTaken, GameManager.Instance.Kreiger);
         }
     }
+
+	public override void ResetCharacter()
+	{
+		base.ResetCharacter();
+		ResetSkill();
+		StopLunge();
+	}
 }

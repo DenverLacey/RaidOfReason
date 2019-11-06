@@ -41,9 +41,6 @@ public class CheckPointManager : MonoBehaviour
             {
                 player.SoftActivate();
                 player.gameObject.transform.position = m_objectiveManager.m_currentObjective.SpawnPoints().transform.position;
-                player.playerState = BaseCharacter.PlayerState.ALIVE;
-                player.m_currentHealth = player.m_maxHealth;
-
             }
         }
     }

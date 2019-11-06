@@ -326,4 +326,10 @@ public class Kenron : BaseCharacter
             dashDisplays[m_TempCharge].SetActive(true);
         }
     }
+
+	public override void ResetCharacter()
+	{
+		base.ResetCharacter();
+		ResetSkill();
+	}
 }
