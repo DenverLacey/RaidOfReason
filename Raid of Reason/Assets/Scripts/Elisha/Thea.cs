@@ -460,7 +460,6 @@ public class Thea : BaseCharacter
     /// </summary>
     public void GiveHealth()
     {
-
         if (GameManager.Instance.Thea.gameObject.activeSelf)
         {
             foreach (BaseCharacter player in GameManager.Instance.Players)
@@ -472,20 +471,23 @@ public class Thea : BaseCharacter
 
                 float sqrDistance = (player.transform.position - transform.position).sqrMagnitude;
 
+
                 // check if inside radius
                 if (sqrDistance <= m_AOERadius * m_AOERadius && player.m_controllerOn)
                 {
-					GameObject waterObj = Instantiate(m_waterPrefab, player.transform.position + Vector3.down, m_waterPrefab.transform.rotation);
-					waterObj.SetActive(true);
-					waterObj.transform.parent = player.transform;
-					Destroy(waterObj, 2f);
+                    GameObject waterObj = Instantiate(m_waterPrefab, player.transform.position + Vector3.down, m_waterPrefab.transform.rotation);
+                    waterObj.SetActive(true);
+                    waterObj.transform.parent = player.transform;
+                    Destroy(waterObj, 2f);
                     player.AddHealth(m_GOPEffect);
-					m_projectile.GetComponent<ProjectileMove>().InstantiateHealIndicator(player.transform.position, m_GOPEffect);
+                    m_projectile.GetComponent<ProjectileMove>().InstantiateHealIndicator(player.transform.position, m_GOPEffect);
                 }
             }
+            
             // Heal Thea.
             AddHealth(m_GOPEffect * m_AOEGrowTime);      
         }
+
     }
 
     /// <summary>

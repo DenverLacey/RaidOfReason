@@ -63,7 +63,7 @@ RectTransform:
   m_GameObject: {fileID: 139168369}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalScale: {x: 0.3441, y: 0.3441, z: 1.7205}
   m_Children:
   - {fileID: 2072075013}
   m_Father: {fileID: 347151390}
@@ -71,7 +71,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 56.3}
+  m_AnchoredPosition: {x: 0, y: 106.7}
   m_SizeDelta: {x: 408.79, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &139168372
@@ -446,7 +446,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &347151390
 RectTransform:
   m_ObjectHideFlags: 0
@@ -491,14 +491,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.91764706}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 4ee186ac8271632459b8127bfa63c5b0, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1417,7 +1417,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: e9933bbc9be5ca0439bcb08837ba6038, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 386b9d933aa3ce84db9d65bf9a0b9adf, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1708,7 +1708,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00018310547, y: -35.299988}
+  m_AnchoredPosition: {x: 0.00018310547, y: -39.800007}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1233777484
@@ -1830,7 +1830,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: e9933bbc9be5ca0439bcb08837ba6038, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 386b9d933aa3ce84db9d65bf9a0b9adf, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1875,7 +1875,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00012207031, y: -17.199986}
+  m_AnchoredPosition: {x: 0.00012207031, y: -21.7}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1358200142
@@ -2614,7 +2614,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 0b41fc48ce679ab45906434afd694c2e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 31e98ab64183d97408d864b26698ec23, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3562,10 +3562,13 @@ MonoBehaviour:
   m_healthBar: {fileID: 1030171901334663358}
   m_healthUI: {fileID: 2401193416284443731}
   m_damagedHealth: {fileID: 7368363943388201152}
-  m_lerpAmount: 0.2
   m_shieldBar: {fileID: 7582522589879327087}
+  m_playerUI:
+  - {fileID: 2302495842451371509}
+  m_lerpAmount: 0.2
   m_criticalHealthImage: {fileID: 3924083163329812672}
   m_duration: 0.3
+  m_criticalPercentageThreshold: 0.5
 --- !u!1 &2302495842451371509
 GameObject:
   m_ObjectHideFlags: 0
@@ -4600,7 +4603,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1898936522348032096
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16012,10 +16015,13 @@ MonoBehaviour:
   m_healthBar: {fileID: 3376891356171210535}
   m_healthUI: {fileID: 7266871306091917774}
   m_damagedHealth: {fileID: 5811068660319806908}
-  m_lerpAmount: 0.2
   m_shieldBar: {fileID: 4715568356882867473}
+  m_playerUI:
+  - {fileID: 1225579518446006730}
+  m_lerpAmount: 0.2
   m_criticalHealthImage: {fileID: 6274553285883009094}
   m_duration: 0.3
+  m_criticalPercentageThreshold: 0.5
 --- !u!1 &8111190716140642829
 GameObject:
   m_ObjectHideFlags: 0
@@ -16371,10 +16377,13 @@ MonoBehaviour:
   m_healthBar: {fileID: 8029545693053642488}
   m_healthUI: {fileID: 4720930370248102850}
   m_damagedHealth: {fileID: 6738326120729135360}
-  m_lerpAmount: 0.2
   m_shieldBar: {fileID: 753408004820756464}
+  m_playerUI:
+  - {fileID: 641034413284723668}
+  m_lerpAmount: 0.2
   m_criticalHealthImage: {fileID: 4021305755999807680}
   m_duration: 0.3
+  m_criticalPercentageThreshold: 0.5
 --- !u!1 &8843211623863176453
 GameObject:
   m_ObjectHideFlags: 0

@@ -92,7 +92,7 @@ public abstract class BaseCharacter : MonoBehaviour
     [Tooltip("The Skill Manager that manages the skills of the players")]
     public SkillManager skillManager;
     private HealthBarUI m_healthBarRef;
-    //public ParticleSystem abilityUI;
+    private GameObject m_playerStats;
 
     [HideInInspector]
     public bool m_controllerOn;
@@ -156,6 +156,8 @@ public abstract class BaseCharacter : MonoBehaviour
         m_original = m_spriteRend.colorOverLifetime;
         m_healthBarRef = FindObjectOfType<HealthBarUI>();
         //originalMaterials = playerRenderers.material;
+        m_playerStats = GameObject.Find("---Stats---");
+        m_playerStats.SetActive(true);
 
         m_playerRenderers = new List<SkinnedMeshRenderer>(GetComponentsInChildren<SkinnedMeshRenderer>());
         foreach (var rend in m_playerRenderers)
@@ -306,7 +308,6 @@ public abstract class BaseCharacter : MonoBehaviour
         if (currentShield > 0)
         {
             currentShield -= damage * m_vulnerability;
-            //IndicateHit();
         }
 
         if (currentShield <= 0)
@@ -336,11 +337,20 @@ public abstract class BaseCharacter : MonoBehaviour
         // checks if all players are dead
         if (GameManager.Instance.AlivePlayers.Count == 0)
         {
-            m_deathMenu.DeathScreen();
+
+            StartCoroutine(DeathScreenDelay(1));
         }
 
 		onTakeDamage?.Invoke(this);
 	} 
+
+    public IEnumerator DeathScreenDelay(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        m_deathMenu.DeathScreen();
+        m_playerStats.SetActive(false);
+
+    }
 
     /// <summary>
     /// Sets damage to a float value.
