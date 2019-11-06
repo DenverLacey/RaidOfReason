@@ -24,10 +24,14 @@ public class PauseCursor : MonoBehaviour
     private Vector3 m_inactivePosition;
 
     private PauseInformation m_pauseMenuInfo;
+
+	Camera camera;
     
     public void Start()
     {
         m_canvas = FindObjectOfType<CanvasScaler>();
+
+		camera = Camera.main;
 
         m_inactivePosition = transform.position;
 
@@ -65,13 +69,19 @@ public class PauseCursor : MonoBehaviour
 
         transform.Translate(x, y, 0);
 
-        // clamp to screen
-        float widthExtents = m_canvas.referenceResolution.x * m_canvas.scaleFactor / 2f;
-        float heightExtents = m_canvas.referenceResolution.y * m_canvas.scaleFactor / 2f;
+		// clamp to screen
+		//float widthExtents = m_canvas.referenceResolution.x * m_canvas.scaleFactor / 2f;
+		//float heightExtents = m_canvas.referenceResolution.y * m_canvas.scaleFactor / 2f;
 
-        Vector3 desiredPosition = transform.localPosition;
-        desiredPosition.x = Mathf.Clamp(desiredPosition.x, -widthExtents, widthExtents);
-        desiredPosition.y = Mathf.Clamp(desiredPosition.y, -heightExtents, heightExtents);
+		//Vector3 desiredPosition = transform.localPosition;
+		//desiredPosition.x = Mathf.Clamp(desiredPosition.x, -widthExtents, widthExtents);
+		//desiredPosition.y = Mathf.Clamp(desiredPosition.y, -heightExtents, heightExtents);
+
+		Vector3 viewportPos = camera.WorldToViewportPoint(transform.position);
+		viewportPos.x = Mathf.Clamp(viewportPos.x, 0f, 1f);
+		viewportPos.y = Mathf.Clamp(viewportPos.y, 0f, 1f);
+
+		Vector3 desiredPosition = camera.ViewportToWorldPoint(viewportPos);
 
         transform.localPosition = desiredPosition;
     }
