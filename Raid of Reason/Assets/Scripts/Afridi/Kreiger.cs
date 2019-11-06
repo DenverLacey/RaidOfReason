@@ -334,5 +334,8 @@ public class Kreiger : BaseCharacter
 		base.ResetCharacter();
 		ResetSkill();
 		StopLunge();
+		m_animator.SetBool("Attack", false);
+		islunging = false;
+		m_lungeDelayTimer = 0f;
 	}
 }

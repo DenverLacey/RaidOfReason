@@ -256,20 +256,21 @@ public class Kenron : BaseCharacter
             m_estimatedDashTime -= Time.deltaTime;
             if ((m_dashPosition - transform.position).sqrMagnitude <= 0.1f || m_estimatedDashTime <= 0.0f)
             {
+				//            // reset boolean flags
+				//            m_dashCollider.enabled = false;
+				//            m_animator.SetBool("Attack", false);
 
-                // reset boolean flags
-                m_dashCollider.enabled = false;
-                m_animator.SetBool("Attack", false);
+				//            m_dashDone = true;
 
-                m_dashDone = true;
+				//            // stop kenron
+				//            m_rigidbody.velocity = Vector3.zero;
 
-                // stop kenron
-                m_rigidbody.velocity = Vector3.zero;
+				//transform.position = m_dashPosition;
 
-				transform.position = m_dashPosition;
+				//            // run delay timer
+				//            m_dashDelayTimer -= Time.deltaTime;
 
-                // run delay timer
-                m_dashDelayTimer -= Time.deltaTime;
+				EndDash();
             }
 			else
 			{
@@ -280,10 +281,12 @@ public class Kenron : BaseCharacter
             // if ready to dash again 
             if (m_dashDelayTimer <= 0.0f && gameObject.activeSelf)
             {
-                StartCoroutine(TimeTillRecharge());
-                m_controllerOn = true;
-                isDashing = false;
-				m_dashTrail.SetActive(false);
+				//            StartCoroutine(TimeTillRecharge());
+				//            m_controllerOn = true;
+				//            isDashing = false;
+				//m_dashTrail.SetActive(false);
+
+				ReadyDash();
 			}
         }
     }
@@ -309,6 +312,37 @@ public class Kenron : BaseCharacter
         }
     }
 
+	public void EndDash()
+	{
+		// reset boolean flags
+		m_dashCollider.enabled = false;
+		m_animator.SetBool("Attack", false);
+
+		m_dashDone = true;
+
+		// stop kenron
+		m_rigidbody.velocity = Vector3.zero;
+
+		transform.position = m_dashPosition;
+
+		// run delay timer
+		m_dashDelayTimer -= Time.deltaTime;
+	}
+
+	public void ReadyDash()
+	{
+		StartCoroutine(TimeTillRecharge());
+		m_controllerOn = true;
+		isDashing = false;
+		m_dashTrail.SetActive(false);
+	}
+
+	public void ResetDash()
+	{
+		EndDash();
+		ReadyDash();
+	}
+
     IEnumerator ChaosFlameVisual()
     {
         m_startParticle.Play();
@@ -330,6 +364,8 @@ public class Kenron : BaseCharacter
 	public override void ResetCharacter()
 	{
 		base.ResetCharacter();
+		m_animator.SetBool("Attack", false);
 		ResetSkill();
+		ResetDash();
 	}
 }

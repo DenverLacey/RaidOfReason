@@ -475,9 +475,11 @@ public class Thea : BaseCharacter
         //m_AOEShapeModule.radius = 0;
     }
 
-    private IEnumerator HealthOverTime() {
+    private IEnumerator HealthOverTime()
+	{
         m_isHealthRegen = true;
-        while (m_currentHealth < m_maxHealth) {
+        while (m_currentHealth < m_maxHealth)
+		{
             Regenerate();
             yield return new WaitForSeconds(STRegenEachFrame);
         }
@@ -493,7 +495,15 @@ public class Thea : BaseCharacter
         }
     }
 
-    public void Regenerate() {
+    public void Regenerate()
+	{
         AddHealth(STHealthRegenerated);
     }
+
+	public override void ResetCharacter()
+	{
+		base.ResetCharacter();
+		EndGIftOfPoseidon();
+		ResetGiftOfPoseidon();
+	}
 }
