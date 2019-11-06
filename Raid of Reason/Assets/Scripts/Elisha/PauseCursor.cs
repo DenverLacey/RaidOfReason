@@ -77,13 +77,14 @@ public class PauseCursor : MonoBehaviour
 		//desiredPosition.x = Mathf.Clamp(desiredPosition.x, -widthExtents, widthExtents);
 		//desiredPosition.y = Mathf.Clamp(desiredPosition.y, -heightExtents, heightExtents);
 
-		Vector3 viewportPos = camera.WorldToViewportPoint(transform.position);
+		Vector3 viewportPos = camera.ScreenToViewportPoint(transform.position);
 		viewportPos.x = Mathf.Clamp(viewportPos.x, 0f, 1f);
 		viewportPos.y = Mathf.Clamp(viewportPos.y, 0f, 1f);
 
-		Vector3 desiredPosition = camera.ViewportToWorldPoint(viewportPos);
+		Vector3 desiredPosition = camera.ViewportToScreenPoint(viewportPos);
 
-        transform.localPosition = desiredPosition;
+
+        transform.position = desiredPosition;
     }
 
     /// <summary>

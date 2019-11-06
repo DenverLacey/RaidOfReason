@@ -41,37 +41,44 @@ public class PauseMenu : MonoBehaviour
 
     public void Update()
     {
-        if (XCI.GetButtonDown(XboxButton.Start, XboxController.First))
+        if(GameManager.Instance.AlivePlayers.Count == 0)
         {
-            if (!m_pauseMenu.activeInHierarchy && m_isPaused == false)
-            {
-                Paused();
-            }
-            else if (m_pauseMenu.activeInHierarchy && m_isPaused == true)
-            {
-                ContinueGame();
-            }
+            return;
         }
-        else if (XCI.GetButtonDown(XboxButton.Start, XboxController.Second))
+        else
         {
-            if (!m_pauseMenu.activeInHierarchy && m_isPaused == false)
+            if (XCI.GetButtonDown(XboxButton.Start, XboxController.First))
             {
-                Paused();
+                if (!m_pauseMenu.activeInHierarchy && m_isPaused == false)
+                {
+                    Paused();
+                }
+                else if (m_pauseMenu.activeInHierarchy && m_isPaused == true)
+                {
+                    ContinueGame();
+                }
             }
-            else if (m_pauseMenu.activeInHierarchy && m_isPaused == true)
+            else if (XCI.GetButtonDown(XboxButton.Start, XboxController.Second))
             {
-                ContinueGame();
+                if (!m_pauseMenu.activeInHierarchy && m_isPaused == false)
+                {
+                    Paused();
+                }
+                else if (m_pauseMenu.activeInHierarchy && m_isPaused == true)
+                {
+                    ContinueGame();
+                }
             }
-        }
-        else if (XCI.GetButtonDown(XboxButton.Start, XboxController.Third))
-        {
-            if (!m_pauseMenu.activeInHierarchy && m_isPaused == false)
+            else if (XCI.GetButtonDown(XboxButton.Start, XboxController.Third))
             {
-                Paused();
-            }
-            else if (m_pauseMenu.activeInHierarchy && m_isPaused == true)
-            {
-                ContinueGame();
+                if (!m_pauseMenu.activeInHierarchy && m_isPaused == false)
+                {
+                    Paused();
+                }
+                else if (m_pauseMenu.activeInHierarchy && m_isPaused == true)
+                {
+                    ContinueGame();
+                }
             }
         }
     }

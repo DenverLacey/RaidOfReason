@@ -155,7 +155,6 @@ public abstract class BaseCharacter : MonoBehaviour
         skillManager = FindObjectOfType<SkillManager>();
         m_original = m_spriteRend.colorOverLifetime;
         m_healthBarRef = FindObjectOfType<HealthBarUI>();
-        //originalMaterials = playerRenderers.material;
         m_playerStats = GameObject.Find("---Stats---");
         m_playerStats.SetActive(true);
 
@@ -337,7 +336,6 @@ public abstract class BaseCharacter : MonoBehaviour
         // checks if all players are dead
         if (GameManager.Instance.AlivePlayers.Count == 0)
         {
-
             StartCoroutine(DeathScreenDelay(1));
         }
 
@@ -349,7 +347,6 @@ public abstract class BaseCharacter : MonoBehaviour
         yield return new WaitForSeconds(duration);
         m_deathMenu.DeathScreen();
         m_playerStats.SetActive(false);
-
     }
 
     /// <summary>

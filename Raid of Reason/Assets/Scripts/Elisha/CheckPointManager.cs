@@ -26,6 +26,12 @@ public class CheckPointManager : MonoBehaviour
     [SerializeField]
     [Tooltip("How long it takes for the player to respwn.")]
     private float m_spawnDelay;
+    private float m_currentSpawnDelay;
+
+    private void Start()
+    {
+        m_currentSpawnDelay = m_spawnDelay;
+    }
 
     public void RespawnToCheckpoint()
     {
@@ -37,6 +43,7 @@ public class CheckPointManager : MonoBehaviour
                 player.gameObject.transform.position = m_objectiveManager.m_currentObjective.SpawnPoints().transform.position;
                 player.playerState = BaseCharacter.PlayerState.ALIVE;
                 player.m_currentHealth = player.m_maxHealth;
+
             }
         }
     }
@@ -44,5 +51,6 @@ public class CheckPointManager : MonoBehaviour
     public void InvokeRespawn()
     {
         Invoke("RespawnToCheckpoint", m_spawnDelay);
+        Invo
     }
 }

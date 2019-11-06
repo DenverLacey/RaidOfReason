@@ -93,7 +93,6 @@ public class HealthBarUI : MonoBehaviour
             if (m_healthBar.fillAmount <= m_criticalPercentageThreshold)
             {
                 m_criticalHealthImage.enabled = true;
-                //PlayerUIShake(m_character);
                 if (!m_isCritical)
                 {
                     m_isCritical = true;

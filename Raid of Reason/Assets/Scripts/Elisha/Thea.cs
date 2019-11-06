@@ -319,37 +319,6 @@ public class Thea : BaseCharacter
         {
             m_shotCounter = 0;
         }
-
-        #region Old Shooting Mech
-        //m_counter += Time.deltaTime;
-
-        //// If the player presses the right trigger button.
-        //if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1)
-        //{
-        //    //m_skillPopups[0].enabled = true;
-        //    // Start the shot counter.
-        //    m_shotCounter += Time.deltaTime;
-
-        //    if (m_counter > m_projectileDelay)
-        //    {
-        //        // Instantiate projectile object.
-        //        Vector3 desiredPosition = transform.position + transform.forward;
-        //        desiredPosition.y = 1;
-        //        GameObject temp = Instantiate(m_projectile, desiredPosition, transform.rotation);
-        //        // Set projectile damage and move projectile.
-        //        temp.GetComponent<ProjectileMove>().SetDamage(m_damage);
-        //        // Reset counter.
-        //        m_counter = 0f;
-        //    }
-        //}
-        //// If player releases the right trigger button.
-        //else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) < 0.1)
-        //{
-        //    // Reset the counter.
-        //    m_shotCounter = 0f;
-        //    //m_skillPopups[0].enabled = false;
-        //}
-        #endregion
     }
 
     /// <summary>
