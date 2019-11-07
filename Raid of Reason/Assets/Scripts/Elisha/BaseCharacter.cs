@@ -551,5 +551,9 @@ public abstract class BaseCharacter : MonoBehaviour
 
 		playerState = PlayerState.ALIVE;
 		SetHealth(m_maxHealth);
+
+		m_animator.SetFloat("MovX", 0f);
+		m_animator.SetFloat("MovZ", 0f);
+		m_animator.SetBool("Attack", false);
 	}
 }

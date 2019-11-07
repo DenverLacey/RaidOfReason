@@ -368,7 +368,6 @@ public class Kenron : BaseCharacter
 	public override void ResetCharacter()
 	{
 		base.ResetCharacter();
-		m_animator.SetBool("Attack", false);
 		ResetSkill();
 		ResetDash();
 	}
