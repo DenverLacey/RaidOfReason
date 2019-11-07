@@ -322,7 +322,7 @@ public abstract class BaseCharacter : MonoBehaviour
         if (m_currentHealth <= 0.0f)
         {
             if (playerState != PlayerState.DEAD)
-                CheckPointManager.Instance.InvokeRespawn(this);
+                CheckPointManager.Instance.InvokeRespawn(this, transform.position.y);
 
             playerState = PlayerState.DEAD;
         }
@@ -491,16 +491,16 @@ public abstract class BaseCharacter : MonoBehaviour
 
 	public void SoftActivate()
 	{
+        gameObject.SetActive(true);
 		transform.Find("Model").gameObject.SetActive(true);
-		transform.localPosition = new Vector3(transform.localPosition.x, 0, transform.localPosition.z);
 		ResetCharacter();
 	}
 
 	public void SoftDeactivate()
 	{
 		transform.Find("Model").gameObject.SetActive(false);
-		transform.position = transform.position + Vector3.up * 1000f;
-	}
+        gameObject.SetActive(false);
+    }
 
 	public void RumbleController(float duration, float leftIntensity = 1f, float rightIntensity = 1f)
 	{

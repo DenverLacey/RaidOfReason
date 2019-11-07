@@ -33,16 +33,16 @@ public class CheckPointManager : MonoBehaviour
         m_currentSpawnDelay = m_spawnDelay;
     }
 
-    public IEnumerator RespawnToCheckpoint(BaseCharacter character)
+    public IEnumerator RespawnToCheckpoint(BaseCharacter character, float y)
     {
 		yield return new WaitForSeconds(m_spawnDelay);
 
 		character.SoftActivate();
-		character.transform.position = m_objectiveManager.m_currentObjective.SpawnPoints().transform.position;
+		character.transform.position =  new Vector3(m_objectiveManager.m_currentObjective.SpawnPoints().transform.position.x, y, m_objectiveManager.m_currentObjective.SpawnPoints().transform.position.z);
     }
 
-    public void InvokeRespawn(BaseCharacter character)
+    public void InvokeRespawn(BaseCharacter character, float y)
     {
-        StartCoroutine(RespawnToCheckpoint(character));
+        StartCoroutine(RespawnToCheckpoint(character, y));
     }
 }

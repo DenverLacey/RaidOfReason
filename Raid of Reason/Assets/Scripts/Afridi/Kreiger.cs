@@ -61,14 +61,6 @@ public class Kreiger : BaseCharacter
     public float knockBackForce;
 
     [SerializeField]
-    [Tooltip("Increased Radius from Kreigers Roaring Thunder ability")]
-    private float m_RTRadiusIncreased;
-
-    [SerializeField]
-    [Tooltip("Increased Duration from Kreigers Roaring Thunder ability")]
-    private float m_RTDurationIncreased;
-
-    [SerializeField]
     [Tooltip("How much more knockback Kreiger deals with Kinetic Dischage")]
     public float KDForce;
 
@@ -145,7 +137,6 @@ public class Kreiger : BaseCharacter
         triggerIsDown = false;
         islunging = false;
         runOnce = true;
-        skillManager.m_mainSkills[1].m_duration += m_RTDurationIncreased;
         m_Thea = FindObjectOfType<Thea>();
         m_Kenron = FindObjectOfType<Kenron>();
     }
@@ -271,15 +262,15 @@ public class Kreiger : BaseCharacter
         }
         // Ability is active
         isTaunting = true;
-        GameManager.Instance.Kreiger.currentShield = 25; 
+        GameManager.Instance.Kreiger.currentShield += m_SSShieldsGiven; 
 
         if (Utility.IsPlayerAvailable(CharacterType.KENRON)) 
         {
-            GameManager.Instance.Kenron.currentShield = m_SSShieldsGiven;
+            GameManager.Instance.Kenron.currentShield += m_SSShieldsGiven;
         }
         if (Utility.IsPlayerAvailable(CharacterType.THEA))
         {
-            GameManager.Instance.Thea.currentShield = m_SSShieldsGiven;
+            GameManager.Instance.Thea.currentShield += m_SSShieldsGiven;
         }
 
         // taunt enemies
