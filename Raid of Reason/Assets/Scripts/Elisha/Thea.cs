@@ -114,8 +114,6 @@ public class Thea : BaseCharacter
     [SerializeField]
     private GameObject m_waterPrefab;
 
-    public GameObject Ability_UI;
-
 	[SerializeField]
 	[Tooltip("Initial Effect when activating GIft of Poseidon")]
 	private ParticleSystem m_healEffect;
@@ -167,7 +165,6 @@ public class Thea : BaseCharacter
         m_AOERadius = m_AOEMin;
         m_AOEShapeModule = m_HealRadius1.shape;
         m_AOEShapeModule2 = m_healRadius2.shape;
-        IntialiseUpgrades();
         GOPChargeMeter = GameObject.Find("ChargeMeter");
         GOPChargeMeterBar = GameObject.Find("ChargeMeterBar");
         GOPChargeMeter.transform.localScale = new Vector3(0, 1, 0);
@@ -178,15 +175,6 @@ public class Thea : BaseCharacter
         GOPChargeMeterBar.SetActive(false);
         GOPRadiusIndicator.SetActive(false);
         m_GOPRadiusIndicatorInitialScale = GOPRadiusIndicator.transform.localScale;
-    }
-
-    void IntialiseUpgrades()
-    {
-        //if (m_skillUpgrades.Find(skill => skill.name == "Settling Tide"))
-        //{
-        //    skillManager.m_mainSkills[2].m_coolDown /= STReductionRate;
-        //    m_AOEGrowTime /= STChargeRate;
-        //}
     }
 
     // Update is called once per frame
@@ -347,7 +335,10 @@ public class Thea : BaseCharacter
         GOPChargeMeterBar.SetActive(true);
         Debug.DrawLine(transform.position, transform.position + Vector3.forward * m_AOEMax);
         m_isActive = true;
-        Ability_UI.SetActive(false);
+        if (Ability_UI != null)
+        {
+            Ability_UI.SetActive(false);
+        }
         // Checks if player can use the ability.
         if (GameManager.Instance.Thea.gameObject.activeSelf && GOPChargeMeter)
         {

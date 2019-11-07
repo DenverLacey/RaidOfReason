@@ -179,6 +179,10 @@ public class Kenron : BaseCharacter
         if (this.gameObject != null)
         {
 			RestrictControlsForSeconds(m_CFMovementDelay, MovementAxis.All);
+            if (Ability_UI != null)
+            {
+                Ability_UI.SetActive(false);
+            }
 
             if (skillDuration >= skillManager.m_mainSkills[0].m_duration)
             {

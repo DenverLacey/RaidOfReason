@@ -165,14 +165,6 @@ public class Kreiger : BaseCharacter
         // Allows Kreiger to perform Melee Punches 
         base.Update();
         Punch();
-        //if (!isActive && abilityUI.gameObject != null)
-        //{
-        //    abilityUI.Play();
-        //}
-        //else
-        //{
-        //    abilityUI.Stop();
-        //}
 
     }
 
@@ -273,13 +265,19 @@ public class Kreiger : BaseCharacter
     public void Spott(float skillDuration)
     {
 		RestrictControlsForSeconds(m_tauntMovementDelay, MovementAxis.All);
-
+        if (Ability_UI != null)
+        {
+            Ability_UI.SetActive(false);
+        }
         // Ability is active
         isTaunting = true;
 
-        if (GameManager.Instance.DeadPlayers.Count <= 0)
+        if (Utility.IsPlayerAvailable(CharacterType.KENRON)) 
         {
             GameManager.Instance.Kenron.currentShield = m_SSShieldsGiven;
+        }
+        if (Utility.IsPlayerAvailable(CharacterType.THEA))
+        {
             GameManager.Instance.Thea.currentShield = m_SSShieldsGiven;
         }
 

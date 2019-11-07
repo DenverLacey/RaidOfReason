@@ -50,6 +50,7 @@ public abstract class BaseCharacter : MonoBehaviour
     [SerializeField]
     [Tooltip("How fast will the player move?")]
     protected float m_movementSpeed;
+    public GameObject Ability_UI;
 
     protected float m_currentMovement;
 

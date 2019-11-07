@@ -105,6 +105,13 @@ public class SkillManager : MonoBehaviour {
                     m_mainSkills[0].onCooldown = true;
                 }
             }
+            if (m_mainSkills[0].readyToDisplay && !m_mainSkills[0].onCooldown)
+            {
+                if (GameManager.Instance.Kenron.Ability_UI != null)
+                {
+                    GameManager.Instance.Kenron.Ability_UI.SetActive(true);
+                }
+            }
         }
 
         // Empty Check
@@ -125,6 +132,13 @@ public class SkillManager : MonoBehaviour {
                     m_mainSkills[1].m_currentDuration = 0;
                     m_mainSkills[1].active = true;
                     m_mainSkills[1].onCooldown = true;
+                }
+                if (m_mainSkills[1].readyToDisplay && !m_mainSkills[1].onCooldown)
+                {
+                    if (GameManager.Instance.Kreiger.Ability_UI != null)
+                    {
+                        GameManager.Instance.Kreiger.Ability_UI.SetActive(true);
+                    }
                 }
             }
         }
@@ -156,7 +170,10 @@ public class SkillManager : MonoBehaviour {
                 }
                 if (m_mainSkills[2].readyToDisplay && !m_mainSkills[2].onCooldown)
                 {
-                    GameManager.Instance.Thea.Ability_UI.SetActive(true);
+                    if (GameManager.Instance.Thea.Ability_UI != null)
+                    {
+                        GameManager.Instance.Thea.Ability_UI.SetActive(true);
+                    }
                 }
             }
         }
