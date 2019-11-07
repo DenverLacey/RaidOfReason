@@ -25,22 +25,6 @@ public class BarrierManager : MonoBehaviour
                 Barriers[0].SetActive(false);
             }
         }
-        if (m_ObjManager.m_currentObjective.name == "Protect The Crystal_1")
-        {
-            Barriers[1].SetActive(true);
-            if (m_ObjManager.ObjectiveCompleted == true)
-            {
-                Barriers[1].SetActive(false);
-            }
-        }
-        if (m_ObjManager.m_currentObjective.name == "Countdown To Destruction_2")
-        {
-            Barriers[2].SetActive(true);
-            if (m_ObjManager.ObjectiveCompleted == true)
-            {
-                Barriers[2].SetActive(false);
-            }
-        }
     }
 
 }

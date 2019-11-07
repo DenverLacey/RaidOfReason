@@ -213,33 +213,28 @@ public class Thea : BaseCharacter
             GOPChargeMeterBar.transform.LookAt(camera);
         }
 
-        //if (!m_isActive && abilityUI.gameObject != null)
-        //{
-        //    abilityUI.Play();
-        //}
-        //else
-        //{
-        //    abilityUI.Stop();
-        //}
-
-        //float healthcomparison = GameManager.Instance.Kenron.m_currentHealth + GameManager.Instance.Kreiger.m_currentHealth;
-
-        //if (healthcomparison <= OAAllyHealthChecks[0])
-        //{
-        //    m_projectileDelay = OAFireRateIncreased[0];
-        //}
-        //if (healthcomparison <= OAAllyHealthChecks[1])
-        //{
-        //    m_projectileDelay = OAFireRateIncreased[1];
-        //}
-        //if (healthcomparison <= OAAllyHealthChecks[2])
-        //{
-        //    m_projectileDelay = OAFireRateIncreased[2];
-        //}
-        //if (healthcomparison <= OAAllyHealthChecks[3])
-        //{
-        //    m_projectileDelay = OAFireRateIncreased[3];
-        //}
+        #region Thea Fire Rate Change
+        float healthcomparison = GameManager.Instance.Kenron.m_currentHealth + GameManager.Instance.Kreiger.m_currentHealth;
+        if (GameManager.Instance.DeadPlayers.Count <= 0)
+        {
+            if (healthcomparison <= OAAllyHealthChecks[0])
+            {
+                m_projectileDelay = OAFireRateIncreased[0];
+            }
+            if (healthcomparison <= OAAllyHealthChecks[1])
+            {
+                m_projectileDelay = OAFireRateIncreased[1];
+            }
+            if (healthcomparison <= OAAllyHealthChecks[2])
+            {
+                m_projectileDelay = OAFireRateIncreased[2];
+            }
+            if (healthcomparison <= OAAllyHealthChecks[3])
+            {
+                m_projectileDelay = OAFireRateIncreased[3];
+            }
+        }
+        #endregion
 
         if (GameManager.Instance.Thea.playerState == PlayerState.DEAD)
         {
@@ -472,7 +467,6 @@ public class Thea : BaseCharacter
         GOPChargeMeter.SetActive(false);
         GOPChargeMeterBar.SetActive(false);
         GOPRadiusIndicator.SetActive(false);
-        //m_AOEShapeModule.radius = 0;
     }
 
     private IEnumerator HealthOverTime()
