@@ -101,7 +101,7 @@ public class HealthBarUI : MonoBehaviour
                 
                 if (m_healthBar.fillAmount <= 0)
                 {
-                    m_criticalHealthImage.enabled = false;
+                    m_criticalHealthImage.color = new Color(m_criticalHealthImage.color.r, m_criticalHealthImage.color.g, m_criticalHealthImage.color.b, 0);
                     m_criticalHealthImage.DOKill(true);
                 }
             }
