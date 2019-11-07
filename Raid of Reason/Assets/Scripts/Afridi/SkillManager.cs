@@ -17,6 +17,8 @@ public class Skills
 {
 	public UnityEvent m_reset;
 
+    public delegate void OnDone();
+
     [Tooltip("Time until Skill can be used again")]
 	public float m_coolDown;
 
@@ -39,6 +41,8 @@ public class Skills
     [HideInInspector]
     public bool onCooldown = false;
 
+    public OnDone onDone;
+
     public void RunTimer()
 	{
 		m_currentCoolDown += Time.deltaTime;
@@ -49,6 +53,7 @@ public class Skills
         if (m_currentCoolDown >= m_coolDown)
         {
             onCooldown = false;
+            onDone();
         }
         if (m_currentDuration >= m_duration && active)
         {
