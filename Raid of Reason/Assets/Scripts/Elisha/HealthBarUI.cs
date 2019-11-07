@@ -62,7 +62,6 @@ public class HealthBarUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // If player is true.
         if (m_character)
         {
             if (m_character.m_currentHealth > 0)
@@ -98,10 +97,10 @@ public class HealthBarUI : MonoBehaviour
                     m_isCritical = true;
                     m_criticalHealthImage.DOColor(imageWithAlpha, m_duration).SetLoops(-1, LoopType.Yoyo);
                 }
-                
+
                 if (m_healthBar.fillAmount <= 0)
                 {
-                    m_criticalHealthImage.color = new Color(m_criticalHealthImage.color.r, m_criticalHealthImage.color.g, m_criticalHealthImage.color.b, 0);
+                    m_criticalHealthImage.color = new Color(m_criticalHealthImage.color.r, m_criticalHealthImage.color.g, m_criticalHealthImage.color.b, 0f);
                     m_criticalHealthImage.DOKill(true);
                 }
             }

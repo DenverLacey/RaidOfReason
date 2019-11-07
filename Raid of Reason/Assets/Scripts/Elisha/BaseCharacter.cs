@@ -334,7 +334,7 @@ public abstract class BaseCharacter : MonoBehaviour
         // checks if all players are dead
         if (GameManager.Instance.AlivePlayers.Count == 0)
         {
-            StartCoroutine(DeathScreenDelay(1));
+            StartCoroutine(DeathScreenDelay(0.1f));
         }
 
 		onTakeDamage?.Invoke(this);

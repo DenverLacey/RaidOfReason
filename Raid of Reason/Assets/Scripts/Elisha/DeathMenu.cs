@@ -33,7 +33,6 @@ public class DeathMenu : MonoBehaviour
         m_isDeath = true;
         m_p1Cursor.gameObject.SetActive(true);
         m_DeathMenu.SetActive(true);
-        //m_miniMap.SetActive(false);
     }
 
     public void RestartGame()

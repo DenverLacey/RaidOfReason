@@ -86,7 +86,7 @@ public class SkillManager : MonoBehaviour {
             return;
 
         // Empty Check
-        if (GameManager.Instance.Kenron != null)
+        if (GameManager.Instance.Kenron.gameObject.activeInHierarchy)
         {
             // If the first players left trigger is pressed
             if (XCI.GetAxis(XboxAxis.LeftTrigger, GameManager.Instance.Kenron.controller) > 0.1f)
@@ -115,7 +115,7 @@ public class SkillManager : MonoBehaviour {
         }
 
         // Empty Check
-        if (GameManager.Instance.Kreiger != null)
+        if (GameManager.Instance.Kreiger.gameObject.activeInHierarchy)
         {
             // If the second players left trigger is pressed
             if (XCI.GetAxis(XboxAxis.LeftTrigger, GameManager.Instance.Kreiger.controller) > 0.1f)
@@ -144,7 +144,7 @@ public class SkillManager : MonoBehaviour {
         }
 
         // Empty Check
-        if (GameManager.Instance.Thea != null)
+        if (GameManager.Instance.Thea.gameObject.activeInHierarchy)
         {
             // If the third players left trigger is pressed
             if (XCI.GetAxis(XboxAxis.LeftTrigger, GameManager.Instance.Thea.controller) > 0.1f && GameManager.Instance.Thea.playerState == BaseCharacter.PlayerState.ALIVE)
