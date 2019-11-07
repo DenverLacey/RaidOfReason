@@ -19,6 +19,8 @@ public class HourglassIndicator : MonoBehaviour
 	private SpriteRenderer m_hourglass;
 	private BaseCharacter m_character;
 
+	Vector3 m_offset;
+
 	private float m_timer;
 	private int m_phase;
 	private bool m_alreadyActivated;
@@ -50,6 +52,8 @@ public class HourglassIndicator : MonoBehaviour
 		m_skill = m_skillManager.m_mainSkills[(int)m_character.CharacterType];
 
 		m_skill.onDone = OnSkillCooldownDone;
+
+		m_offset = transform.position - m_character.transform.position;
     }
 
     // Update is called once per frame
@@ -57,8 +61,8 @@ public class HourglassIndicator : MonoBehaviour
     {
 		// move with character
 		Vector3 position = transform.position;
-		position.x = m_character.transform.position.x;
-		position.z = m_character.transform.position.z;
+		position.x = m_character.transform.position.x + m_offset.x;
+		position.z = m_character.transform.position.z + m_offset.z;
 		transform.position = position;
 
         if (XCI.GetAxis(XboxAxis.LeftTrigger, m_character.controller) > 0.01f && m_alreadyActivated == false && m_triggerDown == false)
