@@ -39,19 +39,10 @@ public class CheckPointManager : MonoBehaviour
 
 		character.SoftActivate();
 		character.transform.position = m_objectiveManager.m_currentObjective.SpawnPoints().transform.position;
-
-        //foreach (BaseCharacter player in GameManager.Instance.DeadPlayers)
-        //{
-        //    if (m_objectiveManager.m_currentObjective.name == m_objectiveManager.m_objectives[0].name)
-        //    {
-        //        player.SoftActivate();
-        //        player.gameObject.transform.position = m_objectiveManager.m_currentObjective.SpawnPoints().transform.position;
-        //    }
-        //}
     }
 
     public void InvokeRespawn(BaseCharacter character)
     {
-		StartCoroutine(RespawnToCheckpoint(character));
+        StartCoroutine(RespawnToCheckpoint(character));
     }
 }

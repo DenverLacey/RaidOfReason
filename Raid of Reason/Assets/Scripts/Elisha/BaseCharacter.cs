@@ -221,11 +221,6 @@ public abstract class BaseCharacter : MonoBehaviour
 				SoftDeactivate();
                 break;
         }
-
-        if (playerState == PlayerState.DEAD)
-        {
-            CheckPointManager.Instance.InvokeRespawn(this);
-        }
     }
 
     /// <summary>
@@ -325,7 +320,10 @@ public abstract class BaseCharacter : MonoBehaviour
         // If player has no health.
         if (m_currentHealth <= 0.0f)
         {
-           playerState = PlayerState.DEAD;
+            if (playerState != PlayerState.DEAD)
+                CheckPointManager.Instance.InvokeRespawn(this);
+
+            playerState = PlayerState.DEAD;
         }
 		else
 		{
