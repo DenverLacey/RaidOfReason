@@ -277,12 +277,9 @@ public class Kreiger : BaseCharacter
         // Ability is active
         isTaunting = true;
 
-        if (GameManager.Instance.Kenron.playerState != PlayerState.DEAD)
+        if (GameManager.Instance.DeadPlayers.Count <= 0)
         {
             GameManager.Instance.Kenron.currentShield = m_SSShieldsGiven;
-        }
-        if (GameManager.Instance.Thea.playerState != PlayerState.DEAD)
-        {
             GameManager.Instance.Thea.currentShield = m_SSShieldsGiven;
         }
 
