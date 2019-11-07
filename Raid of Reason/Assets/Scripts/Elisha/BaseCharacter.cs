@@ -224,7 +224,7 @@ public abstract class BaseCharacter : MonoBehaviour
 
         if (playerState == PlayerState.DEAD)
         {
-            CheckPointManager.Instance.InvokeRespawn();
+            CheckPointManager.Instance.InvokeRespawn(this);
         }
     }
 

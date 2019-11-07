@@ -33,21 +33,25 @@ public class CheckPointManager : MonoBehaviour
         m_currentSpawnDelay = m_spawnDelay;
     }
 
-    public void RespawnToCheckpoint()
+    public IEnumerator RespawnToCheckpoint(BaseCharacter character)
     {
-        foreach (BaseCharacter player in GameManager.Instance.DeadPlayers)
-        {
-            if (m_objectiveManager.m_currentObjective.name == m_objectiveManager.m_objectives[0].name)
-            {
-                player.SoftActivate();
-                player.gameObject.transform.position = m_objectiveManager.m_currentObjective.SpawnPoints().transform.position;
-            }
-        }
+		yield return new WaitForSeconds(m_spawnDelay);
+
+		character.SoftActivate();
+		character.transform.position = m_objectiveManager.m_currentObjective.SpawnPoints().transform.position;
+
+        //foreach (BaseCharacter player in GameManager.Instance.DeadPlayers)
+        //{
+        //    if (m_objectiveManager.m_currentObjective.name == m_objectiveManager.m_objectives[0].name)
+        //    {
+        //        player.SoftActivate();
+        //        player.gameObject.transform.position = m_objectiveManager.m_currentObjective.SpawnPoints().transform.position;
+        //    }
+        //}
     }
 
-    public void InvokeRespawn()
+    public void InvokeRespawn(BaseCharacter character)
     {
-        Invoke("RespawnToCheckpoint", m_spawnDelay);
-		//Invo
+		StartCoroutine(RespawnToCheckpoint(character));
     }
 }
