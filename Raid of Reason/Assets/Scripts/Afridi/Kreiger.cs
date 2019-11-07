@@ -271,6 +271,7 @@ public class Kreiger : BaseCharacter
         }
         // Ability is active
         isTaunting = true;
+        GameManager.Instance.Kreiger.currentShield = 25; 
 
         if (Utility.IsPlayerAvailable(CharacterType.KENRON)) 
         {
