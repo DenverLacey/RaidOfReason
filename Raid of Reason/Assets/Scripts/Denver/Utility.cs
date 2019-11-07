@@ -58,4 +58,20 @@ public static class Utility
 			character.m_currentHealth > 0f && 
 			character.playerState == BaseCharacter.PlayerState.ALIVE;
 	}
+
+	public static bool IsPlayerAvailable(CharacterType characterType)
+	{
+		switch (characterType)
+		{
+			case CharacterType.KENRON:
+				return GameManager.Instance.Kenron != null && GameManager.Instance.Kenron.playerState == BaseCharacter.PlayerState.ALIVE;
+
+			case CharacterType.KREIGER:
+				return GameManager.Instance.Kreiger != null && GameManager.Instance.Kreiger.playerState == BaseCharacter.PlayerState.ALIVE;
+
+			case CharacterType.THEA:
+				return GameManager.Instance.Thea != null && GameManager.Instance.Thea.playerState == BaseCharacter.PlayerState.ALIVE;
+		}
+		return false;
+	}
 }
