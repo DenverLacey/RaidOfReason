@@ -38,6 +38,6 @@ public class Portal : MonoBehaviour
         KenronCheck = false;
         NashornCheck = false;
         TheaCheck = false;
-        SceneManager.LoadScene(buildIndex);
+		LevelManager.FadeLoadLevel(buildIndex);
     }
 }
