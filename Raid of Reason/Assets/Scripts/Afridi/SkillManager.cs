@@ -53,7 +53,12 @@ public class Skills
         if (m_currentCoolDown >= m_coolDown)
         {
             onCooldown = false;
-            onDone();
+			//onDone?.Invoke();
+
+			if (onDone != null)
+			{
+				onDone.Invoke();
+			}
         }
         if (m_currentDuration >= m_duration && active)
         {

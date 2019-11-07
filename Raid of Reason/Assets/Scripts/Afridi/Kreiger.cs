@@ -81,9 +81,6 @@ public class Kreiger : BaseCharacter
     [Tooltip("Checks if Kreigers Skill is Active")]
     public bool isTaunting;
 
-    // Skill is active check
-    public bool isActive;
-
     [Header("--Particles And UI--")]
 
     [SerializeField]
@@ -133,7 +130,7 @@ public class Kreiger : BaseCharacter
         LeftGauntlet.enabled = false;
         RightGauntlet.enabled = false;
         isTaunting = false;
-        isActive = false;
+        isSkillActive = false;
         triggerIsDown = false;
         islunging = false;
         runOnce = true;
@@ -284,7 +281,7 @@ public class Kreiger : BaseCharacter
             }
 		}
 
-        isActive = true;
+        isSkillActive = true;
 
         m_tauntParticle.Play();
         StartCoroutine(MachinasDareVisual());
@@ -310,7 +307,7 @@ public class Kreiger : BaseCharacter
 
     public void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Enemy" && isActive == true)
+        if (collision.gameObject.tag == "Enemy" && isSkillActive == true)
         {
              collision.gameObject.GetComponent<EnemyData>().TakeDamage(SSDamageTaken, GameManager.Instance.Kreiger);
         }

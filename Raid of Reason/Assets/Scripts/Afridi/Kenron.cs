@@ -54,9 +54,6 @@ public class Kenron : BaseCharacter
 
     [Header("--Skills--")]
 
-    [Tooltip("Checks if Kenrons Skill is Active")]
-    public bool isActive = false;
-
     [SerializeField]
     [Tooltip("Kenrons Minimum Damage Boost whilst in Chaos Flame")]
     private float m_minCFDamage;
@@ -186,7 +183,7 @@ public class Kenron : BaseCharacter
 
             if (skillDuration >= skillManager.m_mainSkills[0].m_duration)
             {
-                isActive = true;
+                isSkillActive = true;
                 StartCoroutine(ChaosFlameVisual());
                 m_kenronParticle.Play();
                 // DoRumble();
@@ -306,7 +303,7 @@ public class Kenron : BaseCharacter
             if (skillManager.m_mainSkills[0].m_currentDuration >= skillManager.m_mainSkills[0].m_duration)
             {
                 // Resets Stats and Skill
-                isActive = false;
+                isSkillActive = false;
                 m_currentCharges = m_charges;
                 SetDamage(m_minDamage, m_maxDamage);
                 SetSpeed(m_movementSpeed);

@@ -127,7 +127,7 @@ public abstract class BaseCharacter : MonoBehaviour
     public MultiTargetCamera m_camera;
     protected Animator m_animator;
     protected float m_vulnerability;
-    protected bool m_bActive;
+	public bool isSkillActive;
     protected float m_rotationSpeed = 250.0f;
     protected Vector3 m_direction;
     private ParticleSystem.ColorOverLifetimeModule m_original;
@@ -151,7 +151,7 @@ public abstract class BaseCharacter : MonoBehaviour
         m_maxcurrentDamage = m_maxDamage;
         m_vulnerability = 1.0f;
         m_controllerOn = true;
-        m_bActive = false;
+        isSkillActive = false;
         currentShield = 0;
         skillManager = FindObjectOfType<SkillManager>();
         m_original = m_spriteRend.colorOverLifetime;

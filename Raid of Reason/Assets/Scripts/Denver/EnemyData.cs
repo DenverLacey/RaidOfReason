@@ -311,7 +311,7 @@ public class EnemyData : MonoBehaviour
 		}
 
         // Kenros Skill Merge
-        if (character.tag == "Kenron" && GameManager.Instance.Kenron.isActive)
+        if (character.tag == "Kenron" && GameManager.Instance.Kenron.isSkillActive)
         {
             GameManager.Instance.Kenron.m_currentHealth = GameManager.Instance.Kenron.m_currentHealth + GameManager.Instance.Kenron.m_healthGained;
             GameManager.Instance.Kenron.skillManager.m_mainSkills[0].m_currentDuration -= GameManager.Instance.Kenron.m_RTDurationIncreased;

@@ -134,7 +134,6 @@ public class Thea : BaseCharacter
     private LayerMask m_layerMask;
     private float m_shotCounter;
     private float m_counter;
-    private bool m_isActive;
     private float m_AOERadius;
     private float m_AOETimer;
     private float m_particleRadius;
@@ -159,7 +158,7 @@ public class Thea : BaseCharacter
     {
         base.Awake();
         CharacterType = CharacterType.THEA;
-        m_isActive = false;
+        isSkillActive = false;
         m_isHealthRegen = false;
         m_AOETimer = 0f;
         m_AOERadius = m_AOEMin;
@@ -286,7 +285,7 @@ public class Thea : BaseCharacter
 	public void Projectile()
     {
         m_counter += Time.deltaTime;
-        if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1f && !m_isActive)
+        if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1f && !isSkillActive)
         {
             m_shotCounter += Time.deltaTime;
 
@@ -334,7 +333,7 @@ public class Thea : BaseCharacter
         GOPChargeMeter.SetActive(true);
         GOPChargeMeterBar.SetActive(true);
         Debug.DrawLine(transform.position, transform.position + Vector3.forward * m_AOEMax);
-        m_isActive = true;
+        isSkillActive = true;
         if (Ability_UI != null)
         {
             Ability_UI.SetActive(false);
@@ -372,7 +371,7 @@ public class Thea : BaseCharacter
             }
 
             // Checks if ability has been used.
-            if (m_isActive == false)
+            if (isSkillActive == false)
             {
                 return;
             }
@@ -451,7 +450,7 @@ public class Thea : BaseCharacter
     public void ResetGiftOfPoseidon()
     {
         m_AOETimer = 0f;
-        m_isActive = false;
+        isSkillActive = false;
         m_AOERadius = 0;
         m_movementSpeed = m_currentMovement;
         GOPMaxCharge.SetActive(false);
