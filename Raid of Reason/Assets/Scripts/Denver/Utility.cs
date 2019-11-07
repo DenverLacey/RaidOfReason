@@ -40,25 +40,6 @@ public static class Utility
 		return tag == "Kenron" || tag == "Thea" || tag == "Kreiger";
 	}
 
-	/// <summary>
-	/// Returns true if player should be able to be attacked or not
-	/// </summary>
-	/// <param name="character">
-	/// Player character that is being queried
-	/// </param>
-	/// <returns>
-	/// True if player can be attacked and false otherwise
-	/// </returns>
-	public static bool PlayerIsAttackable(BaseCharacter character)
-	{
-		return 
-			character != null && 
-			character.gameObject.activeSelf && 
-			(character.CanMove || character.CanRotate) && 
-			character.m_currentHealth > 0f && 
-			character.playerState == BaseCharacter.PlayerState.ALIVE;
-	}
-
 	public static bool IsPlayerAvailable(CharacterType characterType)
 	{
 		switch (characterType)

@@ -24,7 +24,7 @@ public class TauntEvent : Behaviour
     /// </returns>
     public override Result Execute(EnemyData agent) 
 	{
-		if (GameManager.Instance.Kreiger && GameManager.Instance.Kreiger.isTaunting && agent.Taunted)
+		if (Utility.IsPlayerAvailable(CharacterType.KREIGER) && GameManager.Instance.Kreiger.isTaunting && agent.Taunted)
 		{
 			agent.Target = GameManager.Instance.Kreiger.transform.position;
 			agent.TargetPlayer = GameManager.Instance.Kreiger;

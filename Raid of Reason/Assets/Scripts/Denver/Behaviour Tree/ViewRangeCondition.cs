@@ -28,11 +28,8 @@ public class ViewRangeCondition : Behaviour
         Vector3 closestTar = Vector3.zero;
 		BaseCharacter closestCharacter = null;
 
-        foreach (BaseCharacter player in GameManager.Instance.Players)
+        foreach (BaseCharacter player in GameManager.Instance.AlivePlayers)
 		{
-			if (!Utility.PlayerIsAttackable(player))
-				continue;
-
 			float sqrDistance = (player.transform.position - agent.transform.position).sqrMagnitude;
 
 			bool isPriority = false;

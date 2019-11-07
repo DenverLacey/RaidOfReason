@@ -43,20 +43,12 @@ public class SuicideEnemyAttack : Behaviour
 
 		if (agent.AttackTimer >= agent.AttackCooldown)
 		{
-			foreach (BaseCharacter p in GameManager.Instance.Players)
+			foreach (BaseCharacter p in GameManager.Instance.AlivePlayers)
 			{
-				if (!p) { continue; }
 				float sqrDistance = (p.transform.position - agent.transform.position).sqrMagnitude;
 				if (sqrDistance <= agent.AttackRange.max * agent.AttackRange.max)
 				{
 					p.TakeDamage(agent.AttackDamage);
-					if (p.tag == "Kreiger")
-					{
-                        //if (GameManager.Instance.Kreiger.isActive && GameManager.Instance.Kreiger.m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
-                        //{
-                        //    agent.TakeDamage(GameManager.Instance.Kreiger.SSDamageTaken, GameManager.Instance.Kreiger);
-                        //}
-                    }
 				}
 			}
 
