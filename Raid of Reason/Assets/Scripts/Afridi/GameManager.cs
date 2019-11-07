@@ -144,6 +144,11 @@ public class GameManager : MonoBehaviour
         }
 	}
 
+    private void Update()
+    {
+        Cursor.visible = false;
+    }
+
     /// <summary>
     /// Lets characters give a reference to themselves to the GameManager
     /// </summary>
