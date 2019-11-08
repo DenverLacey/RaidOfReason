@@ -24,7 +24,6 @@ public class DeathMenu : MonoBehaviour
         m_p1Cursor.SetController(1);
         m_p1InactivePosition = transform.position;
         m_DeathMenu.SetActive(false);
-        m_miniMap = GameObject.Find("Minimap_Outline");
     }
 
     public void DeathScreen()

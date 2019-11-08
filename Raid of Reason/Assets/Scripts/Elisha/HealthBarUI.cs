@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 
 /* 
- * Author: Elisha Anagnostakis, Afridi Rahim
+ * Author: Elisha Anagnostakis
  * Description: Handles updating each characters’ health bar.
  */
 

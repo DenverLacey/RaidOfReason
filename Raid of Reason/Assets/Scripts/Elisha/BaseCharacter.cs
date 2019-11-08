@@ -333,21 +333,21 @@ public abstract class BaseCharacter : MonoBehaviour
 			RumbleController(.1f);
 		}
        
-        // checks if all players are dead
-        if (GameManager.Instance.AlivePlayers.Count == 0)
-        {
-            StartCoroutine(DeathScreenDelay(0.1f));
-        }
+        //// checks if all players are dead
+        //if (GameManager.Instance.DeadPlayers.Count == 3)
+        //{
+        //    StartCoroutine(DeathScreenDelay(1f));
+        //}
 
 		onTakeDamage?.Invoke(this);
 	} 
 
-    public IEnumerator DeathScreenDelay(float duration)
-    {
-        yield return new WaitForSeconds(duration);
-        m_deathMenu.DeathScreen();
-        m_playerStats.SetActive(false);
-    }
+    //public IEnumerator DeathScreenDelay(float duration)
+    //{
+    //    yield return new WaitForSeconds(duration);
+    //    m_playerStats.SetActive(false);
+    //    m_deathMenu.DeathScreen();
+    //}
 
     /// <summary>
     /// Sets damage to a float value.
