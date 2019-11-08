@@ -30,7 +30,7 @@ public class ProtectionObjective : BaseObjective
         return null;
     }
 
-    public override void Awake()
+    public override void Init()
     {
         m_currentHealth = health;
         m_currentTimer = timer;

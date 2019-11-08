@@ -63,7 +63,7 @@ public class OffscreenCameraController : MonoBehaviour
     void Update()
     {
 		// if character is not playing
-		if (Utility.IsPlayerAvailable(m_character.CharacterType))
+		if (m_character.playerState == BaseCharacter.PlayerState.NP)
 		{
 			gameObject.SetActive(false);
 			return;

@@ -19,7 +19,7 @@ public class BossObjective : BaseObjective
     private GameManager manager;
     public GameObject SpawnPoint;
 
-    public override void Awake()
+    public override void Init()
     {
         manager = FindObjectOfType<GameManager>();
         Boss = GameObject.Find("Boss");

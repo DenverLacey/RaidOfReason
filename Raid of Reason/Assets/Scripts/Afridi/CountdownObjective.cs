@@ -27,7 +27,7 @@ public class CountdownObjective : BaseObjective
     // Current Timer
     private float currentTimer;
 
-    public override void Awake()
+    public override void Init()
     {
         currentTimer = maxtimer;
         spawnPoint = GameObject.Find(spawnPointName);

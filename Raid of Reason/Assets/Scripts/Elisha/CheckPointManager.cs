@@ -37,8 +37,12 @@ public class CheckPointManager : MonoBehaviour
     {
 		yield return new WaitForSeconds(m_spawnDelay);
 
-		character.SoftActivate();
-		character.transform.position =  new Vector3(m_objectiveManager.m_currentObjective.SpawnPoints().transform.position.x, y, m_objectiveManager.m_currentObjective.SpawnPoints().transform.position.z);
+        if (m_objectiveManager.m_currentObjective.SpawnPoints() != null)
+        {
+            character.SoftActivate();
+            character.transform.position = new Vector3(m_objectiveManager.m_currentObjective.SpawnPoints().transform.position.x, y, m_objectiveManager.m_currentObjective.SpawnPoints().transform.position.z);
+            //character.transform.position =  new Vector3(-1,0,-75);
+        }
     }
 
     public void InvokeRespawn(BaseCharacter character, float y)

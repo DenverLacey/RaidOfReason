@@ -20,7 +20,7 @@ public class Level0Objective : BaseObjective
     private GameObject portal;
     private GameObject Zone;
 
-    public override void Awake()
+    public override void Init()
     {
         portal = GameObject.Find(portalName);
         if (portal != null)

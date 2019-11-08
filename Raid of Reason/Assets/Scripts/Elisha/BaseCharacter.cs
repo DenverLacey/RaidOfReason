@@ -89,6 +89,7 @@ public abstract class BaseCharacter : MonoBehaviour
 
     // Player Colliders
     private CapsuleCollider m_playerCollider;
+    public ObjectiveManager man;
 
     [Tooltip("The Skill Manager that manages the skills of the players")]
     public SkillManager skillManager;
@@ -152,6 +153,7 @@ public abstract class BaseCharacter : MonoBehaviour
         m_vulnerability = 1.0f;
         m_controllerOn = true;
         isSkillActive = false;
+        man = FindObjectOfType<ObjectiveManager>();
         currentShield = 0;
         skillManager = FindObjectOfType<SkillManager>();
         m_original = m_spriteRend.colorOverLifetime;
@@ -180,7 +182,7 @@ public abstract class BaseCharacter : MonoBehaviour
     /// </summary>
     protected virtual void Update()
     {
-
+        DebugTools.LogVariable("C1", man.m_currentObjective.SpawnPoints());
         if (m_pauseInfo.m_isPaused)
             return;
 
@@ -330,7 +332,7 @@ public abstract class BaseCharacter : MonoBehaviour
 		{
 			RumbleController(.1f);
 		}
-
+       
         // checks if all players are dead
         if (GameManager.Instance.AlivePlayers.Count == 0)
         {
