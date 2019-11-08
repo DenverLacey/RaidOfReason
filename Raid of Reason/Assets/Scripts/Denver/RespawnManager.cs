@@ -31,17 +31,19 @@ public class RespawnManager : MonoBehaviour
 		if (ms_instance == null)
 		{
 			ms_instance = this;
-
-			foreach (var player in GameManager.Instance.Players)
-			{
-				m_respawnInformation.Add(new RespawnInformation(player, player.transform.position));
-			}
-
 			DontDestroyOnLoad(gameObject);
 		}
 		else
 		{
 			Destroy(gameObject);
+		}
+	}
+
+	private void Start()
+	{
+		foreach (var player in GameManager.Instance.Players)
+		{
+			m_respawnInformation.Add(new RespawnInformation(player, player.transform.position));
 		}
 	}
 
