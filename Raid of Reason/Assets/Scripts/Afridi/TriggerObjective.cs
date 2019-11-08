@@ -27,17 +27,17 @@ public class TriggerObjective : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Kenron")
+        if (other.tag == "Kenron" && Utility.IsPlayerAvailable(CharacterType.KENRON))
         {
             RespawnManager.UpdateSpawnPoint(respawnPoint.transform.position);
             KenronPass = true;
         }
-        if (other.tag == "Kreiger")
+        if (other.tag == "Kreiger" && Utility.IsPlayerAvailable(CharacterType.KREIGER))
         {
             RespawnManager.UpdateSpawnPoint(respawnPoint.transform.position);
             NashornPass = true;
         }
-        if (other.tag == "Thea")
+        if (other.tag == "Thea" && Utility.IsPlayerAvailable(CharacterType.THEA))
         {
             RespawnManager.UpdateSpawnPoint(respawnPoint.transform.position);
             TheaPass = true;

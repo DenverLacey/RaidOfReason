@@ -28,6 +28,11 @@ public class CrystalSuicideBehaviourTree : BehaviourTree
 
     void Init(Scene s, LoadSceneMode l)
     {
+        if (s.name != "The level")
+        {
+            return;
+        }
+
         m_objectPosition = GameObject.Find(m_objectName).transform.position;
 
         // create components for behaviour tree

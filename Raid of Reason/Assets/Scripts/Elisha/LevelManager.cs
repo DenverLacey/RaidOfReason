@@ -36,7 +36,7 @@ public class LevelManager : MonoBehaviour
 
     public void Start()
     {
-        animator = FindObjectOfType<Animator>();
+        animator = GetComponent<Animator>();
         SceneManager.sceneLoaded += FadeFromBlack;
     }
 
