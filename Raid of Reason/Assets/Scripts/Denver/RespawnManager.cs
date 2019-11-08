@@ -6,13 +6,11 @@ public class RespawnManager : MonoBehaviour
 {
 	private class RespawnInformation
 	{
-		public BaseCharacter character;
 		public Vector3 respawnPosition;
 		public bool isRespawning;
 
-		public RespawnInformation(BaseCharacter a_character, Vector3 a_respawnPosition)
+		public RespawnInformation(Vector3 a_respawnPosition)
 		{
-			character = a_character;
 			respawnPosition = a_respawnPosition;
 			isRespawning = false;
 		}
@@ -35,21 +33,18 @@ public class RespawnManager : MonoBehaviour
     private DeathMenu m_deathScreen;
 
 	private static RespawnManager ms_instance;
-	private static List<RespawnInformation> m_respawnInformation = new List<RespawnInformation>();
+	private static Dictionary<BaseCharacter, RespawnInformation> m_respawnInformation = new Dictionary<BaseCharacter, RespawnInformation>();
 
 	private void Awake()
 	{
-		if (ms_instance == null)
-		{
-			ms_instance = this;
-		}
+		ms_instance = this;
 	}
 
 	private void Start()
 	{
 		foreach (var player in GameManager.Instance.Players)
 		{
-			m_respawnInformation.Add(new RespawnInformation(player, player.transform.position));
+			m_respawnInformation.Add(player, new RespawnInformation(player.transform.position));
 		}
 	}
 
@@ -62,29 +57,28 @@ public class RespawnManager : MonoBehaviour
 
 	public static void UpdateSpawnPoint(Vector3 spawnPoint)
 	{
-		for (int i = 0; i < m_respawnInformation.Count; i++)
+		var respawnInfomation = new Dictionary<BaseCharacter, RespawnInformation>();
+		foreach (var player in GameManager.Instance.Players)
 		{
-			var info = m_respawnInformation[i];
-
-			Vector3 relativePosition = spawnPoint;
-			relativePosition.y = info.character.transform.position.y;
-			info.respawnPosition = relativePosition;
+			Vector3 relativePosition = GetRelativePosition(player, spawnPoint);
+			respawnInfomation.Add(player, new RespawnInformation(relativePosition));
 		}
-		
+		m_respawnInformation = respawnInfomation;
 	}
 
 	public static void RespawnPlayer(BaseCharacter player)
 	{
 		// if player is not in spawn point dictionary
-		if (!m_respawnInformation.Exists(i => i.character == player))
+		if (!m_respawnInformation.ContainsKey(player))
 		{
-			throw new System.Exception(string.Format("No spawn point assigned for player: {0}", player.name));
+			Vector3 spawnPoint = GetRelativePosition(player, m_respawnInformation.Values.GetEnumerator().Current.respawnPosition);
+			m_respawnInformation.Add(player, new RespawnInformation(spawnPoint));
 		}
 
 		ms_instance.StartCoroutine(WaitToRespawn(player));
-		Get(player).isRespawning = true;
+		m_respawnInformation[player].isRespawning = true;
 
-        if (m_respawnInformation.TrueForAll(i => i.isRespawning))
+        if (AllRespawning())
         {
             ms_instance.StartCoroutine(DisplayDeathScreen());
         }
@@ -94,11 +88,25 @@ public class RespawnManager : MonoBehaviour
 	{
 		yield return new WaitForSeconds(ms_instance.m_respawnDelay);
 		player.SoftActivate();
-		player.transform.position = Get(player).respawnPosition;
+		player.transform.position = m_respawnInformation[player].respawnPosition;
 	}
 
-	private static RespawnInformation Get(BaseCharacter character)
+	private static bool AllRespawning()
 	{
-		return m_respawnInformation.Find(i => i.character == character);
+		foreach (var pair in m_respawnInformation)
+		{
+			if (pair.Value.isRespawning == false)
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private static Vector3 GetRelativePosition(BaseCharacter character, Vector3 source)
+	{
+		Vector3 position = source;
+		source.y = character.transform.position.y;
+		return position;
 	}
 }
