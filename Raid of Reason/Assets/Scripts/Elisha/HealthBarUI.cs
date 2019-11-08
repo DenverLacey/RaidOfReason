@@ -29,9 +29,6 @@ public class HealthBarUI : MonoBehaviour
     private Image m_shieldBar;
 
     [SerializeField]
-    private GameObject[] m_playerUI;
-
-    [SerializeField]
     [Tooltip("How much the damaged health sprite will lerp when damaged.")]
     private float m_lerpAmount = 0.2f;
 
@@ -40,12 +37,23 @@ public class HealthBarUI : MonoBehaviour
 
     [SerializeField]
     private Image m_criticalHealthImage;
+
+    [SerializeField]
+    private Image m_criticalHealthBarFlash;
+
     [SerializeField]
     private float m_duration;
+
     [SerializeField]
     [Range(0f, 1f)]
     private float m_criticalPercentageThreshold = 0.5f;
-    private Color imageWithAlpha;
+
+    private Color m_colourWithAlpha;
+    private Color m_colourWithoutAlpha;
+
+    private Color m_healthColourWithAlpha;
+    private Color m_healthColourWithoutAlpha;
+
     private float m_prevHealth;
     private bool m_isCritical = false;
 
@@ -55,8 +63,16 @@ public class HealthBarUI : MonoBehaviour
         m_shieldBar.gameObject.SetActive(false);
         m_prevHealth = m_character.m_currentHealth;
         m_character.onTakeDamage += HealthBarShake;
-        imageWithAlpha = m_criticalHealthImage.color;
+
+        // critical red ring flash 
+        m_colourWithAlpha = m_criticalHealthImage.color;
         m_criticalHealthImage.color = new Color(m_criticalHealthImage.color.r, m_criticalHealthImage.color.g, m_criticalHealthImage.color.b, 0f);
+        m_colourWithoutAlpha = m_criticalHealthImage.color;
+
+        // health bar flashes white 
+        m_healthColourWithAlpha = m_criticalHealthBarFlash.color;
+        m_criticalHealthBarFlash.color = new Color(m_criticalHealthBarFlash.color.r, m_criticalHealthBarFlash.color.g, m_criticalHealthBarFlash.color.b, 0f);
+        m_healthColourWithoutAlpha = m_criticalHealthBarFlash.color;
     }
 
     // Update is called once per frame
@@ -89,20 +105,26 @@ public class HealthBarUI : MonoBehaviour
                 m_shieldBar.gameObject.SetActive(false);
             }
 
-            if (m_healthBar.fillAmount <= m_criticalPercentageThreshold)
+            // Critical health flashing 
+            if ((m_healthBar.fillAmount > m_criticalPercentageThreshold && m_isCritical == true) || m_character.playerState != BaseCharacter.PlayerState.ALIVE)
+            {
+                m_criticalHealthImage.enabled = false;
+                m_isCritical = false;
+                m_criticalHealthImage.DOKill();
+                m_criticalHealthImage.color = m_colourWithoutAlpha;
+
+                m_criticalHealthBarFlash.enabled = false;
+                m_criticalHealthBarFlash.DOKill(true);
+                m_criticalHealthBarFlash.color = m_healthColourWithoutAlpha;
+            }
+            else if (m_healthBar.fillAmount <= m_criticalPercentageThreshold && m_isCritical == false)
             {
                 m_criticalHealthImage.enabled = true;
-                if (!m_isCritical)
-                {
-                    m_isCritical = true;
-                    m_criticalHealthImage.DOColor(imageWithAlpha, m_duration).SetLoops(-1, LoopType.Yoyo);
-                }
+                m_isCritical = true;
+                m_criticalHealthImage.DOColor(m_colourWithAlpha, m_duration).SetLoops(-1, LoopType.Yoyo);
 
-                if (m_healthBar.fillAmount <= 0)
-                {
-                    m_criticalHealthImage.color = new Color(m_criticalHealthImage.color.r, m_criticalHealthImage.color.g, m_criticalHealthImage.color.b, 0f);
-                    m_criticalHealthImage.DOKill(true);
-                }
+                m_criticalHealthBarFlash.enabled = true;
+                m_criticalHealthBarFlash.DOColor(m_healthColourWithAlpha, m_duration).SetLoops(-1, LoopType.Yoyo);
             }
         }
     }
@@ -125,15 +147,5 @@ public class HealthBarUI : MonoBehaviour
     {
         transform.DOKill(true);
         transform.DOPunchPosition(Vector3.right * 3 * 3f, .3f, 10, 1);
-    }
-
-    private void PlayerUIShake(BaseCharacter player)
-    {
-        // checks for every object that exists in the players UI.
-        foreach(GameObject i in m_playerUI)
-        {
-            i.transform.DOKill(true);
-            i.transform.DOPunchPosition(Vector3.down * 3 * 3f, .3f, 10, 1);
-        }
     }
 }
