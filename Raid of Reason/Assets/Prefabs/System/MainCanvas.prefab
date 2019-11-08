@@ -3178,7 +3178,7 @@ GameObject:
   - component: {fileID: 8037536376674129246}
   - component: {fileID: 4172082371264826958}
   m_Layer: 5
-  m_Name: CriticalHealthFlash
+  m_Name: CriticalHealthWhiteFlash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3195,12 +3195,12 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 3949382950185629246}
-  m_RootOrder: 3
+  m_Father: {fileID: 2048372085826882107}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 13.7, y: 0.9000168}
+  m_AnchoredPosition: {x: 1.4999828, y: 0.9000168}
   m_SizeDelta: {x: 154.7, y: 110}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8037536376674129246
@@ -3231,7 +3231,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 1015c6b4870a2d445b00ecee93d49723, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9fffb7a52724dcd49994e01f905cb061, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3709,7 +3709,8 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 3396446649485015855}
   m_Father: {fileID: 3001962959863297547}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4258,7 +4259,7 @@ MonoBehaviour:
   m_criticalHealthImage: {fileID: 3924083163329812672}
   m_criticalHealthBarFlash: {fileID: 3650988202811434394}
   m_duration: 0.2
-  m_criticalPercentageThreshold: 0.5
+  m_criticalPercentageThreshold: 1
 --- !u!1 &2302495842451371509
 GameObject:
   m_ObjectHideFlags: 0
@@ -4333,7 +4334,6 @@ RectTransform:
   - {fileID: 3813100486944837265}
   - {fileID: 2703028234426479437}
   - {fileID: 1509637781986072688}
-  - {fileID: 3396446649485015855}
   m_Father: {fileID: 3115628941564456779}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4951,7 +4951,8 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 8054057248840974485}
   m_Father: {fileID: 3949382950185629246}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5178,7 +5179,6 @@ RectTransform:
   - {fileID: 5357892506258189048}
   - {fileID: 2048372085826882107}
   - {fileID: 9043247077285975076}
-  - {fileID: 8054057248840974485}
   m_Father: {fileID: 9066232476112354162}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5855,7 +5855,7 @@ GameObject:
   - component: {fileID: 872260676174451648}
   - component: {fileID: 3650988202811434394}
   m_Layer: 5
-  m_Name: CriticalHealthFlash
+  m_Name: CriticalHealthWhiteFlash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5872,12 +5872,12 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 8382197907136606870}
-  m_RootOrder: 3
+  m_Father: {fileID: 4608232490571012990}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 12.2, y: 0}
+  m_AnchoredPosition: {x: -0, y: 0}
   m_SizeDelta: {x: 154.7, y: 110}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &872260676174451648
@@ -5908,11 +5908,11 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 1015c6b4870a2d445b00ecee93d49723, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 9fffb7a52724dcd49994e01f905cb061, type: 3}
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -6298,6 +6298,7 @@ GameObject:
   - component: {fileID: 4608232490571012990}
   - component: {fileID: 1648237872182076041}
   - component: {fileID: 1030171901334663358}
+  - component: {fileID: 1549544868847844761}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -6315,7 +6316,8 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 302758523202938367}
   m_Father: {fileID: 8382197907136606870}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6361,6 +6363,19 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &1549544868847844761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5433563551851925614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1200242548, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 1
 --- !u!1 &5525782411034456074
 GameObject:
   m_ObjectHideFlags: 0
@@ -6771,7 +6786,6 @@ RectTransform:
   - {fileID: 1687933914059608645}
   - {fileID: 4608232490571012990}
   - {fileID: 4504244088394350950}
-  - {fileID: 302758523202938367}
   m_Father: {fileID: 6253881183102180260}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6916,7 +6930,7 @@ GameObject:
   - component: {fileID: 6282889939599889799}
   - component: {fileID: 2266067531360479083}
   m_Layer: 5
-  m_Name: CriticalHealthFlash
+  m_Name: CriticalHealthWhiteFlash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6933,12 +6947,12 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 3001962959863297547}
-  m_RootOrder: 3
+  m_Father: {fileID: 2703028234426479437}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 12.7, y: 0.4}
+  m_AnchoredPosition: {x: 0.49998283, y: 0.4}
   m_SizeDelta: {x: 154.7, y: 110}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6282889939599889799
@@ -6969,7 +6983,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 1015c6b4870a2d445b00ecee93d49723, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9fffb7a52724dcd49994e01f905cb061, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
