@@ -133,7 +133,7 @@ public class Kenron : BaseCharacter
         m_Enemy = FindObjectOfType<EnemyData>();
         m_currentCharges = m_charges;
         isDashing = false;
-        m_TempCharge = m_currentCharges - 1;
+        m_TempCharge = 3;
         // set size of dash hit box
         Vector3 hitBoxSize = new Vector3(m_dashCollider.size.x, m_dashCollider.size.y, m_maxDashDistance);
         m_dashCollider.size = hitBoxSize;
@@ -257,20 +257,6 @@ public class Kenron : BaseCharacter
             m_estimatedDashTime -= Time.deltaTime;
             if ((m_dashPosition - transform.position).sqrMagnitude <= 0.1f || m_estimatedDashTime <= 0.0f)
             {
-				//            // reset boolean flags
-				//            m_dashCollider.enabled = false;
-				//            m_animator.SetBool("Attack", false);
-
-				//            m_dashDone = true;
-
-				//            // stop kenron
-				//            m_rigidbody.velocity = Vector3.zero;
-
-				//transform.position = m_dashPosition;
-
-				//            // run delay timer
-				//            m_dashDelayTimer -= Time.deltaTime;
-
 				EndDash();
             }
 			else
@@ -282,11 +268,6 @@ public class Kenron : BaseCharacter
             // if ready to dash again 
             if (m_dashDelayTimer <= 0.0f && gameObject.activeSelf)
             {
-				//            StartCoroutine(TimeTillRecharge());
-				//            m_controllerOn = true;
-				//            isDashing = false;
-				//m_dashTrail.SetActive(false);
-
 				ReadyDash();
 			}
         }
@@ -328,7 +309,16 @@ public class Kenron : BaseCharacter
 
 		// run delay timer
 		m_dashDelayTimer -= Time.deltaTime;
-	}
+
+        foreach (GameObject dash in dashDisplays)
+        {
+            if (m_currentCharges == 4)
+            {
+                dash.SetActive(true);
+            }
+        }
+
+    }
 
 	public void ReadyDash()
 	{

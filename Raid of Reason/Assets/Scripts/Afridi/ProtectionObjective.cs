@@ -72,11 +72,11 @@ public class ProtectionObjective : BaseObjective
 
     public override bool HasFailed()
     {
-        return health <= 0;
+        return m_currentHealth <= 0;
     }
 
     public override bool IsDone()
     {
-        return m_currentTimer <= 0 && health > 0;
+        return m_currentTimer <= 0 && m_currentHealth > 0;
     }
 }

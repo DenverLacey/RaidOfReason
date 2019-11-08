@@ -56,14 +56,8 @@ public class CrystalSuicideAttack : Behaviour
 				}
 			}
 
-			foreach (var crystal in GameObject.FindObjectsOfType<ProtectionObjective>())
-			{
-				float sqrDistance = (crystal.ProtectObject.transform.position - agent.transform.position).sqrMagnitude;
-				if (sqrDistance <= agent.AttackRange.max * agent.AttackRange.max)
-				{
-					crystal.TakeDamage(agent.AttackDamage);
-				}
-			}
+            var crystal = GameObject.FindObjectOfType<ObjectiveManager>().m_currentObjective as ProtectionObjective;
+            crystal?.TakeDamage(agent.AttackDamage);
 
 			var explosion = GameObject.Instantiate(agent.AttackPrefabs[0]);
 			explosion.transform.position = agent.transform.position;
