@@ -323,8 +323,8 @@ public abstract class BaseCharacter : MonoBehaviour
         // If player has no health.
         if (m_currentHealth <= 0.0f)
         {
-            if (playerState != PlayerState.DEAD)
-                CheckPointManager.Instance.InvokeRespawn(this, transform.position.y);
+			if (playerState != PlayerState.DEAD)
+				RespawnManager.RespawnPlayer(this);
 
             playerState = PlayerState.DEAD;
         }
