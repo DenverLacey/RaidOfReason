@@ -147,7 +147,6 @@ public class Thea : BaseCharacter
 
 	private void Start()
 	{
-		GameManager.Instance.GiveCharacterReference(this);
         m_collider = GetComponent<CapsuleCollider>();
 	}
 
@@ -174,6 +173,7 @@ public class Thea : BaseCharacter
         GOPChargeMeterBar.SetActive(false);
         GOPRadiusIndicator.SetActive(false);
         m_GOPRadiusIndicatorInitialScale = GOPRadiusIndicator.transform.localScale;
+        GameManager.Instance.GiveCharacterReference(this);
     }
 
     // Update is called once per frame

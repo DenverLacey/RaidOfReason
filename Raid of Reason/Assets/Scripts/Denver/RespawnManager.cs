@@ -22,8 +22,19 @@ public class RespawnManager : MonoBehaviour
 	[SerializeField]
 	private float m_respawnDelay = 5f;
 
-	private static RespawnManager ms_instance;
+    [Tooltip("Delay in between all players dying and the death screen displaying")]
+    [SerializeField]
+    private float m_deathScreenDelay = 1f;
 
+    [Tooltip("Stats UI")]
+    [SerializeField]
+    private GameObject m_stats;
+
+    [Tooltip("Death Screen (called EndMenu)")]
+    [SerializeField]
+    private DeathMenu m_deathScreen;
+
+	private static RespawnManager ms_instance;
 	private static List<RespawnInformation> m_respawnInformation = new List<RespawnInformation>();
 
 	private void Awake()
@@ -31,11 +42,6 @@ public class RespawnManager : MonoBehaviour
 		if (ms_instance == null)
 		{
 			ms_instance = this;
-			DontDestroyOnLoad(gameObject);
-		}
-		else
-		{
-			Destroy(gameObject);
 		}
 	}
 
@@ -47,13 +53,12 @@ public class RespawnManager : MonoBehaviour
 		}
 	}
 
-	private void Update()
-	{
-		if (m_respawnInformation.TrueForAll(i => i.isRespawning))
-		{
-			// death screen
-		}
-	}
+    private static IEnumerator DisplayDeathScreen()
+    {
+        yield return new WaitForSecondsRealtime(ms_instance.m_deathScreenDelay);
+        ms_instance.m_stats.SetActive(false);
+        ms_instance.m_deathScreen.DeathScreen();
+    }
 
 	public static void UpdateSpawnPoint(Vector3 spawnPoint)
 	{
@@ -78,6 +83,11 @@ public class RespawnManager : MonoBehaviour
 
 		ms_instance.StartCoroutine(WaitToRespawn(player));
 		Get(player).isRespawning = true;
+
+        if (m_respawnInformation.TrueForAll(i => i.isRespawning))
+        {
+            ms_instance.StartCoroutine(DisplayDeathScreen());
+        }
 	}
 
 	private static IEnumerator WaitToRespawn(BaseCharacter player)

@@ -116,7 +116,6 @@ public class Kreiger : BaseCharacter
 
     private void Start()
 	{
-		GameManager.Instance.GiveCharacterReference(this);
         m_collider = GetComponent<CapsuleCollider>();
         m_hitEnemies = new List<EnemyData>();
     }
@@ -136,6 +135,7 @@ public class Kreiger : BaseCharacter
         runOnce = true;
         m_Thea = FindObjectOfType<Thea>();
         m_Kenron = FindObjectOfType<Kenron>();
+        GameManager.Instance.GiveCharacterReference(this);
     }
 
     protected override void FixedUpdate()

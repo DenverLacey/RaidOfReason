@@ -8,36 +8,66 @@ public class Portal : MonoBehaviour
     public int buildIndex;
     public float transitonTime;
 
-    private bool KenronCheck = false;
-    private bool NashornCheck = false;
-    private bool TheaCheck = false;
-
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Kenron")
-        {
-            KenronCheck = true;
-        }
-        else if (other.tag == "Kreiger")
-        {
-            NashornCheck = true;
-        }
-        else if (other.tag == "Thea")
-        {
-            TheaCheck = true;
-        }
-        if (KenronCheck && NashornCheck && TheaCheck)
-        {
-            StartCoroutine(MovetoScene(transitonTime));
+        if (GameManager.Instance.Players.Count > 1) {
+
+            #region Single Player
+            if (Utility.IsPlayerAvailable(CharacterType.KENRON))
+            {
+                StartCoroutine(MovetoScene(transitonTime));
+            }
+            if (Utility.IsPlayerAvailable(CharacterType.KREIGER))
+            {
+                StartCoroutine(MovetoScene(transitonTime));
+            }
+            if (Utility.IsPlayerAvailable(CharacterType.THEA))
+            {
+                StartCoroutine(MovetoScene(transitonTime));
+            }
+            #endregion
+
+            #region Two Player
+            if (Utility.IsPlayerAvailable(CharacterType.KENRON) && Utility.IsPlayerAvailable(CharacterType.THEA))
+            {
+                StartCoroutine(MovetoScene(transitonTime));
+            }
+            if (Utility.IsPlayerAvailable(CharacterType.KENRON) && Utility.IsPlayerAvailable(CharacterType.KREIGER))
+            {
+                StartCoroutine(MovetoScene(transitonTime));
+            }
+
+            if (Utility.IsPlayerAvailable(CharacterType.KREIGER) && Utility.IsPlayerAvailable(CharacterType.THEA))
+            {
+                StartCoroutine(MovetoScene(transitonTime));
+            }
+            if (Utility.IsPlayerAvailable(CharacterType.KREIGER) && Utility.IsPlayerAvailable(CharacterType.KENRON))
+            {
+                StartCoroutine(MovetoScene(transitonTime));
+            }
+
+            if (Utility.IsPlayerAvailable(CharacterType.THEA) && Utility.IsPlayerAvailable(CharacterType.KREIGER))
+            {
+                StartCoroutine(MovetoScene(transitonTime));
+            }
+            if (Utility.IsPlayerAvailable(CharacterType.THEA) && Utility.IsPlayerAvailable(CharacterType.KENRON))
+            {
+                StartCoroutine(MovetoScene(transitonTime));
+            }
+            #endregion
+
+            #region Three Player
+            if (Utility.IsPlayerAvailable(CharacterType.KENRON) && Utility.IsPlayerAvailable(CharacterType.THEA) && Utility.IsPlayerAvailable(CharacterType.KREIGER))
+            {
+                StartCoroutine(MovetoScene(transitonTime));
+            }
+            #endregion
         }
     }
 
     IEnumerator MovetoScene(float time)
     {
         yield return new WaitForSeconds(time);
-        KenronCheck = false;
-        NashornCheck = false;
-        TheaCheck = false;
 		LevelManager.FadeLoadLevel(buildIndex);
     }
 }

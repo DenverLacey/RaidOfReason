@@ -121,7 +121,6 @@ public class Kenron : BaseCharacter
 
     private void Start()
     {
-        GameManager.Instance.GiveCharacterReference(this);
         m_collider = GetComponent<CapsuleCollider>();
     }
 
@@ -139,6 +138,7 @@ public class Kenron : BaseCharacter
         m_dashCollider.size = hitBoxSize;
         m_dashCollider.enabled = false;
 		m_dashTrail.SetActive(false);
+        GameManager.Instance.GiveCharacterReference(this);
     }
 
     protected override void FixedUpdate()

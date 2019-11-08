@@ -332,14 +332,14 @@ public abstract class BaseCharacter : MonoBehaviour
 		{
 			RumbleController(.1f);
 		}
-       
+
         //// checks if all players are dead
         //if (GameManager.Instance.DeadPlayers.Count == 3)
         //{
         //    StartCoroutine(DeathScreenDelay(1f));
         //}
 
-		onTakeDamage?.Invoke(this);
+        onTakeDamage?.Invoke(this);
 	} 
 
     //public IEnumerator DeathScreenDelay(float duration)
