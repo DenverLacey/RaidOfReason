@@ -284,23 +284,41 @@ public class Thea : BaseCharacter
 	/// </summary>
 	public void Projectile()
     {
-        m_counter += Time.deltaTime;
-        if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1f && !isSkillActive)
-        {
-            m_shotCounter += Time.deltaTime;
+		//    m_counter += Time.deltaTime;
+		//    if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1f && !isSkillActive)
+		//    {
+		//        m_shotCounter += Time.deltaTime;
 
-            if (m_counter > m_projectileDelay)
-            {
-                Vector3 desiredPosition = transform.position + transform.forward;
-                desiredPosition.y = 1;
-                FireProjectile(desiredPosition, transform.rotation);
-                m_counter = 0;
-            }
-        }
-        else
-        {
-            m_shotCounter = 0;
-        }
+		//        if (m_counter > m_projectileDelay)
+		//        {
+		//m_animator.SetTrigger("Attack");
+		//            Vector3 desiredPosition = transform.position + transform.forward;
+		//            desiredPosition.y = 1;
+		//            FireProjectile(desiredPosition, transform.rotation);
+		//            m_counter = 0;
+		//        }
+		//    }
+		//    else
+		//    {
+		//        m_shotCounter = 0;
+		//    }
+
+		m_counter += Time.deltaTime;
+
+		if (XCI.GetAxis(XboxAxis.RightTrigger, controller) > 0.1f && !isSkillActive)
+		{
+			m_shotCounter += Time.deltaTime;
+
+			if (m_counter >= m_projectileDelay)
+			{
+				m_animator.SetTrigger("Attack");
+				m_counter = 0;
+			}
+		}
+		else
+		{
+			m_shotCounter = 0;
+		}
     }
 
     /// <summary>
@@ -317,6 +335,13 @@ public class Thea : BaseCharacter
 
         projectile.SetActive(true);
     }
+
+	public void FireProjectileOnAttack()
+	{
+		Vector3 pos = transform.position;
+		pos.y = 1f;
+		FireProjectile(pos, transform.rotation);
+	}
 
     /// <summary>
     /// Thea has the ability to do a charge up time attack with scaling AOE and heal.

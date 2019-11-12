@@ -182,7 +182,6 @@ public abstract class BaseCharacter : MonoBehaviour
     /// </summary>
     protected virtual void Update()
     {
-        DebugTools.LogVariable("C1", man.m_currentObjective.SpawnPoints());
         if (m_pauseInfo.m_isPaused)
             return;
 

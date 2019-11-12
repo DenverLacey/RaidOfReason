@@ -288,6 +288,11 @@ public class Kreiger : BaseCharacter
 
         // set vulnerability
         m_vulnerability = m_tauntVulnerability;
+
+		if (m_animator)
+		{
+			m_animator.SetTrigger("Taunt");
+		}
     }
 
     /// <summary>
