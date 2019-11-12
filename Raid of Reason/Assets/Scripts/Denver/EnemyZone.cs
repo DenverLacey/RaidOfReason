@@ -12,6 +12,10 @@ using UnityEngine;
 /// </summary>
 public class EnemyZone : MonoBehaviour
 {
+	[Tooltip("Will cull enemies if set to true")]
+	[SerializeField]
+	private bool m_cull = true;
+
 	[Tooltip("Distance from zone edge all players must be for zone to be culled")]
 	[SerializeField]
 	private Vector2 m_cullDistance = new Vector2(30, 30);
@@ -152,7 +156,7 @@ public class EnemyZone : MonoBehaviour
 
 		PlayerWithinCullDistance:
 
-		if (m_active)
+		if (m_active || m_cull == false)
         {
 
 			// reactivate enemies
