@@ -64,7 +64,7 @@ public class ProtectionObjective : BaseObjective
     public override void Update()
     {
         m_currentTimer -= Time.deltaTime;
-        if (HasFailed() == true)
+        if (HasFailed() == true && ProtectObject != null)
         {
             ProtectObject.SetActive(false);
         }
