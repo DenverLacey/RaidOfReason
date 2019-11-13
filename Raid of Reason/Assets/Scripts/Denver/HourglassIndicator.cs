@@ -52,6 +52,7 @@ public class HourglassIndicator : MonoBehaviour
 		if (m_character == null)
 		{
 			gameObject.SetActive(false);
+			return;
 		}
 
 		m_skill = m_skillManager.m_mainSkills[(int)m_character.CharacterType];
