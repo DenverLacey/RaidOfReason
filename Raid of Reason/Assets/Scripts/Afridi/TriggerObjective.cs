@@ -22,17 +22,7 @@ public class TriggerObjective : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Kenron" && Utility.IsPlayerAvailable(CharacterType.KENRON))
-        {
-            RespawnManager.UpdateSpawnPoint(respawnPoint.transform.position);
-            playerHere = true;
-        }
-        if (other.tag == "Kreiger" && Utility.IsPlayerAvailable(CharacterType.KREIGER))
-        {
-            RespawnManager.UpdateSpawnPoint(respawnPoint.transform.position);
-            playerHere = true;
-        }
-        if (other.tag == "Thea" && Utility.IsPlayerAvailable(CharacterType.THEA))
+        if (Utility.TagIsPlayerTag(other.tag))
         {
             RespawnManager.UpdateSpawnPoint(respawnPoint.transform.position);
             playerHere = true;
