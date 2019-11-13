@@ -57,6 +57,7 @@ public class CharacterInformation : InteractableUIElement
 	// child objects
 	private Image m_selectedBorder;
 	private Color m_selectedBorderColour;
+	private Transform m_characterImage;
 
 	private Image[] m_childImages;
 	private List<Color> m_childImageOriginalColours = new List<Color>();
@@ -64,10 +65,12 @@ public class CharacterInformation : InteractableUIElement
 
 	private void Start()
 	{
-		m_selectedBorder = transform.Find("SelectedBorder").GetComponent<Image>();
+		m_selectedBorder = transform.parent.Find("SelectedBorder").Find("Image").GetComponent<Image>();
 		m_selectedBorderColour = m_selectedBorder.color;
 
-		m_childImages = GetComponentsInChildren<Image>();
+		m_characterImage = transform.parent.Find("Character Image");
+
+		m_childImages = transform.parent.GetComponentsInChildren<Image>();
 
 		foreach (Image child in m_childImages)
 		{
@@ -128,8 +131,8 @@ public class CharacterInformation : InteractableUIElement
 			character = m_character;
 
 			// kill tweening
-			transform.DOKill(complete: true);
-			transform.DOPunchPosition(Vector3.down * m_punchForce, m_punchDuration, m_punchVibrato, m_punchElasticity);
+			m_characterImage.DOKill(complete: true);
+			m_characterImage.DOPunchPosition(Vector3.down * m_punchForce, m_punchDuration, m_punchVibrato, m_punchElasticity);
 
 			// TODO: Make nice sound
 			AudioManager.Instance.PlaySound(m_selectedSound);
@@ -162,9 +165,9 @@ public class CharacterInformation : InteractableUIElement
 			m_selected = false;
 
 			// do transform tweeing
-			transform.DOKill(complete: true);
+			m_characterImage.DOKill(complete: true);
 
-			transform.DOPunchPosition(Vector3.up * m_punchForce, m_punchDuration, m_punchVibrato, m_punchElasticity);
+			m_characterImage.DOPunchPosition(Vector3.up * m_punchForce, m_punchDuration, m_punchVibrato, m_punchElasticity);
 
 			// stop tweening selectedBorder colour
 			m_selectedBorder.DOKill();
