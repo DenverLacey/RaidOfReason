@@ -13,22 +13,25 @@ using DG.Tweening;
 /// <summary>
 /// Handles controllers for Character Selection screen and loading level scene
 /// </summary>
-public class CharacterSelection : InteractableUIElement
+public class CharacterSelection : MonoBehaviour
 {
-	[SerializeField]
 	[Tooltip("Player 1's cursor object")]
+	[SerializeField]
 	private PlayerCursor m_p1Cursor;
 	private Vector3 m_p1InactivePosition;
+	public PlayerCursor P1Cursor { get => m_p1Cursor; }
 
-	[SerializeField]
 	[Tooltip("Player 2's cursor object")]
+	[SerializeField]
 	private PlayerCursor m_p2Cursor;
 	private Vector3 m_p2InactivePosition;
+	public PlayerCursor P2Cursor { get => m_p2Cursor; }
 
-	[SerializeField]
 	[Tooltip("Player 3's cursor object")]
+	[SerializeField]
 	private PlayerCursor m_p3Cursor;
 	private Vector3 m_p3InactivePosition;
+	public PlayerCursor P3Cursor { get => m_p3Cursor; }
 
 	[SerializeField]
 	[Tooltip("Start Button Object")]
@@ -38,6 +41,10 @@ public class CharacterSelection : InteractableUIElement
 	[Tooltip("Scene Index of first level")]
 	private int m_firstLevelIndex;
 
+	public int FirstLevelIndex { get => m_firstLevelIndex; }
+
+	private HashSet<PlayerCursor> m_playerCursors = new HashSet<PlayerCursor>();
+
 	// Start is called before the first frame update
 	void Start()
     {
@@ -45,6 +52,8 @@ public class CharacterSelection : InteractableUIElement
 		m_p2Cursor.SetController(2);
 		m_p3Cursor.SetController(3);
 		GameManager.Instance.ResetCharacterSelectionSettings();
+
+		m_startButton.SetActive(false);
 	}
 
 	// Update is called once per frame
@@ -54,77 +63,60 @@ public class CharacterSelection : InteractableUIElement
         if (XCI.IsPluggedIn(m_p1Cursor.controller))
 		{
 			m_p1Cursor.Activate();
+			m_playerCursors.Add(m_p1Cursor);
 		}
 		else if (m_p1Cursor.gameObject.activeSelf)
 		{
 			m_p1Cursor.Deactivate();
+			m_playerCursors.Remove(m_p1Cursor);
 		}
 
 		if (XCI.IsPluggedIn(m_p2Cursor.controller))
 		{
 			m_p2Cursor.Activate();
+			m_playerCursors.Add(m_p2Cursor);
 		}
 		else if (m_p2Cursor.gameObject.activeSelf)
 		{
 			m_p2Cursor.Deactivate();
+			m_playerCursors.Remove(m_p2Cursor);
 		}
 
 		if (XCI.IsPluggedIn(m_p3Cursor.controller))
 		{
 			m_p3Cursor.Activate();
+			m_playerCursors.Add(m_p3Cursor);
 		}
 		else if (m_p3Cursor.gameObject.activeSelf)
 		{
 			m_p3Cursor.Deactivate();
-		}
-	}
-
-	/// <summary>
-	/// When start button is pressed, check that all players have selected a charater
-	/// and if so, load level scene
-	/// </summary>
-	public void OnPressed()
-	{
-		transform.DOKill(complete: true);
-
-		// get player cursor information
-		var p1Info = m_p1Cursor.GetSelectedCharacter();
-		var p2Info = m_p2Cursor.GetSelectedCharacter();
-		var p3Info = m_p3Cursor.GetSelectedCharacter();
-
-		var playerInformation = new List<(XboxController, PlayerIndex, CharacterType, bool)>();
-		
-		// focus controllers that are plugged in
-		if (m_p1Cursor.gameObject.activeSelf)
-		{
-			playerInformation.Add(p1Info);
-		}
-		if (m_p2Cursor.gameObject.activeSelf)
-		{
-			playerInformation.Add(p2Info);
-		}
-		if (m_p3Cursor.gameObject.activeSelf)
-		{
-			playerInformation.Add(p3Info);
+			m_playerCursors.Remove(m_p3Cursor);
 		}
 
-		// if all players are ready
-		if (playerInformation.TrueForAll(info => info.Item4) && playerInformation.Count > 1)
+		bool allPlayersSelectedCharacter = false;
+		foreach (PlayerCursor pc in m_playerCursors)
 		{
-			// send info to game manager
-			foreach (var info in playerInformation)
-			{
-				GameManager.Instance.SetCharacterController(info.Item3, info.Item2, info.Item1);
-			}
+			allPlayersSelectedCharacter |= !pc.HasSelectedCharacter();
+		}
+		allPlayersSelectedCharacter = !allPlayersSelectedCharacter;
 
-			// load first level
-			LevelManager.FadeLoadLevel(m_firstLevelIndex);
+		if (allPlayersSelectedCharacter && m_playerCursors.Count > 1)
+		{
+			ActivateStartButton();
 		}
 		else
 		{
-			// do tweening stuff
-			transform.DOPunchPosition(Vector3.right * 3f, .3f, 10, 1);
+			DeactivateStartButton();
 		}
-		
+	}
+
+	private void ActivateStartButton()
+	{
+		m_startButton.SetActive(true);
+	}
+
+	private void DeactivateStartButton()
+	{
+		m_startButton.SetActive(false);
 	}
 }

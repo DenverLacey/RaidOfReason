@@ -142,9 +142,9 @@ public class PlayerCursor : MonoBehaviour
 					hasToken = false;
 				}
 			}
-			else if (temp is CharacterSelection && !hasToken)
+			else if (temp is CharacterSelectionStartButton && !hasToken)
 			{
-				((CharacterSelection)temp).OnPressed();
+				((CharacterSelectionStartButton)temp).OnPressed();
 			}
             else if (XCI.GetButtonDown(XboxButton.A, XboxController.First) && temp is BackButton)
             {
@@ -173,41 +173,13 @@ public class PlayerCursor : MonoBehaviour
 		}
 	}
 
-	/// <summary>
-	/// Sets current collided transform and calls Character Information's Hover function
-	/// if collision is a Character Information Object
-	/// </summary>
-	/// <param name="collision">
-	/// Collider of the object that has been collided with
-	/// </param>
-	private void OnTriggerEnter2D(Collider2D collision)
+	public void SetCollidedTransform(Transform transform)
 	{
-		m_collidedTransform = collision.transform;
-
-		var info = m_collidedTransform.GetComponent<CharacterInformation>();
-
-		if (info)
-		{
-			info.Hover();
-		}
+		m_collidedTransform = transform;
 	}
 
-	/// <summary>
-	/// nulls current collided transform and calls Character Information's Unhover function
-	/// if collision is a Character Information Object
-	/// </summary>
-	/// <param name="collision">
-	/// Collider of the object that has been collided with
-	/// </param>
-	private void OnTriggerExit2D(Collider2D collision)
+	public void NullCollidedTransform()
 	{
-		var info = m_collidedTransform?.GetComponent<CharacterInformation>();
-
-		if (info)
-		{
-			info.Unhover();
-		}
-
 		m_collidedTransform = null;
 	}
 

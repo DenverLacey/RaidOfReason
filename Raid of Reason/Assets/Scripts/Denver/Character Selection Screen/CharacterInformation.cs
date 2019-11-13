@@ -188,4 +188,26 @@ public class CharacterInformation : InteractableUIElement
 			return false;
 		}
 	}
+
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		var cursor = collision.GetComponent<PlayerCursor>();
+
+		if (cursor)
+		{
+			Hover();
+			cursor.SetCollidedTransform(transform);
+		}
+	}
+
+	private void OnTriggerExit2D(Collider2D collision)
+	{
+		var cursor = collision.GetComponent<PlayerCursor>();
+
+		if (cursor)
+		{
+			Unhover();
+			cursor.NullCollidedTransform();
+		}
+	}
 }
