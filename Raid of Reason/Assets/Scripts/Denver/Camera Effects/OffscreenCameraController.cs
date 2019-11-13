@@ -68,6 +68,11 @@ public class OffscreenCameraController : MonoBehaviour
 			gameObject.SetActive(false);
 			return;
 		}
+		else if (Utility.IsPlayerAvailable(m_character.CharacterType) == false)
+		{
+			m_activator.gameObject.SetActive(false);
+			return;
+		}
 
 		Vector3 viewportPosition = m_mainCamera.WorldToViewportPoint(m_target.position);
 		viewportPosition *= viewportPosition.z > 0 ? 1 : -1;
