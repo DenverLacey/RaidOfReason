@@ -8,8 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4695537241820358136}
+  - component: {fileID: 8751730531809948975}
   - component: {fileID: 837812465090574571}
+  - component: {fileID: 1543864832560298925}
   m_Layer: 9
   m_Name: ChargeMeter
   m_TagString: Untagged
@@ -17,20 +18,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4695537241820358136
-Transform:
+--- !u!224 &8751730531809948975
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 81168843140236064}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: -0, z: 0}
-  m_LocalScale: {x: 1.0039737, y: 0.9791997, z: 0.1611552}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.0039737, y: 0.97919965, z: 0.1611552}
   m_Children: []
   m_Father: {fileID: 8133515216026031775}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 5.06, y: 2.5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &837812465090574571
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -68,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: baaaa253c883e844ea373bb1acfb96af, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bb0021c462f04e245a164fff04ada2ca, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -79,6 +85,14 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!222 &1543864832560298925
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 81168843140236064}
+  m_CullTransparentMesh: 0
 --- !u!1 &512049867901031825
 GameObject:
   m_ObjectHideFlags: 0
@@ -9626,7 +9640,7 @@ RectTransform:
   m_LocalScale: {x: 0.61524147, y: 0.69214666, z: 0.32275182}
   m_Children:
   - {fileID: 6447916808274081695}
-  - {fileID: 4695537241820358136}
+  - {fileID: 8751730531809948975}
   m_Father: {fileID: 4820443638325163085}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9983,6 +9997,7 @@ MonoBehaviour:
   m_waterDissapearDelay: 2
   GOPMaxCharge: {fileID: 5028907425003288623}
   GOPRadiusIndicator: {fileID: 8112532566760586191}
+  m_waterEffect: {fileID: 0}
   STHealthRegenerated: 5
   STRegenEachFrame: 2
   STReductionRate: 2
@@ -10023,8 +10038,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GOPWater: {fileID: 4072663448691296262}
   GOPWaterTex: {fileID: 468655290774548071}
-  m_timer: 1
   m_duration: 1
+  m_rotateSpeed: 5
 --- !u!23 &3777708967802242873
 MeshRenderer:
   m_ObjectHideFlags: 0

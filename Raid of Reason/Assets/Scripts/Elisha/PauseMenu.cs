@@ -14,7 +14,7 @@ public class PauseMenu : MonoBehaviour
 {
     [SerializeField]
     [Tooltip("Player 1's cursor object")]
-    private PauseCursor m_Cursor;
+    private PauseCursor m_p1Cursor;
 
     [SerializeField]
     [Tooltip("Player 2's cursor object")]
@@ -49,9 +49,13 @@ public class PauseMenu : MonoBehaviour
         m_playerHUD = GameObject.Find("---Stats---");
         m_playerHUD.SetActive(true);
         m_pauseMenu.SetActive(false);
-        m_P1InactivePosition = transform.position;
-        m_P2InactivePosition = transform.position;
-        m_P3InactivePosition = transform.position;
+        m_P1InactivePosition = m_p1Cursor.transform.position;
+        m_P2InactivePosition = m_p2Cursor.transform.position;
+        m_P3InactivePosition = m_p3Cursor.transform.position;
+
+        m_p1Cursor.gameObject.SetActive(false);
+        m_p2Cursor.gameObject.SetActive(false);
+        m_p3Cursor.gameObject.SetActive(false);
     }
 
     public void Update()
@@ -64,16 +68,17 @@ public class PauseMenu : MonoBehaviour
         {
             if (XCI.GetButtonDown(XboxButton.Start, XboxController.First))
             {
-                m_Cursor.SetController(1);
+                m_p1Cursor.SetController(1);
                 if (!m_pauseMenu.activeInHierarchy && m_isPaused == false)
                 {
                     m_playerHUD.SetActive(false);
-                    m_Cursor.gameObject.SetActive(true);
+                    m_p1Cursor.gameObject.SetActive(true);
                     Paused();
                 }
                 else if (m_pauseMenu.activeInHierarchy && m_isPaused == true)
                 {
                     m_playerHUD.SetActive(true);
+                    m_p1Cursor.gameObject.SetActive(false);
                     ContinueGame();
                 }
             }
@@ -90,6 +95,7 @@ public class PauseMenu : MonoBehaviour
                 else if (m_pauseMenu.activeInHierarchy && m_isPaused == true)
                 {
                     m_playerHUD.SetActive(true);
+                    m_p2Cursor.gameObject.SetActive(false);
                     ContinueGame();
                 }
             }
@@ -106,6 +112,7 @@ public class PauseMenu : MonoBehaviour
                 else if (m_pauseMenu.activeInHierarchy && m_isPaused == true)
                 {
                     m_playerHUD.SetActive(true);
+                    m_p3Cursor.gameObject.SetActive(false);
                     ContinueGame();
                 }
             }
