@@ -20,6 +20,8 @@ public class CharacterSelectionStartButton : InteractableUIElement
 
 	private CharacterSelection m_characterSelection;
 
+	private BoxCollider2D m_collider;
+
 	private void Awake()
 	{
 		m_borderImage = transform.Find("Button Border").GetComponent<Image>();
@@ -28,6 +30,7 @@ public class CharacterSelectionStartButton : InteractableUIElement
 	private void Start()
 	{
 		m_characterSelection = FindObjectOfType<CharacterSelection>();
+		m_collider = GetComponent<BoxCollider2D>();
 	}
 
 	private void OnEnable()
@@ -41,6 +44,29 @@ public class CharacterSelectionStartButton : InteractableUIElement
 		Color desiredColour = m_borderImage.color;
 		desiredColour.a = 1f;
 		m_borderImage.color = desiredColour;
+	}
+
+	private void Update()
+	{
+		if (XCI.GetButtonDown(XboxButton.A, XboxController.Any))
+		{
+			List<PlayerCursor> cursors = m_characterSelection.PlayerCursors;
+
+			float minx = m_collider.bounds.min.x;
+			float maxx = m_collider.bounds.max.x;
+			float miny = m_collider.bounds.min.y;
+			float maxy = m_collider.bounds.max.y;
+
+			foreach (var cursor in cursors)
+			{
+				if (cursor.transform.position.x >= minx && cursor.transform.position.y >= miny &&
+					cursor.transform.position.x <= maxx && cursor.transform.position.y <= maxy)
+				{
+					OnPressed();
+					break;
+				}
+			}
+		}
 	}
 
 	/// <summary>

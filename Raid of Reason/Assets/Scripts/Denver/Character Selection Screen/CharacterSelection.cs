@@ -44,6 +44,7 @@ public class CharacterSelection : MonoBehaviour
 	public int FirstLevelIndex { get => m_firstLevelIndex; }
 
 	private HashSet<PlayerCursor> m_playerCursors = new HashSet<PlayerCursor>();
+	public List<PlayerCursor> PlayerCursors { get => new List<PlayerCursor>(m_playerCursors); }
 
 	// Start is called before the first frame update
 	void Start()
