@@ -41,12 +41,17 @@ public class Thea : BaseCharacter
     [Tooltip("Movement Speed while casting Gift of Poseidon")]
     private float m_GOPMovement;
 
+    [SerializeField]
+    [Tooltip("The delay at which the water sprite dissapears")]
+    private float m_waterDissapearDelay;
+
     public GameObject GOPMaxCharge;
-	private Vector3 m_GOPMaxChargeInitialScale;
     public GameObject GOPRadiusIndicator;
+	private Vector3 m_GOPMaxChargeInitialScale;
     private Vector3 m_GOPRadiusIndicatorInitialScale;
     private GameObject GOPChargeMeter;
     private GameObject GOPChargeMeterBar;
+    public GOPWaterEffect m_waterEffect;
 
     [Header("--Skills--")]
 
@@ -174,6 +179,7 @@ public class Thea : BaseCharacter
         GOPRadiusIndicator.SetActive(false);
         m_GOPRadiusIndicatorInitialScale = GOPRadiusIndicator.transform.localScale;
         GameManager.Instance.GiveCharacterReference(this);
+        m_waterEffect = GetComponent<GOPWaterEffect>();
     }
 
     // Update is called once per frame
@@ -425,6 +431,7 @@ public class Thea : BaseCharacter
 	public void GiftOfPoseidonHealAndReset()
 	{
 		GiveHealth();
+        m_waterEffect.Activate(m_AOERadius, transform.position);
 		ResetGiftOfPoseidon();
         RumbleController(m_GOPRumbleDuration, m_GOPRumbleIntensity, m_GOPRumbleIntensity);
         m_healEffect.Play();
