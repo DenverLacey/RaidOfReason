@@ -23,6 +23,7 @@ public class ObjectiveManager : MonoBehaviour
     public Text objectiveTimer;
     public Text objectiveDescription;
 
+    public GameObject billBoards;
     public GameObject objectiveComplete;
     public GameObject objectiveFailed;
 
@@ -41,6 +42,7 @@ public class ObjectiveManager : MonoBehaviour
             m_triggerObjective.gameObject.SetActive(true);
         }
 
+        billBoards.SetActive(false);
         m_currentObjective = m_objectives[0];
         m_currentObjective.Init();
         ObjectiveCompleted = false;
@@ -50,11 +52,12 @@ public class ObjectiveManager : MonoBehaviour
     {
 
         if (m_currentObjective && ObjectiveTriggered == true)
-        {           
+        {
             if (triggerObjectives.Count > 1)
             {
                 m_triggerObjective.gameObject.SetActive(false);
             }
+            billBoards.SetActive(true);
             objectiveTimer.gameObject.SetActive(true);
             objectiveTimer.gameObject.transform.GetChild(0).gameObject.SetActive(true);
             objectiveDescription.gameObject.SetActive(true);
@@ -83,6 +86,7 @@ public class ObjectiveManager : MonoBehaviour
             }
             else
             {
+                billBoards.SetActive(false);
                 objectiveTimer.gameObject.SetActive(false);
                 objectiveTimer.gameObject.transform.GetChild(0).gameObject.SetActive(false);
             }
@@ -120,6 +124,7 @@ public class ObjectiveManager : MonoBehaviour
             // Reset Trigger
             ObjectiveTriggered = false;
 
+            billBoards.SetActive(true);
             objectiveTimer.gameObject.SetActive(false);
             objectiveTimer.gameObject.transform.GetChild(0).gameObject.SetActive(false);
             objectiveDescription.gameObject.SetActive(false);
@@ -145,6 +150,7 @@ public class ObjectiveManager : MonoBehaviour
 		// objective failed
         if (m_hasFailed && !m_isDone)
         {
+            billBoards.SetActive(true);
             objectiveTimer.gameObject.SetActive(false);
             objectiveTimer.gameObject.transform.GetChild(0).gameObject.SetActive(false);
             objectiveDescription.gameObject.SetActive(false);
