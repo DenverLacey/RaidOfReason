@@ -12,8 +12,6 @@ public class BossObjective : BaseObjective
     public  GameObject bosshealthBar;
     [Tooltip("The Objective Description")]
     public string description;
-    [Tooltip("Name of the Objective")]
-    public string name;
     public string spawnPointName;
 
     private GameManager manager;
@@ -51,10 +49,6 @@ public class BossObjective : BaseObjective
         return description;
     }
 
-    public override string GrabTitle()
-    {
-        return name;
-    }
 
     public override bool HasFailed()
     {

@@ -22,11 +22,9 @@ public class ObjectiveManager : MonoBehaviour
 
     public Text objectiveTimer;
     public Text objectiveDescription;
-    public Text showTitle;
 
     public GameObject objectiveComplete;
     public GameObject objectiveFailed;
-    public GameObject skillTreeUnlock;
 
     private bool m_isDone;
     private bool m_hasFailed;
@@ -58,15 +56,14 @@ public class ObjectiveManager : MonoBehaviour
                 m_triggerObjective.gameObject.SetActive(false);
             }
             objectiveTimer.gameObject.SetActive(true);
+            objectiveTimer.gameObject.transform.GetChild(0).gameObject.SetActive(true);
             objectiveDescription.gameObject.SetActive(true);
-            showTitle.gameObject.SetActive(true);
 
             #region Current Objective Init
                 m_isDone = m_currentObjective.IsDone();
                 m_hasFailed = m_currentObjective.HasFailed();
                 objectiveDescription.text = m_currentObjective.GrabDescription();
-                showTitle.text = m_currentObjective.GrabTitle();
-                objectiveTimer.text = m_currentObjective.Timer().ToString("f0");
+                objectiveTimer.gameObject.transform.GetChild(0).gameObject.GetComponent<Text>().text = m_currentObjective.Timer().ToString("f0");
                 #endregion
 
             m_currentObjective.Update();
@@ -82,11 +79,12 @@ public class ObjectiveManager : MonoBehaviour
 
             if (m_currentObjective.Timer() > 0)
             {
-                objectiveTimer.text = m_currentObjective.Timer().ToString("f0");
+                objectiveTimer.gameObject.transform.GetChild(0).gameObject.GetComponent<Text>().text = m_currentObjective.Timer().ToString("f0");
             }
             else
             {
                 objectiveTimer.gameObject.SetActive(false);
+                objectiveTimer.gameObject.transform.GetChild(0).gameObject.SetActive(false);
             }
         }
     }
@@ -101,11 +99,6 @@ public class ObjectiveManager : MonoBehaviour
             if (barriers != null)
             {
                 barriers.ManageBarriers();
-            }
-
-            if (m_currentObjective.GrabTitle() == "Level 0" && m_currentObjective.ActivatePortal() != null)
-            {
-                m_currentObjective.ActivatePortal().SetActive(true);
             }
 
             if (m_objectives.Count > 1)
@@ -128,8 +121,8 @@ public class ObjectiveManager : MonoBehaviour
             ObjectiveTriggered = false;
 
             objectiveTimer.gameObject.SetActive(false);
+            objectiveTimer.gameObject.transform.GetChild(0).gameObject.SetActive(false);
             objectiveDescription.gameObject.SetActive(false);
-            showTitle.gameObject.SetActive(false);
 
             objectiveComplete.SetActive(true);
 
@@ -141,8 +134,7 @@ public class ObjectiveManager : MonoBehaviour
             #region Objective Descriptions
             // Replaces Old objective texts with new objective
             objectiveDescription.text = objectiveDescription.text.Replace(m_currentObjective.GrabDescription(), m_currentObjective.GrabDescription());
-            showTitle.text = showTitle.text.Replace(m_currentObjective.GrabTitle(), m_currentObjective.GrabTitle());
-            objectiveTimer.text = objectiveTimer.text.Replace(m_currentObjective.Timer().ToString("f0"), m_currentObjective.Timer().ToString("f0"));
+            objectiveTimer.gameObject.transform.GetChild(0).gameObject.GetComponent<Text>().text = objectiveTimer.text.Replace(m_currentObjective.Timer().ToString("f0"), m_currentObjective.Timer().ToString("f0"));
             #endregion
 
             yield return new WaitForSeconds(5);
@@ -154,8 +146,9 @@ public class ObjectiveManager : MonoBehaviour
         if (m_hasFailed && !m_isDone)
         {
             objectiveTimer.gameObject.SetActive(false);
+            objectiveTimer.gameObject.transform.GetChild(0).gameObject.SetActive(false);
             objectiveDescription.gameObject.SetActive(false);
-            showTitle.gameObject.SetActive(false);
+
             ObjectiveTriggered = false;
             objectiveFailed.SetActive(true);
             yield return new WaitForSecondsRealtime(5);

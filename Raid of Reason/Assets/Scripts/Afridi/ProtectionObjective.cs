@@ -56,11 +56,6 @@ public class ProtectionObjective : BaseObjective
         return description;
     }
 
-    public override string GrabTitle()
-    {
-        return nameOfObject;
-    }
-
     public override void Update()
     {
         m_currentTimer -= Time.deltaTime;

@@ -8,21 +8,19 @@ public class CrystalHealth : MonoBehaviour
     public Image healthBar;
     private ObjectiveManager manager;
     public List<ProtectionObjective> Objects = new List<ProtectionObjective>();
-    public float upAmount;
     private void Awake()
     {
+        healthBar.gameObject.SetActive(false);
         manager = FindObjectOfType<ObjectiveManager>();
     }
+
     private void Update()
     {
-        Vector3 screenPoint = Camera.main.WorldToScreenPoint(transform.position);
-        screenPoint.y += upAmount;
-        healthBar.transform.position = screenPoint;
-
         if (Objects.Count == 1)
         {
-            if (manager.m_currentObjective == Objects[0] && !manager.m_currentObjective.IsDone())
+            if (manager.m_currentObjective == Objects[0] && !manager.m_currentObjective.IsDone() && manager.ObjectiveTriggered == true)
             {
+                healthBar.gameObject.SetActive(true);
                 healthBar.fillAmount = Objects[0].m_currentHealth / Objects[0].health;
             }
 

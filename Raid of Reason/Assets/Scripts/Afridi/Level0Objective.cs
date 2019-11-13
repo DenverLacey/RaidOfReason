@@ -11,8 +11,6 @@ public class Level0Objective : BaseObjective
     [Tooltip("The Objective Description")]
     public string description;
 
-    [Tooltip("Name of the Objective")]
-    public string name;
     public string portalName;
     public string enemyZoneName;
     public string spawnPointName;
@@ -44,11 +42,6 @@ public class Level0Objective : BaseObjective
     public override string GrabDescription()
     {
         return description;
-    }
-
-    public override string GrabTitle()
-    {
-        return name;
     }
 
     public override void Update()

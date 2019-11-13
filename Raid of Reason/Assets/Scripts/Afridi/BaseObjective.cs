@@ -10,7 +10,6 @@ public abstract class BaseObjective : ScriptableObject
     public abstract bool HasFailed();
     public abstract float Timer();
     public abstract string GrabDescription();
-    public abstract string GrabTitle();
     public abstract GameObject SpawnPoints();
 
     public abstract GameObject ActivatePortal();

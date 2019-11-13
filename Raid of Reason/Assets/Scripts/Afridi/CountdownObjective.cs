@@ -17,8 +17,6 @@ public class CountdownObjective : BaseObjective
     [Tooltip("The Objective Description")]
     public string description;
 
-    [Tooltip("Name of the Objective")]
-    public string name;
     public string spawnPointName;
     public string enemyZoneName;
     private GameObject spawnPoint;
@@ -52,11 +50,6 @@ public class CountdownObjective : BaseObjective
     public override string GrabDescription()
     {
         return description;
-    }
-
-    public override string GrabTitle()
-    {
-        return name;
     }
 
     public override void Update()

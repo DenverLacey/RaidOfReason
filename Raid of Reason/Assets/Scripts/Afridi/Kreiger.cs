@@ -257,6 +257,7 @@ public class Kreiger : BaseCharacter
         {
             Ability_UI.SetActive(false);
         }
+
         // Ability is active
         isTaunting = true;
         GameManager.Instance.Kreiger.currentShield += m_SSShieldsGiven; 

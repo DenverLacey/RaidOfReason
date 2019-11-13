@@ -143,12 +143,12 @@ public class SkillManager : MonoBehaviour {
                     m_mainSkills[1].active = true;
                     m_mainSkills[1].onCooldown = true;
                 }
-                if (m_mainSkills[1].readyToDisplay && !m_mainSkills[1].onCooldown)
+            }
+            if (m_mainSkills[1].readyToDisplay && !m_mainSkills[1].onCooldown)
+            {
+                if (GameManager.Instance.Kreiger.Ability_UI != null)
                 {
-                    if (GameManager.Instance.Kreiger.Ability_UI != null)
-                    {
-                        GameManager.Instance.Kreiger.Ability_UI.SetActive(true);
-                    }
+                    GameManager.Instance.Kreiger.Ability_UI.SetActive(true);
                 }
             }
         }
