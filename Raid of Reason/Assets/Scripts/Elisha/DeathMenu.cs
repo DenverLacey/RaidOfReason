@@ -22,7 +22,6 @@ public class DeathMenu : MonoBehaviour
     private void Start()
     {
         m_DeathMenu = GameObject.Find("---EndMenu---");
-        m_DeathMenu.SetActive(false);
         m_isDeath = false;
         m_p1Cursor.SetController(1);
         m_p1InactivePosition = transform.position;

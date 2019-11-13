@@ -42,6 +42,7 @@ public class ObjectiveManager : MonoBehaviour
             m_triggerObjective.gameObject.SetActive(true);
         }
 
+        objectiveTimer.gameObject.SetActive(false);
         billBoards.SetActive(false);
         m_currentObjective = m_objectives[0];
         m_currentObjective.Init();
