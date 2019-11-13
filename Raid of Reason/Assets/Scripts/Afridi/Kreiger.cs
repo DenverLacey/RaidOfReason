@@ -56,6 +56,14 @@ public class Kreiger : BaseCharacter
 	[Tooltip("How long, in seconds, Nashorn will be stationary when casting taunt")]
 	private float m_tauntMovementDelay = 1.0f;
 
+	[SerializeField]
+	[Tooltip("Intensity of the rumble when Nashorn taunts")]
+	private float m_tauntRumbleIntensity = 1f;
+
+	[SerializeField]
+	[Tooltip("Duration of the rumble when Nashorn taunts")]
+	private float m_tauntRumbleDuration = 0.4f;
+
     [SerializeField]
     [Tooltip("How much knockback is applied to Kreigers Hydraulic Pummel")]
     public float knockBackForce;
@@ -303,7 +311,7 @@ public class Kreiger : BaseCharacter
 	public void OnTauntAnimation()
 	{
 		m_tauntEffect.Show(m_tauntRadius, transform.position);
-		RumbleController(.4f);
+		RumbleController(m_tauntRumbleDuration, m_tauntRumbleIntensity, m_tauntRumbleIntensity);
 	}
 
     /// <summary>
