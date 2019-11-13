@@ -14,7 +14,16 @@ public class PauseMenu : MonoBehaviour
 {
     [SerializeField]
     [Tooltip("Player 1's cursor object")]
-    private PauseCursor m_p1Cursor;
+    private PauseCursor m_Cursor;
+
+    [SerializeField]
+    [Tooltip("Player 2's cursor object")]
+    private PauseCursor m_p2Cursor;
+
+    [SerializeField]
+    [Tooltip("Player 3's cursor object")]
+    private PauseCursor m_p3Cursor;
+
 
     [SerializeField]
     [Tooltip("Character Scene Index")]
@@ -26,18 +35,23 @@ public class PauseMenu : MonoBehaviour
 
     [HideInInspector]
     public bool m_isPaused { get; set; }
-    private Vector3 m_p1InactivePosition;
+    private Vector3 m_P1InactivePosition;
+    private Vector3 m_P2InactivePosition;
+    private Vector3 m_P3InactivePosition;
     public GameObject m_pauseMenu;
-    private GameObject m_miniMap;
     private GameObject m_playerHUD;
 
     private void Start()
     {
-        m_isPaused = false;
-        m_p1Cursor.SetController(1);
-        m_p1InactivePosition = transform.position;
+        m_pauseMenu = GameObject.Find("---PauseMenu---");
         m_pauseMenu.gameObject.SetActive(false);
+        m_isPaused = false;
         m_playerHUD = GameObject.Find("---Stats---");
+        m_playerHUD.SetActive(true);
+        m_pauseMenu.SetActive(false);
+        m_P1InactivePosition = transform.position;
+        m_P2InactivePosition = transform.position;
+        m_P3InactivePosition = transform.position;
     }
 
     public void Update()
@@ -50,9 +64,11 @@ public class PauseMenu : MonoBehaviour
         {
             if (XCI.GetButtonDown(XboxButton.Start, XboxController.First))
             {
+                m_Cursor.SetController(1);
                 if (!m_pauseMenu.activeInHierarchy && m_isPaused == false)
                 {
                     m_playerHUD.SetActive(false);
+                    m_Cursor.gameObject.SetActive(true);
                     Paused();
                 }
                 else if (m_pauseMenu.activeInHierarchy && m_isPaused == true)
@@ -61,11 +77,14 @@ public class PauseMenu : MonoBehaviour
                     ContinueGame();
                 }
             }
-            else if (XCI.GetButtonDown(XboxButton.Start, XboxController.Second))
+
+            if (XCI.GetButtonDown(XboxButton.Start, XboxController.Second))
             {
+                m_p2Cursor.SetController(2);
                 if (!m_pauseMenu.activeInHierarchy && m_isPaused == false)
                 {
                     m_playerHUD.SetActive(false);
+                    m_p2Cursor.gameObject.SetActive(true);
                     Paused();
                 }
                 else if (m_pauseMenu.activeInHierarchy && m_isPaused == true)
@@ -74,11 +93,14 @@ public class PauseMenu : MonoBehaviour
                     ContinueGame();
                 }
             }
-            else if (XCI.GetButtonDown(XboxButton.Start, XboxController.Third))
+
+            if (XCI.GetButtonDown(XboxButton.Start, XboxController.Third))
             {
+                m_p3Cursor.SetController(3);
                 if (!m_pauseMenu.activeInHierarchy && m_isPaused == false)
                 {
                     m_playerHUD.SetActive(false);
+                    m_p3Cursor.gameObject.SetActive(true);
                     Paused();
                 }
                 else if (m_pauseMenu.activeInHierarchy && m_isPaused == true)
@@ -99,7 +121,6 @@ public class PauseMenu : MonoBehaviour
     {
         Time.timeScale = 0.0f;
         m_isPaused = true;
-        m_p1Cursor.gameObject.SetActive(true);
         m_pauseMenu.SetActive(true);
     }
 
@@ -107,7 +128,6 @@ public class PauseMenu : MonoBehaviour
     {
         m_isPaused = false;
         Time.timeScale = 1;
-        m_p1Cursor.gameObject.SetActive(false);
         m_pauseMenu.SetActive(false);
     }
 

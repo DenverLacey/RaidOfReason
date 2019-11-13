@@ -15,21 +15,26 @@ public class DeathMenu : MonoBehaviour
     private int m_sceneToRestartIndex;
 
     private Vector3 m_p1InactivePosition;
-    private bool m_isDeath = false;
+    private bool m_isDeath;
+    private GameObject m_playerHUD;
     public GameObject m_DeathMenu;
-    private GameObject m_miniMap;
 
     private void Start()
     {
+        m_DeathMenu = GameObject.Find("---EndMenu---");
+        m_DeathMenu.SetActive(false);
+        m_isDeath = false;
         m_p1Cursor.SetController(1);
         m_p1InactivePosition = transform.position;
-        m_DeathMenu.SetActive(false);
+        m_playerHUD = GameObject.Find("---Stats---");
+        m_playerHUD.SetActive(true);
     }
 
     public void DeathScreen()
     {
         Time.timeScale = 0.0f;
         m_isDeath = true;
+        m_playerHUD.SetActive(false);
         m_p1Cursor.gameObject.SetActive(true);
         m_DeathMenu.SetActive(true);
     }

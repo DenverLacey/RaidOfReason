@@ -40,6 +40,14 @@ public class PauseCursor : MonoBehaviour
             case XboxController.First:
                 m_playerIndex = PlayerIndex.One;
                 break;
+
+            case XboxController.Second:
+                m_playerIndex = PlayerIndex.Two;
+                break;
+
+            case XboxController.Third:
+                m_playerIndex = PlayerIndex.Three;
+                break;
         }
     }
 
@@ -137,6 +145,16 @@ public class PauseCursor : MonoBehaviour
             case 1:
                 controller = XboxController.First;
                 m_playerIndex = PlayerIndex.One;
+                break;
+
+            case 2:
+                controller = XboxController.Second;
+                m_playerIndex = PlayerIndex.Two;
+                break;
+
+            case 3:
+                controller = XboxController.Third;
+                m_playerIndex = PlayerIndex.Three;
                 break;
 
             default:
