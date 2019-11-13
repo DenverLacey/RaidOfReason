@@ -29,6 +29,7 @@ public class ObjectiveManager : MonoBehaviour
 
     private bool m_isDone;
     private bool m_hasFailed;
+    private bool m_haveObjective;
 
     private void Awake()
     {
@@ -51,7 +52,6 @@ public class ObjectiveManager : MonoBehaviour
 
     private void Update()
     {
-
         if (m_currentObjective && ObjectiveTriggered == true)
         {
             if (triggerObjectives.Count > 1)

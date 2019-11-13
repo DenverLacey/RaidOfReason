@@ -6,8 +6,6 @@ using UnityEngine;
 public class TriggerObjective : MonoBehaviour
 {
     private ObjectiveManager objectiveManager;
-    private BarrierManager Barriers;
-    private int m_playersInGame;
     public GameObject respawnPoint;
 
     private bool playerHere = false;
@@ -15,8 +13,6 @@ public class TriggerObjective : MonoBehaviour
     private void Awake()
     {
         objectiveManager = FindObjectOfType<ObjectiveManager>();
-        Barriers = FindObjectOfType<BarrierManager>();
-        m_playersInGame = GameManager.Instance.AlivePlayers.Count;
         gameObject.GetComponent<BoxCollider>().isTrigger = true;
     }
 
@@ -33,6 +29,6 @@ public class TriggerObjective : MonoBehaviour
             objectiveManager.ObjectiveTriggered = true;
             playerHere = false;
             this.gameObject.SetActive(false);
-        }    
+        }
     }
 }
