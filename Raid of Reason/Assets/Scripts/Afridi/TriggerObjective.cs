@@ -10,9 +10,7 @@ public class TriggerObjective : MonoBehaviour
     private int m_playersInGame;
     public GameObject respawnPoint;
 
-    private bool KenronPass;
-    private bool NashornPass;
-    private bool TheaPass;
+    private bool playerHere = false;
 
     private void Awake()
     {
@@ -20,9 +18,6 @@ public class TriggerObjective : MonoBehaviour
         Barriers = FindObjectOfType<BarrierManager>();
         m_playersInGame = GameManager.Instance.AlivePlayers.Count;
         gameObject.GetComponent<BoxCollider>().isTrigger = true;
-        KenronPass = false;
-        NashornPass = false;
-        TheaPass = false;
     }
 
     void OnTriggerEnter(Collider other)
@@ -30,25 +25,23 @@ public class TriggerObjective : MonoBehaviour
         if (other.tag == "Kenron" && Utility.IsPlayerAvailable(CharacterType.KENRON))
         {
             RespawnManager.UpdateSpawnPoint(respawnPoint.transform.position);
-            KenronPass = true;
+            playerHere = true;
         }
         if (other.tag == "Kreiger" && Utility.IsPlayerAvailable(CharacterType.KREIGER))
         {
             RespawnManager.UpdateSpawnPoint(respawnPoint.transform.position);
-            NashornPass = true;
+            playerHere = true;
         }
         if (other.tag == "Thea" && Utility.IsPlayerAvailable(CharacterType.THEA))
         {
             RespawnManager.UpdateSpawnPoint(respawnPoint.transform.position);
-            TheaPass = true;
+            playerHere = true;
         }
 
-        if (KenronPass && NashornPass && TheaPass)
+        if (playerHere)
         {
             objectiveManager.ObjectiveTriggered = true;
-            KenronPass = false;
-            NashornPass = false;
-            TheaPass = false;
+            playerHere = false;
             this.gameObject.SetActive(false);
         }    
     }
