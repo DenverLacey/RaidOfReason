@@ -91,6 +91,10 @@ public class Kreiger : BaseCharacter
     [Tooltip("Shock Effect That Appears When Kreiger Taunts")]
     private ParticleSystem m_debrisParticle;
 
+	[SerializeField]
+	[Tooltip("Taunt Effect")]
+	private TauntEffectIndicator m_tauntEffect;
+
     private float m_lungeDelayTimer;
     // Desired position to lunge.
     private Vector3 m_lungePosition;
@@ -295,6 +299,12 @@ public class Kreiger : BaseCharacter
 			m_animator.SetTrigger("Taunt");
 		}
     }
+
+	public void OnTauntAnimation()
+	{
+		m_tauntEffect.Show(m_tauntRadius, transform.position);
+		RumbleController(.4f);
+	}
 
     /// <summary>
     /// Resets Kreigers Stats back to his base after Spott is Used
