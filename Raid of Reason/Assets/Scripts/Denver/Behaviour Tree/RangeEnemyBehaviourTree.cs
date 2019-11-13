@@ -48,11 +48,14 @@ public class RangeEnemyBehaviourTree : BehaviourTree
 		attackSequence.AddChild(new GetIntoPosition());
 		attackSequence.AddChild(new RangeEnemyAttack());
 
+		TurnManualSteeringOff turnOffManualSteering = new TurnManualSteeringOff();
+
 		Wander wander = new Wander();
 
 		// add components to behaviour tree
 		m_behaviourTree.AddChild(stunnedCondition);
 		m_behaviourTree.AddChild(attackSequence);
+		m_behaviourTree.AddChild(turnOffManualSteering);
 		m_behaviourTree.AddChild(wander);
 	}
 
@@ -66,39 +69,4 @@ public class RangeEnemyBehaviourTree : BehaviourTree
     {
         m_behaviourTree.Execute(agent);
     }
-
-    /// <summary>
-	/// Finds the closest point on the nav mesh to the source.
-	/// </summary>
-	/// <param name="source">
-	/// The source position that you want to know the closest point on the nav mesh.
-	/// </param>
-    /// <param name="tolerance">
-    /// How close the source can be to being on the Nav Mesh and succeed
-    /// </param>
-	/// <returns>
-	/// The closest point on the nav mesh to the source position.
-	/// </returns>
-    public static Vector3 FindClosestPoint(Vector3 source, float tolerance) 
-    {
-		NavMeshHit hit;
-        var area = NavMesh.GetAreaFromName("Walkable");
-
-		if (NavMesh.SamplePosition(source, out hit, tolerance, area))
-		{
-			if (hit.hit)
-			{
-				return source;
-			}
-		}
-
-		if (NavMesh.FindClosestEdge(source, out hit, area))
-		{
-			if (hit.hit)
-			{
-				return hit.position;
-			}
-		}
-		return Vector3.positiveInfinity;
-	}
 }

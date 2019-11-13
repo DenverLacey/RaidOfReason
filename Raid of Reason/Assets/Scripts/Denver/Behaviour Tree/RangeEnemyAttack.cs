@@ -10,6 +10,20 @@ using static Behaviour.Result;
 
 public class RangeEnemyAttack : Behaviour
 {
+	void OnAttackAnimation(EnemyData agent)
+	{
+		// reset attacking variables
+		agent.Attacking = false;
+		agent.AttackTimer = 0f;
+
+		EnemyProjectile projectile = GameObject.Instantiate(agent.AttackPrefabs[0], agent.transform.position + agent.transform.forward, agent.transform.rotation).GetComponent<EnemyProjectile>();
+
+		if (projectile)
+		{
+			projectile.Init(agent.AttackDamage, agent);
+		}
+	}
+
     /// <summary>
 	/// Performs attack behaviour on range enemy agent
 	/// </summary>
@@ -21,6 +35,12 @@ public class RangeEnemyAttack : Behaviour
 	/// </returns>
     public override Result Execute(EnemyData agent)
     {
+		// set OnAttackAnimation delegate for agent
+		if (agent.OnAttackDelegate == null)
+		{
+			agent.OnAttackDelegate = OnAttackAnimation;
+		}
+
 		// rotate to face player
         Vector3 direction = (agent.TargetPlayer.transform.position - agent.transform.position).normalized;
 		direction.y = 0f;
@@ -33,16 +53,18 @@ public class RangeEnemyAttack : Behaviour
 
         if (agent.AttackTimer >= agent.AttackCooldown)
         {
-            // reset attacking variables
-            agent.Attacking = false;
-			agent.AttackTimer = 0f;
+			//         // reset attacking variables
+			//         agent.Attacking = false;
+			//agent.AttackTimer = 0f;
 
-            EnemyProjectile projectile = GameObject.Instantiate(agent.AttackPrefabs[0], agent.transform.position + agent.transform.forward, agent.transform.rotation).GetComponent<EnemyProjectile>();
+			//         EnemyProjectile projectile = GameObject.Instantiate(agent.AttackPrefabs[0], agent.transform.position + agent.transform.forward, agent.transform.rotation).GetComponent<EnemyProjectile>();
 
-            if (projectile)
-            {
-                projectile.Init(agent.AttackDamage, agent);
-            }
+			//         if (projectile)
+			//         {
+			//             projectile.Init(agent.AttackDamage, agent);
+			//         }
+
+			agent.SetAnimatorTrigger("Attack");
         }
 
         return PENDING_COMPOSITE;
