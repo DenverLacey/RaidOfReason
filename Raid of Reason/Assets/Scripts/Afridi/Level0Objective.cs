@@ -46,7 +46,10 @@ public class Level0Objective : BaseObjective
 
     public override void Update()
     {
-       
+        if (IsDone())
+        {
+            ActivatePortal().SetActive(true);
+        }
     }
 
     public override GameObject ActivatePortal()
