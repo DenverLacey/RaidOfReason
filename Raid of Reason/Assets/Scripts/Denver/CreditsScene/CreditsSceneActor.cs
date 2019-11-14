@@ -39,7 +39,7 @@ public class CreditsSceneActor : MonoBehaviour
 
 		if (m_phase == 1)
 		{
-			if (Input.GetKeyDown(KeyCode.Return) || XCI.GetButton(XboxButton.Start, XboxController.Any))
+			if (Input.GetKeyDown(KeyCode.Return) || Utility.IsButtonDownByAnyController(XboxButton.Start))
 			{
 				LevelManager.FadeLoadLevel(0);
 			}

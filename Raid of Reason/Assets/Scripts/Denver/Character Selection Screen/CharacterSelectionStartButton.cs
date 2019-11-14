@@ -6,6 +6,7 @@ using XboxCtrlrInput;
 using XInputDotNetPure;
 using DG.Tweening;
 
+[RequireComponent(typeof(BoxCollider2D))]
 public class CharacterSelectionStartButton : InteractableUIElement
 {
 	[Tooltip("How fast the buttons border will fade in and out")]
@@ -48,23 +49,13 @@ public class CharacterSelectionStartButton : InteractableUIElement
 
 	private void Update()
 	{
-		if (XCI.GetButtonDown(XboxButton.A, XboxController.Any))
+		if (Utility.IsButtonDownByAnyController(XboxButton.A))
 		{
 			List<PlayerCursor> cursors = m_characterSelection.PlayerCursors;
 
-			float minx = m_collider.bounds.min.x;
-			float maxx = m_collider.bounds.max.x;
-			float miny = m_collider.bounds.min.y;
-			float maxy = m_collider.bounds.max.y;
-
-			foreach (var cursor in cursors)
+			if (cursors.Exists(cursor => IsCursorHovering(cursor, m_collider)))
 			{
-				if (cursor.transform.position.x >= minx && cursor.transform.position.y >= miny &&
-					cursor.transform.position.x <= maxx && cursor.transform.position.y <= maxy)
-				{
-					OnPressed();
-					break;
-				}
+				OnPressed();
 			}
 		}
 	}

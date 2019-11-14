@@ -143,15 +143,14 @@ public class EnemyPathfinding : MonoBehaviour
 		}
 		else
 		{
-			StopPathing();
+
+			SetRoughDestination(destination);
 		}
 	}
 
 	public void SetRoughDestination(Vector3 destination)
 	{
 		destination.y = transform.position.y;
-
-		Debug.DrawLine(destination, destination + Vector3.up);
 
 		if (AtPosition(destination))
 		{
@@ -162,9 +161,14 @@ public class EnemyPathfinding : MonoBehaviour
 			m_pathing = true;
 			m_currentCorner = 1;
 		}
+		else if (FindClosestVertex(destination, out Vector3 close) && NavMesh.CalculatePath(transform.position, close, NavMesh.AllAreas, m_path))
+		{
+			m_pathing = true;
+			m_currentCorner = 1;
+		}
 		else
 		{
-			SetDestination(FindClosestVertex(destination));
+			StopPathing();
 		}
 	}
 
@@ -235,11 +239,11 @@ public class EnemyPathfinding : MonoBehaviour
 		return m_speedReductionMultiplier;
 	}
 
-	private Vector3 FindClosestVertex(Vector3 sourcePosition)
+	private bool FindClosestVertex(Vector3 sourcePosition, out Vector3 closestPosition)
 	{
 		NavMeshTriangulation triangluation = NavMesh.CalculateTriangulation();
 
-		Vector3 closestVertex = Vector3.positiveInfinity;
+		closestPosition = Vector3.positiveInfinity;
 		float closestSqrDistance = float.MaxValue;
 
 		foreach (var vertex in triangluation.vertices)
@@ -249,10 +253,10 @@ public class EnemyPathfinding : MonoBehaviour
 			if (sqrDistance < closestSqrDistance)
 			{
 				closestSqrDistance = sqrDistance;
-				closestVertex = vertex;
+				closestPosition = vertex;
 			}
 		}
 
-		return closestVertex;
+		return closestPosition != Vector3.positiveInfinity;
 	}
 }

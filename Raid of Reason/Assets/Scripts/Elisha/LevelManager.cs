@@ -28,7 +28,11 @@ public class LevelManager : MonoBehaviour
     private static Animator animator;
 
     private int m_sceneIndex;
+	public int SceneIndex { get => m_sceneIndex; }
+
     private int m_prevSceneIndex;
+	public int PrevSceneIndex { get => m_prevSceneIndex; }
+
     private int m_sceneToLoad;
 
     private bool m_titleScreenVisited = false;

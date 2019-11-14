@@ -57,14 +57,16 @@ public class PlayerCursor : MonoBehaviour
 
 	private CanvasScaler m_canvas;
 
+	private BoxCollider2D m_collider;
+	public Bounds Pointer { get => m_collider.bounds; }
+
 	// Start is called before the first frame update
 	void Start()
     {
 		hasToken = true;
-
 		m_canvas = FindObjectOfType<CanvasScaler>();
-
 		m_inactivePosition = transform.position;
+		m_collider = GetComponent<BoxCollider2D>();
 
 		switch (controller)
 		{

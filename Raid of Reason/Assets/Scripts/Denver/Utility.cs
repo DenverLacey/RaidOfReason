@@ -6,6 +6,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using XboxCtrlrInput;
 
 /// <summary>
 /// Utility class comprises of all utility functions
@@ -54,5 +55,50 @@ public static class Utility
 				return GameManager.Instance.Thea != null && GameManager.Instance.Thea.playerState == BaseCharacter.PlayerState.ALIVE;
 		}
 		return false;
+	}
+
+	public static bool IsButtonPressedByAnyController(XboxButton button)
+	{
+		if (XCI.GetButton(button, XboxController.First) ||
+			XCI.GetButton(button, XboxController.Second) ||
+			XCI.GetButton(button, XboxController.Third) ||
+			XCI.GetButton(button, XboxController.Fourth))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	public static bool IsButtonDownByAnyController(XboxButton button)
+	{
+		if (XCI.GetButtonDown(button, XboxController.First)  ||
+			XCI.GetButtonDown(button, XboxController.Second) ||
+			XCI.GetButtonDown(button, XboxController.Third)  ||
+			XCI.GetButtonDown(button, XboxController.Fourth))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	public static bool IsButtonUpByAnyController(XboxButton button)
+	{
+		if (XCI.GetButtonUp(button, XboxController.First) ||
+			XCI.GetButtonUp(button, XboxController.Second) ||
+			XCI.GetButtonUp(button, XboxController.Third) ||
+			XCI.GetButtonUp(button, XboxController.Fourth))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 }
