@@ -97,7 +97,7 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.5
+    agentRadius: 1
     agentHeight: 2
     agentSlope: 45
     agentClimb: 0.4
@@ -105,7 +105,7 @@ NavMeshSettings:
     maxJumpAcrossDistance: 0
     minRegionArea: 2
     manualCellSize: 0
-    cellSize: 0.16666667
+    cellSize: 0.33333334
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
@@ -566,18 +566,6 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: c8bfd1cfda4aa4a48ad75d920a9948c9, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6273410bed602804e9ecb2d7f32fcb26, type: 3}
---- !u!114 &23153052 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4823527291062200124, guid: e645cb267fcc2db478863b9dc482236b,
-    type: 3}
-  m_PrefabInstance: {fileID: 137058550}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &24580682
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7205,7 +7193,7 @@ PrefabInstance:
     - target: {fileID: 7930753754068002405, guid: 6f775ccf72fa6054e9bcc358b762b3ae,
         type: 3}
       propertyPath: m_Size.x
-      value: 30.125067
+      value: 21.461267
       objectReference: {fileID: 0}
     - target: {fileID: 7930753754068002405, guid: 6f775ccf72fa6054e9bcc358b762b3ae,
         type: 3}
@@ -7230,12 +7218,12 @@ PrefabInstance:
     - target: {fileID: 7930753754068002405, guid: 6f775ccf72fa6054e9bcc358b762b3ae,
         type: 3}
       propertyPath: m_Center.x
-      value: -3.4460175
+      value: -0.8601556
       objectReference: {fileID: 0}
     - target: {fileID: 7930753754068002405, guid: 6f775ccf72fa6054e9bcc358b762b3ae,
         type: 3}
       propertyPath: m_Center.z
-      value: -1.1158862
+      value: -1.115886
       objectReference: {fileID: 0}
     - target: {fileID: 7930753754068002404, guid: 6f775ccf72fa6054e9bcc358b762b3ae,
         type: 3}
@@ -7494,12 +7482,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5707208689818696768, guid: 1a7661fa950b2cc42b35751633494eb9,
     type: 3}
   m_PrefabInstance: {fileID: 2016128861}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &517876796 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2953301164392110313, guid: e645cb267fcc2db478863b9dc482236b,
-    type: 3}
-  m_PrefabInstance: {fileID: 137058550}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &524399239
 GameObject:
@@ -11155,8 +11137,7 @@ MonoBehaviour:
   ObjectiveTriggered: 0
   BuildIndex: 2
   objectiveTimer: {fileID: 137058560}
-  objectiveDescription: {fileID: 23153052}
-  billBoards: {fileID: 517876796}
+  objectiveDescription: {fileID: 0}
   objectiveComplete: {fileID: 1405586688}
   objectiveFailed: {fileID: 806101999}
 --- !u!1 &692714691
