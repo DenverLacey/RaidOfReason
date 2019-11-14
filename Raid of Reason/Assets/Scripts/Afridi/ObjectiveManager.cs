@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 /*
  * Author: Afridi Rahim, Denver Lacey
 */
@@ -20,8 +21,8 @@ public class ObjectiveManager : MonoBehaviour
     public bool ObjectiveTriggered = false;
     public int BuildIndex;
 
-    public Text objectiveTimer;
-    public Text objectiveDescription;
+    public TextMeshProUGUI objectiveTimer;
+    public TextMeshProUGUI objectiveDescription;
 
     public GameObject objectiveComplete;
     public GameObject objectiveFailed;
@@ -66,7 +67,7 @@ public class ObjectiveManager : MonoBehaviour
                 m_isDone = m_currentObjective.IsDone();
                 m_hasFailed = m_currentObjective.HasFailed();
                 objectiveDescription.text = m_currentObjective.GrabDescription();
-                objectiveTimer.gameObject.transform.GetChild(0).gameObject.GetComponent<Text>().text = m_currentObjective.Timer().ToString("f0");
+                objectiveTimer.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = m_currentObjective.Timer().ToString("f0");
                 #endregion
 
             m_currentObjective.Update();
@@ -82,7 +83,7 @@ public class ObjectiveManager : MonoBehaviour
 
             if (m_currentObjective.Timer() > 0)
             {
-                objectiveTimer.gameObject.transform.GetChild(0).gameObject.GetComponent<Text>().text = m_currentObjective.Timer().ToString("f0");
+                objectiveTimer.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = m_currentObjective.Timer().ToString("f0");
             }
             else
             {

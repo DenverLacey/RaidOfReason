@@ -40,9 +40,11 @@ public class PauseMenu : MonoBehaviour
     private Vector3 m_P3InactivePosition;
     public GameObject m_pauseMenu;
     private GameObject m_playerHUD;
+    private GameObject m_objectiveHUD;
 
     private void Start()
     {
+        m_objectiveHUD = GameObject.Find("---Objectives---");
         m_pauseMenu = GameObject.Find("---PauseMenu---");
         m_pauseMenu.gameObject.SetActive(false);
         m_isPaused = false;
@@ -71,12 +73,14 @@ public class PauseMenu : MonoBehaviour
                 m_p1Cursor.SetController(1);
                 if (!m_pauseMenu.activeInHierarchy && m_isPaused == false)
                 {
+                    m_objectiveHUD.SetActive(false);
                     m_playerHUD.SetActive(false);
                     m_p1Cursor.gameObject.SetActive(true);
                     Paused();
                 }
                 else if (m_pauseMenu.activeInHierarchy && m_isPaused == true)
                 {
+                    m_objectiveHUD.SetActive(true);
                     m_playerHUD.SetActive(true);
                     m_p1Cursor.gameObject.SetActive(false);
                     ContinueGame();
@@ -88,12 +92,14 @@ public class PauseMenu : MonoBehaviour
                 m_p2Cursor.SetController(2);
                 if (!m_pauseMenu.activeInHierarchy && m_isPaused == false)
                 {
+                    m_objectiveHUD.SetActive(false);
                     m_playerHUD.SetActive(false);
                     m_p2Cursor.gameObject.SetActive(true);
                     Paused();
                 }
                 else if (m_pauseMenu.activeInHierarchy && m_isPaused == true)
                 {
+                    m_objectiveHUD.SetActive(true);
                     m_playerHUD.SetActive(true);
                     m_p2Cursor.gameObject.SetActive(false);
                     ContinueGame();
@@ -105,23 +111,20 @@ public class PauseMenu : MonoBehaviour
                 m_p3Cursor.SetController(3);
                 if (!m_pauseMenu.activeInHierarchy && m_isPaused == false)
                 {
+                    m_objectiveHUD.SetActive(false);
                     m_playerHUD.SetActive(false);
                     m_p3Cursor.gameObject.SetActive(true);
                     Paused();
                 }
                 else if (m_pauseMenu.activeInHierarchy && m_isPaused == true)
                 {
+                    m_objectiveHUD.SetActive(true);
                     m_playerHUD.SetActive(true);
                     m_p3Cursor.gameObject.SetActive(false);
                     ContinueGame();
                 }
             }
         }
-    }
-
-    public void CharacterSelection()
-    {
-        SceneManager.LoadScene(m_characterSceneIndex, LoadSceneMode.Single);
     }
 
     public void Paused()
@@ -138,13 +141,24 @@ public class PauseMenu : MonoBehaviour
         m_pauseMenu.SetActive(false);
     }
 
-    public void RestartGame()
+    public void ClickedCharacterSelect(int levelIndex)
     {
-        SceneManager.LoadScene(m_restartedScene, LoadSceneMode.Single);
+        Time.timeScale = 1;
+        m_pauseMenu.SetActive(false);
+        LevelManager.FadeLoadLevel(levelIndex);
     }
 
-    public void Quit()
+    public void ClickedRestart(int levelIndex)
     {
-        LevelManager.LoadLevel(0);
+        Time.timeScale = 1;
+        m_pauseMenu.SetActive(false);
+        LevelManager.FadeLoadLevel(levelIndex);
+    }
+
+    public void ClickQuit()
+    {
+        Time.timeScale = 1;
+        m_pauseMenu.SetActive(false);
+        LevelManager.FadeLoadLevel(0);
     }
 }
