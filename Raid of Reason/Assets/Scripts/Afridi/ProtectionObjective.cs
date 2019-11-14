@@ -2,7 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Objectives/Protect Me")]
+/*
+ * Author: Afridi Rahim
+ * Description: Time Based Protection Objective
+ * Last Edited: 15/11/2019
+ */
+[CreateAssetMenu(menuName = "Objectives/Protect The Crystal")]
 public class ProtectionObjective : BaseObjective
 {
     [Tooltip("Name of the Objective")]
@@ -15,24 +20,19 @@ public class ProtectionObjective : BaseObjective
     public string description;
 
     public GameObject ProtectObject { get; private set; }
-    public string spawnPointName;
-    private GameObject SpawnPoint;
-    public float m_currentTimer;
-    public float m_currentHealth;
+    private float m_currentTimer;
+    public float currentHealth;
 
+    #region Objective Setup
     private void OnEnable()
     {
+        // Finds the Crystal
         ProtectObject = GameObject.Find(nameOfObject);
-    }
-
-    public override GameObject ActivatePortal()
-    {
-        return null;
     }
 
     public override void Init()
     {
-        m_currentHealth = health;
+        currentHealth = health;
         m_currentTimer = timer;
     }
 
@@ -43,12 +43,8 @@ public class ProtectionObjective : BaseObjective
 
     public void TakeDamage(float damage)
     {
-        m_currentHealth -= damage;
-    }
-
-    public override GameObject SpawnPoints()
-    {
-        return SpawnPoint;
+        // Enables the crystal to take damage
+        currentHealth -= damage;
     }
 
     public override string GrabDescription()
@@ -59,19 +55,22 @@ public class ProtectionObjective : BaseObjective
     public override void Update()
     {
         m_currentTimer -= Time.deltaTime;
-        if (HasFailed() == true && ProtectObject != null)
+        if (Failed() == true && ProtectObject != null)
         {
             ProtectObject.SetActive(false);
         }
     }
 
-    public override bool HasFailed()
+    public override bool Failed()
     {
-        return m_currentHealth <= 0;
+        // Failure Requirments: Crystal Dies
+        return currentHealth <= 0;
     }
 
-    public override bool IsDone()
+    public override bool Completed()
     {
-        return m_currentTimer <= 0 && m_currentHealth > 0;
+        // Completion Requirements: Timer is 0 and health is above 0
+        return m_currentTimer <= 0 && currentHealth > 0;
     }
+    #endregion
 }

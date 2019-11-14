@@ -5,15 +5,13 @@ using UnityEngine.UI;
 using XboxCtrlrInput;
 
 /*
-  * Author: Afridi Rahim
-  *
-  * Summary: The Stats and Management of Kreigers Core Mechanics.
-  *          Manages his abilites and his skill tree as he improves within the
-  *          game
+  * Author: Afridi Rahim, Denver Lacey
+  * Description: Handle all of Kenrons Core Mechanics 
+  * Last Edited: 15/11/2019
 */
-
 public class Kreiger : BaseCharacter
 {
+    #region Punch Variables
     [Header("Punching Attacks")]
 
     [Tooltip("The Collider of Kreigers Left Gauntlet")]
@@ -40,11 +38,13 @@ public class Kreiger : BaseCharacter
 
     [Tooltip("How much shield will Kreiger gain on every punch?")]
     public float shieldGain;
+    #endregion
 
+    #region Skills
     [Header("--Skills--")]
 
     [SerializeField]
-    [Tooltip("Size of the area of effect for taunt ability")]
+    [Tooltip("Size of the area of effect for Machinas Dare")]
     private float m_tauntRadius;
 	public float TauntRadius { get => m_tauntRadius; }
 
@@ -68,27 +68,25 @@ public class Kreiger : BaseCharacter
     [Tooltip("How much knockback is applied to Kreigers Hydraulic Pummel")]
     public float knockBackForce;
 
-    [SerializeField]
-    [Tooltip("How much more knockback Kreiger deals with Kinetic Dischage")]
-    public float KDForce;
+    [Tooltip("How long the enemy is stunned for")]
+    public float stunTime;
 
-    [Tooltip("How long the enemy is stunned by Kinetic Dischage")]
-    public float KDStun;
-
-    [Tooltip("How Much Damage dealt when an enemy gets hit by another Enemy by Kinetic Dischage")]
-    public float KDKnockbackDamage;
+    [Tooltip("How Much Damage dealt when an enemy gets hit by another Enemy")]
+    public float knockBackDamage;
 
     [SerializeField]
-    [Tooltip("How much shields Kreigers Static Shield Gives To His Allies")]
-    private float m_SSShieldsGiven;
+    [Tooltip("How much shields Kreigers Gives To His Allies")]
+    private float m_shieldsGiven;
 
     [SerializeField]
-    [Tooltip("How much damage Enemies take with Static Shield")]
-    public float SSDamageTaken;
+    [Tooltip("How much damage Enemies take when attacking Krieger")]
+    public float thornDamage;
 
     [Tooltip("Checks if Kreigers Skill is Active")]
     public bool isTaunting;
+    #endregion
 
+    #region Particles
     [Header("--Particles And UI--")]
 
     [SerializeField]
@@ -102,6 +100,7 @@ public class Kreiger : BaseCharacter
 	[SerializeField]
 	[Tooltip("Taunt Effect")]
 	private TauntEffectIndicator m_tauntEffect;
+    #endregion
 
     private float m_lungeDelayTimer;
     // Desired position to lunge.
@@ -112,18 +111,8 @@ public class Kreiger : BaseCharacter
     private bool islunging;
     // checks if trigger has been pressed
     private bool triggerIsDown;
-    // Kenron Instance
-    private Kenron m_Kenron;
-    // Thea Instance
-    private Thea m_Thea;
-    // Empty Object for particle instantiating
-    private GameObject particleInstantiate;
-    private GameObject temp;
-    private bool runOnce;
 
-    private float totalAmountTaunted;
-    private float amountTaunted;
-
+    // Enemies hit by Punches
     public List<EnemyData> m_hitEnemies;
 
     private void Start()
@@ -132,7 +121,8 @@ public class Kreiger : BaseCharacter
         m_hitEnemies = new List<EnemyData>();
     }
 
-	protected override void Awake()
+    #region Intialisation
+    protected override void Awake()
     {
         // Initialisation 
         base.Awake();
@@ -144,9 +134,6 @@ public class Kreiger : BaseCharacter
         isSkillActive = false;
         triggerIsDown = false;
         islunging = false;
-        runOnce = true;
-        m_Thea = FindObjectOfType<Thea>();
-        m_Kenron = FindObjectOfType<Kenron>();
         GameManager.Instance.GiveCharacterReference(this);
     }
 
@@ -167,6 +154,7 @@ public class Kreiger : BaseCharacter
         Punch();
 
     }
+    #endregion
 
     /// <summary>
     /// Kreigers Attack. By Pressing the Right Trigger, Kreiger Becomes Stationery and Punches his foes switching between fists
@@ -224,6 +212,9 @@ public class Kreiger : BaseCharacter
         }
     }
 
+    /// <summary>
+    /// Allows Krieger to Lunge Forward
+    /// </summary>
 	void StartLunge()
 	{
 		islunging = true;
@@ -237,6 +228,9 @@ public class Kreiger : BaseCharacter
 		LeftGauntlet.enabled = true;
 	}
 
+    /// <summary>
+    /// Stops Krieger from lunging forward
+    /// </summary>
 	void StopLunge()
 	{
 		CanRotate = true;
@@ -247,24 +241,33 @@ public class Kreiger : BaseCharacter
         OnDisable();
 	}
 
+    /// <summary>
+    /// Clears any hit enemies if Krieger Dies 
+    /// </summary>
     public void OnDisable()
     {
         m_hitEnemies.Clear();
     }
 
+
+    /// <summary>
+    /// Handles the Particle on when Nashorn uses Machinas Dare
+    /// </summary>
+    /// <returns>The length of how long the particle is active till it ends</returns>
     IEnumerator MachinasDareVisual()
     {
         yield return new WaitForSeconds(0.5f);
         m_debrisParticle.Play();
-
     }
 
     /// <summary>
-	/// Kreiger's Ability. Boosting His Health up and reducing incoming damage he taunts all enemies to himself
+	/// Boosting His Health up and reducing incoming damage he taunts all enemies to himself
 	/// </summary>
-    public void Spott(float skillDuration)
+    public void MachinasDare(float skillDuration)
     {
 		RestrictControlsForSeconds(m_tauntMovementDelay, MovementAxis.All);
+
+        // Turns ability UI On/Off
         if (Ability_UI != null)
         {
             Ability_UI.SetActive(false);
@@ -272,15 +275,18 @@ public class Kreiger : BaseCharacter
 
         // Ability is active
         isTaunting = true;
-        GameManager.Instance.Kreiger.currentShield += m_SSShieldsGiven; 
+        isSkillActive = true;
 
+        GameManager.Instance.Kreiger.currentShield += m_shieldsGiven; 
+
+        // Give Shields to available Player
         if (Utility.IsPlayerAvailable(CharacterType.KENRON)) 
         {
-            GameManager.Instance.Kenron.currentShield += m_SSShieldsGiven;
+            GameManager.Instance.Kenron.currentShield += m_shieldsGiven;
         }
         if (Utility.IsPlayerAvailable(CharacterType.THEA))
         {
-            GameManager.Instance.Thea.currentShield += m_SSShieldsGiven;
+            GameManager.Instance.Thea.currentShield += m_shieldsGiven;
         }
 
         // taunt enemies
@@ -290,12 +296,10 @@ public class Kreiger : BaseCharacter
 			if (sqrDist <= m_tauntRadius * m_tauntRadius)
 			{
                    enemy.Taunted = true;
-                   totalAmountTaunted++;
             }
 		}
-
-        isSkillActive = true;
-
+        
+        // Plays second taunt particle
         m_tauntParticle.Play();
         StartCoroutine(MachinasDareVisual());
 
@@ -308,6 +312,9 @@ public class Kreiger : BaseCharacter
 		}
     }
 
+    /// <summary>
+    ///  Plays an effect when an animations is played
+    /// </summary>
 	public void OnTauntAnimation()
 	{
 		m_tauntEffect.Show(m_tauntRadius, transform.position);
@@ -315,7 +322,7 @@ public class Kreiger : BaseCharacter
 	}
 
     /// <summary>
-    /// Resets Kreigers Stats back to his base after Spott is Used
+    /// Resets Kreigers Stats back to his base after Machinas Dare is Used
     /// </summary>
     public void ResetSkill()
     {
@@ -329,15 +336,22 @@ public class Kreiger : BaseCharacter
         }
     }
 
+    /// <summary>
+    /// Handles The thorn damage dealt to enemies
+    /// </summary>
+    /// <param name="collision"></param>
     public void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Enemy" && isSkillActive == true)
         {
-             collision.gameObject.GetComponent<EnemyData>().TakeDamage(SSDamageTaken, GameManager.Instance.Kreiger);
+             collision.gameObject.GetComponent<EnemyData>().TakeDamage(thornDamage, GameManager.Instance.Kreiger);
         }
     }
 
-	public override void ResetCharacter()
+    /// <summary>
+    /// Handles the character if they die whilst using a skill or punching
+    /// </summary>
+    public override void ResetCharacter()
 	{
 		base.ResetCharacter();
 		ResetSkill();

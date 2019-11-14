@@ -58,7 +58,7 @@ namespace Cinemachine
             CinemachineVirtualCameraBase vcam,
             CinemachineCore.Stage stage, ref CameraState state, float deltaTime);
 
-        /// <summary>Because extensions can be placed on manager cams and will in that
+        /// <summary>Because extensions can be placed on Manager cams and will in that
         /// case be called for all the vcam children, vcam-specific state information
         /// should be stored here.  Just define a class to hold your state info
         /// and use it exclusively when calling this.</summary>

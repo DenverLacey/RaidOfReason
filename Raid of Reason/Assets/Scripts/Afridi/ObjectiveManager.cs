@@ -6,17 +6,18 @@ using UnityEngine.UI;
 using TMPro;
 /*
  * Author: Afridi Rahim, Denver Lacey
+ * Description: Handles all The Objectives and thier designated Loops
+ * Last Edited: 15/11/2019
 */
 public class ObjectiveManager : MonoBehaviour
 {
     [SerializeField]
     [Tooltip("Objectives should be added in order of progression")]
-    public List<BaseObjective> m_objectives = new List<BaseObjective>();
+    public List<BaseObjective> objectives = new List<BaseObjective>();
     public List<TriggerObjective> triggerObjectives = new List<TriggerObjective>();
-    public BaseObjective m_currentObjective;
-    public TriggerObjective m_triggerObjective;
+    public BaseObjective currentObjective;
+    public TriggerObjective triggerObjective;
     public BarrierManager barriers;
-
     public bool ObjectiveCompleted;
     public bool ObjectiveTriggered = false;
 
@@ -25,103 +26,109 @@ public class ObjectiveManager : MonoBehaviour
 
     public GameObject objectiveComplete;
     public GameObject objectiveFailed;
+    [Tooltip("Time till Objective Completion/Failed dissapears")]
+    public float objectiveFade;
 
-    private bool m_isDone;
-    private bool m_hasFailed;
+    private bool m_Completed;
+    private bool m_Failed;
     private bool m_haveObjective;
 
     private void Awake()
     {
+        // If There are trigger opbjectives
         if (triggerObjectives.Count > 1)
         {
+            // Set them up
             foreach (TriggerObjective obj in triggerObjectives)
             {
                 obj.gameObject.SetActive(false);
             }
-            m_triggerObjective = triggerObjectives[0];
-            m_triggerObjective.gameObject.SetActive(true);
+            triggerObjective = triggerObjectives[0];
+            triggerObjective.gameObject.SetActive(true);
         }
 
+        // Init
+        currentObjective = objectives[0];
+        currentObjective.Init();
         objectiveTimer.gameObject.SetActive(false);
-
-        m_currentObjective = m_objectives[0];
-        m_currentObjective.Init();
         ObjectiveCompleted = false;
     }
 
     private void Update()
     {
-        if (m_currentObjective && ObjectiveTriggered == true)
+        // If the current objective exists and has been triggered
+        if (currentObjective && ObjectiveTriggered == true)
         {
             if (triggerObjectives.Count > 1)
             {
-                m_triggerObjective.gameObject.SetActive(false);
+                // Disable triggered trigger
+                triggerObjective.gameObject.SetActive(false);
             }
       
+            // Set Descriptions and Timer
             objectiveTimer.gameObject.SetActive(true);
             objectiveTimer.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+            objectiveTimer.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = currentObjective.Timer().ToString("f0");
+
             objectiveDescription.gameObject.SetActive(true);
+            objectiveDescription.text = currentObjective.GrabDescription();
 
-            m_isDone = m_currentObjective.IsDone();
-            m_hasFailed = m_currentObjective.HasFailed();
-            objectiveDescription.text = m_currentObjective.GrabDescription();
-            objectiveTimer.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = m_currentObjective.Timer().ToString("f0");
+            // Stores Complete/Failed Bools
+            m_Completed = currentObjective.Completed();
+            m_Failed = currentObjective.Failed();
+         
+            currentObjective.Update();
 
-            m_currentObjective.Update();
-
-            if (m_isDone && !m_hasFailed)
+            // On Completion 
+            if (m_Completed && !m_Failed)
             {
                 StartCoroutine(ObjectiveLoop());
             }
-            else if (m_hasFailed && !m_isDone)
+
+            // On Failure
+            else if (m_Failed && !m_Completed)
             {
                 StartCoroutine(ObjectiveLoop());
-            }
-
-            if (m_currentObjective.Timer() > 0)
-            {
-                objectiveTimer.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = m_currentObjective.Timer().ToString("f0");
-            }
-            else
-            {
-                objectiveTimer.gameObject.SetActive(false);
-                objectiveTimer.gameObject.transform.GetChild(0).gameObject.SetActive(false);
             }
         }
     }
 
+    /// <summary>
+    /// This Loop Determines the Paths of Failure or Completion
+    /// </summary>
+    /// <returns>Time till next objective Starts</returns>
     IEnumerator ObjectiveLoop()
     {
-		// objective succeeded
-        if (m_isDone && !m_hasFailed)
+        #region Objective Complete
+        // objective succeeded
+        if (m_Completed && !m_Failed)
         {
             ObjectiveCompleted = true;
 
+            // Empty Check before setting a new Objective
             if (barriers != null)
             {
                 barriers.ManageBarriers();
             }
-
-            if (m_objectives.Count != 0)
+            if (objectives.Count > 1)
             {
-			    m_objectives.RemoveAt(0);
-                m_currentObjective = m_objectives[0];
-                m_currentObjective.Init();
+			    objectives.RemoveAt(0);
+                currentObjective = objectives[0];
+                currentObjective.Init();
             }
-
-            if (triggerObjectives.Count != 0)
+            if (triggerObjectives.Count > 1)
             {
                 triggerObjectives.RemoveAt(0);
-                m_triggerObjective = triggerObjectives[0];
-                m_triggerObjective.gameObject.SetActive(true);
+                triggerObjective = triggerObjectives[0];
+                triggerObjective.gameObject.SetActive(true);
             }
 
+            // Reset Triggerand completion
             ObjectiveCompleted = false;
-
-            // Reset Trigger
             ObjectiveTriggered = false;
-
-            if (m_objectives.Count != 0)
+            
+            // Turns off Timers and Descriptions
+            if (objectives.Count > 1)
             {
                 objectiveTimer.gameObject.SetActive(false);
                 objectiveTimer.gameObject.transform.GetChild(0).gameObject.SetActive(false);
@@ -131,38 +138,45 @@ public class ObjectiveManager : MonoBehaviour
             objectiveComplete.SetActive(true);
 
             #region Objective Descriptions
-            if (m_objectives.Count != 0)
+            if (objectives.Count > 1)
             {
                 // Replaces Old objective texts with new objective
-                objectiveDescription.text = objectiveDescription.text.Replace(m_currentObjective.GrabDescription(), m_currentObjective.GrabDescription());
-                objectiveTimer.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = objectiveTimer.text.Replace(m_currentObjective.Timer().ToString("f0"), m_currentObjective.Timer().ToString("f0"));
+                objectiveDescription.text = objectiveDescription.text.Replace(currentObjective.GrabDescription(), currentObjective.GrabDescription());
+                objectiveTimer.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = objectiveTimer.text.Replace(currentObjective.Timer().ToString("f0"), currentObjective.Timer().ToString("f0"));
             }
             #endregion
-
-            yield return new WaitForSeconds(5);
+          
+            yield return new WaitForSeconds(objectiveFade);
 
             if (ObjectiveCompleted == false)
             {
                 objectiveComplete.SetActive(false);
             }
 
-            if (m_objectives.Count == 0)
+            // If its the last objective roll credits
+            if (objectives.Count == 0)
             {
                 LevelManager.FadeLoadNextLevel();
             }
         }
+        #endregion
 
-		// objective failed
-        if (m_hasFailed && !m_isDone)
+        #region Objective Failed
+        // objective failed
+        if (m_Failed && !m_Completed)
         {
+            // Turn Everything Off
             objectiveTimer.gameObject.SetActive(false);
             objectiveTimer.gameObject.transform.GetChild(0).gameObject.SetActive(false);
             objectiveDescription.gameObject.SetActive(false);
 
+            //Reset Trigger
             ObjectiveTriggered = false;
             objectiveFailed.SetActive(true);
-            yield return new WaitForSecondsRealtime(5);
+            yield return new WaitForSecondsRealtime(objectiveFade);
+            // Reload Scene
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+        #endregion
     }
 }

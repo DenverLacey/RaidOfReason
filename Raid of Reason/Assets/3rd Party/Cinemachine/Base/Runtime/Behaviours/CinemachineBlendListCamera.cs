@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Cinemachine
 {
     /// <summary>
-    /// This is a virtual camera "manager" that owns and manages a collection
+    /// This is a virtual camera "Manager" that owns and manages a collection
     /// of child Virtual Cameras.  When the camera goes live, these child vcams 
     /// are enabled, one after another, holding each camera for a designated time.  
     /// Blends between cameras are specified.

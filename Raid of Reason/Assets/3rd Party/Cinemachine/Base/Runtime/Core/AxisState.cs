@@ -33,10 +33,10 @@ namespace Cinemachine
         [Tooltip("The amount of time in seconds it takes to decelerate the axis to zero if the supplied axis is in a neutral position")]
         public float m_DecelTime;
 
-        /// <summary>The name of this axis as specified in Unity Input manager.
+        /// <summary>The name of this axis as specified in Unity Input Manager.
         /// Setting to an empty string will disable the automatic updating of this axis</summary>
         [FormerlySerializedAs("m_AxisName")]
-        [Tooltip("The name of this axis as specified in Unity Input manager. Setting to an empty string will disable the automatic updating of this axis")]
+        [Tooltip("The name of this axis as specified in Unity Input Manager. Setting to an empty string will disable the automatic updating of this axis")]
         public string m_InputAxisName;
 
         /// <summary>The value of the input axis.  A value of 0 means no input

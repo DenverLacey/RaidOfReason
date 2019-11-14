@@ -126,10 +126,6 @@ public class EnemyData : MonoBehaviour
 	[Tooltip("Animator Controller component of enemy")]
 	private Animator m_animator;
 
-	[HideInInspector]
-    // Afridi added this for the skill tree
-    public bool isDeadbByKenron = false;
-
 	private Collider m_collider;
 
 	// Pathfinding Stuff
@@ -313,8 +309,8 @@ public class EnemyData : MonoBehaviour
         // Kenros Skill Merge
         if (character.tag == "Kenron" && GameManager.Instance.Kenron.isSkillActive)
         {
-            GameManager.Instance.Kenron.m_currentHealth = GameManager.Instance.Kenron.m_currentHealth + GameManager.Instance.Kenron.m_healthGained;
-            GameManager.Instance.Kenron.skillManager.m_mainSkills[0].m_currentDuration -= GameManager.Instance.Kenron.m_RTDurationIncreased;
+            GameManager.Instance.Kenron.currentHealth = GameManager.Instance.Kenron.currentHealth + GameManager.Instance.Kenron.healthGained;
+            GameManager.Instance.Kenron.skillManager.m_mainSkills[0].m_currentDuration -= GameManager.Instance.Kenron.durationIncreased;
         }
 
 		DisplayDamage(damage);
@@ -457,7 +453,7 @@ public class EnemyData : MonoBehaviour
         {
             if (m_knockedBack == true)
             {
-                other.GetComponentInParent<EnemyData>().TakeDamage(GameManager.Instance.Kreiger.KDKnockbackDamage, GameManager.Instance.Kreiger);
+                other.GetComponentInParent<EnemyData>().TakeDamage(GameManager.Instance.Kreiger.knockBackDamage, GameManager.Instance.Kreiger);
             }
         }
     }

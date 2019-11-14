@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 
 /* 
- * Author: Elisha, Denver, Afridi
+ * Author: Elisha Anagnostakis, Denver Lacey, Afridi Rahim
  * Description: Abstract base class that will be derived by character classes Kenron, Kreiger and Thea. Handles everything to do 
  *              with the characters movements and states.
  */
@@ -41,7 +41,7 @@ public abstract class BaseCharacter : MonoBehaviour
 
     public PlayerState playerState;
     public float m_maxHealth;
-    public float m_currentHealth;
+    public float currentHealth;
     [Tooltip("This variable indicates how much more health the player can recieve")]
     public float m_maxOverheal;
     protected Rigidbody m_rigidbody;
@@ -89,7 +89,6 @@ public abstract class BaseCharacter : MonoBehaviour
 
     // Player Colliders
     private CapsuleCollider m_playerCollider;
-    public ObjectiveManager man;
 
     [Tooltip("The Skill Manager that manages the skills of the players")]
     public SkillManager skillManager;
@@ -149,13 +148,12 @@ public abstract class BaseCharacter : MonoBehaviour
         m_animator = GetComponentInChildren<Animator>();
         m_deathMenu = FindObjectOfType<DeathMenu>();
         m_pauseInfo = FindObjectOfType<PauseMenu>();
-        m_currentHealth = m_maxHealth;
+        currentHealth = m_maxHealth;
         m_mincurrentDamage = m_minDamage;
         m_maxcurrentDamage = m_maxDamage;
         m_vulnerability = 1.0f;
         m_controllerOn = true;
         isSkillActive = false;
-        man = FindObjectOfType<ObjectiveManager>();
         currentShield = 0;
         skillManager = FindObjectOfType<SkillManager>();
         m_original = m_spriteRend.colorOverLifetime;
@@ -211,9 +209,9 @@ public abstract class BaseCharacter : MonoBehaviour
             currentShield = m_maxShield;
         }
 
-        if (m_currentHealth < 0)
+        if (currentHealth < 0)
         {
-            m_currentHealth = 0;    
+            currentHealth = 0;    
         }
 
         // Checks the states of all derived players of this class.
@@ -315,7 +313,7 @@ public abstract class BaseCharacter : MonoBehaviour
         if (currentShield <= 0)
         {
             // Take an amount of damage from the players current health.
-            m_currentHealth -= damage * m_vulnerability;
+            currentHealth -= damage * m_vulnerability;
             if (this.gameObject.activeSelf == true)
             {
                 for (int i = 0; i < m_playerRenderers.Count; i++)
@@ -327,7 +325,7 @@ public abstract class BaseCharacter : MonoBehaviour
         }
 
         // If player has no health.
-        if (m_currentHealth <= 0.0f)
+        if (currentHealth <= 0.0f)
         {
 			if (playerState != PlayerState.DEAD)
 				RespawnManager.RespawnPlayer(this);
@@ -371,17 +369,17 @@ public abstract class BaseCharacter : MonoBehaviour
     /// <param name="health"></param>
     public void SetHealth(float health)
     {
-        m_currentHealth = health;
+        currentHealth = health;
 
-        if (m_currentHealth > m_maxHealth)
+        if (currentHealth > m_maxHealth)
         {
-            m_currentHealth = m_maxHealth;
+            currentHealth = m_maxHealth;
         }
     }
 
     public void AddHealth(float amount)
     {
-        SetHealth(m_currentHealth + amount);
+        SetHealth(currentHealth + amount);
     }
 
     /// <summary>
@@ -423,7 +421,7 @@ public abstract class BaseCharacter : MonoBehaviour
     /// <returns> float value. </returns>
     public float GetHealth()
     {
-        return m_currentHealth;
+        return currentHealth;
     }
 
     /// <summary>

@@ -3,13 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using XboxCtrlrInput;
 using XInputDotNetPure;
-
+/*
+ * Author: Afridi Rahim, Denver Lacey, Elisha Anagnostakis
+ * Description: Handles the Damage, KnockBack and Stun time for Kriegers Damage
+ * Last Edited: 15/11/2019
+     */
 public class SmashDamage : MonoBehaviour
 { 
-    private bool haveSkill = false;
     private float m_rumbleDuration = 0.1f;
     private float m_rumbleIntensity = 1000f;
 
+    /// <summary>
+    /// Handles how kuch damage/knockback/stun is dealt
+    /// </summary>
+    /// <param name="other"></param>
     public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Enemy")
@@ -29,40 +36,28 @@ public class SmashDamage : MonoBehaviour
             // Controller vibration
             DoRumble();
 
-
-            //if (GameManager.Instance.Kreiger != null && GameManager.Instance.Kreiger.m_skillUpgrades.Find(skill => skill.Name == "Kinetic Discharge"))
-            //{
-            //    haveSkill = true;
-            //    // TODO: Knockback enemies deal damage to other enemies 
-
-            //    if (rb != null && haveSkill == true)
-            //    {
-            //        Vector3 direction = other.transform.position - GameManager.Instance.Kreiger.transform.position;
-            //        direction.y = 0;
-
-            //        rb.AddForce(direction.normalized * GameManager.Instance.Kreiger.KDForce, ForceMode.Impulse);
-            //        enemy.KnockBack(GameManager.Instance.Kreiger.KDStun);
-            //    }
-            //}
-           
-            if (rb != null && haveSkill == false)
-            {
-                Vector3 direction = other.transform.position - GameManager.Instance.Kreiger.transform.position;
-                direction.y = 0;
-
-                rb.AddForce(direction.normalized * GameManager.Instance.Kreiger.knockBackForce, ForceMode.Impulse);
-            }
-
+           Vector3 direction = other.transform.position - GameManager.Instance.Kreiger.transform.position;        
+            
+            // Knocks Back and Stuns Enemies
+            rb.AddForce(direction.normalized * GameManager.Instance.Kreiger.knockBackForce, ForceMode.Impulse);
+            enemy.KnockBack(GameManager.Instance.Kreiger.stunTime);
             enemy.TakeDamage(GameManager.Instance.Kreiger.GetDamage(), GameManager.Instance.Kreiger);
         }
     }
 
+    /// <summary>
+    /// Applys Rumble
+    /// </summary>
     public void DoRumble()
     {
         GamePad.SetVibration(GameManager.Instance.Kreiger.playerIndex, m_rumbleIntensity, m_rumbleIntensity);
         StartCoroutine(StopRumble());
     }
 
+    /// <summary>
+    /// Disable Rumble
+    /// </summary>
+    /// <returns>Duration till rumble has to stop</returns>
     public IEnumerator StopRumble()
     {
         yield return new WaitForSeconds(m_rumbleDuration);

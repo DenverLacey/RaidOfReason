@@ -5,7 +5,7 @@ using Cinemachine.Utility;
 namespace Cinemachine
 {
     /// <summary>
-    /// Cinemachine ClearShot is a "manager camera" that owns and manages a set of 
+    /// Cinemachine ClearShot is a "Manager camera" that owns and manages a set of 
     /// Virtual Camera gameObject children.  When Live, the ClearShot will check the
     /// children, and choose the one with the best quality shot and make it Live.
     /// 

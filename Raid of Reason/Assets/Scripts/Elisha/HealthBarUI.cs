@@ -61,7 +61,7 @@ public class HealthBarUI : MonoBehaviour
     {
         m_healthBar.gameObject.SetActive(true);
         m_shieldBar.gameObject.SetActive(false);
-        m_prevHealth = m_character.m_currentHealth;
+        m_prevHealth = m_character.currentHealth;
         m_character.onTakeDamage += HealthBarShake;
 
         // critical red ring flash 
@@ -80,11 +80,11 @@ public class HealthBarUI : MonoBehaviour
     {
         if (m_character)
         {
-            if (m_character.m_currentHealth > 0)
+            if (m_character.currentHealth > 0)
             {
                 // This will output visually how much health the players have.
-                m_healthBar.fillAmount = m_character.m_currentHealth / m_character.m_maxHealth;
-                if (m_prevHealth != m_character.m_currentHealth)
+                m_healthBar.fillAmount = m_character.currentHealth / m_character.m_maxHealth;
+                if (m_prevHealth != m_character.currentHealth)
                 {
                     OnDelayDone();
                 }
@@ -139,7 +139,7 @@ public class HealthBarUI : MonoBehaviour
         if (Mathf.Abs(m_damagedHealth.fillAmount - m_healthBar.fillAmount) <= 0.01f)
         {
             m_damagedHealth.fillAmount = m_healthBar.fillAmount - 0.1f;
-            m_prevHealth = m_character.m_currentHealth;
+            m_prevHealth = m_character.currentHealth;
         }
     }
 

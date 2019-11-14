@@ -2,33 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Author: Afridi Rahim
+ * Description: Handles Kenrons Damage 
+ * Last Edited: 15/11/2019
+*/
 [RequireComponent(typeof(Collider))]
 public class SwordDamage : MonoBehaviour
 {
-	private Collider m_collider;
-    public float damageDealtInDash;
-
-  
-	private void Start()
-	{
-        m_collider = GetComponent<Collider>();
-	}
-
+    /// <summary>
+    /// This Trigger enables Kenron To Do Damage
+    /// </summary>
+    /// <param name="other">The other object the player passes through</param>
 	public void OnTriggerEnter(Collider other)
 	{
 		if (other.gameObject.tag == "Enemy")
 		{
-            damageDealtInDash += GameManager.Instance.Kenron.GetDamage();
-
 			EnemyData enemy = other.gameObject.GetComponent<EnemyData>();
+        
+            // Deals Damage with respective Effect
             enemy.TakeDamage(GameManager.Instance.Kenron.GetDamage(), GameManager.Instance.Kenron);
-
             enemy.IndicateHit(GameManager.Instance.Kenron);
-
-            if (enemy.Health <= 0) {
-                enemy.isDeadbByKenron = true;
-                enemy.isDeadbByKenron = false;
-            }
 		}
 	}
 }

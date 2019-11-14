@@ -6,16 +6,14 @@ using XboxCtrlrInput;
 using XInputDotNetPure;
 
 /*
-  * Author: Afridi Rahim
-  *
-  * Summary: The Stats and Management of Kenrons Core Mechanics.
-  *          Manages his abilites and his skill tree as he improves within the
-  *          game
+  * Author: Afridi Rahim, Denver Lacey
+  * Description: Handle all of Kenrons Core Mechanics 
+  * Last Edited: 15/11/2019
 */
 
 public class Kenron : BaseCharacter
 {
-
+    #region Dash Attack Variables
     [Header("--Dash Attack Stats--")]
 
     [SerializeField]
@@ -32,7 +30,7 @@ public class Kenron : BaseCharacter
 
     // charge times
     [SerializeField]
-    public int m_currentCharges;
+    private int m_currentCharges;
 
     [SerializeField]
     [Tooltip("Buffer distance to avoid Kenron getting stuck in walls")]
@@ -40,18 +38,20 @@ public class Kenron : BaseCharacter
 
     [SerializeField]
     [Tooltip("How many charges it takes for dashes to go off")]
-    public int m_charges;
+    public int charges;
 
     [SerializeField]
     [Tooltip("Time till a charge is recharged again")]
-    public float m_rechargeRate;
+    public float rechargeRate;
 
     private Vector3 m_dashVelocity;
 
     [SerializeField]
     [Tooltip("Hit box for dash attack")]
     private BoxCollider m_dashCollider;
+    #endregion
 
+    #region Skills
     [Header("--Skills--")]
 
     [SerializeField]
@@ -62,23 +62,25 @@ public class Kenron : BaseCharacter
     [Tooltip("Kenrons Maximum Damage Boost whilst in Chaos Flame")]
     private float m_maxCFDamage;
 
-    [Tooltip("Health Gained Back from Kenrons Vile Infusion Skill")]
-    public float m_healthGained;
+    [Tooltip("Health Gained Back from Kenrons Skill")]
+    public float healthGained;
 
 	[SerializeField]
 	[Tooltip("How long, in seconds, Kenron will be stationary when casting Chaos Flame")]
 	private float m_CFMovementDelay = 0.5f;
 
-    [Tooltip("Ability Duration Increase from Kenrons Blood Lust Skill")]
-    public float m_RTDurationIncreased;
+    [Tooltip("Ability Duration Increase from Kenrons Skill")]
+    public float durationIncreased;
 
     [SerializeField]
     [Tooltip("How long it takes for the trail in Kenrons Ability To Go Away")]
-    private float m_BTDegen;
+    private float m_TrailDegen;
 
+    [Tooltip("The Dash Displays on The UI")]
     public List<GameObject> dashDisplays = new List<GameObject>();
+    #endregion
 
-
+    #region Particles
     [Header("--Particles And UI--")]
 
     [SerializeField]
@@ -92,10 +94,7 @@ public class Kenron : BaseCharacter
 	[SerializeField]
 	[Tooltip("Trail Renderer for Dash Trail Effect")]
 	private GameObject m_dashTrail;
-
-
-    // Enemy reference used for skill checking
-    private EnemyData m_Enemy;
+    #endregion
 
     // Desired position to dash
     private Vector3 m_dashPosition;
@@ -106,31 +105,23 @@ public class Kenron : BaseCharacter
     private float m_estimatedDashTime;
     private float m_dashDistance;
     private bool m_dashDone;
-    //private float m_rumbleDuration = 0.1f;
-    //private float m_rumbleIntensity = 1000f;
+
+    // Exists to ensure the charge array does not go below 1
     private int m_TempCharge;
+
     // Checks if Kenron is Dashing or Not
     private bool isDashing;
 
     // Checks if a specific trigger on the controller is pressed
     private bool m_triggerDown;
 
-
-    // Kenrons Collider
-    private CapsuleCollider m_collider;
-
-    private void Start()
-    {
-        m_collider = GetComponent<CapsuleCollider>();
-    }
-
+    #region Intialisation
     protected override void Awake()
     {
         // Initalisation
         base.Awake();
         CharacterType = CharacterType.KENRON;
-        m_Enemy = FindObjectOfType<EnemyData>();
-        m_currentCharges = m_charges;
+        m_currentCharges = charges ;
         isDashing = false;
         m_TempCharge = 3;
         // set size of dash hit box
@@ -144,7 +135,7 @@ public class Kenron : BaseCharacter
     protected override void FixedUpdate()
     {
         // Empty Check
-        if (this.gameObject != null)
+        if (gameObject != null)
         {
             // Updates Player Movement
             base.FixedUpdate();
@@ -166,6 +157,7 @@ public class Kenron : BaseCharacter
         position.y = 0.1f;
         Debug.DrawLine(position, position + transform.forward * 0.5f);
     }
+    #endregion
 
     /// <summary>
     /// Kenrons Skill. By Halving his health, he gains a boost of Speed and Damage 
@@ -173,24 +165,28 @@ public class Kenron : BaseCharacter
     public void ChaosFlame(float skillDuration)
     {
         // Empty Check
-        if (this.gameObject != null)
+        if (gameObject != null)
         {
+            
 			RestrictControlsForSeconds(m_CFMovementDelay, MovementAxis.All);
 			m_animator.SetTrigger("Cast");
 
+
+            // Turns UI On/Off
             if (Ability_UI != null)
             {
                 Ability_UI.SetActive(false);
             }
 
+            // If the duration for kenrons Skill is greater than the main duration (Could have done this better)
             if (skillDuration >= skillManager.m_mainSkills[0].m_duration)
             {
+                // Initalise Skill Stats
                 isSkillActive = true;
                 StartCoroutine(ChaosFlameVisual());
                 m_kenronParticle.Play();
-                // DoRumble();
                 SetDamage(m_minCFDamage, m_maxCFDamage);
-                SetHealth(m_currentHealth / 2);
+                SetHealth(currentHealth / 2);
             }
         }
     }
@@ -213,7 +209,6 @@ public class Kenron : BaseCharacter
                 m_dashCollider.enabled = true;
                 m_dashDelayTimer = m_dashDelay;
                 m_dashStartPosition = transform.position;
-                // DoRumble();
                 dashDisplays[m_TempCharge].SetActive(false);
                 m_TempCharge--;
                 m_currentCharges--;
@@ -224,6 +219,7 @@ public class Kenron : BaseCharacter
 				// activate trail effect
 				m_dashTrail.SetActive(true);
 
+                // Checks that we dont dash through barreirs or Environments
 				if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, m_maxDashDistance, LayerMask.GetMask("Environment", "Barrier")))
 				{
 					m_dashPosition = hit.point - transform.forward * m_dashBufferDistance;
@@ -253,9 +249,11 @@ public class Kenron : BaseCharacter
         {
             m_triggerDown = false;
         }
-
+        
+        // If we are dashing
         if (isDashing)
         {
+            // Calculate the end we are at and end the dash
             m_estimatedDashTime -= Time.deltaTime;
             if ((m_dashPosition - transform.position).sqrMagnitude <= 0.1f || m_estimatedDashTime <= 0.0f)
             {
@@ -287,7 +285,7 @@ public class Kenron : BaseCharacter
             {
                 // Resets Stats and Skill
                 isSkillActive = false;
-                m_currentCharges = m_charges;
+                m_currentCharges = charges ;
                 SetDamage(m_minDamage, m_maxDamage);
                 SetSpeed(m_movementSpeed);
                 m_TempCharge = m_currentCharges - 1;
@@ -296,6 +294,9 @@ public class Kenron : BaseCharacter
         }
     }
 
+    /// <summary>
+    /// Handles how and what happens when the dash ends 
+    /// </summary>
 	public void EndDash()
 	{
 		// reset boolean flags
@@ -322,20 +323,30 @@ public class Kenron : BaseCharacter
 
     }
 
+    /// <summary>
+    /// Handles how and what happens when the dash is ready 
+    /// </summary>
 	public void ReadyDash()
 	{
-		StartCoroutine(TimeTillRecharge());
+		StartCoroutine(RechargeDashes());
 		m_controllerOn = true;
 		isDashing = false;
 		m_dashTrail.SetActive(false);
 	}
 
+    /// <summary>
+    /// Basically calls the above 2 function
+    /// </summary>
 	public void ResetDash()
 	{
 		EndDash();
 		ReadyDash();
 	}
 
+    /// <summary>
+    /// Handles the Particle on when Kenron Uses Chaos Flame
+    /// </summary>
+    /// <returns>The length of how long the particle is active till it ends</returns>
     IEnumerator ChaosFlameVisual()
     {
         m_startParticle.Play();
@@ -343,10 +354,14 @@ public class Kenron : BaseCharacter
         m_startParticle.Stop();
     }
 
-    IEnumerator TimeTillRecharge()
+    /// <summary>
+    /// Handles how long it takes to recharge a dash
+    /// </summary>
+    /// <returns>the length of each time a dash returns</returns>
+    IEnumerator RechargeDashes()
     {
-        yield return new WaitForSeconds(m_rechargeRate);
-        if (m_currentCharges < m_charges)
+        yield return new WaitForSeconds(rechargeRate);
+        if (m_currentCharges < charges )
         {
             m_currentCharges++;
             m_TempCharge++;
@@ -354,6 +369,9 @@ public class Kenron : BaseCharacter
         }
     }
 
+    /// <summary>
+    /// Handles the character if they die whilst using a skill or dashing
+    /// </summary>
 	public override void ResetCharacter()
 	{
 		base.ResetCharacter();

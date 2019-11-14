@@ -9968,7 +9968,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerState: 0
   m_maxHealth: 100
-  m_currentHealth: 0
+  currentHealth: 0
   m_maxOverheal: 0
   m_movementSpeed: 10
   Ability_UI: {fileID: 0}
@@ -9981,7 +9981,6 @@ MonoBehaviour:
   m_shieldDegenerateAmount: 0
   controller: 3
   playerIndex: 0
-  man: {fileID: 0}
   skillManager: {fileID: 0}
   m_controllerOn: 0
   m_damageMaterial: {fileID: 2100000, guid: f4599d425001da04abed12dbbc9d0899, type: 2}
@@ -15306,10 +15305,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4820443638325163085}
     m_Modifications:
-    - target: {fileID: 100000, guid: f473912daa7c98e48835da204cfd2217, type: 3}
-      propertyPath: m_Name
-      value: Model
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f473912daa7c98e48835da204cfd2217, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -15353,6 +15348,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: f473912daa7c98e48835da204cfd2217, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f473912daa7c98e48835da204cfd2217, type: 3}
+      propertyPath: m_Name
+      value: Model
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: f473912daa7c98e48835da204cfd2217, type: 3}
       propertyPath: m_Enabled
@@ -15620,10 +15619,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4820443638325163085}
     m_Modifications:
-    - target: {fileID: 100672, guid: 7dc0b63f67faaf9479803bcfdff7f71e, type: 3}
-      propertyPath: m_Name
-      value: HealEffect_3
-      objectReference: {fileID: 0}
     - target: {fileID: 484662, guid: 7dc0b63f67faaf9479803bcfdff7f71e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -15668,18 +15663,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 100672, guid: 7dc0b63f67faaf9479803bcfdff7f71e, type: 3}
+      propertyPath: m_Name
+      value: HealEffect_3
+      objectReference: {fileID: 0}
     - target: {fileID: 19891704, guid: 7dc0b63f67faaf9479803bcfdff7f71e, type: 3}
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 19942270, guid: 7dc0b63f67faaf9479803bcfdff7f71e, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 960b5a4dad66fa346978aa0d6f78f92a, type: 2}
-    - target: {fileID: 19942270, guid: 7dc0b63f67faaf9479803bcfdff7f71e, type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 2100000, guid: 960b5a4dad66fa346978aa0d6f78f92a, type: 2}
     - target: {fileID: 19840972, guid: 7dc0b63f67faaf9479803bcfdff7f71e, type: 3}
       propertyPath: playOnAwake
       value: 0
@@ -15700,6 +15691,14 @@ PrefabInstance:
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 19942270, guid: 7dc0b63f67faaf9479803bcfdff7f71e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 960b5a4dad66fa346978aa0d6f78f92a, type: 2}
+    - target: {fileID: 19942270, guid: 7dc0b63f67faaf9479803bcfdff7f71e, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 960b5a4dad66fa346978aa0d6f78f92a, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7dc0b63f67faaf9479803bcfdff7f71e, type: 3}
 --- !u!198 &8490809386875847956 stripped

@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Cinemachine
 {
     /// <summary>
-    /// This is a virtual camera "manager" that owns and manages a collection
+    /// This is a virtual camera "Manager" that owns and manages a collection
     /// of child Virtual Cameras.  These child vcams are mapped to individual states in
     /// an animation state machine, allowing you to associate specific vcams to specific 
     /// animation states.  When that state is active in the state machine, then the 

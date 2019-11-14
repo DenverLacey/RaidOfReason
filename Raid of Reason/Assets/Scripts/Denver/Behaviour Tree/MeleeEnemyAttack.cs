@@ -32,7 +32,7 @@ public class MeleeEnemyAttack : Behaviour
 			//{
    //             //if (GameManager.Instance.Kreiger.isActive && GameManager.Instance.Kreiger.m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
    //             //{
-   //             //    agent.TakeDamage(GameManager.Instance.Kreiger.SSDamageTaken, GameManager.Instance.Kreiger);
+   //             //    agent.TakeDamage(GameManager.Instance.Kreiger.thornDamage, GameManager.Instance.Kreiger);
    //             //}
    //         }
 		}

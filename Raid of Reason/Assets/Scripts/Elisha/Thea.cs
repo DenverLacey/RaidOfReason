@@ -197,7 +197,7 @@ public class Thea : BaseCharacter
     {
         base.Update();
 
-        if (m_currentHealth != m_maxHealth && !m_isHealthRegen && gameObject.activeSelf)
+        if (currentHealth != m_maxHealth && !m_isHealthRegen && gameObject.activeSelf)
         {
             StartCoroutine(HealthOverTime());
         }
@@ -208,7 +208,7 @@ public class Thea : BaseCharacter
         }
 
         #region Thea Fire Rate Change
-        float healthcomparison = GameManager.Instance.Kenron.m_currentHealth + GameManager.Instance.Kreiger.m_currentHealth;
+        float healthcomparison = GameManager.Instance.Kenron.currentHealth + GameManager.Instance.Kreiger.currentHealth;
         if (GameManager.Instance.DeadPlayers.Count <= 0)
         {
             if (healthcomparison <= OAAllyHealthChecks[0])
@@ -495,7 +495,7 @@ public class Thea : BaseCharacter
     private IEnumerator HealthOverTime()
 	{
         m_isHealthRegen = true;
-        while (m_currentHealth < m_maxHealth)
+        while (currentHealth < m_maxHealth)
 		{
             Regenerate();
             yield return new WaitForSeconds(STRegenEachFrame);

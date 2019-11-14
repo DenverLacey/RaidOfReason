@@ -116,7 +116,7 @@ public class EnemyManager : MonoBehaviour
     }
 
 	/// <summary>
-	/// Executes Behaviour Trees on each enemy the manager handles and
+	/// Executes Behaviour Trees on each enemy the Manager handles and
 	/// removes destroyed enemies from m_enemies
 	/// </summary>
     void FixedUpdate() 
@@ -124,7 +124,7 @@ public class EnemyManager : MonoBehaviour
     }
 
 	/// <summary>
-	/// Calls enemy's init function and adds them to list of enemies for the manager to handle
+	/// Calls enemy's init function and adds them to list of enemies for the Manager to handle
 	/// </summary>
 	/// <param name="enemy">
 	/// Enemy to initialise

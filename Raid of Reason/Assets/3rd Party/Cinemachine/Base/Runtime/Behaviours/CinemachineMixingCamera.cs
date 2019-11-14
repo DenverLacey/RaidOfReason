@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Cinemachine
 {
     /// <summary>
-    /// CinemachineMixingCamera is a "manager camera" that takes on the state of 
+    /// CinemachineMixingCamera is a "Manager camera" that takes on the state of 
     /// the weighted average of the states of its child virtual cameras.
     /// 
     /// A fixed number of slots are made available for cameras, rather than a dynamic array.  

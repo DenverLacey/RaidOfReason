@@ -2,32 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Author: Afridi Rahim, Denver Lacey
+ * Description: Handles How the Objectives Start Up
+ */
 [RequireComponent(typeof(BoxCollider))]
 public class TriggerObjective : MonoBehaviour
 {
-    private ObjectiveManager objectiveManager;
-    public GameObject respawnPoint;
-
-    private bool playerHere = false;
+    private ObjectiveManager m_objectiveManager;
+    private bool m_playerHere = false;
 
     private void Awake()
     {
-        objectiveManager = FindObjectOfType<ObjectiveManager>();
+        // Intialise Collider and Manager
+        m_objectiveManager = FindObjectOfType<ObjectiveManager>();
         gameObject.GetComponent<BoxCollider>().isTrigger = true;
     }
 
+    /// <summary>
+    /// This handles the trigger of the objective. If at least one player passes through the trigger the objective starts up
+    /// </summary>
+    /// <param name="other">The other object in collision</param>
     void OnTriggerEnter(Collider other)
     {
+        // Checks if it is a player
         if (Utility.TagIsPlayerTag(other.tag))
         {
-            RespawnManager.UpdateSpawnPoint(respawnPoint.transform.position);
-            playerHere = true;
+            m_playerHere = true;
         }
 
-        if (playerHere)
+        // if its a player
+        if (m_playerHere)
         {
-            objectiveManager.ObjectiveTriggered = true;
-            playerHere = false;
+            // trigger
+            m_objectiveManager.ObjectiveTriggered = true;
+            m_playerHere = false;
             this.gameObject.SetActive(false);
         }
     }

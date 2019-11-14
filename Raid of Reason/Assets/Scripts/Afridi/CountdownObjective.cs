@@ -4,9 +4,8 @@ using UnityEngine;
 
 /*
  * Author: Afridi Rahim
- * 
- * Summary:
- * This Script creates a Countdown Objective 
+ * Description: Kill Based Objective
+ * Last Edited: 15/11/2019
  */
 [CreateAssetMenu(menuName = "Objectives/Countdown To Destruction")]
 public class CountdownObjective : BaseObjective
@@ -17,29 +16,18 @@ public class CountdownObjective : BaseObjective
     [Tooltip("The Objective Description")]
     public string description;
 
-    public string spawnPointName;
+    [Tooltip("Name of the Zone that the Objective Uses")]
     public string enemyZoneName;
-    private GameObject spawnPoint;
-    private GameObject Zone;
 
-    // Current Timer
+    private GameObject Zone;
     private float currentTimer;
 
+    #region Objective Setup
     public override void Init()
     {
+        // Intialisation
         currentTimer = maxtimer;
-        spawnPoint = GameObject.Find(spawnPointName);
         Zone = GameObject.Find(enemyZoneName);
-    }
-
-    public override GameObject SpawnPoints()
-    {
-        return spawnPoint;
-    }
-
-    public override GameObject ActivatePortal()
-    {
-        return null;
     }
 
     public override float Timer()
@@ -54,20 +42,22 @@ public class CountdownObjective : BaseObjective
 
     public override void Update()
     {
-        spawnPoint = GameObject.Find(spawnPointName);
         Zone = GameObject.Find(enemyZoneName);
         // Timer starts going down
         currentTimer -= Time.deltaTime;
     }
 
-    public override bool IsDone()
+    public override bool Completed()
     {
+        // Completion Requirements: If all spawners in that zone are dead
         bool spawnerExists = Zone.GetComponent<EnemyZone>().Enemies.Exists(e => e.Type == "Spawner");
         return !spawnerExists;
     }
 
-    public override bool HasFailed()
+    public override bool Failed()
     {
+        // Failure Requirements: If the timer has reached 0 
         return currentTimer <= 0;
     }
+    #endregion 
 }

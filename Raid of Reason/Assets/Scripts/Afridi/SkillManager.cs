@@ -135,7 +135,7 @@ public class SkillManager : MonoBehaviour {
                 {
                     m_mainSkills[1].readyToDisplay = false;
                     // Activate Ability
-                    GameManager.Instance.Kreiger.Spott(m_mainSkills[1].m_currentDuration);
+                    GameManager.Instance.Kreiger.MachinasDare(m_mainSkills[1].m_currentDuration);
 
                     // Skill is Reset and has been Activated
                     m_mainSkills[1].m_currentCoolDown = 0;

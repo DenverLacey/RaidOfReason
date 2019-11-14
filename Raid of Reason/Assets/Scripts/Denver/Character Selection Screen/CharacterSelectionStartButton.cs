@@ -100,7 +100,7 @@ public class CharacterSelectionStartButton : InteractableUIElement
 		// if all players are ready
 		if (playerInformation.TrueForAll(info => info.Item4) && playerInformation.Count > 1)
 		{
-			// send info to game manager
+			// send info to game Manager
 			foreach (var info in playerInformation)
 			{
 				GameManager.Instance.SetCharacterController(info.Item3, info.Item2, info.Item1);

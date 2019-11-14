@@ -46,17 +46,11 @@ public class CrystalSuicideAttack : Behaviour
 				float sqrDistance = (p.transform.position - agent.transform.position).sqrMagnitude;
 				if (sqrDistance <= agent.AttackRange.max * agent.AttackRange.max)
 				{
-					p.TakeDamage(agent.AttackDamage);
-
-					//if (p.tag == "Kreiger" && p.m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
-					//{
-					//	Kreiger krieger = p as Kreiger;
-					//	agent.TakeDamage(krieger.SSDamageTaken, krieger);
-					//}
+                    p.TakeDamage(agent.AttackDamage);
 				}
 			}
 
-            var crystal = GameObject.FindObjectOfType<ObjectiveManager>().m_currentObjective as ProtectionObjective;
+            var crystal = GameObject.FindObjectOfType<ObjectiveManager>().currentObjective as ProtectionObjective;
             crystal?.TakeDamage(agent.AttackDamage);
 
 			var explosion = GameObject.Instantiate(agent.AttackPrefabs[0]);
