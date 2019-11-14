@@ -176,6 +176,8 @@ public class Kenron : BaseCharacter
         if (this.gameObject != null)
         {
 			RestrictControlsForSeconds(m_CFMovementDelay, MovementAxis.All);
+			m_animator.SetTrigger("Cast");
+
             if (Ability_UI != null)
             {
                 Ability_UI.SetActive(false);

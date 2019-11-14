@@ -678,6 +678,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5edaf410ec70c8478f3f9616d6d1968, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &444450122 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1245624430811924409, guid: e645cb267fcc2db478863b9dc482236b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1939546263}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &556221625 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9156061718969968279, guid: e645cb267fcc2db478863b9dc482236b,
@@ -798,6 +804,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 3
+--- !u!114 &601735899 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1868934178, guid: e645cb267fcc2db478863b9dc482236b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1939546263}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5edaf410ec70c8478f3f9616d6d1968, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &639819137 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9177747288968116300, guid: d1688a9842b208a42b0186bf1175fd68,
@@ -1654,7 +1672,7 @@ PrefabInstance:
     - target: {fileID: 3774334560616408345, guid: 1a7661fa950b2cc42b35751633494eb9,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5707208689818696768, guid: 1a7661fa950b2cc42b35751633494eb9,
         type: 3}
@@ -1915,6 +1933,28 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1939546263}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1503812247 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 347151389, guid: e645cb267fcc2db478863b9dc482236b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1939546263}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1503812251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1503812247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8f14a832be933747a40580b7169074b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_p1Cursor: {fileID: 601735899}
+  m_sceneToRestartIndex: 3
+  m_objectiveHUD: {fileID: 444450122}
+  m_DeathMenu: {fileID: 1503812247}
 --- !u!1 &1572006015
 GameObject:
   m_ObjectHideFlags: 0
@@ -2800,7 +2840,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 347151389, guid: e645cb267fcc2db478863b9dc482236b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2302495842451371509, guid: e645cb267fcc2db478863b9dc482236b,
         type: 3}
