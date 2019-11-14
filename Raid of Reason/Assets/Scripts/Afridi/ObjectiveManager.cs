@@ -19,8 +19,6 @@ public class ObjectiveManager : MonoBehaviour
 
     public bool ObjectiveCompleted;
     public bool ObjectiveTriggered = false;
-    [Tooltip("The build index for the credits scene")]
-    public int CreditsIndex;
 
     public TextMeshProUGUI objectiveTimer;
     public TextMeshProUGUI objectiveDescription;
@@ -152,7 +150,7 @@ public class ObjectiveManager : MonoBehaviour
 
             if (m_objectives.Count == 0)
             {
-                LevelManager.FadeLoadLevel(CreditsIndex);
+                LevelManager.FadeLoadNextLevel();
             }
         }
 
