@@ -17,14 +17,13 @@ public class DeathMenu : MonoBehaviour
     private Vector3 m_p1InactivePosition;
     public bool m_isDeath { get; set; }
     private GameObject m_playerHUD;
-    private GameObject m_objectiveHUD;
+    public GameObject m_objectiveHUD;
     public GameObject m_DeathMenu;
 
     private void Start()
     {
         m_DeathMenu = GameObject.Find("---EndMenu---");
         m_DeathMenu.SetActive(false);
-        m_objectiveHUD = GameObject.Find("---Objectives---");
         m_isDeath = false;
         m_p1Cursor.SetController(1);
         m_p1InactivePosition = transform.position;

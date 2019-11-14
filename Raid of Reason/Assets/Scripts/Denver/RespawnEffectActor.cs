@@ -18,6 +18,8 @@ public class RespawnEffectActor : MonoBehaviour
 
 	private float m_timer;
 
+    private int m_phase;
+
 	public OnEvent onSpawn;
 	public OnEvent onDeactivate;
 
@@ -32,15 +34,19 @@ public class RespawnEffectActor : MonoBehaviour
 	// Update is called once per frame
 	void Update()
     {
-		m_timer += Time.deltaTime;
+        if (m_phase > 0)
+        {
+            m_timer += Time.deltaTime;
+        }
 
-		if (m_timer >= m_respawnEffectDelay)
+		if (m_phase == 1 && m_timer >= m_respawnEffectDelay)
 		{
 			m_respawnPrefab.SetActive(true);
 			onSpawn(this);
+            m_phase = 2;
 		}
 
-		if (m_timer >= m_respawnEffectDelay + 4f)
+		if (m_phase == 2 && m_timer >= m_respawnEffectDelay + 4f)
 		{
 			Deactivate();
 			onDeactivate(this);
@@ -49,6 +55,8 @@ public class RespawnEffectActor : MonoBehaviour
 
 	public void Activate(float respawnDelay)
 	{
+        m_phase = 1;
+
 		gameObject.SetActive(true);
 		m_buildUpPrefab.SetActive(true);
 		m_respawnEffectDelay = respawnDelay; ;
@@ -57,6 +65,7 @@ public class RespawnEffectActor : MonoBehaviour
 	public void Deactivate()
 	{
 		m_timer = 0f;
+        m_phase = 0;
 		character = null;
 		m_buildUpPrefab.SetActive(false);
 		m_respawnPrefab.SetActive(false);

@@ -3,98 +3,50 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(BoxCollider))]
 public class Portal : MonoBehaviour
 {
-    public int CreditsIndex;
-    public float transitonTime;
+    public GameObject m_dependentSpawner;
+    public GameObject m_particleSystem;
+    public BoxCollider m_collider;
 
-    private bool kenPass = false;
-    private bool nasPass = false;
-    private bool thePass = false;
+    private int m_phase;
 
-
-    private void OnTriggerEnter(Collider other)
+    private void Start()
     {
-        if (GameManager.Instance.Players.Count > 1) {
+        m_particleSystem.SetActive(false);
+    }
 
-            #region Two Player
-            if (Utility.IsPlayerAvailable(CharacterType.KENRON) && Utility.IsPlayerAvailable(CharacterType.THEA))
-            {
-                if (other.tag == "Kenron")
-                {
-                    kenPass = true;
-                }
-                if (other.tag == "Thea")
-                {
-                    thePass = true;
-                }
-                if (kenPass && thePass)
-                {
-                    StartCoroutine(MovetoScene(transitonTime));
-                }
-            }
-            if (Utility.IsPlayerAvailable(CharacterType.KENRON) && Utility.IsPlayerAvailable(CharacterType.KREIGER))
-            {
-                if (other.tag == "Kenron")
-                {
-                    kenPass = true;
-                }
-                if (other.tag == "Kreiger")
-                {
-                    nasPass = true;
-                }
-                if (kenPass && nasPass)
-                {
-                    StartCoroutine(MovetoScene(transitonTime));
-                }
-            }
-            if (Utility.IsPlayerAvailable(CharacterType.KREIGER) && Utility.IsPlayerAvailable(CharacterType.THEA))
-            {
-                if (other.tag == "Thea")
-                {
-                    thePass = true;
-                }
-                if (other.tag == "Kreiger")
-                {
-                    nasPass = true;
-                }
-                if (thePass && nasPass)
-                {
-                    StartCoroutine(MovetoScene(transitonTime));
-                }
-            }
-            #endregion
+    private void Update()
+    {
+        if (m_phase == 0 && m_dependentSpawner == null)
+        {
+            m_particleSystem.SetActive(true);
+            m_phase = 1;
+        }
 
-            #region Three Player
-            if (Utility.IsPlayerAvailable(CharacterType.KENRON) && Utility.IsPlayerAvailable(CharacterType.THEA) && Utility.IsPlayerAvailable(CharacterType.KREIGER))
-            {
-                if (other.tag == "Thea")
-                {
-                    thePass = true;
-                }
-                if (other.tag == "Kreiger")
-                {
-                    nasPass = true;
-                }
-                if (other.tag == "Kenron")
-                {
-                    kenPass = true;
-                }
-                if (thePass && nasPass && kenPass)
-                {
-                    StartCoroutine(MovetoScene(transitonTime));
-                }
-            }
-            #endregion
+        if (m_phase == 1 && AllPlayersInPortal())
+        {
+            LevelManager.FadeLoadNextLevel();
+            m_phase = 2;
         }
     }
 
-    IEnumerator MovetoScene(float time)
+    private bool AllPlayersInPortal()
     {
-        kenPass = false;
-        nasPass = false;
-        thePass = false;
-        yield return new WaitForSeconds(time);
-		LevelManager.FadeLoadLevel(CreditsIndex);
+        float minx = m_collider.bounds.min.x;
+        float maxx = m_collider.bounds.max.x;
+        float minz = m_collider.bounds.min.z;
+        float maxz = m_collider.bounds.max.z;
+
+        foreach (var player in GameManager.Instance.AllPlayers)
+        {
+            if (!(player.transform.position.x <= maxx && player.transform.position.x >= minx &&
+                player.transform.position.z <= maxz && player.transform.position.z >= minz))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }

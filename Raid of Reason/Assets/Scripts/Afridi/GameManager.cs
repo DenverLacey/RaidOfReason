@@ -57,16 +57,35 @@ public class GameManager : MonoBehaviour
         get
         {
 			var players = new List<BaseCharacter>();
-			if (Kenron)
+			if (Kenron && Utility.IsPlayerAvailable(Kenron.CharacterType))
 				players.Add(Kenron);
 
-			if (Kreiger)
+			if (Kreiger && Utility.IsPlayerAvailable(Kreiger.CharacterType))
 				players.Add(Kreiger);
 
-			if (Thea)
+			if (Thea && Utility.IsPlayerAvailable(Thea.CharacterType))
 				players.Add(Thea);
 
 			return players;
+        }
+    }
+
+    public List<BaseCharacter> AllPlayers
+    {
+        get
+        {
+            var players = new List<BaseCharacter>();
+
+            if (Kenron && Kenron.playerState != BaseCharacter.PlayerState.NP)
+                players.Add(Kenron);
+
+            if (Kreiger && Kreiger.playerState != BaseCharacter.PlayerState.NP)
+                players.Add(Kreiger);
+
+            if (Thea && Thea.playerState != BaseCharacter.PlayerState.NP)
+                players.Add(Thea);
+
+            return players;
         }
     }
 

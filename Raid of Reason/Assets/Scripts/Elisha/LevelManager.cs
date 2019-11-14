@@ -53,7 +53,8 @@ public class LevelManager : MonoBehaviour
 
     public static void FadeLoadNextLevel()
     {
-        FadeToLevel(m_instance.m_sceneIndex++);
+        m_instance.m_sceneIndex++;
+        FadeToLevel(m_instance.m_sceneIndex);
     }
 
     public static void LoadLastLevel()

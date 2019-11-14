@@ -40,11 +40,10 @@ public class PauseMenu : MonoBehaviour
     private Vector3 m_P3InactivePosition;
     public GameObject m_pauseMenu;
     private GameObject m_playerHUD;
-    private GameObject m_objectiveHUD;
+    public GameObject m_objectiveHUD;
 
     private void Start()
     {
-        m_objectiveHUD = GameObject.Find("---Objectives---");
         m_pauseMenu = GameObject.Find("---PauseMenu---");
         m_pauseMenu.gameObject.SetActive(false);
         m_isPaused = false;

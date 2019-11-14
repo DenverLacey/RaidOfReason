@@ -53,7 +53,7 @@ public class RespawnManager : MonoBehaviour
 		m_inactiveRespawnEffects = new Queue<RespawnEffectActor>();
 		m_activeRespawnEffects = new List<RespawnEffectActor>();
 
-		foreach (var player in GameManager.Instance.Players)
+		foreach (var player in GameManager.Instance.AllPlayers)
 		{
 			m_respawnInformation.Add(player, new RespawnInformation(player.transform.position));
 			RespawnEffectActor respawnEffectActor = Instantiate(m_respawnEffectObject).GetComponent<RespawnEffectActor>();
@@ -75,7 +75,7 @@ public class RespawnManager : MonoBehaviour
 	public static void UpdateSpawnPoint(Vector3 spawnPoint)
 	{
 		var respawnInfomation = new Dictionary<BaseCharacter, RespawnInformation>();
-		foreach (var player in GameManager.Instance.Players)
+		foreach (var player in GameManager.Instance.AllPlayers)
 		{
 			Vector3 relativePosition = GetRelativePosition(player, spawnPoint);
 			respawnInfomation.Add(player, new RespawnInformation(relativePosition));
@@ -92,8 +92,11 @@ public class RespawnManager : MonoBehaviour
 			m_respawnInformation.Add(player, new RespawnInformation(spawnPoint));
 		}
 
-		ms_instance.StartCoroutine(WaitToRespawn(player));
-		m_respawnInformation[player].isRespawning = true;
+        if (m_respawnInformation[player].isRespawning == false)
+        {
+		    ms_instance.StartCoroutine(WaitToRespawn(player));
+		    m_respawnInformation[player].isRespawning = true;
+        }
 
         if (AllRespawning())
         {
@@ -109,7 +112,6 @@ public class RespawnManager : MonoBehaviour
 		respawnEffect.Activate(2f);
 		respawnEffect.character = player;
 		respawnEffect.transform.position = m_respawnInformation[player].respawnPosition;
-		m_respawnInformation[player].isRespawning = true;
 
 		m_activeRespawnEffects.Add(respawnEffect);
 	}
@@ -129,7 +131,7 @@ public class RespawnManager : MonoBehaviour
 	private static Vector3 GetRelativePosition(BaseCharacter character, Vector3 source)
 	{
 		Vector3 position = source;
-		source.y = character.transform.position.y;
+        source.y = character.YPosition;
 		return position;
 	}
 
@@ -138,7 +140,12 @@ public class RespawnManager : MonoBehaviour
 		BaseCharacter character = respawnEffectActor.character;
 
 		character.SoftActivate();
-		character.transform.position = m_respawnInformation[character].respawnPosition;
+
+        Vector3 desiredPosition = m_respawnInformation[character].respawnPosition;
+        desiredPosition.y = character.YPosition;
+        character.transform.position = desiredPosition;
+
+        m_respawnInformation[character].isRespawning = false;
 	}
 
 	private void OnDeactivate(RespawnEffectActor respawnEffectActor)

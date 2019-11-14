@@ -62,12 +62,10 @@ public class ObjectiveManager : MonoBehaviour
             objectiveTimer.gameObject.transform.GetChild(0).gameObject.SetActive(true);
             objectiveDescription.gameObject.SetActive(true);
 
-            #region Current Objective Init
-                m_isDone = m_currentObjective.IsDone();
-                m_hasFailed = m_currentObjective.HasFailed();
-                objectiveDescription.text = m_currentObjective.GrabDescription();
-                objectiveTimer.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = m_currentObjective.Timer().ToString("f0");
-                #endregion
+            m_isDone = m_currentObjective.IsDone();
+            m_hasFailed = m_currentObjective.HasFailed();
+            objectiveDescription.text = m_currentObjective.GrabDescription();
+            objectiveTimer.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = m_currentObjective.Timer().ToString("f0");
 
             m_currentObjective.Update();
 

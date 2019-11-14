@@ -136,6 +136,8 @@ public abstract class BaseCharacter : MonoBehaviour
     private DeathMenu m_deathMenu;
     private PauseMenu m_pauseInfo;
 
+    public float YPosition { get; private set; }
+
     /// <summary>
     /// This will be called first.
     /// </summary>
@@ -167,6 +169,8 @@ public abstract class BaseCharacter : MonoBehaviour
             m_originalMaterials.Add(rend.material);
         }
         m_currentMovement = m_movementSpeed;
+
+        YPosition = transform.position.y;
     }
 
     /// <summary>
