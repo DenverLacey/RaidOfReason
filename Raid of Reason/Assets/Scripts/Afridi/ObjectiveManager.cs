@@ -138,12 +138,15 @@ public class ObjectiveManager : MonoBehaviour
             #region Objective Descriptions
             // Replaces Old objective texts with new objective
             objectiveDescription.text = objectiveDescription.text.Replace(m_currentObjective.GrabDescription(), m_currentObjective.GrabDescription());
-            objectiveTimer.gameObject.transform.GetChild(0).gameObject.GetComponent<Text>().text = objectiveTimer.text.Replace(m_currentObjective.Timer().ToString("f0"), m_currentObjective.Timer().ToString("f0"));
+            objectiveTimer.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = objectiveTimer.text.Replace(m_currentObjective.Timer().ToString("f0"), m_currentObjective.Timer().ToString("f0"));
             #endregion
 
             yield return new WaitForSeconds(5);
 
-            objectiveComplete.SetActive(false);
+            if (ObjectiveCompleted == false)
+            {
+                objectiveComplete.SetActive(false);
+            }
         }
 
 		// objective failed
