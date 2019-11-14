@@ -17,11 +17,14 @@ public class DeathMenu : MonoBehaviour
     private Vector3 m_p1InactivePosition;
     private bool m_isDeath;
     private GameObject m_playerHUD;
+    private GameObject m_objectiveHUD;
     public GameObject m_DeathMenu;
 
     private void Start()
     {
         m_DeathMenu = GameObject.Find("---EndMenu---");
+        m_DeathMenu.SetActive(false);
+        m_objectiveHUD = GameObject.Find("---Objectives---");
         m_isDeath = false;
         m_p1Cursor.SetController(1);
         m_p1InactivePosition = transform.position;
@@ -34,17 +37,22 @@ public class DeathMenu : MonoBehaviour
         Time.timeScale = 0.0f;
         m_isDeath = true;
         m_playerHUD.SetActive(false);
+        m_objectiveHUD.SetActive(false);
         m_p1Cursor.gameObject.SetActive(true);
         m_DeathMenu.SetActive(true);
     }
 
-    public void RestartGame()
+    public void ClickedRestart(int levelIndex)
     {
-        SceneManager.LoadScene(m_sceneToRestartIndex, LoadSceneMode.Single);
+        Time.timeScale = 1;
+        m_DeathMenu.SetActive(false);
+        LevelManager.FadeLoadLevel(levelIndex);
     }
 
-    public void Quit()
+    public void ClickQuit()
     {
-        LevelManager.LoadLevel(0);
+        Time.timeScale = 1;
+        m_DeathMenu.SetActive(false);
+        LevelManager.FadeLoadLevel(0);
     }
 }
