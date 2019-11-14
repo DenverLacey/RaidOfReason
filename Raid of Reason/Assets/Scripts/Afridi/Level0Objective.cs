@@ -6,7 +6,7 @@ using UnityEngine;
 public class Level0Objective : BaseObjective
 {
     [Tooltip("Scene to transport to once on the portal")]
-    public int buildIndex;
+    public int CreditsIndex;
 
     [Tooltip("The Objective Description")]
     public string description;

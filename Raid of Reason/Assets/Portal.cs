@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Portal : MonoBehaviour
 {
-    public int buildIndex;
+    public int CreditsIndex;
     public float transitonTime;
 
     private bool kenPass = false;
@@ -95,6 +95,6 @@ public class Portal : MonoBehaviour
         nasPass = false;
         thePass = false;
         yield return new WaitForSeconds(time);
-		LevelManager.FadeLoadLevel(buildIndex);
+		LevelManager.FadeLoadLevel(CreditsIndex);
     }
 }

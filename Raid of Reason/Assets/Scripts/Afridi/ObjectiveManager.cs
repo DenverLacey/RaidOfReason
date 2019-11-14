@@ -19,7 +19,8 @@ public class ObjectiveManager : MonoBehaviour
 
     public bool ObjectiveCompleted;
     public bool ObjectiveTriggered = false;
-    public int BuildIndex;
+    [Tooltip("The build index for the credits scene")]
+    public int CreditsIndex;
 
     public TextMeshProUGUI objectiveTimer;
     public TextMeshProUGUI objectiveDescription;
@@ -105,14 +106,14 @@ public class ObjectiveManager : MonoBehaviour
                 barriers.ManageBarriers();
             }
 
-            if (m_objectives.Count > 1)
+            if (m_objectives.Count != 0)
             {
 			    m_objectives.RemoveAt(0);
                 m_currentObjective = m_objectives[0];
                 m_currentObjective.Init();
             }
 
-            if (triggerObjectives.Count > 1)
+            if (triggerObjectives.Count != 0)
             {
                 triggerObjectives.RemoveAt(0);
                 m_triggerObjective = triggerObjectives[0];
@@ -124,21 +125,22 @@ public class ObjectiveManager : MonoBehaviour
             // Reset Trigger
             ObjectiveTriggered = false;
 
-            objectiveTimer.gameObject.SetActive(false);
-            objectiveTimer.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-            objectiveDescription.gameObject.SetActive(false);
+            if (m_objectives.Count != 0)
+            {
+                objectiveTimer.gameObject.SetActive(false);
+                objectiveTimer.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                objectiveDescription.gameObject.SetActive(false);
+            }
 
             objectiveComplete.SetActive(true);
 
-            if (m_objectives.Count <= 0)
-            {
-                LevelManager.FadeLoadLevel(BuildIndex);
-            }
-
             #region Objective Descriptions
-            // Replaces Old objective texts with new objective
-            objectiveDescription.text = objectiveDescription.text.Replace(m_currentObjective.GrabDescription(), m_currentObjective.GrabDescription());
-            objectiveTimer.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = objectiveTimer.text.Replace(m_currentObjective.Timer().ToString("f0"), m_currentObjective.Timer().ToString("f0"));
+            if (m_objectives.Count != 0)
+            {
+                // Replaces Old objective texts with new objective
+                objectiveDescription.text = objectiveDescription.text.Replace(m_currentObjective.GrabDescription(), m_currentObjective.GrabDescription());
+                objectiveTimer.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = objectiveTimer.text.Replace(m_currentObjective.Timer().ToString("f0"), m_currentObjective.Timer().ToString("f0"));
+            }
             #endregion
 
             yield return new WaitForSeconds(5);
@@ -146,6 +148,11 @@ public class ObjectiveManager : MonoBehaviour
             if (ObjectiveCompleted == false)
             {
                 objectiveComplete.SetActive(false);
+            }
+
+            if (m_objectives.Count == 0)
+            {
+                LevelManager.FadeLoadLevel(CreditsIndex);
             }
         }
 

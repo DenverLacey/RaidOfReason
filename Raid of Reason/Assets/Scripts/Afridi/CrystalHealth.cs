@@ -28,6 +28,11 @@ public class CrystalHealth : MonoBehaviour
             {
                 healthBar.gameObject.SetActive(false);
             }
+
+            if (manager.m_currentObjective == Objects[0] && manager.m_currentObjective.IsDone())
+            {
+                healthBar.gameObject.SetActive(false);
+            }
         }
     }
 }
