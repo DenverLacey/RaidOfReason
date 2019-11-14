@@ -185,6 +185,9 @@ public abstract class BaseCharacter : MonoBehaviour
         if (m_pauseInfo.m_isPaused)
             return;
 
+        if (m_deathMenu.m_isDeath)
+            return;
+
         // If player has shield
         if (currentShield > 0)
         {

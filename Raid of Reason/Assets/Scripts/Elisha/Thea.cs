@@ -196,6 +196,7 @@ public class Thea : BaseCharacter
     protected override void Update()
     {
         base.Update();
+
         if (m_currentHealth != m_maxHealth && !m_isHealthRegen && gameObject.activeSelf)
         {
             StartCoroutine(HealthOverTime());

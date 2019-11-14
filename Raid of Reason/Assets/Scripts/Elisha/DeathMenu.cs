@@ -15,7 +15,7 @@ public class DeathMenu : MonoBehaviour
     private int m_sceneToRestartIndex;
 
     private Vector3 m_p1InactivePosition;
-    private bool m_isDeath;
+    public bool m_isDeath { get; set; }
     private GameObject m_playerHUD;
     private GameObject m_objectiveHUD;
     public GameObject m_DeathMenu;
