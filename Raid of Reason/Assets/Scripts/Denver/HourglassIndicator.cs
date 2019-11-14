@@ -1,10 +1,17 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Denver
+ * Description:	Handles functionality of the hourglass indicator
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using XboxCtrlrInput;
 using DG.Tweening;
-using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Shows the player that their ability is on cooldown
+/// </summary>
 public class HourglassIndicator : MonoBehaviour
 {
 	[Tooltip("How long before hourglass starts to fade")]

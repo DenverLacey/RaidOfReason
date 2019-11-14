@@ -1,9 +1,17 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Denver
+ * Description:	Handles functionality of the credits scene
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
 using XboxCtrlrInput;
 
+/// <summary>
+/// Plays Credits Video and stops it at the credits. Can press 'Enter' or 'Start' to go back to title screen
+/// </summary>
 [RequireComponent(typeof(VideoPlayer))]
 public class CreditsSceneActor : MonoBehaviour
 {
@@ -39,7 +47,7 @@ public class CreditsSceneActor : MonoBehaviour
 
 		if (m_phase == 1)
 		{
-			if (Input.GetKeyDown(KeyCode.Return) || Utility.IsButtonDownByAnyController(XboxButton.Start))
+			if (Input.GetKeyDown(KeyCode.Return) || Utility.IsButtonDown(XboxButton.Start))
 			{
 				LevelManager.FadeLoadLevel(0);
 			}

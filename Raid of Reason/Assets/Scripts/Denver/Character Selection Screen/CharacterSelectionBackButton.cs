@@ -1,10 +1,18 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Denver
+ * Description:	Handles all functionality for the back button in the Character Selection Screen Scene
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using XboxCtrlrInput;
 
+/// <summary>
+/// Handles functionality of back button on the character selection screen.  Fade loads the previous level when pressed.
+/// </summary>
 [RequireComponent(typeof(BoxCollider2D))]
 public class CharacterSelectionBackButton : InteractableUIElement
 {
@@ -42,7 +50,7 @@ public class CharacterSelectionBackButton : InteractableUIElement
 				m_flashing = true;
 			}
 
-			if (Utility.IsButtonDownByAnyController(XboxButton.A))
+			if (Utility.IsButtonDown(XboxButton.A))
 			{
 				OnPressed();
 			}

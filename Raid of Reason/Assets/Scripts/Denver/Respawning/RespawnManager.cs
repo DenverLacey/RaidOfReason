@@ -1,9 +1,21 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Denver
+ * Description:	Handles all respawn mechanics. Keeps track of who's respawning and where they should respawn.
+ *				Also will activate death screen when all players are dead (respawning)
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles all respawn mechanics
+/// </summary>
 public class RespawnManager : MonoBehaviour
 {
+	/// <summary>
+	/// Contains a players respawn information
+	/// </summary>
 	private class RespawnInformation
 	{
 		public Vector3 respawnPosition;
@@ -72,6 +84,10 @@ public class RespawnManager : MonoBehaviour
         ms_instance.m_deathScreen.DeathScreen();
     }
 
+	/// <summary>
+	/// Updates respawn points for all players
+	/// </summary>
+	/// <param name="spawnPoint"> New respawn point </param>
 	public static void UpdateSpawnPoint(Vector3 spawnPoint)
 	{
 		var respawnInfomation = new Dictionary<BaseCharacter, RespawnInformation>();
@@ -83,15 +99,12 @@ public class RespawnManager : MonoBehaviour
 		m_respawnInformation = respawnInfomation;
 	}
 
+	/// <summary>
+	/// Respawns a player after a time
+	/// </summary>
+	/// <param name="player"> player to respawn </param>
 	public static void RespawnPlayer(BaseCharacter player)
 	{
-		// if player is not in spawn point dictionary
-		if (!m_respawnInformation.ContainsKey(player))
-		{
-			Vector3 spawnPoint = GetRelativePosition(player, m_respawnInformation.Values.GetEnumerator().Current.respawnPosition);
-			m_respawnInformation.Add(player, new RespawnInformation(spawnPoint));
-		}
-
         if (m_respawnInformation[player].isRespawning == false)
         {
 		    ms_instance.StartCoroutine(WaitToRespawn(player));
@@ -104,6 +117,11 @@ public class RespawnManager : MonoBehaviour
         }
 	}
 
+	/// <summary>
+	/// Activates respawn effect particle system after respawn delay
+	/// </summary>
+	/// <param name="player"> the player that is being respawned </param>
+	/// <returns> WaitForSeconds </returns>
 	private static IEnumerator WaitToRespawn(BaseCharacter player)
 	{
 		yield return new WaitForSeconds(ms_instance.m_respawnDelay);
@@ -116,6 +134,10 @@ public class RespawnManager : MonoBehaviour
 		m_activeRespawnEffects.Add(respawnEffect);
 	}
 
+	/// <summary>
+	/// Checks if all players are respawning
+	/// </summary>
+	/// <returns> true if all players are respawing. False if otherwise </returns>
 	private static bool AllRespawning()
 	{
 		foreach (var pair in m_respawnInformation)
@@ -128,26 +150,37 @@ public class RespawnManager : MonoBehaviour
 		return true;
 	}
 
+	/// <summary>
+	/// Returns a Vector3 position that maintains the character's Y position
+	/// </summary>
+	/// <param name="character"> the pertinent character </param>
+	/// <param name="source"> the position that gives the relative position x and z coords </param>
+	/// <returns> A Vector3 with source's x and z coords but the character's y coord </returns>
 	private static Vector3 GetRelativePosition(BaseCharacter character, Vector3 source)
 	{
-		Vector3 position = source;
         source.y = character.YPosition;
-		return position;
+		return source;
 	}
 
+	/// <summary>
+	/// Respawns a player and updates respawn information. Is called by a respawn effect actor when it hits a spawn event
+	/// </summary>
+	/// <param name="respawnEffectActor"> respawn effect that has hit a spawn event </param>
 	private void OnSpawnEvent(RespawnEffectActor respawnEffectActor)
 	{
 		BaseCharacter character = respawnEffectActor.character;
 
 		character.SoftActivate();
 
-        Vector3 desiredPosition = m_respawnInformation[character].respawnPosition;
-        desiredPosition.y = character.YPosition;
-        character.transform.position = desiredPosition;
+        character.transform.position = m_respawnInformation[character].respawnPosition;
 
         m_respawnInformation[character].isRespawning = false;
 	}
 
+	/// <summary>
+	/// Moves a respawnEffectActor from the active list to the inactive queue
+	/// </summary>
+	/// <param name="respawnEffectActor"> respawn effect to move </param>
 	private void OnDeactivate(RespawnEffectActor respawnEffectActor)
 	{
 		m_activeRespawnEffects.Remove(respawnEffectActor);

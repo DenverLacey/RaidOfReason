@@ -1,4 +1,9 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Denver
+ * Description:	Handles functionality of the start button on the character selection screen
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,6 +11,9 @@ using XboxCtrlrInput;
 using XInputDotNetPure;
 using DG.Tweening;
 
+/// <summary>
+/// Handles functionality of the start button on the character selection screen. Fade loads to the first level
+/// </summary>
 [RequireComponent(typeof(BoxCollider2D))]
 public class CharacterSelectionStartButton : InteractableUIElement
 {
@@ -49,7 +57,7 @@ public class CharacterSelectionStartButton : InteractableUIElement
 
 	private void Update()
 	{
-		if (Utility.IsButtonDownByAnyController(XboxButton.A))
+		if (Utility.IsButtonDown(XboxButton.A))
 		{
 			List<PlayerCursor> cursors = m_characterSelection.PlayerCursors;
 

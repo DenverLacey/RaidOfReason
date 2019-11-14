@@ -1,8 +1,16 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Denver
+ * Description:	Handles the taunt effect particle system
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
+/// <summary>
+/// Handles the taunt effect particle system
+/// </summary>
 [RequireComponent(typeof(SpriteRenderer))]
 public class TauntEffectIndicator : MonoBehaviour
 {
@@ -75,6 +83,11 @@ public class TauntEffectIndicator : MonoBehaviour
 		}
     }
 
+	/// <summary>
+	/// Activates the effect
+	/// </summary>
+	/// <param name="radius"> how big the effect needs to be </param>
+	/// <param name="position"> where the effect should be </param>
 	public void Show(float radius, Vector3 position)
 	{
 		gameObject.SetActive(true);

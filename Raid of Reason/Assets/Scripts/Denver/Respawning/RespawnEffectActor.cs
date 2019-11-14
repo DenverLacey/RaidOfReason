@@ -1,7 +1,15 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Denver
+ * Description:	Handles respawn particle system timings and notifies RespawnManager when to spawn the player and when the particle is done
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles functionality of the Respawn Particle Effect
+/// </summary>
 public class RespawnEffectActor : MonoBehaviour
 {
 	public delegate void OnEvent(RespawnEffectActor respawnEffectActor);

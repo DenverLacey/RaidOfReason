@@ -1,7 +1,15 @@
-﻿using System.Collections;
+﻿/*
+ * Author: Denver
+ * Description:	Handles functionality of the respawn triggers
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Updates the RespawnManager's respawn point when a player enters the trigger
+/// </summary>
 [RequireComponent(typeof(Collider))]
 public class RespawnTrigger : MonoBehaviour
 {

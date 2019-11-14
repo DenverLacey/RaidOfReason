@@ -57,7 +57,7 @@ public static class Utility
 		return false;
 	}
 
-	public static bool IsButtonPressedByAnyController(XboxButton button)
+	public static bool IsButtonPressed(XboxButton button)
 	{
 		if (XCI.GetButton(button, XboxController.First) ||
 			XCI.GetButton(button, XboxController.Second) ||
@@ -72,7 +72,7 @@ public static class Utility
 		}
 	}
 
-	public static bool IsButtonDownByAnyController(XboxButton button)
+	public static bool IsButtonDown(XboxButton button)
 	{
 		if (XCI.GetButtonDown(button, XboxController.First)  ||
 			XCI.GetButtonDown(button, XboxController.Second) ||
@@ -87,7 +87,7 @@ public static class Utility
 		}
 	}
 
-	public static bool IsButtonUpByAnyController(XboxButton button)
+	public static bool IsButtonUp(XboxButton button)
 	{
 		if (XCI.GetButtonUp(button, XboxController.First) ||
 			XCI.GetButtonUp(button, XboxController.Second) ||
