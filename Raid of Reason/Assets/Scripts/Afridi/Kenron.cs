@@ -290,6 +290,7 @@ public class Kenron : BaseCharacter
                 SetSpeed(m_movementSpeed);
                 m_TempCharge = m_currentCharges - 1;
                 m_kenronParticle.Stop();
+                m_startParticle.Stop();
             }
         }
     }

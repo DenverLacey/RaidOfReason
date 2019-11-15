@@ -68,14 +68,14 @@ public class ObjectiveManager : MonoBehaviour
             // Set Descriptions and Timer
             objectiveTimer.gameObject.SetActive(true);
             objectiveTimer.gameObject.transform.GetChild(0).gameObject.SetActive(true);
-            objectiveTimer.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = currentObjective.Timer().ToString("f0");
-
             objectiveDescription.gameObject.SetActive(true);
-            objectiveDescription.text = currentObjective.GrabDescription();
+
 
             // Stores Complete/Failed Bools
             m_Completed = currentObjective.Completed();
             m_Failed = currentObjective.Failed();
+            objectiveDescription.text = currentObjective.GrabDescription();
+            objectiveTimer.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = currentObjective.Timer().ToString("f0");
          
             currentObjective.Update();
 
@@ -128,22 +128,16 @@ public class ObjectiveManager : MonoBehaviour
             ObjectiveTriggered = false;
             
             // Turns off Timers and Descriptions
-            if (objectives.Count > 1)
-            {
-                objectiveTimer.gameObject.SetActive(false);
-                objectiveTimer.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                objectiveDescription.gameObject.SetActive(false);
-            }
+            objectiveTimer.gameObject.SetActive(false);
+            objectiveTimer.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+            objectiveDescription.gameObject.SetActive(false);
 
             objectiveComplete.SetActive(true);
 
             #region Objective Descriptions
-            if (objectives.Count > 1)
-            {
-                // Replaces Old objective texts with new objective
-                objectiveDescription.text = objectiveDescription.text.Replace(currentObjective.GrabDescription(), currentObjective.GrabDescription());
-                objectiveTimer.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = objectiveTimer.text.Replace(currentObjective.Timer().ToString("f0"), currentObjective.Timer().ToString("f0"));
-            }
+            // Replaces Old objective texts with new objective
+            objectiveDescription.text = objectiveDescription.text.Replace(currentObjective.GrabDescription(), currentObjective.GrabDescription());
+            objectiveTimer.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = objectiveTimer.text.Replace(currentObjective.Timer().ToString("f0"), currentObjective.Timer().ToString("f0"));
             #endregion
           
             yield return new WaitForSeconds(objectiveFade);
