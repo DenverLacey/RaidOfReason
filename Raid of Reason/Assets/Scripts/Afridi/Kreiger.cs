@@ -300,16 +300,6 @@ public class Kreiger : BaseCharacter
         {
             GameManager.Instance.Thea.currentShield += m_shieldsGiven;
         }
-
-        // taunt enemies
-        foreach (EnemyData enemy in GameObject.FindObjectsOfType<EnemyData>())
-		{
-			float sqrDist = (enemy.transform.position - transform.position).sqrMagnitude;
-			if (sqrDist <= m_tauntRadius * m_tauntRadius)
-			{
-                   enemy.Taunted = true;
-            }
-		}
         
         // Plays second taunt particle
         m_tauntParticle.Play();
@@ -332,10 +322,13 @@ public class Kreiger : BaseCharacter
 		m_tauntEffect.Show(m_tauntRadius, transform.position);
 		RumbleController(m_tauntRumbleDuration, m_tauntRumbleIntensity, m_tauntRumbleIntensity);
 
-		foreach (var enemy in GameObject.FindObjectsOfType<EnemyData>())
+		// taunt enemies
+		foreach (EnemyData enemy in GameObject.FindObjectsOfType<EnemyData>())
 		{
-			if (enemy.Taunted)
+			float sqrDist = (enemy.transform.position - transform.position).sqrMagnitude;
+			if (sqrDist <= m_tauntRadius * m_tauntRadius)
 			{
+				enemy.Taunted = true;
 				enemy.TakeDamage(m_tauntDamage, this);
 				Vector3 direction = (enemy.transform.position - transform.position).normalized;
 				enemy.KnockBack(direction * m_tauntKnockbackForce, m_tauntStunDuration);
