@@ -320,8 +320,8 @@ MonoBehaviour:
   feedbackAmount: 0.3
   m_shieldBuffer: 0
   m_shieldDegenerateAmount: 0
-  controller: 1
-  playerIndex: 0
+  controller: 2
+  playerIndex: 1
   skillManager: {fileID: 0}
   m_controllerOn: 0
   m_damageMaterial: {fileID: 2100000, guid: f4599d425001da04abed12dbbc9d0899, type: 2}
@@ -340,7 +340,7 @@ MonoBehaviour:
   m_maxCFDamage: 70
   healthGained: 5
   m_CFMovementDelay: 0.5
-  durationIncreased: 2
+  durationIncreased: 0
   m_TrailDegen: 3
   dashDisplays:
   - {fileID: 0}
@@ -674,6 +674,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5877011709370991675}
     m_Modifications:
+    - target: {fileID: 4153159892060089487, guid: 8d2906bfe6894dc40bebb3b9e1fcc21d,
+        type: 3}
+      propertyPath: m_Name
+      value: CFX2_Big_Splash (No Collision)
+      objectReference: {fileID: 0}
     - target: {fileID: 4155115819597000241, guid: 8d2906bfe6894dc40bebb3b9e1fcc21d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -744,11 +749,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 100
       objectReference: {fileID: 0}
-    - target: {fileID: 4153159892060089487, guid: 8d2906bfe6894dc40bebb3b9e1fcc21d,
-        type: 3}
-      propertyPath: m_Name
-      value: CFX2_Big_Splash (No Collision)
-      objectReference: {fileID: 0}
     - target: {fileID: 4258319205150877521, guid: 8d2906bfe6894dc40bebb3b9e1fcc21d,
         type: 3}
       propertyPath: playOnAwake
@@ -784,25 +784,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5877011709370991675}
     m_Modifications:
-    - target: {fileID: 198796712453205768, guid: c0bd40913acc33645a6f92f39e5dfb84,
-        type: 3}
-      propertyPath: looping
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 198796712453205768, guid: c0bd40913acc33645a6f92f39e5dfb84,
-        type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 198796712453205768, guid: c0bd40913acc33645a6f92f39e5dfb84,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.g
-      value: 0.101960786
-      objectReference: {fileID: 0}
-    - target: {fileID: 198796712453205768, guid: c0bd40913acc33645a6f92f39e5dfb84,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.b
-      value: 0.12156863
+    - target: {fileID: 1727626132299242, guid: c0bd40913acc33645a6f92f39e5dfb84, type: 3}
+      propertyPath: m_Name
+      value: ChaosFlame
       objectReference: {fileID: 0}
     - target: {fileID: 4159976647224570, guid: c0bd40913acc33645a6f92f39e5dfb84, type: 3}
       propertyPath: m_LocalPosition.x
@@ -860,9 +844,25 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 100
       objectReference: {fileID: 0}
-    - target: {fileID: 1727626132299242, guid: c0bd40913acc33645a6f92f39e5dfb84, type: 3}
-      propertyPath: m_Name
-      value: ChaosFlame
+    - target: {fileID: 198796712453205768, guid: c0bd40913acc33645a6f92f39e5dfb84,
+        type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198796712453205768, guid: c0bd40913acc33645a6f92f39e5dfb84,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198796712453205768, guid: c0bd40913acc33645a6f92f39e5dfb84,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.101960786
+      objectReference: {fileID: 0}
+    - target: {fileID: 198796712453205768, guid: c0bd40913acc33645a6f92f39e5dfb84,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.12156863
       objectReference: {fileID: 0}
     - target: {fileID: 198310897626484064, guid: c0bd40913acc33645a6f92f39e5dfb84,
         type: 3}
@@ -1051,21 +1051,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5877011709370991675}
     m_Modifications:
-    - target: {fileID: 19800000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 19800000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
-      propertyPath: ShapeModule.m_Scale.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19800000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
-      propertyPath: ShapeModule.m_Scale.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 19800000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
-      propertyPath: ShapeModule.m_Scale.z
-      value: 3
+    - target: {fileID: 100000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
+      propertyPath: m_Name
+      value: ChaosFlame_2
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1123,9 +1111,21 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 100
       objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
-      propertyPath: m_Name
-      value: ChaosFlame_2
+    - target: {fileID: 19800000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
+      propertyPath: ShapeModule.m_Scale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
+      propertyPath: ShapeModule.m_Scale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
+      propertyPath: ShapeModule.m_Scale.z
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5179342627934997183, guid: 3156817f64ec68948ad6bb26569b9ef5,
         type: 3}

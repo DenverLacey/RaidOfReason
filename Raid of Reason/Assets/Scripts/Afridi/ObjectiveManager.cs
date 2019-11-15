@@ -28,10 +28,12 @@ public class ObjectiveManager : MonoBehaviour
     public GameObject objectiveFailed;
     [Tooltip("Time till Objective Completion/Failed dissapears")]
     public float objectiveFade;
+    private int index = 4;
 
     private bool m_Completed;
     private bool m_Failed;
     private bool m_haveObjective;
+    private bool m_protect;
 
     private void Awake()
     {
@@ -48,6 +50,7 @@ public class ObjectiveManager : MonoBehaviour
         }
 
         // Init
+        m_protect = false;
         currentObjective = objectives[0];
         currentObjective.Init();
         objectiveTimer.gameObject.SetActive(false);
@@ -70,6 +73,10 @@ public class ObjectiveManager : MonoBehaviour
             objectiveTimer.gameObject.transform.GetChild(0).gameObject.SetActive(true);
             objectiveDescription.gameObject.SetActive(true);
 
+            if (currentObjective is ProtectionObjective)
+            {
+                m_protect = true;
+            }
 
             // Stores Complete/Failed Bools
             m_Completed = currentObjective.Completed();
@@ -105,11 +112,6 @@ public class ObjectiveManager : MonoBehaviour
         {
             ObjectiveCompleted = true;
 
-            // Empty Check before setting a new Objective
-            if (barriers != null)
-            {
-                barriers.ManageBarriers();
-            }
             if (objectives.Count > 1)
             {
 			    objectives.RemoveAt(0);
@@ -142,15 +144,21 @@ public class ObjectiveManager : MonoBehaviour
           
             yield return new WaitForSeconds(objectiveFade);
 
+            // Empty Check before setting a new Objective
+            if (barriers != null)
+            {
+                barriers.ManageBarriers();
+            }
+
             if (ObjectiveCompleted == false)
             {
                 objectiveComplete.SetActive(false);
             }
 
             // If its the last objective roll credits
-            if (objectives.Count == 0)
+            if (currentObjective is ProtectionObjective && m_protect == true)
             {
-                LevelManager.FadeLoadNextLevel();
+                LevelManager.FadeLoadLevel(index); 
             }
         }
         #endregion
