@@ -207,9 +207,18 @@ public class Thea : BaseCharacter
             GOPChargeMeterBar.transform.LookAt(camera);
         }
 
-        #region Thea Fire Rate Change
-        float healthcomparison = GameManager.Instance.Kenron.currentHealth + GameManager.Instance.Kreiger.currentHealth;
-        if (GameManager.Instance.DeadPlayers.Count <= 0)
+		// float healthcomparison = GameManager.Instance.Kenron.currentHealth + GameManager.Instance.Kreiger.currentHealth;
+
+		float healthcomparison = 0f;
+		foreach (var player in GameManager.Instance.Players)
+		{
+			if (player == this)
+				continue;
+
+			healthcomparison += player.GetHealth();
+		}
+
+		if (GameManager.Instance.DeadPlayers.Count <= 0)
         {
             if (healthcomparison <= OAAllyHealthChecks[0])
             {
@@ -228,7 +237,6 @@ public class Thea : BaseCharacter
                 m_projectileDelay = OAFireRateIncreased[3];
             }
         }
-        #endregion
 
         if (GameManager.Instance.Thea.playerState == PlayerState.DEAD)
         {
