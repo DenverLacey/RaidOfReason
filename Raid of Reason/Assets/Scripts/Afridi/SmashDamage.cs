@@ -39,8 +39,7 @@ public class SmashDamage : MonoBehaviour
            Vector3 direction = other.transform.position - GameManager.Instance.Kreiger.transform.position;        
             
             // Knocks Back and Stuns Enemies
-            rb.AddForce(direction.normalized * GameManager.Instance.Kreiger.knockBackForce, ForceMode.Impulse);
-            enemy.KnockBack(GameManager.Instance.Kreiger.stunTime);
+            enemy.KnockBack(direction.normalized * GameManager.Instance.Kreiger.knockBackForce, GameManager.Instance.Kreiger.stunTime);
             enemy.TakeDamage(GameManager.Instance.Kreiger.GetDamage(), GameManager.Instance.Kreiger);
         }
     }

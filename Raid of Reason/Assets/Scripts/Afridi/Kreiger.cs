@@ -48,6 +48,18 @@ public class Kreiger : BaseCharacter
     private float m_tauntRadius;
 	public float TauntRadius { get => m_tauntRadius; }
 
+	[SerializeField]
+	[Tooltip("How much damage taunt will do to effected enemies")]
+	private float m_tauntDamage = 10f;
+
+	[SerializeField]
+	[Tooltip("Force applied to enemies on taunt")]
+	private float m_tauntKnockbackForce = 40f;
+
+	[SerializeField]
+	[Tooltip("How long enemies will be stunned after taunt")]
+	private float m_tauntStunDuration = 1f;
+
     [SerializeField]
     [Tooltip("How vulnerable Kreiger is while taunting (1.0 is default)")]
     private float m_tauntVulnerability;
@@ -319,6 +331,16 @@ public class Kreiger : BaseCharacter
 	{
 		m_tauntEffect.Show(m_tauntRadius, transform.position);
 		RumbleController(m_tauntRumbleDuration, m_tauntRumbleIntensity, m_tauntRumbleIntensity);
+
+		foreach (var enemy in GameObject.FindObjectsOfType<EnemyData>())
+		{
+			if (enemy.Taunted)
+			{
+				enemy.TakeDamage(m_tauntDamage, this);
+				Vector3 direction = (enemy.transform.position - transform.position).normalized;
+				enemy.KnockBack(direction * m_tauntKnockbackForce, m_tauntStunDuration);
+			}
+		}
 	}
 
     /// <summary>

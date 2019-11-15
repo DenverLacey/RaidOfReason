@@ -277,11 +277,12 @@ public class EnemyData : MonoBehaviour
 		DebugTools.LogVariable("Stunned", Stunned);
 	}
 
-    public void KnockBack(float duration)
+    public void KnockBack(Vector3 force, float stunDuration)
     {
         m_knockedBack = true;
         Stunned = true;
-        StartCoroutine(ResetKnockBack(duration));
+		Rigidbody.AddForce(force, ForceMode.Impulse);
+        StartCoroutine(ResetKnockBack(stunDuration));
     }
 
     IEnumerator ResetKnockBack(float duration)
