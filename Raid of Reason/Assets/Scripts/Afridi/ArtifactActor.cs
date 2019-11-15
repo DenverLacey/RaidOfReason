@@ -8,7 +8,7 @@ public class ArtifactActor : MonoBehaviour
     public GameObject smallCrystal;
 
     public float rotationSpeedBigCrystal;
-    public float rotationSpeedSmallCrystal;
+    public float rotationSpeedSmallCryst3al;
 
     public float bobSpeedBigCrystal;
     public float bobSpeedSmallCrystal;
@@ -29,7 +29,7 @@ public class ArtifactActor : MonoBehaviour
     {
         // rotation
         bigCrystal.transform.rotation = Quaternion.AngleAxis(rotationSpeedBigCrystal, Vector3.up) * bigCrystal.transform.rotation;
-        smallCrystal.transform.rotation = Quaternion.AngleAxis(-rotationSpeedSmallCrystal, Vector3.up) * smallCrystal.transform.rotation;
+        smallCrystal.transform.rotation = Quaternion.AngleAxis(-rotationSpeedSmallCryst3al, Vector3.up) * smallCrystal.transform.rotation;
 
         // bobbing
         Vector3 desiredPosBig = bigCrystal.transform.localPosition;
