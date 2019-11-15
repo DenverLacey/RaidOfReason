@@ -326,13 +326,14 @@ public class Thea : BaseCharacter
 
 			if (m_counter >= m_projectileDelay)
 			{
-				m_animator.SetTrigger("Attack");
+				m_animator.SetBool("Attack", true);
 				m_counter = 0;
 			}
 		}
 		else
 		{
 			m_shotCounter = 0;
+			m_animator.SetBool("Attack", false);
 		}
     }
 

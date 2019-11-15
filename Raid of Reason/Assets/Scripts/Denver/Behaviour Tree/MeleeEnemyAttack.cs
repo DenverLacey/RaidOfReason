@@ -13,7 +13,7 @@ using static Behaviour.Result;
 /// </summary>
 public class MeleeEnemyAttack : Behaviour
 {
-	private BaseCharacter m_targetPlayer;
+	bool m_attackFailed = false;
 
 	void OnAttackAnimation(EnemyData agent)
 	{
@@ -24,17 +24,18 @@ public class MeleeEnemyAttack : Behaviour
 		// attack player
 		// TODO: Replace with Instantiate(agent.AttackPrefab, agent.transform.position + agent.transform.forward, Quaternion.identity);
 
-		if (m_targetPlayer)
+		if (Physics.Raycast(agent.transform.position, agent.transform.forward, out RaycastHit hit, agent.AttackRange.max) && Utility.TagIsPlayerTag(hit.collider.tag))
 		{
-			m_targetPlayer.TakeDamage(agent.AttackDamage);
+			BaseCharacter player = hit.collider.GetComponent<BaseCharacter>();
 
-			//if (m_targetPlayer.tag == "Kreiger" && GameManager.Instance.Kreiger.m_skillUpgrades.Count > 1)
-			//{
-   //             //if (GameManager.Instance.Kreiger.isActive && GameManager.Instance.Kreiger.m_skillUpgrades.Find(skill => skill.Name == "Static Shield"))
-   //             //{
-   //             //    agent.TakeDamage(GameManager.Instance.Kreiger.thornDamage, GameManager.Instance.Kreiger);
-   //             //}
-   //         }
+			if (player != null)
+			{
+				player.TakeDamage(agent.AttackDamage);
+			}
+		}
+		else
+		{
+			m_attackFailed = true;
 		}
 	}
 
@@ -71,17 +72,16 @@ public class MeleeEnemyAttack : Behaviour
 
 			// play attack animation
 			agent.SetAnimatorTrigger("Attack");
-
-			if (Physics.Raycast(agent.transform.position, agent.transform.forward, out RaycastHit hit, agent.AttackRange.max))
-			{
-				m_targetPlayer = hit.collider.GetComponent<BaseCharacter>();
-			}
-			else
-			{
-				m_targetPlayer = null;
-				return FAILURE;
-			}
 		}
-		return PENDING_COMPOSITE;
+
+		if (m_attackFailed == true)
+		{
+			m_attackFailed = false;
+			return FAILURE;
+		}
+		else
+		{
+			return PENDING_COMPOSITE;
+		}
 	}
 }
