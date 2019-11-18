@@ -532,4 +532,9 @@ public class Thea : BaseCharacter
 		EndGIftOfPoseidon();
 		ResetGiftOfPoseidon();
 	}
+
+	private void PlayHealVoiceLine()
+	{
+
+	}
 }

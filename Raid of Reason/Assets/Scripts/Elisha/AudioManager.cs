@@ -90,7 +90,7 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     public void Start()
     {
-        PlaySound(SoundType.COMBAT_MUSIC);
+        // PlaySound(SoundType.COMBAT_MUSIC);
     }
 
     /// <summary>

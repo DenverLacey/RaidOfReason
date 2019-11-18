@@ -562,4 +562,9 @@ public abstract class BaseCharacter : MonoBehaviour
 		m_animator.SetFloat("MovZ", 0f);
 		m_animator.SetBool("Attack", false);
 	}
+
+	private void PlayTheaDeathVoiceLine()
+	{
+
+	}
 }
