@@ -64,7 +64,7 @@ public class HourglassIndicator : MonoBehaviour
 
 		m_skill = m_skillManager.m_mainSkills[(int)m_character.CharacterType];
 
-		m_skill.onDone = OnSkillCooldownDone;
+		m_skill.onDone += OnSkillCooldownDone;
 
 		m_offset = transform.position - m_character.transform.position;
     }

@@ -41,7 +41,7 @@ public class Skills
     [HideInInspector]
     public bool onCooldown = false;
 
-    public OnDone onDone;
+    public OnDone onDone = () => { };
 
     public void RunTimer()
 	{
