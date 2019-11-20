@@ -127,8 +127,21 @@ public class CharacterInformation : InteractableUIElement
 	{
 		if (!m_selected)
 		{
-			// set character 
-			character = m_character;
+            if (m_character == CharacterType.KENRON)
+            {
+                AkSoundEngine.PostEvent("Kenron_UI_Select_Event", gameObject);
+            }
+            else if (m_character == CharacterType.KREIGER)
+            {
+                AkSoundEngine.PostEvent("Machina_UI_Select_Event", gameObject);
+            }
+            else if (m_character == CharacterType.THEA)
+            {
+                AkSoundEngine.PostEvent("Thea_Select_Event", gameObject);
+            }
+
+            // set character 
+            character = m_character;
 
 			// kill tweening
 			m_characterImage.DOKill(complete: true);

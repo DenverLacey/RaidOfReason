@@ -132,7 +132,10 @@ public class RespawnManager : MonoBehaviour
 		respawnEffect.transform.position = m_respawnInformation[player].respawnPosition;
 
 		m_activeRespawnEffects.Add(respawnEffect);
-	}
+
+        // play respawn sound
+        AkSoundEngine.PostEvent("Respawn_Event", respawnEffect.gameObject);
+    }
 
 	/// <summary>
 	/// Checks if all players are respawning

@@ -238,7 +238,10 @@ public class Kreiger : BaseCharacter
 		// enable colliders
 		RightGauntlet.enabled = true;
 		LeftGauntlet.enabled = true;
-	}
+
+        // play sound effect
+        AkSoundEngine.PostEvent("Machina_Attack_Event", gameObject);
+    }
 
     /// <summary>
     /// Stops Krieger from lunging forward
@@ -374,4 +377,9 @@ public class Kreiger : BaseCharacter
 		islunging = false;
 		m_lungeDelayTimer = 0f;
 	}
+
+    private void OnSkillReady()
+    {
+        AkSoundEngine.PostEvent("Machina_UI_CoolDowns_Event", gameObject);
+    }
 }
