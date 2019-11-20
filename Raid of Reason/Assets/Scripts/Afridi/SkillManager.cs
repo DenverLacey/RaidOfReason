@@ -114,8 +114,9 @@ public class SkillManager : MonoBehaviour {
                     m_mainSkills[0].active = true;
                     m_mainSkills[0].onCooldown = true;
 
-                    // kenron reset sound
-                    AkSoundEngine.PostEvent("Kenron_FlameEngulf_Event", gameObject);
+					// kenron skill sound
+					// AkSoundEngine.PostEvent("Kenron_FlameEngulf_Event", gameObject);
+					AudioManager.Instance.PlaySound(SoundType.KENRON_SKILL);
                 }
             }
             if (m_mainSkills[0].readyToDisplay && !m_mainSkills[0].onCooldown)
@@ -146,8 +147,9 @@ public class SkillManager : MonoBehaviour {
                     m_mainSkills[1].active = true;
                     m_mainSkills[1].onCooldown = true;
 
-                    // krieger reset sound
-                    AkSoundEngine.PostEvent("Machina_Ability_Event", gameObject);
+					// krieger reset sound
+					// AkSoundEngine.PostEvent("Machina_Ability_Event", gameObject);
+					AudioManager.Instance.PlaySound(SoundType.KRIEGER_SKILL);
                 }
             }
             if (m_mainSkills[1].readyToDisplay && !m_mainSkills[1].onCooldown)
@@ -167,14 +169,11 @@ public class SkillManager : MonoBehaviour {
             {
                 if(m_mainSkills[2].m_currentCoolDown >= m_mainSkills[2].m_coolDown)
                 {
-                    // thea close sound
-                    AkSoundEngine.SetRTPCValue("Thea_Close", 1);
-
                     // Activate Ability
                     m_mainSkills[2].readyToDisplay = false;
                     GameManager.Instance.Thea.GiftOfPoseidon(m_mainSkills[2].m_currentDuration);
                     m_mainSkills[2].active = true;
-                } 
+				} 
             }
             else if(XCI.GetAxis(XboxAxis.LeftTrigger,GameManager.Instance.Thea.controller) < 0.1)
             {

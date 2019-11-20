@@ -133,8 +133,9 @@ public class RespawnManager : MonoBehaviour
 
 		m_activeRespawnEffects.Add(respawnEffect);
 
-        // play respawn sound
-        AkSoundEngine.PostEvent("Respawn_Event", respawnEffect.gameObject);
+		// play respawn sound
+		// AkSoundEngine.PostEvent("Respawn_Event", respawnEffect.gameObject);
+		AudioManager.Instance.PlaySound(SoundType.RESPAWN);
     }
 
 	/// <summary>

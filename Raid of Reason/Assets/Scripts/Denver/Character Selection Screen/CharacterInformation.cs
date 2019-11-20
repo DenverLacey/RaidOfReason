@@ -127,19 +127,6 @@ public class CharacterInformation : InteractableUIElement
 	{
 		if (!m_selected)
 		{
-            if (m_character == CharacterType.KENRON)
-            {
-                AkSoundEngine.PostEvent("Kenron_UI_Select_Event", gameObject);
-            }
-            else if (m_character == CharacterType.KREIGER)
-            {
-                AkSoundEngine.PostEvent("Machina_UI_Select_Event", gameObject);
-            }
-            else if (m_character == CharacterType.THEA)
-            {
-                AkSoundEngine.PostEvent("Thea_Select_Event", gameObject);
-            }
-
             // set character 
             character = m_character;
 
@@ -147,7 +134,7 @@ public class CharacterInformation : InteractableUIElement
 			m_characterImage.DOKill(complete: true);
 			m_characterImage.DOPunchPosition(Vector3.down * m_punchForce, m_punchDuration, m_punchVibrato, m_punchElasticity);
 
-			// TODO: Make nice sound
+			// make nice sound
 			AudioManager.Instance.PlaySound(m_selectedSound);
 
 			m_selectedBorder.DOColor(tweenColour, m_colourDuration).SetLoops(-1, LoopType.Yoyo);
@@ -158,7 +145,7 @@ public class CharacterInformation : InteractableUIElement
 		}
 		else
 		{
-			// TODO: Make bad sound
+			// make bad sound
 			AudioManager.Instance.PlaySound(m_failedSound);
 
 			return false;

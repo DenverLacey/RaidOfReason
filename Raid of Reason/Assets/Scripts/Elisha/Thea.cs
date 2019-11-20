@@ -344,6 +344,8 @@ public class Thea : BaseCharacter
     /// <param name="rot"></param>
     private void FireProjectile(Vector3 pos, Quaternion rot)
     {
+		AudioManager.Instance.PlaySound(SoundType.THEA_ATTACK);
+
         var projectile = ObjectPooling.GetPooledObject(PROJECTILE_PREFAB_PATH);
 
         projectile.transform.position = pos;
@@ -447,6 +449,14 @@ public class Thea : BaseCharacter
         m_healEffect.Play();
         m_HealRadius1.transform.position = transform.position;
         m_HealRadius1.Play();
+
+		AudioManager.Instance.StopSound(SoundType.THEA_SKILL);
+		AudioManager.Instance.PlaySound(SoundType.THEA_SKILL_CLOSE);
+	}
+
+	public void StartGiftOfPoseidon()
+	{
+		AudioManager.Instance.PlaySound(SoundType.THEA_SKILL);
 	}
 
     /// <summary>

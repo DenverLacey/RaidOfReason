@@ -17,16 +17,28 @@ public enum SoundType
     KENRON_WALK,
     KENRON_ATTACK,
     KENRON_HURT,
+	KENRON_COOLDOWN,
+	KENRON_SKILL,
 
     // Kreiger sounds
-    Kreiger_WALK,
-    Kreiger_ATTACK,
-    Kreiger_HURT,
+    KRIEGER_WALK,
+    KRIEGER_ATTACK,
+    KRIEGER_HURT,
+	KRIEGER_COOLDOWN,
+	KRIEGER_SKILL,
 
     // Thea sounds
     THEA_WALK,
     THEA_ATTACK,
     THEA_HURT,
+	THEA_COOLDOWN,
+	THEA_SKILL,
+	THEA_SKILL_CLOSE,
+
+	// SFX
+	RESPAWN,
+
+	MISC,
 }
 
 [System.Serializable]
@@ -41,6 +53,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     private List<StringSoundPair> m_soundList = new List<StringSoundPair>();
     private Dictionary<SoundType, SoundData> m_sounds = new Dictionary<SoundType, SoundData>();
+
+	private List<StringSoundPair> m_activeSounds = new List<StringSoundPair>();
 
     [SerializeField]
     private static AudioManager ms_instance;
@@ -127,6 +141,19 @@ public class AudioManager : MonoBehaviour
 		sound.source.Play();
 	}
 
+	public void PlaySound(AudioClip clip, bool loop = false)
+	{
+		SoundData sound = new SoundData
+		{
+			clip = clip,
+			volume = 1f,
+			pitch = 1f,
+			loop = loop,
+			spatialBlend = 0f
+		};
+		PlaySound(sound);
+	}
+
     /// <summary>
     /// Stops playing individual sound.
     /// </summary>
@@ -175,4 +202,10 @@ public class AudioManager : MonoBehaviour
         int randIdx = Random.Range(0, matchingSounds.Count);
         return matchingSounds[randIdx];
     }
+
+	private void RemoveSoundFromActivePool(SoundData sound)
+	{
+		var found = m_activeSounds.Find(p => p.value == sound);
+		m_activeSounds.Remove(found);
+	}
 }

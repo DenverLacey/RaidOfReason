@@ -244,8 +244,9 @@ public class Kenron : BaseCharacter
                 // position hit box
                 m_dashCollider.transform.position = transform.position + transform.forward * (m_dashDistance / 2f);
 
-                // Play Dash Sound effect
-                AkSoundEngine.PostEvent("Kenron_Attack_Event", gameObject);
+				// Play Dash Sound effect
+				// AkSoundEngine.PostEvent("Kenron_Attack_Event", gameObject);
+				AudioManager.Instance.PlaySound(SoundType.KENRON_ATTACK);
             }
         }
         else if (XCI.GetAxis(XboxAxis.RightTrigger, controller) < 0.1f && !isDashing)
@@ -385,6 +386,7 @@ public class Kenron : BaseCharacter
 
     private void OnSkillReady()
     {
-        AkSoundEngine.PostEvent("Kenron_UI_CoolDowns_Event", gameObject);
+		// AkSoundEngine.PostEvent("Kenron_UI_CoolDowns_Event", gameObject);
+		AudioManager.Instance.PlaySound(SoundType.KENRON_COOLDOWN);
     }
 }

@@ -239,8 +239,9 @@ public class Kreiger : BaseCharacter
 		RightGauntlet.enabled = true;
 		LeftGauntlet.enabled = true;
 
-        // play sound effect
-        AkSoundEngine.PostEvent("Machina_Attack_Event", gameObject);
+		// play sound effect
+		// AkSoundEngine.PostEvent("Machina_Attack_Event", gameObject);
+		AudioManager.Instance.PlaySound(SoundType.KRIEGER_ATTACK);
     }
 
     /// <summary>
@@ -380,6 +381,7 @@ public class Kreiger : BaseCharacter
 
     private void OnSkillReady()
     {
-        AkSoundEngine.PostEvent("Machina_UI_CoolDowns_Event", gameObject);
+		// AkSoundEngine.PostEvent("Machina_UI_CoolDowns_Event", gameObject);
+		AudioManager.Instance.PlaySound(SoundType.KRIEGER_COOLDOWN);
     }
 }
