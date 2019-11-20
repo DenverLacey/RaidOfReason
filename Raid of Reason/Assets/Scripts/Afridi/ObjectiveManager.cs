@@ -125,8 +125,7 @@ public class ObjectiveManager : MonoBehaviour
                 triggerObjective.gameObject.SetActive(true);
             }
 
-            // Reset Triggerand completion
-            ObjectiveCompleted = false;
+            // Reset Trigger
             ObjectiveTriggered = false;
             
             // Turns off Timers and Descriptions
@@ -144,15 +143,12 @@ public class ObjectiveManager : MonoBehaviour
           
             yield return new WaitForSeconds(objectiveFade);
 
-            // Empty Check before setting a new Objective
-            if (barriers != null)
-            {
-                barriers.ManageBarriers();
-            }
-
-            if (ObjectiveCompleted == false)
+            if (ObjectiveCompleted == true && barriers != null)
             {
                 objectiveComplete.SetActive(false);
+                barriers.ManageBarriers();
+                // Reset Completion
+                ObjectiveCompleted = false;
             }
 
             // If its the last objective roll credits

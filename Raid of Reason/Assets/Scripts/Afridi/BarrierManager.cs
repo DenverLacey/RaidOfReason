@@ -11,7 +11,7 @@ public class BarrierManager : MonoBehaviour
 {
     private ObjectiveManager m_ObjManager;
     public List<GameObject> Barriers = new List<GameObject>();
-    public string objectiveName;
+
     void Awake()
     {
         // Initalise the barriers and Manager 
@@ -27,15 +27,11 @@ public class BarrierManager : MonoBehaviour
     /// </summary>
     public void ManageBarriers()
     {
-        // If the current objective is this one
-        if (m_ObjManager.currentObjective.name == objectiveName)
-        {
-            // Turn specified barrier off
-            if (m_ObjManager.ObjectiveCompleted == true)
-            {
-                Barriers[0].SetActive(false);
-            }
-        }
+       // Turn specified barrier off
+       if (m_ObjManager.ObjectiveCompleted == true)
+       {
+           Barriers[0].SetActive(false);
+       }
     }
 
 }
