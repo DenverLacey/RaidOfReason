@@ -62,6 +62,11 @@ public class ObjectiveManager : MonoBehaviour
         // If the current objective exists and has been triggered
         if (currentObjective && ObjectiveTriggered == true)
         {
+            if (currentObjective is ProtectionObjective)
+            {
+                m_protect = true;
+            }
+
             if (triggerObjectives.Count > 1)
             {
                 // Disable triggered trigger
@@ -73,10 +78,6 @@ public class ObjectiveManager : MonoBehaviour
             objectiveTimer.gameObject.transform.GetChild(0).gameObject.SetActive(true);
             objectiveDescription.gameObject.SetActive(true);
 
-            if (currentObjective is ProtectionObjective)
-            {
-                m_protect = true;
-            }
 
             // Stores Complete/Failed Bools
             m_Completed = currentObjective.Completed();
