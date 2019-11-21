@@ -166,6 +166,11 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         Cursor.visible = false;
+
+		if (Input.GetKeyDown(KeyCode.Escape))
+		{
+			Application.Quit();
+		}
     }
 
     /// <summary>
