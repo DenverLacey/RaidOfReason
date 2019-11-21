@@ -11,9 +11,10 @@ using UnityEngine.SceneManagement;
 
 public class ObjectPooling : MonoBehaviour
 {
-
+    // The default pool size the objects are in
     private const int m_defaultPoolSize = 20;
 
+    // a flag that tells the pool to expand when needing more objects than intended
     public static bool expandWhenNecessary = true;
 
     public static Dictionary<string, List<GameObject>> objectPools = new Dictionary<string, List<GameObject>>();

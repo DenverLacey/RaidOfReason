@@ -13,9 +13,11 @@ public class LevelManager : MonoBehaviour
 {
     private void Awake()
     {
+        // Singleton
         if (m_instance == null)
         {
             m_instance = this;
+            // this instance will never be destroyed when scenes are changing
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -44,6 +46,9 @@ public class LevelManager : MonoBehaviour
         SceneManager.sceneLoaded += FadeFromBlack;
     }
 
+    /// <summary>
+    /// Loads the next level within the index.
+    /// </summary>
     public static void LoadNextLevel()
     {
         m_instance.m_prevSceneIndex = m_instance.m_sceneIndex;
@@ -51,12 +56,18 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(m_instance.m_sceneIndex, LoadSceneMode.Single);
     }
 
+    /// <summary>
+    /// The API that fades to the next index in the build settings.
+    /// </summary>
     public static void FadeLoadNextLevel()
     {
         m_instance.m_sceneIndex++;
         FadeToLevel(m_instance.m_sceneIndex);
     }
 
+    /// <summary>
+    /// Loads the last level within the build settings.
+    /// </summary>
     public static void LoadLastLevel()
     {
         int temp = m_instance.m_prevSceneIndex;
@@ -65,11 +76,18 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(m_instance.m_sceneIndex, LoadSceneMode.Single);
     }
 
+    /// <summary>
+    /// Fade loads the last level in the index.
+    /// </summary>
     public static void FadeLoadLastLevel()
     {
         FadeToLevel(m_instance.m_prevSceneIndex);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="levelIndex"></param>
     public static void LoadLevel(int levelIndex)
     {
         m_instance.m_prevSceneIndex = m_instance.m_sceneIndex;
@@ -77,11 +95,19 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(m_instance.m_sceneIndex, LoadSceneMode.Single);
     }
 
+    /// <summary>
+    /// The API that calls the instance to fade to level.
+    /// </summary>
+    /// <param name="levelIndex"></param>
     public static void FadeLoadLevel(int levelIndex)
     {
         FadeToLevel(levelIndex);
     }
 
+    /// <summary>
+    /// Loads the level by name that is set in the parameter.
+    /// </summary>
+    /// <param name="levelName"></param>
     public static void LoadLevelFromName(string levelName)
     {
         int levelIndex = SceneManager.GetSceneByName(levelName).buildIndex;
@@ -93,6 +119,10 @@ public class LevelManager : MonoBehaviour
         m_instance.m_titleScreenVisited = true;
     }
 
+    /// <summary>
+    /// The instance of fade to level.
+    /// </summary>
+    /// <param name="levelIndex"></param>
     private static void FadeToLevel(int levelIndex)
     {
         m_instance.m_sceneToLoad = levelIndex;

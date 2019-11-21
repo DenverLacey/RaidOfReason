@@ -113,10 +113,6 @@ public abstract class BaseCharacter : MonoBehaviour
 		set => m_movementAxes = value ? m_movementAxes | MovementAxis.Rotate : m_movementAxes & ~MovementAxis.Rotate;
 	}
 
-    //public Material damageFeedback;
-    //private Material originalMaterial;
-    //public Material[] playerMaterial;
-
     [SerializeField]
     [Tooltip("Material to show daamge")]
     private Material m_damageMaterial;

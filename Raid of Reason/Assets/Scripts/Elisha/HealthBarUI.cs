@@ -1,13 +1,14 @@
-﻿using System.Collections;
+﻿/* 
+ * Author: Elisha Anagnostakis
+ * Description: This script handles all the mechanics that the player health bars do such as shield increase / damage,
+ * health increase / damage, and critical health state
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-
-/* 
- * Author: Elisha Anagnostakis
- * Description: Handles updating each characters’ health bar.
- */
 
 public class HealthBarUI : MonoBehaviour
 {
@@ -31,8 +32,7 @@ public class HealthBarUI : MonoBehaviour
     [SerializeField]
     [Tooltip("How much the damaged health sprite will lerp when damaged.")]
     private float m_lerpAmount = 0.2f;
-
-
+    
     [Header("--Critical Health Image Settings--")]
 
     [SerializeField]
@@ -80,9 +80,10 @@ public class HealthBarUI : MonoBehaviour
     {
         if (m_character)
         {
+            // checks if the player has health
             if (m_character.currentHealth > 0)
             {
-                // This will output visually how much health the players have.
+                // This will output visually how much health the players have
                 m_healthBar.fillAmount = m_character.currentHealth / m_character.m_maxHealth;
                 if (m_prevHealth != m_character.currentHealth)
                 {
@@ -91,23 +92,29 @@ public class HealthBarUI : MonoBehaviour
             }
             else
             {
+                // if player is dead set the fill amounts to 0
                 m_healthBar.fillAmount = 0;
                 m_damagedHealth.fillAmount = 0;
             }
 
+            // checks if the player has shield
             if (m_character.currentShield > 0)
             {
+                // turns on the shield sprite
                 m_shieldBar.gameObject.SetActive(true);
+                // This will output visually how much shield the players have
                 m_shieldBar.fillAmount = m_character.currentShield / m_character.m_maxShield;
             }
             else
             {
+                // turns off the shield sprite
                 m_shieldBar.gameObject.SetActive(false);
             }
 
-            // Critical health flashing 
+            // checks if the health bar is greater than the set threshold that then becomes critical health
             if ((m_healthBar.fillAmount > m_criticalPercentageThreshold && m_isCritical == true) || m_character.playerState != BaseCharacter.PlayerState.ALIVE)
             {
+                // Resets all critical heath attributes
                 m_criticalHealthImage.enabled = false;
                 m_isCritical = false;
                 m_criticalHealthImage.DOKill();
@@ -119,11 +126,15 @@ public class HealthBarUI : MonoBehaviour
             }
             else if (m_healthBar.fillAmount <= m_criticalPercentageThreshold && m_isCritical == false)
             {
+                // enables the critical health sprite
                 m_criticalHealthImage.enabled = true;
+                // sets the flag to true 
                 m_isCritical = true;
+                // loops image alpha between 1 and 0
                 m_criticalHealthImage.DOColor(m_colourWithAlpha, m_duration).SetLoops(-1, LoopType.Yoyo);
 
                 m_criticalHealthBarFlash.enabled = true;
+                // flashes the critical health image within a loop
                 m_criticalHealthBarFlash.DOColor(m_healthColourWithAlpha, m_duration).SetLoops(-1, LoopType.Yoyo);
             }
         }
@@ -143,6 +154,10 @@ public class HealthBarUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Heath bar shake using DO Tweening to punch the bars transform when players get damaged.
+    /// </summary>
+    /// <param name="player"></param>
     private void HealthBarShake(BaseCharacter player)
     {
         transform.DOKill(true);
