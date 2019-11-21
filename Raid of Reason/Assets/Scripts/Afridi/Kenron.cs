@@ -157,12 +157,17 @@ public class Kenron : BaseCharacter
         position.y = 0.1f;
         Debug.DrawLine(position, position + transform.forward * 0.5f);
     }
-    #endregion
+	#endregion
 
-    /// <summary>
-    /// Kenrons Skill. By Halving his health, he gains a boost of Speed and Damage 
-    /// </summary>
-    public void ChaosFlame(float skillDuration)
+	private void Start()
+	{
+		skillManager.m_mainSkills[0].onDone += () => AudioManager.Instance.PlaySound(SoundType.KENRON_COOLDOWN);
+	}
+
+	/// <summary>
+	/// Kenrons Skill. By Halving his health, he gains a boost of Speed and Damage 
+	/// </summary>
+	public void ChaosFlame(float skillDuration)
     {
         // Empty Check
         if (gameObject != null)

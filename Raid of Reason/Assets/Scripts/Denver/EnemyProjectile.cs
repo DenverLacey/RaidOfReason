@@ -65,6 +65,7 @@ public class EnemyProjectile : MonoBehaviour
 	{
 		m_damage = damage;
 		m_parent = parent;
+		AudioManager.Instance.PlaySound(SoundType.RANGE_ATTACK);
 	}
 
     /// <summary>
@@ -80,6 +81,7 @@ public class EnemyProjectile : MonoBehaviour
         {
             BaseCharacter player = other.GetComponent<BaseCharacter>();
             player.TakeDamage(m_damage);
+			AudioManager.Instance.PlaySound(SoundType.RANGE_ATTACK_HIT);
         }
 
 		// if hit some object

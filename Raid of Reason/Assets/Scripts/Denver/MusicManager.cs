@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+public enum MusicType
+{
+	TITLE,
+	LVL_1,
+	LVL_2_PHASE_1,
+	LVL_2_PHASE_2,
+}
 
 public class MusicManager : MonoBehaviour
 {
-	public enum MusicType
-	{
-		TITLE,
-		LVL_1,
-		LVL_2_PHASE_1,
-		LVL_2_PHASE_2,
-	}
 
 	[Tooltip("Title Screen Music")]
 	[SerializeField]
@@ -84,6 +84,13 @@ public class MusicManager : MonoBehaviour
 	{
 		if (m_transition)
 		{
+			if (m_currentMusic == m_nextMusic)
+			{
+				m_transition = false;
+				m_nextMusic = null;
+				return;
+			}
+
 			m_timer += Time.deltaTime;
 
 			m_currentMusic.source.volume = m_currentMusic.volume - (m_timer / m_transitionDuration) * m_currentMusic.volume;

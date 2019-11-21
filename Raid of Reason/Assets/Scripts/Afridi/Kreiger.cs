@@ -131,6 +131,7 @@ public class Kreiger : BaseCharacter
 	{
         m_collider = GetComponent<CapsuleCollider>();
         m_hitEnemies = new List<EnemyData>();
+		skillManager.m_mainSkills[1].onDone += () => AudioManager.Instance.PlaySound(SoundType.KRIEGER_COOLDOWN);
     }
 
     #region Intialisation

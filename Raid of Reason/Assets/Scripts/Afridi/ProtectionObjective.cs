@@ -34,8 +34,6 @@ public class ProtectionObjective : BaseObjective
     {
         currentHealth = health;
         m_currentTimer = timer;
-
-		MusicManager.Transition(MusicManager.MusicType.LVL_2_PHASE_2);
     }
 
     public override float Timer()

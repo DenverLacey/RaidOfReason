@@ -58,9 +58,7 @@ public class CharacterInformation : InteractableUIElement
 	private Image m_selectedBorder;
 	private Color m_selectedBorderColour;
 	private Transform m_characterImage;
-
-	private Image[] m_childImages;
-	private List<Color> m_childImageOriginalColours = new List<Color>();
+	private Transform m_characterImageGrey;
 	int m_hoverers;
 
 	private void Start()
@@ -69,14 +67,7 @@ public class CharacterInformation : InteractableUIElement
 		m_selectedBorderColour = m_selectedBorder.color;
 
 		m_characterImage = transform.parent.Find("Character Image");
-
-		m_childImages = transform.parent.GetComponentsInChildren<Image>();
-
-		foreach (Image child in m_childImages)
-		{
-			m_childImageOriginalColours.Add(child.color);
-			child.color *= Color.gray;
-		}
+		m_characterImageGrey = transform.parent.Find("Character Image Grey");
 	}
 
 	/// <summary>
@@ -87,10 +78,8 @@ public class CharacterInformation : InteractableUIElement
 		//Interlocked.Increment(ref m_hoverers);
 		m_hoverers++;
 
-		for (int i = 0; i < m_childImages.Length; i++)
-		{
-			m_childImages[i].color = m_childImageOriginalColours[i];
-		}
+		m_characterImageGrey.gameObject.SetActive(false);
+		m_characterImage.gameObject.SetActive(true);
 	}
 
 	/// <summary>
@@ -104,10 +93,8 @@ public class CharacterInformation : InteractableUIElement
 		if (m_hoverers <= 0 && !m_selected)
 		{
 			m_hoverers = 0;
-			foreach (Image child in m_childImages)
-			{
-				child.color *= Color.gray;
-			}
+			m_characterImage.gameObject.SetActive(false);
+			m_characterImageGrey.gameObject.SetActive(true);
 		}
 	}
 
@@ -175,10 +162,8 @@ public class CharacterInformation : InteractableUIElement
 
 			if (m_hoverers == 0)
 			{
-				foreach (Image child in m_childImages)
-				{
-					child.color *= Color.gray;
-				}
+				m_characterImage.gameObject.SetActive(false);
+				m_characterImageGrey.gameObject.SetActive(true);
 			}
 
 			return true;

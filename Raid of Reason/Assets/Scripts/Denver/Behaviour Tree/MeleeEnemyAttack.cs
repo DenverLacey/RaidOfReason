@@ -31,6 +31,7 @@ public class MeleeEnemyAttack : Behaviour
 			if (player != null)
 			{
 				player.TakeDamage(agent.AttackDamage);
+				AudioManager.Instance.PlaySound(SoundType.MELEE_ATTACK);
 			}
 		}
 		else

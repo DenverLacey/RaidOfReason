@@ -167,10 +167,10 @@ public abstract class BaseCharacter : MonoBehaviour
         YPosition = transform.position.y;
     }
 
-    /// <summary>
-    /// Physics update.
-    /// </summary>
-    protected virtual void FixedUpdate()
+	/// <summary>
+	/// Physics update.
+	/// </summary>
+	protected virtual void FixedUpdate()
     {
         
 	}
@@ -324,7 +324,22 @@ public abstract class BaseCharacter : MonoBehaviour
         if (currentHealth <= 0.0f)
         {
 			if (playerState != PlayerState.DEAD)
+			{
 				RespawnManager.RespawnPlayer(this);
+				
+				switch (CharacterType)
+				{
+					case CharacterType.KENRON:
+						AudioManager.Instance.PlaySound(SoundType.KENRON_DEATH);
+						break;
+					case CharacterType.KREIGER:
+						AudioManager.Instance.PlaySound(SoundType.KRIEGER_DEATH);
+						break;
+					case CharacterType.THEA:
+						AudioManager.Instance.PlaySound(SoundType.THEA_DEATH);
+						break;
+				}
+			}
 
             playerState = PlayerState.DEAD;
         }

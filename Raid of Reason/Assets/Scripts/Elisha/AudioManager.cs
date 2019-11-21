@@ -19,6 +19,7 @@ public enum SoundType
     KENRON_HURT,
 	KENRON_COOLDOWN,
 	KENRON_SKILL,
+	KENRON_DEATH,
 
     // Kreiger sounds
     KRIEGER_WALK,
@@ -26,6 +27,7 @@ public enum SoundType
     KRIEGER_HURT,
 	KRIEGER_COOLDOWN,
 	KRIEGER_SKILL,
+	KRIEGER_DEATH,
 
     // Thea sounds
     THEA_WALK,
@@ -34,11 +36,16 @@ public enum SoundType
 	THEA_COOLDOWN,
 	THEA_SKILL,
 	THEA_SKILL_CLOSE,
+	THEA_DEATH,
 
 	// SFX
 	RESPAWN,
 
-	MISC,
+	// Enemy SFX
+	MELEE_ATTACK,
+	RANGE_ATTACK,
+	RANGE_ATTACK_HIT,
+	SUICIDE_ATTACK,
 }
 
 [System.Serializable]

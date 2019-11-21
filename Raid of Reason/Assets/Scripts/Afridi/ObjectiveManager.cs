@@ -64,8 +64,11 @@ public class ObjectiveManager : MonoBehaviour
         {
             if (currentObjective is ProtectionObjective)
             {
-                m_protect = true;
-            }
+				if (m_protect == false)
+					MusicManager.Transition(MusicType.LVL_2_PHASE_2);
+
+				m_protect = true;
+			}
 
             if (triggerObjectives.Count > 1)
             {

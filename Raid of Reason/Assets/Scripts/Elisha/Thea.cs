@@ -153,6 +153,7 @@ public class Thea : BaseCharacter
 	private void Start()
 	{
         m_collider = GetComponent<CapsuleCollider>();
+		skillManager.m_mainSkills[2].onDone += () => AudioManager.Instance.PlaySound(SoundType.THEA_COOLDOWN);
 	}
 
 	/// <summary>

@@ -54,6 +54,7 @@ public class SuicideEnemyAttack : Behaviour
 
 			var explosion = GameObject.Instantiate(agent.AttackPrefabs[0]);
 			explosion.transform.position = agent.transform.position;
+			AudioManager.Instance.PlaySound(SoundType.SUICIDE_ATTACK);
 			agent.Die();
 
 			return SUCCESS;
