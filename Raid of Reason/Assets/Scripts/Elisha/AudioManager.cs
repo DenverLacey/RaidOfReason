@@ -52,7 +52,7 @@ public class AudioManager : MonoBehaviour
 {
     [SerializeField]
     private List<StringSoundPair> m_soundList = new List<StringSoundPair>();
-    private Dictionary<SoundType, SoundData> m_sounds = new Dictionary<SoundType, SoundData>();
+    private Dictionary<SoundType, List<SoundData>> m_sounds = new Dictionary<SoundType, List<SoundData>>();
 
 	private List<StringSoundPair> m_activeSounds = new List<StringSoundPair>();
 
@@ -84,6 +84,13 @@ public class AudioManager : MonoBehaviour
 
         // Gets an audio source component automatically when the user wants to add a new clip 
         // and allows the user to edit specific parts of the component of the clip.
+
+		foreach (var pair in m_soundList)
+		{
+			if (m_sounds.ContainsKey(pair.key) == false)
+				m_sounds.Add(pair.key, new List<SoundData>());
+		}
+
         foreach (var pair in m_soundList)
         {
             SoundData newSoundData = new SoundData();
@@ -94,8 +101,8 @@ public class AudioManager : MonoBehaviour
             newSoundData.source.loop = pair.value.loop;
             newSoundData.source.spatialBlend = pair.value.spatialBlend;
 
-            // add to dictionary of souds
-            m_sounds.Add(pair.key, newSoundData);
+			// add to dictionary of souds
+			m_sounds[pair.key].Add(newSoundData);
         }
     }
 
@@ -180,27 +187,19 @@ public class AudioManager : MonoBehaviour
         // Checks all arrays that use SoundData
         foreach(var pair in m_sounds)
         {
-            // And stops audio clips.
-            pair.Value.source.Stop();
+			foreach (var sound in pair.Value)
+			{
+				// And stops audio clips.
+				sound.source.Stop();
+			}
         }  
     }
 
     SoundData PickSoundOfType(SoundType type)
     {
-        // create list of all sounds with matching type
-        List<SoundData> matchingSounds = new List<SoundData>();
-
-        foreach (var pair in m_sounds)
-        {
-            if (pair.Key == type)
-            {
-                matchingSounds.Add(pair.Value);
-            }
-        }
-
-        // pick random sound from list
-        int randIdx = Random.Range(0, matchingSounds.Count);
-        return matchingSounds[randIdx];
+		List<SoundData> m_soundsOfType = m_sounds[type];
+		int randIdx = Random.Range(0, m_soundsOfType.Count);
+		return m_sounds[type][randIdx];
     }
 
 	private void RemoveSoundFromActivePool(SoundData sound)

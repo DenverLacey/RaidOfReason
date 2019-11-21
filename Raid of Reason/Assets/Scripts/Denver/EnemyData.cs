@@ -152,6 +152,8 @@ public class EnemyData : MonoBehaviour
 		m_inactiveDebuffs.Add(m_attackDebuff);
 		m_inactiveDebuffs.Add(m_speedDebuff);
 
+		m_tauntedEffect.Stop();
+
         Strength = 1f;
     }
 

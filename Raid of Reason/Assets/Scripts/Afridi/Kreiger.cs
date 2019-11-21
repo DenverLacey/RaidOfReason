@@ -323,7 +323,7 @@ public class Kreiger : BaseCharacter
     /// </summary>
 	public void OnTauntAnimation()
 	{
-		m_tauntEffect.Show(m_tauntRadius, transform.position);
+		// m_tauntEffect.Show(m_tauntRadius, transform.position);
 		RumbleController(m_tauntRumbleDuration, m_tauntRumbleIntensity, m_tauntRumbleIntensity);
 
 		// taunt enemies
