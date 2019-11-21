@@ -163,7 +163,12 @@ public class GameManager : MonoBehaviour
         }
 	}
 
-    private void Update()
+	private void Start()
+	{
+		Application.targetFrameRate = 60;
+	}
+
+	private void Update()
     {
         Cursor.visible = false;
 
