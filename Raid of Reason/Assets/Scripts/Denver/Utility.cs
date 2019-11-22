@@ -59,46 +59,25 @@ public static class Utility
 
 	public static bool IsButtonPressed(XboxButton button)
 	{
-		if (XCI.GetButton(button, XboxController.First) ||
-			XCI.GetButton(button, XboxController.Second) ||
-			XCI.GetButton(button, XboxController.Third) ||
-			XCI.GetButton(button, XboxController.Fourth))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return	XCI.GetButton(button, XboxController.First)  ||
+				XCI.GetButton(button, XboxController.Second) ||
+				XCI.GetButton(button, XboxController.Third)  ||
+				XCI.GetButton(button, XboxController.Fourth);
 	}
 
 	public static bool IsButtonDown(XboxButton button)
 	{
-		if (XCI.GetButtonDown(button, XboxController.First)  ||
-			XCI.GetButtonDown(button, XboxController.Second) ||
-			XCI.GetButtonDown(button, XboxController.Third)  ||
-			XCI.GetButtonDown(button, XboxController.Fourth))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return	XCI.GetButtonDown(button, XboxController.First)  ||
+				XCI.GetButtonDown(button, XboxController.Second) ||
+				XCI.GetButtonDown(button, XboxController.Third)  ||
+				XCI.GetButtonDown(button, XboxController.Fourth);
 	}
 
 	public static bool IsButtonUp(XboxButton button)
 	{
-		if (XCI.GetButtonUp(button, XboxController.First) ||
-			XCI.GetButtonUp(button, XboxController.Second) ||
-			XCI.GetButtonUp(button, XboxController.Third) ||
-			XCI.GetButtonUp(button, XboxController.Fourth))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return	XCI.GetButtonUp(button, XboxController.First)  ||
+				XCI.GetButtonUp(button, XboxController.Second) ||
+				XCI.GetButtonUp(button, XboxController.Third)  ||
+				XCI.GetButtonUp(button, XboxController.Fourth);
 	}
 }

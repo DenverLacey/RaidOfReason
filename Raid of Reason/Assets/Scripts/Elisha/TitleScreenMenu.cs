@@ -53,6 +53,7 @@ public class TitleScreenMenu : MonoBehaviour
 
     public void StartGame()
     {
+		AudioManager.Instance.PlaySound(SoundType.BUTTON_CLICK);
         LevelManager.FadeLoadLevel(1);
     }
 }

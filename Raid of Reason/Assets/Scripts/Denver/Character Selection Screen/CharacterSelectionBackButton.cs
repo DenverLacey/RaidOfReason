@@ -55,7 +55,7 @@ public class CharacterSelectionBackButton : InteractableUIElement
 				OnPressed();
 			}
 		}
-		else if(m_flashing == true)
+		else if (m_flashing == true)
 		{
 			m_borderImage.DOKill();
 
@@ -69,6 +69,7 @@ public class CharacterSelectionBackButton : InteractableUIElement
 
 	private void OnPressed()
 	{
+		AudioManager.Instance.PlaySound(SoundType.BUTTON_CLICK);
 		LevelManager.FadeLoadLastLevel();
 	}
 }

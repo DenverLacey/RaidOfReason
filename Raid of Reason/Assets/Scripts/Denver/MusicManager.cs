@@ -110,6 +110,10 @@ public class MusicManager : MonoBehaviour
 
 	public static void Transition(MusicType musicType)
 	{
+		if (musicType == ms_instance.m_state)
+			return;
+
+
 		ms_instance.m_transition = true;
 		ms_instance.m_state = musicType;
 
@@ -144,6 +148,12 @@ public class MusicManager : MonoBehaviour
 				Transition(MusicType.LVL_2_PHASE_1);
 				ms_instance.m_level2Phase2Music.source.volume = 0f;
 				ms_instance.m_level2Phase2Music.source.Play();
+				break;
+			case "DynamicMenu":
+				Transition(MusicType.TITLE);
+				break;
+			case "CharacterSelectionScene_002":
+				Transition(MusicType.TITLE);
 				break;
 			case "CreditsScene":
 				Transition(MusicType.TITLE);

@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
 {
     readonly bool m_isInstance;
 	private bool m_doCharacterSelection;
+	private int m_fpsTarget = 60;
 
 	private GameManager()
 	{
@@ -165,7 +166,8 @@ public class GameManager : MonoBehaviour
 
 	private void Start()
 	{
-		Application.targetFrameRate = 60;
+		QualitySettings.vSyncCount = 0;
+		Application.targetFrameRate = m_fpsTarget;
 	}
 
 	private void Update()

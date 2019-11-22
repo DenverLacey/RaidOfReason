@@ -27,6 +27,7 @@ public class PauseInformation : MonoBehaviour
 
     public void Click()
     {
+		AudioManager.Instance.PlaySound(SoundType.BUTTON_CLICK);
         m_onClickEvent.Invoke();
     }
 

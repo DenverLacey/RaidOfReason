@@ -26,4 +26,14 @@ public class SoundData
 
     [HideInInspector]
     public AudioSource source;
+
+	public void InitialseAudioSource(AudioSource audioSource)
+	{
+		source = audioSource;
+		audioSource.clip = clip;
+		audioSource.volume = volume;
+		audioSource.pitch = pitch;
+		audioSource.loop = loop;
+		audioSource.spatialBlend = spatialBlend;
+	}
 }

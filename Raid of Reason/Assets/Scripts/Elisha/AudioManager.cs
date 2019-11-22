@@ -10,42 +10,34 @@ using System.Collections.Generic;
 
 public enum SoundType
 {
-    //Ambient Sounds
-    COMBAT_MUSIC,
-
     // Kenron sounds
-    KENRON_WALK,
     KENRON_ATTACK,
-    KENRON_HURT,
 	KENRON_COOLDOWN,
 	KENRON_SKILL,
 	KENRON_DEATH,
 
     // Kreiger sounds
-    KRIEGER_WALK,
     KRIEGER_ATTACK,
-    KRIEGER_HURT,
 	KRIEGER_COOLDOWN,
 	KRIEGER_SKILL,
 	KRIEGER_DEATH,
 
     // Thea sounds
-    THEA_WALK,
     THEA_ATTACK,
-    THEA_HURT,
 	THEA_COOLDOWN,
 	THEA_SKILL,
 	THEA_SKILL_CLOSE,
 	THEA_DEATH,
-
-	// SFX
-	RESPAWN,
 
 	// Enemy SFX
 	MELEE_ATTACK,
 	RANGE_ATTACK,
 	RANGE_ATTACK_HIT,
 	SUICIDE_ATTACK,
+
+	// SFX
+	RESPAWN,
+	BUTTON_CLICK,
 }
 
 [System.Serializable]
@@ -100,16 +92,17 @@ public class AudioManager : MonoBehaviour
 
         foreach (var pair in m_soundList)
         {
-            SoundData newSoundData = new SoundData();
-            newSoundData.source = gameObject.AddComponent<AudioSource>();
-            newSoundData.source.clip = pair.value.clip;
-            newSoundData.source.volume = pair.value.volume;
-            newSoundData.source.pitch = pair.value.pitch;
-            newSoundData.source.loop = pair.value.loop;
-            newSoundData.source.spatialBlend = pair.value.spatialBlend;
+			//newSoundData.source = gameObject.AddComponent<AudioSource>();
+			//newSoundData.source.clip = pair.value.clip;
+			//newSoundData.source.volume = pair.value.volume;
+			//newSoundData.source.pitch = pair.value.pitch;
+			//newSoundData.source.loop = pair.value.loop;
+			//newSoundData.source.spatialBlend = pair.value.spatialBlend;
+
+			pair.value.InitialseAudioSource(gameObject.AddComponent<AudioSource>());
 
 			// add to dictionary of souds
-			m_sounds[pair.key].Add(newSoundData);
+			m_sounds[pair.key].Add(pair.value);
         }
     }
 

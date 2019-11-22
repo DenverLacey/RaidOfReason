@@ -74,6 +74,8 @@ public class CharacterSelectionStartButton : InteractableUIElement
 	/// </summary>
 	public void OnPressed()
 	{
+		AudioManager.Instance.PlaySound(SoundType.BUTTON_CLICK);
+
 		transform.DOKill(complete: true);
 
 		// get player cursor information

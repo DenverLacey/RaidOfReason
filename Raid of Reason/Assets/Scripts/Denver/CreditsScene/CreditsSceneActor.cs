@@ -49,6 +49,7 @@ public class CreditsSceneActor : MonoBehaviour
 		{
 			if (Input.GetKeyDown(KeyCode.Return) || Utility.IsButtonDown(XboxButton.Start))
 			{
+				AudioManager.Instance.PlaySound(SoundType.BUTTON_CLICK);
 				LevelManager.FadeLoadLevel(0);
 			}
 		}
