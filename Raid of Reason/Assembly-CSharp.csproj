@@ -150,12 +150,14 @@
     <Compile Include="Assets\3rd Party\Unity-XboxCtrlrInput-master\XboxCtrlrInput\Assets\XboxCtrlrInputExample\MovePlayer.cs" />
     <Compile Include="Assets\Portal.cs" />
     <Compile Include="Assets\RotateSprite.cs" />
+    <Compile Include="Assets\Scripts\Afridi\ArtifactActor.cs" />
     <Compile Include="Assets\Scripts\Afridi\BarrierManager.cs" />
     <Compile Include="Assets\Scripts\Afridi\BaseObjective.cs" />
     <Compile Include="Assets\Scripts\Afridi\CountdownObjective.cs" />
     <Compile Include="Assets\Scripts\Afridi\CrystalHealthBar.cs" />
     <Compile Include="Assets\Scripts\Afridi\DeactivateUI.cs" />
     <Compile Include="Assets\Scripts\Afridi\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Afridi\GIFLoader.cs" />
     <Compile Include="Assets\Scripts\Afridi\Kenron.cs" />
     <Compile Include="Assets\Scripts\Afridi\Kreiger.cs" />
     <Compile Include="Assets\Scripts\Afridi\ObjectiveManager.cs" />
@@ -168,6 +170,8 @@
     <Compile Include="Assets\Scripts\Denver\Behaviour Tree\Behaviour.cs" />
     <Compile Include="Assets\Scripts\Denver\Behaviour Tree\BehaviourTree.cs" />
     <Compile Include="Assets\Scripts\Denver\Behaviour Tree\Composite.cs" />
+    <Compile Include="Assets\Scripts\Denver\Behaviour Tree\CrystalMeleeAttack.cs" />
+    <Compile Include="Assets\Scripts\Denver\Behaviour Tree\CrystalMeleeBehaviourTree.cs" />
     <Compile Include="Assets\Scripts\Denver\Behaviour Tree\CrystalSuicideAttack.cs" />
     <Compile Include="Assets\Scripts\Denver\Behaviour Tree\CrystalSuicideBehaviourTree.cs" />
     <Compile Include="Assets\Scripts\Denver\Behaviour Tree\GetIntoPosition.cs" />
@@ -176,6 +180,7 @@
     <Compile Include="Assets\Scripts\Denver\Behaviour Tree\MeleeEnemyBehaviourTree.cs" />
     <Compile Include="Assets\Scripts\Denver\Behaviour Tree\MinAttackRangeCondition.cs" />
     <Compile Include="Assets\Scripts\Denver\Behaviour Tree\Not.cs" />
+    <Compile Include="Assets\Scripts\Denver\Behaviour Tree\NothingBehaviourTree.cs" />
     <Compile Include="Assets\Scripts\Denver\Behaviour Tree\RangeEnemyAttack.cs" />
     <Compile Include="Assets\Scripts\Denver\Behaviour Tree\RangeEnemyBehaviourTree.cs" />
     <Compile Include="Assets\Scripts\Denver\Behaviour Tree\Selector.cs" />
@@ -210,6 +215,7 @@
     <Compile Include="Assets\Scripts\Denver\EnemyProjectile.cs" />
     <Compile Include="Assets\Scripts\Denver\EnemyZone.cs" />
     <Compile Include="Assets\Scripts\Denver\HourglassIndicator.cs" />
+    <Compile Include="Assets\Scripts\Denver\MusicManager.cs" />
     <Compile Include="Assets\Scripts\Denver\NumberIndicator.cs" />
     <Compile Include="Assets\Scripts\Denver\Respawning\RespawnEffectActor.cs" />
     <Compile Include="Assets\Scripts\Denver\Respawning\RespawnManager.cs" />
@@ -287,7 +293,6 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\SineVFX\PostProcessing\Resources\Shaders\MotionBlur.cginc" />
-    <None Include="Assets\ErbGameArt\Procedural fire\Shaders\FireSphere.shader" />
     <None Include="Assets\SineVFX\PostProcessing\Resources\Shaders\Fog.shader" />
     <None Include="Assets\3rd Party\Particlecollection_Free samples\Material\JMO Assets\Cartoon FX\Shaders\CFXM_MobileParticleAdd_Alpha8.shader" />
     <None Include="Assets\3rd Party\EffectExamples\Shared\Shaders\SurfaceShader_VC.shader" />
@@ -328,7 +333,6 @@
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\SineVFX\PostProcessing\Editor Resources\UI\Trackball.shader" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
-    <None Include="Assets\ErbGameArt\Procedural fire\Demo scene\Readme.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\SineVFX\PostProcessing\Resources\Shaders\Bloom.cginc" />
     <None Include="Assets\SineVFX\PostProcessing\Resources\Shaders\TAA.shader" />
@@ -369,25 +373,25 @@
     <None Include="Assets\SineVFX\TranslucentCrystals\Resources\Shaders\Crystal.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:/Users/s173165/Desktop/RaidOfReason/trunk/Raid of Reason/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>C:/Users/s181330/Desktop/Triumvirates/Raid of Reason/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>C:/Users/s173165/Desktop/RaidOfReason/trunk/Raid of Reason/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>C:/Users/s181330/Desktop/Triumvirates/Raid of Reason/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>C:/Users/s173165/Desktop/RaidOfReason/trunk/Raid of Reason/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>C:/Users/s181330/Desktop/Triumvirates/Raid of Reason/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Postprocessing.Editor">
-      <HintPath>C:/Users/s173165/Desktop/RaidOfReason/trunk/Raid of Reason/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
+      <HintPath>C:/Users/s181330/Desktop/Triumvirates/Raid of Reason/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Postprocessing.Runtime">
-      <HintPath>C:/Users/s173165/Desktop/RaidOfReason/trunk/Raid of Reason/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
+      <HintPath>C:/Users/s181330/Desktop/Triumvirates/Raid of Reason/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:/Users/s173165/Desktop/RaidOfReason/trunk/Raid of Reason/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>C:/Users/s181330/Desktop/Triumvirates/Raid of Reason/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
-      <HintPath>C:/Users/s173165/Desktop/RaidOfReason/trunk/Raid of Reason/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+      <HintPath>C:/Users/s181330/Desktop/Triumvirates/Raid of Reason/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity 2018.3.8f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -591,19 +595,19 @@
       <HintPath>C:/Program Files/Unity 2018.3.8f1/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="DOTween">
-      <HintPath>C:/Users/s173165/Desktop/RaidOfReason/trunk/Raid of Reason/Assets/3rd Party/DOTween/DOTween.dll</HintPath>
+      <HintPath>C:/Users/s181330/Desktop/Triumvirates/Raid of Reason/Assets/3rd Party/DOTween/DOTween.dll</HintPath>
     </Reference>
     <Reference Include="XInputDotNetPure">
-      <HintPath>C:/Users/s173165/Desktop/RaidOfReason/trunk/Raid of Reason/Assets/3rd Party/Unity-XboxCtrlrInput-master/XboxCtrlrInput/Assets/Plugins/XInputDotNetPure.dll</HintPath>
+      <HintPath>C:/Users/s181330/Desktop/Triumvirates/Raid of Reason/Assets/3rd Party/Unity-XboxCtrlrInput-master/XboxCtrlrInput/Assets/Plugins/XInputDotNetPure.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
-      <HintPath>C:/Users/s173165/Desktop/RaidOfReason/trunk/Raid of Reason/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
+      <HintPath>C:/Users/s181330/Desktop/Triumvirates/Raid of Reason/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>C:/Users/s173165/Desktop/RaidOfReason/trunk/Raid of Reason/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
+      <HintPath>C:/Users/s181330/Desktop/Triumvirates/Raid of Reason/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
-      <HintPath>C:/Users/s173165/Desktop/RaidOfReason/trunk/Raid of Reason/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+      <HintPath>C:/Users/s181330/Desktop/Triumvirates/Raid of Reason/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity 2018.3.8f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

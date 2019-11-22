@@ -74,7 +74,7 @@ public class ObjectiveManager : MonoBehaviour
             {
                 // Disable triggered trigger
                 triggerObjective.gameObject.SetActive(false);
-            }
+            }  
       
             // Set Descriptions and Timer
             objectiveTimer.gameObject.SetActive(true);
