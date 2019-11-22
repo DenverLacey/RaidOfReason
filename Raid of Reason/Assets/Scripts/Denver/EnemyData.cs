@@ -326,8 +326,11 @@ public class EnemyData : MonoBehaviour
 	/// </summary>
 	public void IndicateHit(BaseCharacter character)
 	{
-        Renderer.material.color = Color.red;
-        StartCoroutine(ResetColour(.2f));
+		if (Renderer != null)
+		{
+			Renderer.material.color = Color.red;
+			StartCoroutine(ResetColour(.2f));
+		}
 
         switch (character.CharacterType)
         {
