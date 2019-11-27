@@ -376,7 +376,6 @@ public class Thea : BaseCharacter
         GOPRadiusIndicator.SetActive(true);
         GOPChargeMeter.SetActive(true);
         GOPChargeMeterBar.SetActive(true);
-        Debug.DrawLine(transform.position, transform.position + Vector3.forward * m_AOEMax);
         isSkillActive = true;
         if (Ability_UI != null)
         {
@@ -389,7 +388,7 @@ public class Thea : BaseCharacter
             m_AOETimer += Time.deltaTime;
             m_movementSpeed = m_GOPMovement;
             // Lerping the AOE
-            m_AOERadius = Mathf.Lerp(m_AOERadius, m_AOEMax, m_AOETimer / m_AOEGrowTime);
+            m_AOERadius = Mathf.Max(m_AOEMin, Mathf.Lerp(m_AOERadius, m_AOEMax, m_AOETimer / m_AOEGrowTime));
             // Charge meter charges up based on the radius of the AOE.
             GOPChargeMeter.transform.localScale = new Vector3(m_AOERadius / m_AOEMax, 1);
             GOPRadiusIndicator.transform.localScale = new Vector3(m_AOERadius * m_GOPRadiusIndicatorInitialScale.x, m_AOERadius * m_GOPRadiusIndicatorInitialScale.y, 0);
@@ -504,7 +503,7 @@ public class Thea : BaseCharacter
     {
         m_AOETimer = 0f;
         isSkillActive = false;
-        m_AOERadius = 0;
+        m_AOERadius = 0f;
         m_movementSpeed = m_currentMovement;
         GOPMaxCharge.SetActive(false);
         GOPChargeMeter.SetActive(false);
