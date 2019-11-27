@@ -101,7 +101,7 @@ public class CharacterSelection : MonoBehaviour
 		}
 		allPlayersSelectedCharacter = !allPlayersSelectedCharacter;
 
-		if (allPlayersSelectedCharacter && m_playerCursors.Count > 1)
+		if (allPlayersSelectedCharacter)
 		{
 			ActivateStartButton();
 		}

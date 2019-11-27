@@ -70,6 +70,6 @@ public class CharacterSelectionBackButton : InteractableUIElement
 	private void OnPressed()
 	{
 		AudioManager.Instance.PlaySound(SoundType.BUTTON_CLICK);
-		LevelManager.FadeLoadLastLevel();
+		LevelManager.FadeLoadLevel(0);
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine.Audio;
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 /*
@@ -130,22 +131,48 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning("Sound with this " + type + " wasn't found!");
             return;
         }
-        // If name can be found then play audio clip
-        s.source.Play();      
+
+		if (s.source.isPlaying == false)
+			s.source.Play();
+		else
+			PlaySound(s, true);
     }
 
-	public void PlaySound(SoundData sound)
+	public void PlaySound(SoundData sound, bool copy = false)
 	{
-		// create audio source for sound data
-		sound.source = gameObject.AddComponent<AudioSource>();
-		sound.source.clip = sound.clip;
-		sound.source.volume = sound.volume;
-		sound.source.pitch = sound.pitch;
-		sound.source.loop = sound.loop;
-		sound.source.spatialBlend = sound.spatialBlend;
+		if (copy == false)
+		{
+			// create audio source for sound data
+			sound.source = gameObject.AddComponent<AudioSource>();
+			sound.source.clip = sound.clip;
+			sound.source.volume = sound.volume;
+			sound.source.pitch = sound.pitch;
+			sound.source.loop = sound.loop;
+			sound.source.spatialBlend = sound.spatialBlend;
 
-		// play sound
-		sound.source.Play();
+			// play sound
+			sound.source.Play();
+		}
+		else
+		{
+			SoundData dup = new SoundData();
+			dup.source = gameObject.AddComponent<AudioSource>();
+			dup.source.clip = sound.clip;
+			dup.source.volume = sound.volume;
+			dup.source.pitch = sound.pitch;
+			dup.source.loop = sound.loop;
+			sound.source.spatialBlend = sound.spatialBlend;
+
+			// play sound
+			dup.source.Play();
+			StartCoroutine(RemoveAudioSource(dup.source));
+		}
+	}
+
+	IEnumerator RemoveAudioSource(AudioSource source)
+	{
+		yield return new WaitForSecondsRealtime(source.clip.length + 1);
+		Destroy(source);
 	}
 
 	public void PlaySound(AudioClip clip, bool loop = false)

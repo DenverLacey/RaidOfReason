@@ -22,7 +22,13 @@ public class SwordDamage : MonoBehaviour
         
             // Deals Damage with respective Effect
             enemy.TakeDamage(GameManager.Instance.Kenron.GetDamage(), GameManager.Instance.Kenron);
-            enemy.IndicateHit(GameManager.Instance.Kenron);
+
+			// Kenros Skill Merge
+			if (GameManager.Instance.Kenron.isSkillActive)
+			{
+				GameManager.Instance.Kenron.AddHealth(GameManager.Instance.Kenron.healthGained);
+				GameManager.Instance.Kenron.skillManager.m_mainSkills[0].m_currentDuration -= GameManager.Instance.Kenron.durationIncreased;
+			}
 		}
 	}
 }
