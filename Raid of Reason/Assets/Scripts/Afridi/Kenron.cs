@@ -127,7 +127,7 @@ public class Kenron : BaseCharacter
         // set size of dash hit box
         Vector3 hitBoxSize = new Vector3(m_dashCollider.size.x, m_dashCollider.size.y, m_maxDashDistance);
         m_dashCollider.size = hitBoxSize;
-        m_dashCollider.enabled = false;
+		m_dashCollider.gameObject.SetActive(false);
 		m_dashTrail.SetActive(false);
         GameManager.Instance.GiveCharacterReference(this);
     }
@@ -211,7 +211,7 @@ public class Kenron : BaseCharacter
                 m_controllerOn = false;
                 isDashing = true;
                 m_dashDone = false;
-                m_dashCollider.enabled = true;
+                m_dashCollider.gameObject.SetActive(true);
                 m_dashDelayTimer = m_dashDelay;
                 m_dashStartPosition = transform.position;
                 dashDisplays[m_TempCharge].SetActive(false);
@@ -310,7 +310,7 @@ public class Kenron : BaseCharacter
 	public void EndDash()
 	{
 		// reset boolean flags
-		m_dashCollider.enabled = false;
+		m_dashCollider.gameObject.SetActive(false);
 		m_animator.SetBool("Attack", false);
 
 		m_dashDone = true;

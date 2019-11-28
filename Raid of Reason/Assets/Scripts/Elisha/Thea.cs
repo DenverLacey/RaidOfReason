@@ -104,6 +104,13 @@ public class Thea : BaseCharacter
     [Tooltip("Insert Theas projectile object.")]
     private GameObject m_projectile;
 
+	[SerializeField]
+	[Tooltip("How much damage Thea will do when she is alone")]
+	private float m_minAloneDamage;
+
+	[SerializeField]
+	private float m_maxAloneDamage;
+
     [SerializeField]
     [Tooltip("How long of a delay will it take for her next projectile to instiantiate?")]
     private float m_projectileDelay;
@@ -154,6 +161,12 @@ public class Thea : BaseCharacter
 	{
         m_collider = GetComponent<CapsuleCollider>();
 		skillManager.m_mainSkills[2].onDone += () => AudioManager.Instance.PlaySound(SoundType.THEA_COOLDOWN);
+
+		if (GameManager.Instance.AllPlayers.Count == 1)
+		{
+			m_minDamage = m_minAloneDamage;
+			m_maxDamage = m_maxAloneDamage;
+		}
 	}
 
 	/// <summary>

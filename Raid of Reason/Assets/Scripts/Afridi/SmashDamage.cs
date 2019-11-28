@@ -13,15 +13,16 @@ public class SmashDamage : MonoBehaviour
     private float m_rumbleDuration = 0.1f;
     private float m_rumbleIntensity = 1000f;
 
-    /// <summary>
-    /// Handles how kuch damage/knockback/stun is dealt
-    /// </summary>
-    /// <param name="other"></param>
-    public void OnTriggerEnter(Collider other)
+	/// <summary>
+	/// Handles how kuch damage/knockback/stun is dealt
+	/// </summary>
+	/// <param name="other"></param>
+	public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Enemy")
         {
 			EnemyData enemy = other.gameObject.GetComponent<EnemyData>();
+
             // Knock back enemies with every punch Kreiger lands.
             Rigidbody rb = other.GetComponent<Rigidbody>();
 
@@ -30,9 +31,11 @@ public class SmashDamage : MonoBehaviour
                 return;
             else
                 // Adds the enemy to the list when hit
-            GameManager.Instance.Kreiger.m_hitEnemies.Add(enemy);
+				GameManager.Instance.Kreiger.m_hitEnemies.Add(enemy);
+
             // Gives shield
             GameManager.Instance.Kreiger.currentShield += GameManager.Instance.Kreiger.shieldGain;
+
             // Controller vibration
             DoRumble();
 
