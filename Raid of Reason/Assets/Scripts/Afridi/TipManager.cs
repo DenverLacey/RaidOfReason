@@ -7,6 +7,7 @@ public class TipManager : MonoBehaviour
 {
     public List<GameObject> Tips = new List<GameObject>();
     private bool isTriggered = false;
+    private float waitTime = 5f;
 
     private void Awake()
     {
@@ -24,7 +25,11 @@ public class TipManager : MonoBehaviour
     {
         if (Tips.Count > 0)
         {
-            Time.timeScale = 0.0f;
+            waitTime -= Time.deltaTime;
+            if (waitTime < 0)
+            {
+                Time.timeScale = 0.0f;
+            }
             if (XCI.GetButtonDown(XboxButton.A, XboxController.Any) && !isTriggered)
             {
                 if (Tips[0] != null && !isTriggered)
