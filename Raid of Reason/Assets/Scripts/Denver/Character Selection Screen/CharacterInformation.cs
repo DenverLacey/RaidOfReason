@@ -38,10 +38,18 @@ public class CharacterInformation : InteractableUIElement
 	[Range(0.0f, 1.0f)]
 	private float m_punchElasticity = 1.0f;
 
-	[Header("Border Colour Tweening")]
+	[Header("Border Tweening")]
 	[SerializeField]
 	[Tooltip("How long it takes for colour to change to target colour")]
 	private float m_colourDuration = 0.7f;
+
+	[SerializeField]
+	[Tooltip("How long it takes for the information panel / selected overlay to pop up")]
+	private float m_selectedOverlayDuration = 0.3f;
+
+	[SerializeField]
+	[Tooltip("Where to hide the information panel / selected overlay")]
+	private Vector3 m_selectedOverlayHidePosition;
 
 	[Header("SFX")]
 	[SerializeField]
@@ -57,8 +65,13 @@ public class CharacterInformation : InteractableUIElement
 	// child objects
 	private Image m_selectedBorder;
 	private Color m_selectedBorderColour;
+
 	private Transform m_characterImage;
 	private Transform m_characterImageGrey;
+
+	private Transform m_selectedOverlay;
+	private Vector3 m_selectedOverlayShowPosition;
+
 	int m_hoverers;
 
 	private void Start()
@@ -68,6 +81,10 @@ public class CharacterInformation : InteractableUIElement
 
 		m_characterImage = transform.parent.Find("Character Image");
 		m_characterImageGrey = transform.parent.Find("Character Image Grey");
+
+		m_selectedOverlay = transform.parent.Find("Information Panel");
+		m_selectedOverlayShowPosition = m_selectedOverlay.position;
+		m_selectedOverlay.position = m_selectedOverlayHidePosition;
 	}
 
 	/// <summary>
@@ -121,6 +138,9 @@ public class CharacterInformation : InteractableUIElement
 			m_characterImage.DOKill(complete: true);
 			m_characterImage.DOPunchPosition(Vector3.down * m_punchForce, m_punchDuration, m_punchVibrato, m_punchElasticity);
 
+			m_selectedOverlay.DOKill();
+			m_selectedOverlay.DOMove(m_selectedOverlayShowPosition, m_selectedOverlayDuration);
+
 			// make nice sound
 			AudioManager.Instance.PlaySound(m_selectedSound);
 
@@ -159,6 +179,9 @@ public class CharacterInformation : InteractableUIElement
 			// stop tweening selectedBorder colour
 			m_selectedBorder.DOKill();
 			m_selectedBorder.color = m_selectedBorderColour;
+
+			m_selectedOverlay.DOKill();
+			m_selectedOverlay.DOMove(m_selectedOverlayHidePosition, m_selectedOverlayDuration * 5f);
 
 			if (m_hoverers == 0)
 			{
