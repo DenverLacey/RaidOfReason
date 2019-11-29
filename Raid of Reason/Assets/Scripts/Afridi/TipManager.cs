@@ -7,7 +7,7 @@ public class TipManager : MonoBehaviour
 {
     public List<GameObject> Tips = new List<GameObject>();
     private bool isTriggered = false;
-    private float waitTime = 5f;
+    private float waitTime = 1.3f;
 
     private void Awake()
     {
