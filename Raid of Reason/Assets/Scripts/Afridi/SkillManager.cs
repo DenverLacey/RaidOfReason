@@ -184,8 +184,11 @@ public class SkillManager : MonoBehaviour {
                     m_mainSkills[2].m_currentDuration = 0;
                     m_mainSkills[2].active = false;
                     m_mainSkills[2].onCooldown = true;
-                    GameManager.Instance.Thea.EndGIftOfPoseidon();
                 }
+				if (m_mainSkills[2].onCooldown == true && GameManager.Instance.Thea.IsAnimatorInState("Casting"))
+				{
+					GameManager.Instance.Thea.EndGIftOfPoseidon();
+				}
                 if (m_mainSkills[2].readyToDisplay && !m_mainSkills[2].onCooldown)
                 {
                     if (GameManager.Instance.Thea.Ability_UI != null)

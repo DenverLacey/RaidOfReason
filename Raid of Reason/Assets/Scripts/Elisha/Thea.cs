@@ -166,6 +166,7 @@ public class Thea : BaseCharacter
 		{
 			m_minDamage = m_minAloneDamage;
 			m_maxDamage = m_maxAloneDamage;
+			ResetDamage();
 		}
 	}
 

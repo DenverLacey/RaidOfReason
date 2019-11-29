@@ -145,9 +145,9 @@ public abstract class BaseCharacter : MonoBehaviour
         m_deathMenu = FindObjectOfType<DeathMenu>();
         m_pauseInfo = FindObjectOfType<PauseMenu>();
         currentHealth = m_maxHealth;
-        m_mincurrentDamage = m_minDamage;
-        m_maxcurrentDamage = m_maxDamage;
-        m_vulnerability = 1.0f;
+		m_mincurrentDamage = m_minDamage;
+		m_maxcurrentDamage = m_maxDamage;
+		m_vulnerability = 1.0f;
         m_controllerOn = true;
         isSkillActive = false;
         currentShield = 0;
@@ -551,10 +551,7 @@ public abstract class BaseCharacter : MonoBehaviour
         if (gameObject.activeSelf)
 		    m_movementAxes = ~movementAxis;
 		yield return new WaitForSeconds(duration);
-        do
-        {
-            m_movementAxes = original;
-        } while (!gameObject.activeSelf);
+        m_movementAxes = original;
 	}
 
 	public virtual void ResetCharacter()
@@ -577,5 +574,17 @@ public abstract class BaseCharacter : MonoBehaviour
 	private void PlayTheaDeathVoiceLine()
 	{
 
+	}
+
+	public bool IsAnimatorInState(string stateName, int layer = 0)
+	{
+		if (m_animator)
+		{
+			return m_animator.GetCurrentAnimatorStateInfo(layer).IsName(stateName);
+		}
+		else
+		{
+			return false;
+		}
 	}
 }

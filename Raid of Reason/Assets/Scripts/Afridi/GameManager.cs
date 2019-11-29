@@ -155,6 +155,13 @@ public class GameManager : MonoBehaviour
         {
             // unfreeze scene
             SceneManager.sceneLoaded += (scene, sceneMode) => Time.timeScale = 1.0f;
+			Application.quitting += () =>
+			{
+				GamePad.SetVibration(PlayerIndex.One, 0f, 0f);
+				GamePad.SetVibration(PlayerIndex.Two, 0f, 0f);
+				GamePad.SetVibration(PlayerIndex.Three, 0f, 0f);
+				GamePad.SetVibration(PlayerIndex.Four, 0f, 0f);
+			};
 
 			DontDestroyOnLoad(gameObject);
         }
